@@ -20,7 +20,8 @@ let state = {
     currentUserEmail: '', // Authenticated user email
     displayName: '',      // Authenticated user displayName
     photoURL: '',         // Selected profile photoURL or custom animal emoji
-    googlePhotoURL: ''    // Google authenticating user photoURL
+    googlePhotoURL: '',   // Google authenticating user photoURL
+    completedLessons: []  // Completed grammar lesson IDs
 };
 
 // Flashcard Deck study state
@@ -34,6 +35,11 @@ let currentQuestionIndex = 0;
 let quizScore = 0;
 let quizTimer = { start: 0, end: 0 };
 let quizSelectedCategory = 'all';
+
+// Grammar state
+let currentGrammarLesson = null;
+let grammarPracticeIndex = 0;
+let grammarPracticeScore = 0;
 
 // Cloud synchronization state
 let isCloudMode = false;
@@ -75,16 +81,20 @@ function loadState() {
         const storedStars = localStorage.getItem('vocabflow_stars');
         const storedPhoto = localStorage.getItem('vocabflow_photo_url');
         const storedDisplayName = localStorage.getItem('vocabflow_display_name');
+        const storedCompletedLessons = localStorage.getItem('vocabflow_completed_lessons');
         if (storedLevel) state.userLevel = storedLevel;
         if (storedRoadmap) state.roadmapTasks = JSON.parse(storedRoadmap);
         if (storedStars) state.stars = parseInt(storedStars, 10);
         if (storedPhoto) state.photoURL = storedPhoto;
         if (storedDisplayName) state.displayName = storedDisplayName;
+        if (storedCompletedLessons) state.completedLessons = JSON.parse(storedCompletedLessons);
+        else state.completedLessons = [];
     } catch (e) {
         console.error('Error reading localStorage data', e);
         // Fallback
         state.vocabulary = [...INITIAL_VOCABULARY];
         state.customWords = [];
+        state.completedLessons = [];
     }
 }
 
@@ -93,6 +103,7 @@ function saveVocabToStorage() {
     localStorage.setItem('vocabflow_vocab', JSON.stringify(state.vocabulary));
 }
 
+// Save custom words
 function saveCustomWordsToStorage() {
     localStorage.setItem('vocabflow_custom', JSON.stringify(state.customWords));
 }
@@ -106,6 +117,7 @@ function saveStatsToStorage() {
     localStorage.setItem('vocabflow_stars', state.stars.toString());
     localStorage.setItem('vocabflow_photo_url', state.photoURL);
     localStorage.setItem('vocabflow_display_name', state.displayName);
+    localStorage.setItem('vocabflow_completed_lessons', JSON.stringify(state.completedLessons));
     
     // Sync to Firebase if in Cloud Mode
     if (isCloudMode && window.FirebaseSync) {
@@ -960,6 +972,220 @@ function deleteWordFromWordbook(id) {
     renderDashboard();
 }
 
+// --- INTERACTIVE GRAMMAR LEARNING CONTROLLER ---
+
+let activeGrammarCategory = 'all';
+
+function renderGrammarLessons(category = 'all') {
+    activeGrammarCategory = category;
+    const listContainer = document.getElementById('grammar-lessons-list');
+    if (!listContainer) return;
+
+    listContainer.innerHTML = '';
+    const filtered = category === 'all'
+        ? GRAMMAR_LESSONS
+        : GRAMMAR_LESSONS.filter(l => l.category === category);
+
+    filtered.forEach(lesson => {
+        const card = document.createElement('div');
+        const isActive = currentGrammarLesson && currentGrammarLesson.id === lesson.id;
+        const isCompleted = state.completedLessons.includes(lesson.id);
+
+        card.className = `grammar-lesson-card ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`;
+        
+        let catBadgeText = lesson.category === 'tenses' ? 'Thì câu' : 'Cấu trúc';
+        let statusText = isCompleted ? 'Đã xong ✅' : 'Chưa học 📖';
+
+        card.innerHTML = `
+            <h4>${lesson.title}</h4>
+            <p>${lesson.description}</p>
+            <div class="card-meta">
+                <span class="badge badge-${lesson.category}">${catBadgeText}</span>
+                <span class="status-indicator">${statusText}</span>
+            </div>
+        `;
+
+        card.addEventListener('click', () => {
+            // Remove active from others
+            document.querySelectorAll('.grammar-lesson-card').forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+            loadGrammarLesson(lesson.id);
+        });
+
+        listContainer.appendChild(card);
+    });
+}
+
+function loadGrammarLesson(lessonId) {
+    const lesson = GRAMMAR_LESSONS.find(l => l.id === lessonId);
+    if (!lesson) return;
+
+    currentGrammarLesson = lesson;
+    
+    // Hide empty state, show viewer
+    document.getElementById('grammar-empty-state').classList.add('hidden');
+    const viewer = document.getElementById('grammar-lesson-viewer');
+    viewer.classList.remove('hidden');
+
+    // Populate data
+    document.getElementById('lesson-view-title').textContent = lesson.title;
+    
+    const catBadge = document.getElementById('lesson-view-category');
+    catBadge.textContent = lesson.category === 'tenses' ? 'Thì trong tiếng Anh' : 'Cấu trúc câu';
+    catBadge.className = `badge badge-${lesson.category}`;
+
+    document.getElementById('lesson-view-description').textContent = lesson.description;
+    document.getElementById('lesson-view-formula').textContent = lesson.formula;
+
+    // Render usages
+    const usageUl = document.getElementById('lesson-view-usage');
+    usageUl.innerHTML = lesson.usage.map(u => `<li>${u}</li>`).join('');
+
+    // Render examples
+    const examplesDiv = document.getElementById('lesson-view-examples');
+    examplesDiv.innerHTML = '';
+
+    lesson.examples.forEach(ex => {
+        const item = document.createElement('div');
+        item.className = 'grammar-example-item';
+        item.innerHTML = `
+            <div class="example-texts">
+                <span class="example-en">${ex.en}</span>
+                <span class="example-vi">${ex.vi}</span>
+            </div>
+            <div class="play-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            </div>
+        `;
+
+        item.addEventListener('click', () => {
+            speakEnglish(ex.en);
+        });
+
+        examplesDiv.appendChild(item);
+    });
+
+    // Reset practice panels
+    document.getElementById('grammar-practice-entry').classList.remove('hidden');
+    document.getElementById('grammar-practice-panel').classList.add('hidden');
+    document.getElementById('grammar-success-panel').classList.add('hidden');
+    
+    // Streak check on studying lesson
+    checkAndUpdateStreak();
+    renderDashboard();
+}
+
+function initGrammarPractice() {
+    if (!currentGrammarLesson) return;
+
+    grammarPracticeIndex = 0;
+    grammarPracticeScore = 0;
+
+    // Hide entry block & success, show quiz panel
+    document.getElementById('grammar-practice-entry').classList.add('hidden');
+    document.getElementById('grammar-success-panel').classList.add('hidden');
+    document.getElementById('grammar-practice-panel').classList.remove('hidden');
+
+    loadGrammarPracticeQuestion();
+}
+
+function loadGrammarPracticeQuestion() {
+    const lesson = currentGrammarLesson;
+    const question = lesson.practice[grammarPracticeIndex];
+
+    // Update progress numbers
+    document.getElementById('grammar-practice-step').textContent = `Câu ${grammarPracticeIndex + 1} / ${lesson.practice.length}`;
+    const pct = ((grammarPracticeIndex) / lesson.practice.length) * 100;
+    document.getElementById('grammar-practice-progress').style.width = `${pct}%`;
+
+    // Clear explanation
+    document.getElementById('grammar-explanation-box').classList.add('hidden');
+
+    // Populate question
+    document.getElementById('grammar-practice-question').textContent = question.q;
+
+    // Populate options
+    const optionsDiv = document.getElementById('grammar-practice-options');
+    optionsDiv.innerHTML = '';
+
+    question.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'practice-opt-btn';
+        btn.textContent = opt;
+
+        btn.addEventListener('click', () => {
+            answerGrammarPracticeQuestion(idx);
+        });
+
+        optionsDiv.appendChild(btn);
+    });
+}
+
+function answerGrammarPracticeQuestion(selectedIndex) {
+    const lesson = currentGrammarLesson;
+    const question = lesson.practice[grammarPracticeIndex];
+    const optionBtns = document.querySelectorAll('.practice-opt-btn');
+
+    // Disable all options
+    optionBtns.forEach(btn => btn.disabled = true);
+
+    const isCorrect = selectedIndex === question.answer;
+
+    // Highlight
+    if (isCorrect) {
+        optionBtns[selectedIndex].classList.add('correct');
+        grammarPracticeScore++;
+        speakEnglish("Excellent");
+    } else {
+        optionBtns[selectedIndex].classList.add('incorrect');
+        optionBtns[question.answer].classList.add('correct');
+        speakEnglish("Incorrect");
+    }
+
+    // Explanation details
+    const explanationBox = document.getElementById('grammar-explanation-box');
+    const badge = document.getElementById('grammar-result-badge');
+    const text = document.getElementById('grammar-explanation-text');
+
+    if (isCorrect) {
+        badge.textContent = 'Chính xác! 🎉';
+        badge.className = 'result-badge correct-badge';
+    } else {
+        badge.textContent = 'Chưa chính xác ❌';
+        badge.className = 'result-badge incorrect-badge';
+    }
+
+    text.textContent = question.explanation;
+    explanationBox.classList.remove('hidden');
+}
+
+function nextGrammarPracticeQuestion() {
+    const lesson = currentGrammarLesson;
+    grammarPracticeIndex++;
+
+    if (grammarPracticeIndex < lesson.practice.length) {
+        loadGrammarPracticeQuestion();
+    } else {
+        // End of practice! Show Success Panel
+        document.getElementById('grammar-practice-panel').classList.add('hidden');
+        document.getElementById('grammar-success-panel').classList.remove('hidden');
+
+        // Check if this lesson is completed for the first time
+        const wasCompleted = state.completedLessons.includes(lesson.id);
+        
+        if (!wasCompleted) {
+            state.completedLessons.push(lesson.id);
+            saveStatsToStorage();
+            awardStars(5, `Hoàn thành bài học "${lesson.title}"`);
+        } else {
+            awardStars(2, `Ôn tập thành công bài "${lesson.title}"`);
+        }
+
+        // Re-render sidebar list to update "Đã xong ✅" status badge
+        renderGrammarLessons(activeGrammarCategory);
+    }
+}
+
 // --- COMMUNICATIVE SENTENCES RENDERER ---
 
 function renderSentences(category = 'all') {
@@ -1022,6 +1248,8 @@ function setUpTabNavigation() {
                 renderWordbook();
             } else if (targetId === 'sentences-tab') {
                 renderSentences();
+            } else if (targetId === 'grammar-tab') {
+                renderGrammarLessons();
             } else if (targetId === 'dashboard-tab') {
                 renderDashboard();
             } else if (targetId === 'leaderboard-tab') {
@@ -1036,6 +1264,24 @@ function setUpTabNavigation() {
 function initApp() {
     // 1. Tab Routing Setup
     setUpTabNavigation();
+
+    // 1b. Grammar UI Event Listeners Setup
+    const grammarCatButtons = document.querySelectorAll('.grammar-cat-btn');
+    grammarCatButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            grammarCatButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderGrammarLessons(btn.getAttribute('data-cat'));
+        });
+    });
+
+    document.getElementById('btn-start-grammar-practice').addEventListener('click', initGrammarPractice);
+    document.getElementById('btn-grammar-next').addEventListener('click', nextGrammarPracticeQuestion);
+    document.getElementById('btn-grammar-back-lesson').addEventListener('click', () => {
+        if (currentGrammarLesson) {
+            loadGrammarLesson(currentGrammarLesson.id);
+        }
+    });
 
     // 2. Bind Auth UI buttons
     document.getElementById('btn-google-login').addEventListener('click', handleGoogleLogin);

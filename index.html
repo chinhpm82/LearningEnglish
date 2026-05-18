@@ -79,6 +79,10 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                     <span>Câu giao tiếp</span>
                 </button>
+                <button class="nav-item" data-target="grammar-tab" id="btn-grammar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                    <span>Học ngữ pháp</span>
+                </button>
                 <button class="nav-item" data-target="leaderboard-tab" id="btn-leaderboard">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <span>Bảng xếp hạng</span>
@@ -513,7 +517,112 @@
                 </div>
             </section>
 
-            <!-- TAB 6: LEADERBOARD -->
+            <!-- TAB 6: GRAMMAR -->
+            <section id="grammar-tab" class="tab-content">
+                <div class="tab-title-row">
+                    <div>
+                        <h2>Học Ngữ Pháp Tương Tác 📖</h2>
+                        <p>Làm chủ các cấu trúc ngữ pháp tiếng Anh cốt lõi qua công thức, ví dụ trực quan và bài luyện tập.</p>
+                    </div>
+                </div>
+
+                <div class="grammar-layout">
+                    <!-- Sidebar: Lessons List -->
+                    <div class="grammar-sidebar">
+                        <div class="grammar-category-selector">
+                            <button class="grammar-cat-btn active" data-cat="all">Tất cả</button>
+                            <button class="grammar-cat-btn" data-cat="tenses">Thì câu</button>
+                            <button class="grammar-cat-btn" data-cat="sentences">Cấu trúc</button>
+                        </div>
+                        <div class="grammar-lessons-list" id="grammar-lessons-list">
+                            <!-- Dynamic Lesson Cards injected by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Main Panel: Lesson Content & Practice -->
+                    <div class="grammar-main-content">
+                        <!-- Empty State -->
+                        <div id="grammar-empty-state" class="grammar-empty-state">
+                            <div class="empty-icon">📖</div>
+                            <h4>Chọn một chủ điểm để bắt đầu học</h4>
+                            <p>Hãy click vào danh sách bên trái để khám phá công thức, ví dụ song ngữ và tham gia bài luyện tập tích lũy ⭐!</p>
+                        </div>
+
+                        <!-- Lesson Viewer Container -->
+                        <div id="grammar-lesson-viewer" class="grammar-lesson-viewer hidden">
+                            <div class="lesson-viewer-header">
+                                <h3 id="lesson-view-title">Tên chủ điểm học</h3>
+                                <span class="badge" id="lesson-view-category">Thì</span>
+                            </div>
+
+                            <p id="lesson-view-description" class="lesson-description">Mô tả chi tiết</p>
+
+                            <!-- Formula Box -->
+                            <div class="grammar-formula-box">
+                                <div class="formula-title">✨ Công thức cốt lõi</div>
+                                <div id="lesson-view-formula" class="formula-text">S + V + O</div>
+                            </div>
+
+                            <!-- Usage Section -->
+                            <div class="grammar-section">
+                                <h4>💡 Cách dùng chính</h4>
+                                <ul id="lesson-view-usage" class="usage-list">
+                                    <!-- Dynamic list items -->
+                                </ul>
+                            </div>
+
+                            <!-- Examples Section -->
+                            <div class="grammar-section">
+                                <h4>🔊 Ví dụ song ngữ (Click để phát âm)</h4>
+                                <div id="lesson-view-examples" class="grammar-examples-list">
+                                    <!-- Dynamic examples with audio triggers -->
+                                </div>
+                            </div>
+
+                            <!-- Action Button to Start Practice -->
+                            <div class="grammar-section" id="grammar-practice-entry">
+                                <button class="btn-primary btn-full-width animate-glow" id="btn-start-grammar-practice">
+                                    ✍️ Bắt đầu bài luyện tập (+5 ⭐)
+                                </button>
+                            </div>
+
+                            <!-- Interactive Practice Panel -->
+                            <div id="grammar-practice-panel" class="grammar-practice-panel hidden">
+                                <div class="practice-header">
+                                    <h4>Bài Luyện Tập Tích Lũy</h4>
+                                    <span class="practice-step" id="grammar-practice-step">Câu 1 / 3</span>
+                                </div>
+                                <div class="progress-bar-bg" style="height: 6px; border-radius: 3px; background: rgba(255,255,255,0.06); margin-bottom: 20px; overflow: hidden;">
+                                    <div id="grammar-practice-progress" style="width: 33%; height: 100%; background: var(--accent-gradient); transition: var(--transition-normal);"></div>
+                                </div>
+
+                                <div class="practice-question" id="grammar-practice-question">Câu hỏi sẽ tải ở đây...</div>
+
+                                <div class="practice-options" id="grammar-practice-options">
+                                    <!-- Interactive Options -->
+                                </div>
+
+                                <!-- Explanation Box -->
+                                <div id="grammar-explanation-box" class="grammar-explanation-box hidden">
+                                    <span class="result-badge" id="grammar-result-badge">Chính xác!</span>
+                                    <p id="grammar-explanation-text">Giải thích chi tiết ngữ pháp.</p>
+                                    <button class="btn-primary" id="btn-grammar-next" style="margin-top: 15px; margin-left: auto; display: block;">Câu tiếp theo ➡️</button>
+                                </div>
+                            </div>
+
+                            <!-- Practice Success Screen -->
+                            <div id="grammar-success-panel" class="grammar-success-panel hidden">
+                                <div class="success-icon animate-bounce">⭐</div>
+                                <h4>Xuất sắc! Bạn đã hoàn thành bài tập!</h4>
+                                <p>Bạn đã trả lời đúng tất cả các câu hỏi ngữ pháp và nhận được <strong>+5 Ngôi sao vàng ⭐</strong>!</p>
+                                <button class="btn-secondary" id="btn-grammar-back-lesson" style="margin-top: 20px;">Quay lại bài học</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 7: LEADERBOARD -->
             <section id="leaderboard-tab" class="tab-content">
                 <div class="tab-title-row">
                     <div>
@@ -591,6 +700,7 @@
 
 
     <!-- Local Datasets (Decoupled Database Files) -->
+    <script src="data/grammar-data.js"></script>
     <script src="data/vocabulary-data.js"></script>
     <script src="data/sentences-data.js"></script>
     <!-- Firebase Synchronization Bridge module -->

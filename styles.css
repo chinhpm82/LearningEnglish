@@ -2582,3 +2582,493 @@ input, select, textarea, button {
     border-color: var(--primary);
     box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
 }
+
+/* --- TAB: GRAMMAR LEARNING SYSTEM --- */
+.grammar-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 24px;
+    height: calc(100vh - 160px);
+    min-height: 580px;
+}
+
+.grammar-sidebar {
+    background: rgba(13, 20, 35, 0.45);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+}
+
+.grammar-category-selector {
+    display: flex;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 4px;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    flex-shrink: 0;
+}
+
+.grammar-cat-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 8px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.grammar-cat-btn:hover {
+    color: var(--text-main);
+}
+
+.grammar-cat-btn.active {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.25);
+}
+
+.grammar-lessons-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.grammar-lesson-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+}
+
+.grammar-lesson-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(99, 102, 241, 0.3);
+    transform: translateY(-2px);
+}
+
+.grammar-lesson-card.active {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.15));
+    border-color: var(--primary);
+    box-shadow: inset 0 0 10px rgba(99, 102, 241, 0.1);
+}
+
+.grammar-lesson-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.grammar-lesson-card p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.grammar-lesson-card .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.grammar-lesson-card .badge {
+    font-size: 9.5px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 6px;
+    text-transform: uppercase;
+}
+
+.grammar-lesson-card .badge-tenses {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+}
+
+.grammar-lesson-card .badge-sentences {
+    background: rgba(168, 85, 247, 0.15);
+    color: #c084fc;
+}
+
+.grammar-lesson-card .status-indicator {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.grammar-lesson-card.completed .status-indicator {
+    color: var(--success);
+}
+
+/* Main Content Area */
+.grammar-main-content {
+    background: rgba(13, 20, 35, 0.45);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.grammar-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+    max-width: 380px;
+}
+
+.grammar-empty-state .empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.grammar-empty-state h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 6px;
+}
+
+.grammar-empty-state p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* Lesson Viewer */
+.grammar-lesson-viewer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: left;
+}
+
+.lesson-viewer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 14px;
+}
+
+.lesson-viewer-header h3 {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.lesson-viewer-header .badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: #fff;
+}
+
+.lesson-description {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Formula Box */
+.grammar-formula-box {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(168, 85, 247, 0.08));
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.grammar-formula-box .formula-title {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #818cf8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.grammar-formula-box .formula-text {
+    font-family: 'Consolas', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: 0.5px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.grammar-section h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.usage-list {
+    padding-left: 20px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.usage-list li {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.grammar-examples-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.grammar-example-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.grammar-example-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.grammar-example-item .example-texts {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: left;
+}
+
+.grammar-example-item .example-en {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.grammar-example-item .example-vi {
+    font-size: 12.5px;
+    color: var(--text-muted);
+}
+
+.grammar-example-item .play-icon {
+    color: var(--primary-light);
+    opacity: 0.6;
+    transition: var(--transition-fast);
+}
+
+.grammar-example-item:hover .play-icon {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Interactive Practice */
+.grammar-practice-panel {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.01);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.practice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.practice-header h4 {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #f43f5e;
+    margin: 0;
+}
+
+.practice-step {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.practice-question {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.5;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.practice-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 640px) {
+    .practice-options {
+        grid-template-columns: 1fr;
+    }
+}
+
+.practice-opt-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-main);
+    padding: 14px;
+    border-radius: var(--radius-md);
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: var(--transition-fast);
+}
+
+.practice-opt-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.practice-opt-btn.correct {
+    background: rgba(16, 185, 129, 0.15) !important;
+    border-color: var(--success) !important;
+    color: #34d399 !important;
+    font-weight: 700;
+}
+
+.practice-opt-btn.incorrect {
+    background: rgba(239, 68, 68, 0.15) !important;
+    border-color: var(--danger) !important;
+    color: #f87171 !important;
+}
+
+.grammar-explanation-box {
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 4px solid var(--primary);
+    border-radius: 4px;
+    padding: 16px;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.grammar-explanation-box .result-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+.grammar-explanation-box .result-badge.correct-badge {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+}
+
+.grammar-explanation-box .result-badge.incorrect-badge {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+}
+
+.grammar-explanation-box p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Success panel */
+.grammar-success-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+    margin: auto;
+}
+
+.grammar-success-panel .success-icon {
+    font-size: 56px;
+    margin-bottom: 20px;
+    color: #fbbf24;
+    text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+}
+
+.grammar-success-panel h4 {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+
+.grammar-success-panel p {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    max-width: 320px;
+    line-height: 1.5;
+}
+
+/* Responsive styles for grammar layout */
+@media (max-width: 900px) {
+    .grammar-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+    
+    .grammar-sidebar {
+        max-height: 280px;
+    }
+}
+
