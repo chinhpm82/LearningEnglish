@@ -208,10 +208,7 @@ function checkAndUpdateStreak() {
 
 // --- RENDERING & UI SYNC ---
 
-// 1. Dashboard UI Renderer
 function renderDashboard() {
-    const totalWordsCount = state.vocabulary.length + state.customWords.length;
-    
     // Update Gold Stars counter
     const starsCountEl = document.getElementById('dashboard-stars-count');
     if (starsCountEl) {
@@ -248,13 +245,24 @@ function renderDashboard() {
     // Group all words (built-in + custom)
     const allWords = [...state.vocabulary, ...state.customWords];
     
-    const masteredCount = allWords.filter(w => w.box === 3).length;
-    const learningCount = allWords.filter(w => w.box === 2).length;
-    const newCount = allWords.filter(w => w.box === 1).length;
+    // Filter syllabus words based on student's current level
+    let levelWords = allWords;
+    if (level === 'Beginner') {
+        levelWords = allWords.filter(w => w.category === 'oxford' || w.category === 'custom');
+    } else if (level === 'Intermediate') {
+        levelWords = allWords.filter(w => w.category === 'oxford' || w.category === 'idioms' || w.category === 'custom');
+    } else {
+        levelWords = allWords; // Advanced gets everything
+    }
+
+    const totalWordsCount = levelWords.length;
+    const masteredCount = levelWords.filter(w => w.box === 3).length;
+    const learningCount = levelWords.filter(w => w.box === 2).length;
+    const newCount = levelWords.filter(w => w.box === 1).length;
 
     // Calculate how many words are due for review (nextReview <= now)
     const now = Date.now();
-    const reviewCount = allWords.filter(w => w.nextReview <= now && w.box < 3).length;
+    const reviewCount = levelWords.filter(w => w.nextReview <= now && w.box < 3).length;
 
     // Update Text Elements
     document.getElementById('stats-total-words').textContent = totalWordsCount;
