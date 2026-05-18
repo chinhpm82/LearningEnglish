@@ -14,7 +14,8 @@ let state = {
         totalAnswered: 0,
         correctAnswers: 0
     },
-    userLevel: '',       // 'Beginner', 'Intermediate', 'Advanced'
+    userLevel: 'Beginner',  // Default is 'Beginner' (lowest level)
+    lastTestScore: 0,       // Default placement test score is 0
     roadmapTasks: [],    // Daily checklist tasks { text, completed }
     stars: 0,            // Gamification Gold Stars ⭐
     currentUserEmail: '', // Authenticated user email
@@ -82,14 +83,32 @@ function loadState() {
         }
 
         const storedLevel = localStorage.getItem('vocabflow_user_level');
+        const storedTestScore = localStorage.getItem('vocabflow_last_test_score');
         const storedRoadmap = localStorage.getItem('vocabflow_roadmap_tasks');
         const storedStars = localStorage.getItem('vocabflow_stars');
         const storedPhoto = localStorage.getItem('vocabflow_photo_url');
         const storedDisplayName = localStorage.getItem('vocabflow_display_name');
         const storedCompletedLessons = localStorage.getItem('vocabflow_completed_lessons');
         const storedCompletedSentences = localStorage.getItem('vocabflow_completed_sentences');
-        if (storedLevel) state.userLevel = storedLevel;
-        if (storedRoadmap) state.roadmapTasks = JSON.parse(storedRoadmap);
+        
+        if (storedLevel) {
+            state.userLevel = storedLevel;
+        } else {
+            state.userLevel = 'Beginner';
+        }
+        
+        if (storedTestScore) {
+            state.lastTestScore = parseInt(storedTestScore, 10);
+        } else {
+            state.lastTestScore = 0;
+        }
+
+        if (storedRoadmap) {
+            state.roadmapTasks = JSON.parse(storedRoadmap);
+        } else {
+            state.roadmapTasks = generateRoadmapTasks(state.userLevel);
+        }
+        
         if (storedStars) state.stars = parseInt(storedStars, 10);
         if (storedPhoto) state.photoURL = storedPhoto;
         if (storedDisplayName) state.displayName = storedDisplayName;
@@ -105,6 +124,9 @@ function loadState() {
         state.customWords = [];
         state.completedLessons = [];
         state.completedSentences = [];
+        state.userLevel = 'Beginner';
+        state.lastTestScore = 0;
+        state.roadmapTasks = generateRoadmapTasks('Beginner');
     }
 }
 
@@ -123,6 +145,7 @@ function saveStatsToStorage() {
     localStorage.setItem('vocabflow_last_date', state.lastStudyDate);
     localStorage.setItem('vocabflow_quiz_stats', JSON.stringify(state.quizStats));
     localStorage.setItem('vocabflow_user_level', state.userLevel);
+    localStorage.setItem('vocabflow_last_test_score', state.lastTestScore.toString());
     localStorage.setItem('vocabflow_roadmap_tasks', JSON.stringify(state.roadmapTasks));
     localStorage.setItem('vocabflow_stars', state.stars.toString());
     localStorage.setItem('vocabflow_photo_url', state.photoURL);
@@ -201,6 +224,27 @@ function renderDashboard() {
         welcomeUserEl.textContent = state.displayName ? state.displayName.split(' ')[0] : 'Học viên';
     }
 
+    // Update Private Assessment & Level (Confidential display for current student only)
+    const level = state.userLevel || 'Beginner';
+    const score = state.lastTestScore !== undefined ? state.lastTestScore : 0;
+    
+    let levelNameShort = 'Sơ cấp';
+    if (level === 'Intermediate') {
+        levelNameShort = 'Trung cấp';
+    } else if (level === 'Advanced') {
+        levelNameShort = 'Cao cấp';
+    }
+    
+    const assessmentValEl = document.getElementById('dashboard-assessment-val');
+    const assessmentLevelEl = document.getElementById('dashboard-assessment-level');
+    if (assessmentValEl) assessmentValEl.textContent = `${score}/10`;
+    if (assessmentLevelEl) assessmentLevelEl.textContent = `Trình độ: ${levelNameShort}`;
+    
+    const profileLevelText = document.getElementById('user-private-level-text');
+    if (profileLevelText) {
+        profileLevelText.textContent = `${levelNameShort} (${score}/10)`;
+    }
+
     // Group all words (built-in + custom)
     const allWords = [...state.vocabulary, ...state.customWords];
     
@@ -264,10 +308,22 @@ function renderWordOfTheDay() {
     const allWords = [...state.vocabulary, ...state.customWords];
     if (allWords.length === 0) return;
 
+    const level = state.userLevel || 'Beginner';
+    let levelWords = allWords;
+    if (level === 'Beginner') {
+        levelWords = allWords.filter(w => w.category === 'oxford' || w.category === 'custom');
+    } else if (level === 'Intermediate') {
+        levelWords = allWords.filter(w => w.category === 'oxford' || w.category === 'idioms' || w.category === 'custom');
+    } else {
+        levelWords = allWords.filter(w => w.category === 'oxford' || w.category === 'idioms' || w.category === 'academic' || w.category === 'custom');
+    }
+
+    if (levelWords.length === 0) levelWords = allWords; // Fallback
+
     // Pick a deterministic word of the day using the current date
     const dateNum = new Date().getDate();
-    const index = dateNum % allWords.length;
-    const wotd = allWords[index];
+    const index = dateNum % levelWords.length;
+    const wotd = levelWords[index];
 
     document.getElementById('wotd-word').textContent = wotd.word;
     document.getElementById('wotd-type').textContent = wotd.type;
@@ -286,22 +342,41 @@ function renderWordOfTheDay() {
 
 // --- FLASHCARD ENGINE (LEITNER SRS SYSTEM) ---
 
+// Helper function to shuffle an array (Fisher-Yates)
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
 function initFlashcardSession(category = 'all') {
     const now = Date.now();
     const allWords = [...state.vocabulary, ...state.customWords];
+    const level = state.userLevel || 'Beginner';
 
-    // Filter deck by category
+    // Filter deck based on category and level
     let filtered = [];
     if (category === 'all') {
-        filtered = [...allWords];
+        // Automatically suggest random words appropriate for the student's level
+        if (level === 'Beginner') {
+            filtered = allWords.filter(w => w.category === 'oxford' || w.category === 'custom');
+        } else if (level === 'Intermediate') {
+            filtered = allWords.filter(w => w.category === 'oxford' || w.category === 'idioms' || w.category === 'custom');
+        } else {
+            // Advanced
+            filtered = allWords.filter(w => w.category === 'oxford' || w.category === 'idioms' || w.category === 'academic' || w.category === 'custom');
+        }
     } else if (category === 'custom') {
         filtered = [...state.customWords];
     } else {
+        // If they select a specific category, show words of that category
         filtered = allWords.filter(w => w.category === category);
     }
 
     if (filtered.length === 0) {
-        // Show empty deck state
         flashcardDeck = [];
         renderEmptyFlashcardDeck();
         return;
@@ -312,8 +387,12 @@ function initFlashcardSession(category = 'all') {
     const reviewQueue = filtered.filter(w => w.nextReview <= now && w.box < 3);
     const regularQueue = filtered.filter(w => w.nextReview > now || w.box === 3);
 
-    // Dynamic session deck: prioritizes review, fills the rest with normal words for practice
-    flashcardDeck = [...reviewQueue, ...regularQueue];
+    // Shuffle the review items and the practice items to keep learning completely fresh and random!
+    const shuffledReview = shuffleArray(reviewQueue);
+    const shuffledPractice = shuffleArray(regularQueue);
+
+    // Prioritize due reviews, filled with random practices
+    flashcardDeck = [...shuffledReview, ...shuffledPractice];
     currentCardIndex = 0;
     isCardFlipped = false;
 
@@ -684,6 +763,7 @@ function showQuizResults() {
         }
         
         state.userLevel = level;
+        state.lastTestScore = quizScore;
         state.roadmapTasks = generateRoadmapTasks(level);
         saveStatsToStorage();
         

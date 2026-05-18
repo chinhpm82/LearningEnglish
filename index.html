@@ -47,6 +47,9 @@
                 </div>
                 <div class="user-meta">
                     <span class="user-name" id="user-display-name">Người dùng</span>
+                    <div class="user-private-badge" id="user-private-level-badge" title="Điểm đánh giá trình độ cá nhân (chỉ bạn nhìn thấy)">
+                        🎓 <span id="user-private-level-text">Sơ cấp (0/10)</span>
+                    </div>
                     <button class="btn-logout" id="btn-logout" title="Đăng xuất">Đăng xuất</button>
                 </div>
             </div>
@@ -111,11 +114,21 @@
                         <h2>Chào mừng trở lại, <span id="welcome-username">Học viên</span>! 👋</h2>
                         <p>Hôm nay là một ngày tuyệt vời để học thêm từ mới.</p>
                     </div>
-                    <!-- Stars Counter Card on Dashboard Welcome Header -->
-                    <div class="dashboard-stars-widget animate-glow">
-                        <span class="stars-icon">⭐</span>
-                        <span class="stars-val" id="dashboard-stars-count">0</span>
-                        <span class="stars-lbl">Gold Stars</span>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <!-- Private Assessment Card (Only visible to current user) -->
+                        <div class="dashboard-assessment-widget animate-glow" title="Kết quả đánh giá trình độ cá nhân (chỉ bạn mới nhìn thấy)">
+                            <span class="assessment-icon">🎓</span>
+                            <div class="assessment-info">
+                                <span class="assessment-val" id="dashboard-assessment-val">0/10</span>
+                                <span class="assessment-lbl" id="dashboard-assessment-level">Trình độ: Sơ cấp</span>
+                            </div>
+                        </div>
+                        <!-- Stars Counter Card on Dashboard Welcome Header -->
+                        <div class="dashboard-stars-widget animate-glow">
+                            <span class="stars-icon">⭐</span>
+                            <span class="stars-val" id="dashboard-stars-count">0</span>
+                            <span class="stars-lbl">Gold Stars</span>
+                        </div>
                     </div>
                 </div>
 

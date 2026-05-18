@@ -3188,3 +3188,63 @@ input, select, textarea, button {
     box-shadow: 0 0 15px rgba(251, 191, 36, 0.15);
 }
 
+/* --- PRIVATE ASSESSMENT LEVEL STYLES --- */
+.dashboard-assessment-widget {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.18), rgba(168, 85, 247, 0.06));
+    border: 1px solid rgba(99, 102, 241, 0.35);
+    padding: 8px 16px;
+    border-radius: 16px;
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.12);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-assessment-widget:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.25);
+    border-color: rgba(99, 102, 241, 0.55);
+}
+
+.dashboard-assessment-widget .assessment-icon {
+    font-size: 22px;
+    filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.7));
+}
+
+.dashboard-assessment-widget .assessment-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-assessment-widget .assessment-val {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 800;
+    color: #a5b4fc;
+    line-height: 1.25;
+}
+
+.dashboard-assessment-widget .assessment-lbl {
+    font-size: 9px;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+/* User private badge in sidebar */
+.user-private-badge {
+    font-size: 11px;
+    font-weight: 700;
+    color: #a5b4fc;
+    background: rgba(99, 102, 241, 0.18);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    padding: 4px 10px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-top: 6px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.08);
+}
