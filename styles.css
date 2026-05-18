@@ -2372,6 +2372,13 @@ input, select, textarea, button {
     font-weight: 700;
 }
 
+.leaderboard-header-row .col-streak,
+.leaderboard-header-row .col-stars {
+    display: block;
+    text-align: center;
+    white-space: nowrap;
+}
+
 .leaderboard-list {
     display: flex;
     flex-direction: column;
