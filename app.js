@@ -133,10 +133,12 @@ function loadState() {
         const storedRoadmap = localStorage.getItem('vocabflow_roadmap_tasks');
         const storedStars = localStorage.getItem('vocabflow_stars');
         const storedPhoto = localStorage.getItem('vocabflow_photo_url');
+        const storedDisplayName = localStorage.getItem('vocabflow_display_name');
         if (storedLevel) state.userLevel = storedLevel;
         if (storedRoadmap) state.roadmapTasks = JSON.parse(storedRoadmap);
         if (storedStars) state.stars = parseInt(storedStars, 10);
         if (storedPhoto) state.photoURL = storedPhoto;
+        if (storedDisplayName) state.displayName = storedDisplayName;
     } catch (e) {
         console.error('Error reading localStorage data', e);
         // Fallback
@@ -162,6 +164,7 @@ function saveStatsToStorage() {
     localStorage.setItem('vocabflow_roadmap_tasks', JSON.stringify(state.roadmapTasks));
     localStorage.setItem('vocabflow_stars', state.stars.toString());
     localStorage.setItem('vocabflow_photo_url', state.photoURL);
+    localStorage.setItem('vocabflow_display_name', state.displayName);
     
     // Sync to Firebase if in Cloud Mode
     if (isCloudMode && window.FirebaseSync) {
