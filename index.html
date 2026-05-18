@@ -251,6 +251,12 @@
                             <option value="oxford">Từ vựng thiết yếu (Oxford)</option>
                             <option value="academic">Từ học thuật & IELTS</option>
                             <option value="idioms">Thành ngữ & Cụm từ</option>
+                            <option value="spec-it">💻 Chuyên ngành CNTT (IT)</option>
+                            <option value="spec-geography">🌍 Địa lý Phổ thông</option>
+                            <option value="spec-biology">🌿 Sinh học Phổ thông</option>
+                            <option value="spec-chemistry">🧪 Hóa học Phổ thông</option>
+                            <option value="spec-physics">🌌 Vật lý Phổ thông</option>
+                            <option value="spec-history">📜 Lịch sử Phổ thông</option>
                             <option value="custom">Sổ tay cá nhân</option>
                         </select>
                     </div>
@@ -328,6 +334,69 @@
                     <span class="key">→</span> Đã thuộc |
                     <span class="key">Enter/V</span> Nghe âm thanh
                 </div>
+
+                <!-- Specialized Learning Deck Grid -->
+                <div class="specialized-decks-section">
+                    <h3 class="specialized-title">💡 Khám phá Tiếng Anh Chuyên Ngành & Học Thuật Phổ Thông</h3>
+                    <p class="specialized-subtitle">Click chọn một chuyên đề để thực hành học thẻ Leitner Spaced-Repetition ngay lập tức.</p>
+                    
+                    <div class="specialized-grid">
+                        <!-- Card 1: IT -->
+                        <div class="spec-deck-card spec-it" onclick="selectSpecializedCategory('spec-it')">
+                            <div class="spec-deck-icon">💻</div>
+                            <div class="spec-deck-info">
+                                <h4 class="spec-deck-name">Công nghệ Thông tin (IT)</h4>
+                                <p class="spec-deck-desc">Thuật toán, đệ quy, lập trình hướng đối tượng, bất đồng bộ, biên dịch...</p>
+                                <span class="spec-deck-badge badge-it">10 từ vựng</span>
+                            </div>
+                        </div>
+                        <!-- Card 2: Geography -->
+                        <div class="spec-deck-card spec-geo" onclick="selectSpecializedCategory('spec-geography')">
+                            <div class="spec-deck-icon">🌍</div>
+                            <div class="spec-deck-info">
+                                <h4 class="spec-deck-name">Địa lý Phổ thông</h4>
+                                <p class="spec-deck-desc">Khí quyển, bán cầu, địa hình địa thế, lượng mưa, xói mòn bào mòn đất...</p>
+                                <span class="spec-deck-badge badge-geo">5 từ vựng</span>
+                            </div>
+                        </div>
+                        <!-- Card 3: Biology -->
+                        <div class="spec-deck-card spec-bio" onclick="selectSpecializedCategory('spec-biology')">
+                            <div class="spec-deck-icon">🌿</div>
+                            <div class="spec-deck-info">
+                                <h4 class="spec-deck-name">Sinh học Phổ thông</h4>
+                                <p class="spec-deck-desc">Quang hợp, hô hấp tế bào, nhiễm sắc thể, hệ sinh thái, sự tiến hóa...</p>
+                                <span class="spec-deck-badge badge-bio">5 từ vựng</span>
+                            </div>
+                        </div>
+                        <!-- Card 4: Chemistry -->
+                        <div class="spec-deck-card spec-chem" onclick="selectSpecializedCategory('spec-chemistry')">
+                            <div class="spec-deck-icon">🧪</div>
+                            <div class="spec-deck-info">
+                                <h4 class="spec-deck-name">Hóa học Phổ thông</h4>
+                                <p class="spec-deck-desc">Sự oxy hóa, chất xúc tác phân tử, liên kết cộng hóa trị, độ hòa tan...</p>
+                                <span class="spec-deck-badge badge-chem">5 từ vựng</span>
+                            </div>
+                        </div>
+                        <!-- Card 5: Physics -->
+                        <div class="spec-deck-card spec-phy" onclick="selectSpecializedCategory('spec-physics')">
+                            <div class="spec-deck-icon">🌌</div>
+                            <div class="spec-deck-info">
+                                <h4 class="spec-deck-name">Vật lý Phổ thông</h4>
+                                <p class="spec-deck-desc">Trọng lực lực hấp dẫn, vận tốc tốc độ có hướng, gia tốc, quán tính...</p>
+                                <span class="spec-deck-badge badge-phy">5 từ vựng</span>
+                            </div>
+                        </div>
+                        <!-- Card 6: History -->
+                        <div class="spec-deck-card spec-hist" onclick="selectSpecializedCategory('spec-history')">
+                            <div class="spec-deck-icon">📜</div>
+                            <div class="spec-deck-info">
+                                <h4 class="spec-deck-name">Lịch sử Phổ thông</h4>
+                                <p class="spec-deck-desc">Triều đại lịch sử, chế độ phong kiến, chủ quyền lãnh thổ, cách mạng...</p>
+                                <span class="spec-deck-badge badge-hist">5 từ vựng</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- TAB 3: QUIZ -->
@@ -348,6 +417,12 @@
                                 <option value="oxford">Từ vựng thiết yếu Oxford (Luyện tập)</option>
                                 <option value="academic">Từ học thuật & IELTS (Luyện tập)</option>
                                 <option value="idioms">Thành ngữ & Cụm từ (Luyện tập)</option>
+                                <option value="spec-it">💻 Chuyên ngành CNTT / IT (Luyện tập)</option>
+                                <option value="spec-geography">🌍 Địa lý Phổ thông (Luyện tập)</option>
+                                <option value="spec-biology">🌿 Sinh học Phổ thông (Luyện tập)</option>
+                                <option value="spec-chemistry">🧪 Hóa học Phổ thông (Luyện tập)</option>
+                                <option value="spec-physics">🌌 Vật lý Phổ thông (Luyện tập)</option>
+                                <option value="spec-history">📜 Lịch sử Phổ thông (Luyện tập)</option>
                                 <option value="custom">Sổ tay cá nhân (Luyện tập)</option>
                             </select>
                         </div>
@@ -715,6 +790,7 @@
     <!-- Local Datasets (Decoupled Database Files) -->
     <script src="data/grammar-data.js"></script>
     <script src="data/vocabulary-data.js"></script>
+    <script src="data/specialized-data.js"></script>
     <script src="data/sentences-data.js"></script>
     <!-- Firebase Synchronization Bridge module -->
     <script type="module" src="firebase-sync.js"></script>

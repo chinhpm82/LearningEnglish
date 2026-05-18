@@ -3248,3 +3248,207 @@ input, select, textarea, button {
     text-align: center;
     box-shadow: 0 0 10px rgba(99, 102, 241, 0.08);
 }
+
+/* --- SPECIALIZED DECKS SECTION --- */
+.specialized-decks-section {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.specialized-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--primary-light);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.specialized-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+}
+
+.specialized-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 20px;
+}
+
+.spec-deck-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.5), rgba(15, 23, 42, 0.3));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+}
+
+.spec-deck-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: transparent;
+    transition: all 0.3s ease;
+}
+
+.spec-deck-card:hover {
+    transform: translateY(-4px);
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.5));
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.spec-deck-icon {
+    font-size: 28px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.spec-deck-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.spec-deck-name {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary-light);
+    transition: all 0.3s ease;
+}
+
+.spec-deck-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+.spec-deck-badge {
+    align-self: flex-start;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Individual Neon Color Themes */
+/* 💻 IT Card */
+.spec-deck-card.spec-it::before { background: #06b6d4; }
+.spec-deck-card.spec-it:hover {
+    border-color: rgba(6, 182, 212, 0.4);
+    box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.15);
+}
+.spec-deck-card.spec-it:hover .spec-deck-icon {
+    background: rgba(6, 182, 212, 0.1);
+    border-color: rgba(6, 182, 212, 0.2);
+}
+.spec-deck-badge.badge-it {
+    background: rgba(6, 182, 212, 0.15);
+    color: #22d3ee;
+    border: 1px solid rgba(6, 182, 212, 0.2);
+}
+
+/* 🌍 Geography Card */
+.spec-deck-card.spec-geo::before { background: #3b82f6; }
+.spec-deck-card.spec-geo:hover {
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.15);
+}
+.spec-deck-card.spec-geo:hover .spec-deck-icon {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.2);
+}
+.spec-deck-badge.badge-geo {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+/* 🌿 Biology Card */
+.spec-deck-card.spec-bio::before { background: #10b981; }
+.spec-deck-card.spec-bio:hover {
+    border-color: rgba(16, 185, 129, 0.4);
+    box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.15);
+}
+.spec-deck-card.spec-bio:hover .spec-deck-icon {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.2);
+}
+.spec-deck-badge.badge-bio {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+/* 🧪 Chemistry Card */
+.spec-deck-card.spec-chem::before { background: #ec4899; }
+.spec-deck-card.spec-chem:hover {
+    border-color: rgba(236, 72, 153, 0.4);
+    box-shadow: 0 10px 25px -5px rgba(236, 72, 153, 0.15);
+}
+.spec-deck-card.spec-chem:hover .spec-deck-icon {
+    background: rgba(236, 72, 153, 0.1);
+    border-color: rgba(236, 72, 153, 0.2);
+}
+.spec-deck-badge.badge-chem {
+    background: rgba(236, 72, 153, 0.15);
+    color: #f472b6;
+    border: 1px solid rgba(236, 72, 153, 0.2);
+}
+
+/* 🌌 Physics Card */
+.spec-deck-card.spec-phy::before { background: #8b5cf6; }
+.spec-deck-card.spec-phy:hover {
+    border-color: rgba(139, 92, 246, 0.4);
+    box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.15);
+}
+.spec-deck-card.spec-phy:hover .spec-deck-icon {
+    background: rgba(139, 92, 246, 0.1);
+    border-color: rgba(139, 92, 246, 0.2);
+}
+.spec-deck-badge.badge-phy {
+    background: rgba(139, 92, 246, 0.15);
+    color: #a78bfa;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+/* 📜 History Card */
+.spec-deck-card.spec-hist::before { background: #f59e0b; }
+.spec-deck-card.spec-hist:hover {
+    border-color: rgba(245, 158, 11, 0.4);
+    box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.15);
+}
+.spec-deck-card.spec-hist:hover .spec-deck-icon {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.2);
+}
+.spec-deck-badge.badge-hist {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+

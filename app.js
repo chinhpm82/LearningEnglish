@@ -58,14 +58,29 @@ function loadState() {
         const storedLastDate = localStorage.getItem('vocabflow_last_date');
         const storedQuizStats = localStorage.getItem('vocabflow_quiz_stats');
 
+        // Ensure SPECIALIZED_VOCABULARY is defined (loaded from specialized-data.js)
+        const specList = typeof SPECIALIZED_VOCABULARY !== 'undefined' ? SPECIALIZED_VOCABULARY : [];
+        
         if (storedVocab) {
             state.vocabulary = JSON.parse(storedVocab);
             if (!Array.isArray(state.vocabulary) || state.vocabulary.length === 0) {
-                state.vocabulary = [...INITIAL_VOCABULARY];
+                state.vocabulary = [...INITIAL_VOCABULARY, ...specList];
                 saveVocabToStorage();
+            } else {
+                // Self-healing merge: Add any missing specialized words to the existing state
+                let merged = false;
+                specList.forEach(specWord => {
+                    if (!state.vocabulary.some(w => w.id === specWord.id)) {
+                        state.vocabulary.push(specWord);
+                        merged = true;
+                    }
+                });
+                if (merged) {
+                    saveVocabToStorage();
+                }
             }
         } else {
-            state.vocabulary = [...INITIAL_VOCABULARY];
+            state.vocabulary = [...INITIAL_VOCABULARY, ...specList];
             saveVocabToStorage();
         }
 
@@ -1980,4 +1995,23 @@ function renderAvatarModalChoices() {
         
         grid.appendChild(choice);
     });
+}
+
+// Click handler for specialized learning deck cards
+function selectSpecializedCategory(category) {
+    const selectEl = document.getElementById('flashcard-category');
+    if (selectEl) {
+        selectEl.value = category;
+        // Start the flashcard session with the selected specialized category
+        initFlashcardSession(category);
+        
+        // Smooth scroll back up to the flashcard stage
+        const stage = document.getElementById('flashcard-element');
+        if (stage) {
+            stage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        // Display a high-fidelity visual toast feedback
+        showToastNotification(`📚 Đã nạp từ chuyên đề! Chúc bạn học tốt! ⚡`);
+    }
 }
