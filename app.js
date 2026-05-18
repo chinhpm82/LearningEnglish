@@ -58,6 +58,10 @@ function loadState() {
 
         if (storedVocab) {
             state.vocabulary = JSON.parse(storedVocab);
+            if (!Array.isArray(state.vocabulary) || state.vocabulary.length === 0) {
+                state.vocabulary = [...INITIAL_VOCABULARY];
+                saveVocabToStorage();
+            }
         } else {
             state.vocabulary = [...INITIAL_VOCABULARY];
             saveVocabToStorage();
@@ -986,18 +990,29 @@ function renderGrammarLessons(category = 'all') {
         ? GRAMMAR_LESSONS
         : GRAMMAR_LESSONS.filter(l => l.category === category);
 
+    // Deterministic daily grammar recommendation based on current date
+    const dateNum = new Date().getDate();
+    const recommendedIndex = dateNum % GRAMMAR_LESSONS.length;
+    const recommendedId = GRAMMAR_LESSONS[recommendedIndex].id;
+
     filtered.forEach(lesson => {
         const card = document.createElement('div');
         const isActive = currentGrammarLesson && currentGrammarLesson.id === lesson.id;
-        const isCompleted = state.completedLessons.includes(lesson.id);
+        const studyCount = state.completedLessons.filter(id => id === lesson.id).length;
+        const isCompleted = studyCount > 0;
+        const isRecommended = lesson.id === recommendedId;
 
-        card.className = `grammar-lesson-card ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`;
+        card.className = `grammar-lesson-card ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''} ${isRecommended ? 'recommended' : ''}`;
         
         let catBadgeText = lesson.category === 'tenses' ? 'Thì câu' : 'Cấu trúc';
-        let statusText = isCompleted ? 'Đã xong ✅' : 'Chưa học 📖';
+        let statusText = isCompleted ? `Đã học ${studyCount} lần ⚡` : 'Chưa học 📖';
+        let recBadge = isRecommended ? `<span class="badge badge-recommend">Gợi ý hôm nay 🎯</span>` : '';
 
         card.innerHTML = `
-            <h4>${lesson.title}</h4>
+            <div class="card-title-row">
+                <h4>${lesson.title}</h4>
+                ${recBadge}
+            </div>
             <p>${lesson.description}</p>
             <div class="card-meta">
                 <span class="badge badge-${lesson.category}">${catBadgeText}</span>
@@ -1170,15 +1185,16 @@ function nextGrammarPracticeQuestion() {
         document.getElementById('grammar-practice-panel').classList.add('hidden');
         document.getElementById('grammar-success-panel').classList.remove('hidden');
 
-        // Check if this lesson is completed for the first time
-        const wasCompleted = state.completedLessons.includes(lesson.id);
+        // Count how many times completed before this attempt
+        const studyCountBefore = state.completedLessons.filter(id => id === lesson.id).length;
         
-        if (!wasCompleted) {
-            state.completedLessons.push(lesson.id);
-            saveStatsToStorage();
+        state.completedLessons.push(lesson.id);
+        saveStatsToStorage();
+
+        if (studyCountBefore === 0) {
             awardStars(5, `Hoàn thành bài học "${lesson.title}"`);
         } else {
-            awardStars(2, `Ôn tập thành công bài "${lesson.title}"`);
+            awardStars(2, `Ôn tập thành công bài "${lesson.title}" (Lần ${studyCountBefore + 1})`);
         }
 
         // Re-render sidebar list to update "Đã xong ✅" status badge

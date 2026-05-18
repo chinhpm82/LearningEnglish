@@ -2360,7 +2360,7 @@ input, select, textarea, button {
 
 .leaderboard-header-row {
     display: grid;
-    grid-template-columns: 70px 50px 1fr 120px 120px;
+    grid-template-columns: 80px 60px 1fr 150px 150px;
     align-items: center;
     padding: 18px 24px;
     background: rgba(15, 23, 42, 0.4);
@@ -2379,7 +2379,7 @@ input, select, textarea, button {
 
 .leaderboard-row {
     display: grid;
-    grid-template-columns: 70px 50px 1fr 120px 120px;
+    grid-template-columns: 80px 60px 1fr 150px 150px;
     align-items: center;
     padding: 16px 24px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.04);
@@ -2452,7 +2452,9 @@ input, select, textarea, button {
     color: #ef4444;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 4px;
+    white-space: nowrap;
 }
 
 .col-stars {
@@ -2462,7 +2464,9 @@ input, select, textarea, button {
     color: #fbbf24;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 4px;
+    white-space: nowrap;
 }
 
 .leaderboard-empty-state {
@@ -3070,5 +3074,40 @@ input, select, textarea, button {
     .grammar-sidebar {
         max-height: 280px;
     }
+}
+
+/* Daily recommendation & Repeat counts styles */
+.badge-recommend {
+    background: linear-gradient(135deg, #ef4444, #f59e0b) !important;
+    color: #fff !important;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+    font-size: 9.5px !important;
+    padding: 3px 8px !important;
+    border-radius: 8px !important;
+    font-weight: 700;
+    animation: pulseGlow 1.8s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(1); box-shadow: 0 0 5px rgba(239, 68, 68, 0.4); }
+    100% { transform: scale(1.04); box-shadow: 0 0 12px rgba(239, 68, 68, 0.7); }
+}
+
+.card-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    width: 100%;
+}
+
+.grammar-lesson-card.recommended {
+    border-left: 3.5px solid #f59e0b;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.05), rgba(30, 41, 59, 0.4));
+}
+
+.grammar-lesson-card.recommended:hover {
+    border-color: #fbbf24;
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.15);
 }
 
