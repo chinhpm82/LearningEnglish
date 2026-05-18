@@ -1810,5 +1810,95 @@ const GRAMMAR_LESSONS = [
                 explanation: "Ước trái ngược sự thật xe đắt đỏ ở hiện tại, chia quá khứ giả định to-be 'were'."
             }
         ]
+    },
+    {
+        id: "gr-21",
+        title: "Động từ Bất quy tắc (Irregular Verbs)",
+        category: "sentences",
+        description: "Các động từ không tuân theo quy tắc thêm '-ed' khi chia ở thì Quá khứ và Phân từ hai.",
+        formula: "Không có công thức chung. Phải học thuộc (V1 - Nguyên thể, V2 - Quá khứ đơn, V3 - Quá khứ phân từ).",
+        usage: [
+            "V2 được dùng trong câu khẳng định của thì Quá khứ đơn (Past Simple).",
+            "V3 được dùng trong các thì Hoàn thành (Hiện tại/Quá khứ hoàn thành) và trong cấu trúc Câu bị động (Passive Voice)."
+        ],
+        examples: [
+            { en: "He broke the window yesterday. (Break - Broke - Broken)", vi: "Anh ấy đã làm vỡ cửa sổ hôm qua." },
+            { en: "I have known her for 5 years. (Know - Knew - Known)", vi: "Tôi đã biết cô ấy được 5 năm rồi." },
+            { en: "The book was written by an AI. (Write - Wrote - Written)", vi: "Cuốn sách được viết bởi một AI." }
+        ],
+        practice: [
+            {
+                q: "Situation: Academic submission. 'I ___ my research paper to the professor last night.'",
+                options: ["send", "sended", "sent", "sending"],
+                answer: 2,
+                explanation: "Thì quá khứ đơn (last night). Động từ 'send' bất quy tắc, quá khứ là 'sent'."
+            },
+            {
+                q: "Situation: Travelling accident. 'She ___ her leg while skiing in Switzerland.'",
+                options: ["breaked", "broke", "broken", "breaks"],
+                answer: 1,
+                explanation: "Hành động xảy ra trong quá khứ. 'break' -> V2 là 'broke'."
+            },
+            {
+                q: "Situation: Technology lifespan. 'I have ___ this laptop since 2021.'",
+                options: ["keep", "kept", "keeped", "keeping"],
+                answer: 1,
+                explanation: "Thì hiện tại hoàn thành (have + V3). V3 của 'keep' là 'kept'."
+            },
+            {
+                q: "Situation: IT Bug fixing. 'The developer ___ a critical bug in the server code.'",
+                options: ["finded", "found", "finds", "finding"],
+                answer: 1,
+                explanation: "Kể về một sự kiện đã xảy ra, V2 của 'find' là 'found'."
+            },
+            {
+                q: "Situation: Science discovery. 'Newton ___ the law of universal gravitation.'",
+                options: ["understood", "understand", "understanded", "understanding"],
+                answer: 0,
+                explanation: "Sự kiện lịch sử trong quá khứ. V2 của 'understand' là 'understood'."
+            },
+            {
+                q: "Situation: Passive Voice in news. 'The new bridge was ___ in just six months.'",
+                options: ["build", "builded", "built", "building"],
+                answer: 2,
+                explanation: "Câu bị động (was + V3). V3 của 'build' là 'built'."
+            },
+            {
+                q: "Situation: Software Installation. 'I have already ___ the latest update on my phone.'",
+                options: ["choose", "chose", "choosed", "chosen"],
+                answer: 3,
+                explanation: "Thì hiện tại hoàn thành (have already + V3). V3 của 'choose' là 'chosen'."
+            },
+            {
+                q: "Situation: Daily routine change. 'Normally I wake up at 7, but today I ___ up at 6.'",
+                options: ["waked", "woke", "waken", "wake"],
+                answer: 1,
+                explanation: "Kể về hành động sáng nay (quá khứ). V2 của 'wake' là 'woke'."
+            },
+            {
+                q: "Situation: Missing items. 'Oh no! Someone has ___ my bicycle.'",
+                options: ["steal", "stoled", "stole", "stolen"],
+                answer: 3,
+                explanation: "Thì hiện tại hoàn thành (has + V3). V1-steal, V2-stole, V3-stolen."
+            },
+            {
+                q: "Situation: Teaching AI. 'We ___ the machine learning model with billions of parameters.'",
+                options: ["teached", "taught", "teach", "teaching"],
+                answer: 1,
+                explanation: "Quá khứ đơn. Động từ 'teach' bất quy tắc, V2 là 'taught'."
+            },
+            {
+                q: "Situation: Office meeting. 'Have you ___ to the project manager about the delay?'",
+                options: ["speak", "spoke", "spoken", "speaked"],
+                answer: 2,
+                explanation: "Thì hiện tại hoàn thành nghi vấn (Have you + V3). V3 của 'speak' là 'spoken'."
+            },
+            {
+                q: "Situation: Reading habit. 'He had ___ three chapters before he fell asleep.'",
+                options: ["read", "readed", "reading", "reads"],
+                answer: 0,
+                explanation: "Thì quá khứ hoàn thành (had + V3). Động từ 'read' viết giống nhau cả 3 cột (V1, V2, V3 đều là read, nhưng phát âm khác)."
+            }
+        ]
     }
 ];
