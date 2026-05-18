@@ -647,20 +647,47 @@ function showQuizResults() {
     if (activeCategory === 'assessment') {
         let level = 'Beginner';
         let levelName = 'Sơ cấp (A1-A2)';
-        
+        let speedRating = 'Cần cải thiện phản xạ 🐢';
+
+        if (durationSec < 50) {
+            speedRating = 'Phản xạ chớp nhoáng ⚡';
+        } else if (durationSec < 90) {
+            speedRating = 'Phản xạ tiêu chuẩn ⏱️';
+        }
+
+        // Timed Assessment Rating Matrix (Độ chính xác + Tốc độ phản xạ)
         if (quizScore >= 8) {
-            level = 'Advanced';
-            levelName = 'Cao cấp (C1-C2)';
+            if (durationSec < 60) {
+                level = 'Advanced';
+                levelName = 'Cao cấp (C1-C2)';
+            } else {
+                level = 'Intermediate';
+                levelName = 'Trung cấp (B1-B2)'; // Slower recall, downgraded to Intermediate
+            }
         } else if (quizScore >= 5) {
-            level = 'Intermediate';
-            levelName = 'Trung cấp (B1-B2)';
+            if (durationSec < 95) {
+                level = 'Intermediate';
+                levelName = 'Trung cấp (B1-B2)';
+            } else {
+                level = 'Beginner';
+                levelName = 'Sơ cấp (A1-A2)'; // Too slow, downgraded to Beginner
+            }
+        } else {
+            level = 'Beginner';
+            levelName = 'Sơ cấp (A1-A2)';
         }
         
         state.userLevel = level;
         state.roadmapTasks = generateRoadmapTasks(level);
         saveStatsToStorage();
         
-        msgEl.innerHTML = `🎓 <b>Kết quả Đánh giá Trình độ:</b><br>Trình độ hiện tại của bạn là <span class="level-badge ${level.toLowerCase()}" style="font-size:12px; padding: 4px 10px; box-shadow:none; line-height:1.2; display:inline-block; margin: 6px 0;">${levelName}</span>.<br>Hệ thống đã tự động kích hoạt Lộ trình học tập phù hợp riêng cho bạn tại trang Tổng quan!`;
+        msgEl.innerHTML = `
+            🎓 <b>KẾT QUẢ ĐÁNH GIÁ PHẢN XẠ & TRÌNH ĐỘ:</b><br>
+            • Độ chính xác: <b>${quizScore}/10 câu đúng</b> (${pct}%)<br>
+            • Thời gian hoàn thành: <b>${durationSec} giây</b> (${speedRating})<br>
+            • Xếp hạng trình độ: <span class="level-badge ${level.toLowerCase()}" style="font-size:12px; padding: 4px 10px; box-shadow:none; line-height:1.2; display:inline-block; margin: 6px 0;">${levelName}</span><br>
+            <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 8px; line-height: 1.4;">Hệ thống đã phân tích tốc độ phản xạ và độ chính xác của bạn để tự động thiết lập Lộ trình học tập phù hợp nhất tại trang Tổng quan!</p>
+        `;
     } else {
         if (pct >= 90) msgEl.textContent = '🌟 Xuất sắc! Kỷ lục gia ghi nhớ từ vựng!';
         else if (pct >= 70) msgEl.textContent = '👍 Rất tốt! Tiếp tục phát huy nhé!';
