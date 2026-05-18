@@ -24,12 +24,14 @@ import {
 // --- FIREBASE CONFIGURATION (CẤU HÌNH HỆ THỐNG) ---
 // Bạn chỉ cần thay thế các chuỗi dưới đây bằng khóa thực tế lấy từ Firebase Console của bạn.
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY_PLACEHOLDER",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyDr58jereWx6QVt6OXpD6RydU95T1xAaZ4",
+  authDomain: "learningenglish-5b83c.firebaseapp.com",
+  databaseURL: "https://learningenglish-5b83c-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "learningenglish-5b83c",
+  storageBucket: "learningenglish-5b83c.firebasestorage.app",
+  messagingSenderId: "1034946550291",
+  appId: "1:1034946550291:web:7d0230635c047ed1c17de6",
+  measurementId: "G-0YSGPWF7VM"
 };
 
 // Check if user has set real Firebase credentials
