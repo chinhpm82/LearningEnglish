@@ -21,7 +21,8 @@ let state = {
     displayName: '',      // Authenticated user displayName
     photoURL: '',         // Selected profile photoURL or custom animal emoji
     googlePhotoURL: '',   // Google authenticating user photoURL
-    completedLessons: []  // Completed grammar lesson IDs
+    completedLessons: [], // Completed grammar lesson IDs
+    completedSentences: [] // Completed communicative sentence english string IDs
 };
 
 // Flashcard Deck study state
@@ -86,6 +87,7 @@ function loadState() {
         const storedPhoto = localStorage.getItem('vocabflow_photo_url');
         const storedDisplayName = localStorage.getItem('vocabflow_display_name');
         const storedCompletedLessons = localStorage.getItem('vocabflow_completed_lessons');
+        const storedCompletedSentences = localStorage.getItem('vocabflow_completed_sentences');
         if (storedLevel) state.userLevel = storedLevel;
         if (storedRoadmap) state.roadmapTasks = JSON.parse(storedRoadmap);
         if (storedStars) state.stars = parseInt(storedStars, 10);
@@ -93,12 +95,16 @@ function loadState() {
         if (storedDisplayName) state.displayName = storedDisplayName;
         if (storedCompletedLessons) state.completedLessons = JSON.parse(storedCompletedLessons);
         else state.completedLessons = [];
+        
+        if (storedCompletedSentences) state.completedSentences = JSON.parse(storedCompletedSentences);
+        else state.completedSentences = [];
     } catch (e) {
         console.error('Error reading localStorage data', e);
         // Fallback
         state.vocabulary = [...INITIAL_VOCABULARY];
         state.customWords = [];
         state.completedLessons = [];
+        state.completedSentences = [];
     }
 }
 
@@ -122,6 +128,7 @@ function saveStatsToStorage() {
     localStorage.setItem('vocabflow_photo_url', state.photoURL);
     localStorage.setItem('vocabflow_display_name', state.displayName);
     localStorage.setItem('vocabflow_completed_lessons', JSON.stringify(state.completedLessons));
+    localStorage.setItem('vocabflow_completed_sentences', JSON.stringify(state.completedSentences));
     
     // Sync to Firebase if in Cloud Mode
     if (isCloudMode && window.FirebaseSync) {
@@ -1206,32 +1213,89 @@ function nextGrammarPracticeQuestion() {
 
 function renderSentences(category = 'all') {
     const container = document.getElementById('sentences-list-container');
+    if (!container) return;
     
-    const filtered = category === 'all' 
-        ? COMMUNICATIVE_SENTENCES 
+    // Filter sentences by category
+    const baseFiltered = category === 'all' 
+        ? [...COMMUNICATIVE_SENTENCES] 
         : COMMUNICATIVE_SENTENCES.filter(s => s.category === category);
+
+    // Safeguard completedSentences array
+    if (!state.completedSentences) {
+        state.completedSentences = [];
+    }
+
+    const learned = [];
+    const unlearned = [];
+
+    baseFiltered.forEach(s => {
+        if (state.completedSentences.includes(s.english)) {
+            learned.push(s);
+        } else {
+            unlearned.push(s);
+        }
+    });
+
+    // Shuffle only the uncompleted (unlearned) sentences to make each practice deck random and dynamic!
+    const shuffledUnlearned = unlearned.sort(() => Math.random() - 0.5);
+
+    // Combine: active randomized learning first, completed achievements at the bottom
+    const finalSentences = [...shuffledUnlearned, ...learned];
 
     container.innerHTML = '';
 
-    filtered.forEach(item => {
+    finalSentences.forEach(item => {
         const card = document.createElement('div');
-        card.className = 'sentence-card';
+        const isLearned = state.completedSentences.includes(item.english);
+        
+        card.className = `sentence-card ${isLearned ? 'completed' : ''}`;
         card.innerHTML = `
             <div class="sentence-card-content">
-                <span class="sentence-tag">${item.category}</span>
+                <div class="sentence-header-row">
+                    <span class="sentence-tag">${item.category}</span>
+                    ${isLearned ? '<span class="sentence-learned-badge">Đã thuộc ✅</span>' : ''}
+                </div>
                 <p class="sentence-en">${item.english}</p>
                 <p class="sentence-vi">${item.vietnamese}</p>
             </div>
-            <div class="sentence-speak-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            <div class="sentence-actions">
+                <button class="sentence-action-btn btn-speak" title="Phát âm">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                </button>
+                <button class="sentence-action-btn btn-check ${isLearned ? 'active' : ''}" title="${isLearned ? 'Học lại' : 'Đánh dấu đã thuộc'}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
             </div>
         `;
 
-        card.addEventListener('click', () => {
+        // Click on the text area triggers speech pronunciation
+        card.querySelector('.sentence-card-content').addEventListener('click', () => {
             speakEnglish(item.english);
-            // register study streak for sentences as well
             checkAndUpdateStreak();
             renderDashboard();
+        });
+
+        // Click on specific speak button
+        card.querySelector('.btn-speak').addEventListener('click', (e) => {
+            e.stopPropagation();
+            speakEnglish(item.english);
+            checkAndUpdateStreak();
+            renderDashboard();
+        });
+
+        // Click on checkmark button to mark/unmark as learned
+        card.querySelector('.btn-check').addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!isLearned) {
+                state.completedSentences.push(item.english);
+                saveStatsToStorage();
+                awardStars(1, `Đã thuộc câu giao tiếp: "${item.english.substring(0, 20)}..."`);
+            } else {
+                state.completedSentences = state.completedSentences.filter(s => s !== item.english);
+                saveStatsToStorage();
+            }
+            // Trigger a re-render which shuffles the remaining uncompleted deck and pushes this one down
+            renderSentences(category);
         });
 
         container.appendChild(card);
