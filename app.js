@@ -77,7 +77,9 @@ let state = {
     roadmapTasks: [],    // Daily checklist tasks { text, completed }
     stars: 0,            // Gamification Gold Stars ⭐
     currentUserEmail: '', // Authenticated user email
-    displayName: ''      // Authenticated user displayName
+    displayName: '',      // Authenticated user displayName
+    photoURL: '',         // Selected profile photoURL or custom animal emoji
+    googlePhotoURL: ''    // Google authenticating user photoURL
 };
 
 // Flashcard Deck study state
@@ -130,9 +132,11 @@ function loadState() {
         const storedLevel = localStorage.getItem('vocabflow_user_level');
         const storedRoadmap = localStorage.getItem('vocabflow_roadmap_tasks');
         const storedStars = localStorage.getItem('vocabflow_stars');
+        const storedPhoto = localStorage.getItem('vocabflow_photo_url');
         if (storedLevel) state.userLevel = storedLevel;
         if (storedRoadmap) state.roadmapTasks = JSON.parse(storedRoadmap);
         if (storedStars) state.stars = parseInt(storedStars, 10);
+        if (storedPhoto) state.photoURL = storedPhoto;
     } catch (e) {
         console.error('Error reading localStorage data', e);
         // Fallback
@@ -157,10 +161,11 @@ function saveStatsToStorage() {
     localStorage.setItem('vocabflow_user_level', state.userLevel);
     localStorage.setItem('vocabflow_roadmap_tasks', JSON.stringify(state.roadmapTasks));
     localStorage.setItem('vocabflow_stars', state.stars.toString());
+    localStorage.setItem('vocabflow_photo_url', state.photoURL);
     
     // Sync to Firebase if in Cloud Mode
     if (isCloudMode && window.FirebaseSync) {
-        window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars);
+        window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars, state.photoURL);
     }
 }
 
@@ -1108,12 +1113,13 @@ function initApp() {
                 profileCard.classList.remove('hidden');
                 guestBanner.classList.add('hidden');
 
-                // Save email and display name to state
+                // Save email, display name and Google Photo to state
                 state.currentUserEmail = user.email || '';
                 state.displayName = user.displayName || '';
+                state.googlePhotoURL = user.photoURL || '';
 
                 // Render User Profile Card
-                document.getElementById('user-avatar-img').src = user.photoURL || 'https://www.gravatar.com/avatar/?d=mp';
+                renderUserAvatar(state.photoURL || user.photoURL);
                 document.getElementById('user-display-name').textContent = user.displayName || 'Học viên';
 
                 console.log("☁️ Syncing database progress with Firebase...");
@@ -1129,6 +1135,8 @@ function initApp() {
                         state.userLevel = cloudData.profile.userLevel || '';
                         state.roadmapTasks = cloudData.profile.roadmapTasks || [];
                         state.stars = cloudData.profile.stars || 0;
+                        state.photoURL = cloudData.profile.photoURL || '';
+                        renderUserAvatar(state.photoURL || user.photoURL);
                     }
                     if (cloudData.customWords) {
                         state.customWords = cloudData.customWords;
@@ -1191,6 +1199,37 @@ function initApp() {
 
     // 4. Wordbook Submit Action
     document.getElementById('add-word-form').addEventListener('submit', handleAddWordForm);
+
+    // Avatar Selector Dialog bindings
+    const avatarOpenBtn = document.getElementById('btn-open-avatar-modal');
+    if (avatarOpenBtn) {
+        avatarOpenBtn.addEventListener('click', () => {
+            if (isCloudMode) {
+                document.getElementById('avatar-modal').classList.remove('hidden');
+                renderAvatarModalChoices();
+            } else {
+                alert('Vui lòng đăng nhập để sử dụng tính năng đổi ảnh đại diện thú cưng ngộ nghĩnh!');
+            }
+        });
+    }
+    
+    const avatarCancelBtn = document.getElementById('btn-avatar-cancel');
+    if (avatarCancelBtn) {
+        avatarCancelBtn.addEventListener('click', () => {
+            document.getElementById('avatar-modal').classList.add('hidden');
+        });
+    }
+    
+    const avatarGoogleBtn = document.getElementById('btn-avatar-use-google');
+    if (avatarGoogleBtn) {
+        avatarGoogleBtn.addEventListener('click', () => {
+            state.photoURL = '';
+            renderUserAvatar(state.googlePhotoURL);
+            saveStatsToStorage();
+            document.getElementById('avatar-modal').classList.add('hidden');
+            awardStars(2, "Đồng bộ lại ảnh đại diện Google");
+        });
+    }
 
     // 5. Wordbook Search Filter
     document.getElementById('search-wordbook').addEventListener('input', (e) => {
@@ -1312,7 +1351,7 @@ async function syncCurrentStateToCloud() {
     if (!window.FirebaseSync || !isCloudMode) return;
     
     // Save streak stats
-    await window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars);
+    await window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars, state.photoURL);
     
     // Save custom words
     for (const word of state.customWords) {
@@ -1462,10 +1501,16 @@ async function renderLeaderboard() {
         const userStreak = user.streak || 0;
         const userStars = user.stars || 0;
 
+        let avatarHtml = `<img src="${avatarUrl}" alt="Avatar" class="leaderboard-avatar">`;
+        if (avatarUrl && avatarUrl.startsWith('emoji:')) {
+            const emoji = avatarUrl.split(':')[1];
+            avatarHtml = `<div class="leaderboard-avatar-emoji">${emoji}</div>`;
+        }
+
         row.innerHTML = `
             <span class="col-rank">${rankDisplay}</span>
             <div class="col-avatar">
-                <img src="${avatarUrl}" alt="Avatar" class="leaderboard-avatar">
+                ${avatarHtml}
             </div>
             <span class="col-name">${displayName}</span>
             <span class="col-streak">${userStreak} 🔥</span>
@@ -1473,5 +1518,86 @@ async function renderLeaderboard() {
         `;
         
         listContainer.appendChild(row);
+    });
+}
+
+// --- CUTE ANIMAL AVATARS SELECTION SYSTEM ---
+
+const ANIMAL_AVATARS = [
+    { emoji: '🐱', label: 'Mèo con' },
+    { emoji: '🐶', label: 'Cún con' },
+    { emoji: '🐼', label: 'Gấu trúc' },
+    { emoji: '🦊', label: 'Cáo nhỏ' },
+    { emoji: '🐨', label: 'Koala' },
+    { emoji: '🦁', label: 'Sư tử' },
+    { emoji: '🐰', label: 'Thỏ con' },
+    { emoji: '🐧', label: 'Cánh cụt' },
+    { emoji: '🐻', label: 'Gấu nâu' },
+    { emoji: '🐸', label: 'Ếch xanh' },
+    { emoji: '🐵', label: 'Khỉ con' },
+    { emoji: '🦄', label: 'Kỳ lân' }
+];
+
+function renderUserAvatar(avatarUrl) {
+    const imgEl = document.getElementById('user-avatar-img');
+    if (!imgEl) return;
+
+    // Check if there is already an emoji badge in the container
+    const container = document.getElementById('btn-open-avatar-modal');
+    const existingEmoji = container.querySelector('.user-avatar-emoji');
+    if (existingEmoji) existingEmoji.remove();
+
+    if (avatarUrl && avatarUrl.startsWith('emoji:')) {
+        const emoji = avatarUrl.split(':')[1];
+        imgEl.style.display = 'none';
+        
+        const emojiEl = document.createElement('div');
+        emojiEl.className = 'user-avatar-emoji';
+        emojiEl.textContent = emoji;
+        container.insertBefore(emojiEl, imgEl); // Insert before edit overlay
+    } else {
+        imgEl.style.display = 'block';
+        imgEl.src = avatarUrl || 'https://www.gravatar.com/avatar/?d=mp';
+    }
+}
+
+function renderAvatarModalChoices() {
+    const grid = document.getElementById('avatar-emoji-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    
+    const currentAvatar = state.photoURL || '';
+
+    ANIMAL_AVATARS.forEach(item => {
+        const choice = document.createElement('div');
+        const isSelected = currentAvatar === 'emoji:' + item.emoji;
+        choice.className = `avatar-choice-item ${isSelected ? 'selected' : ''}`;
+        
+        choice.innerHTML = `
+            <span class="avatar-choice-emoji">${item.emoji}</span>
+            <span class="avatar-choice-label">${item.label}</span>
+        `;
+        
+        choice.addEventListener('click', () => {
+            document.querySelectorAll('.avatar-choice-item').forEach(c => c.classList.remove('selected'));
+            choice.classList.add('selected');
+            
+            const selectedAvatarString = 'emoji:' + item.emoji;
+            state.photoURL = selectedAvatarString;
+            
+            // Apply locally
+            renderUserAvatar(selectedAvatarString);
+            
+            // Save & Sync to Firebase Firestore
+            saveStatsToStorage();
+            
+            // Close modal after selection
+            setTimeout(() => {
+                document.getElementById('avatar-modal').classList.add('hidden');
+                awardStars(5, `Đổi sang đại diện ${item.label} ${item.emoji}`);
+            }, 300);
+        });
+        
+        grid.appendChild(choice);
     });
 }
