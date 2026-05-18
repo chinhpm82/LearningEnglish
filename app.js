@@ -87,6 +87,10 @@ let quizScore = 0;
 let quizTimer = { start: 0, end: 0 };
 let quizSelectedCategory = 'all';
 
+// Cloud synchronization state
+let isCloudMode = false;
+let authSkip = false;
+
 // --- CORE UTILITY FUNCTIONS ---
 
 // Load data from LocalStorage
@@ -138,6 +142,11 @@ function saveStatsToStorage() {
     localStorage.setItem('vocabflow_streak', state.streak.toString());
     localStorage.setItem('vocabflow_last_date', state.lastStudyDate);
     localStorage.setItem('vocabflow_quiz_stats', JSON.stringify(state.quizStats));
+    
+    // Sync to Firebase if in Cloud Mode
+    if (isCloudMode && window.FirebaseSync) {
+        window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats);
+    }
 }
 
 // Browser Text-To-Speech Pronunciation Engine
@@ -419,6 +428,16 @@ function handleFlashcardAction(isCorrect) {
         // Save
         if (isCustom) saveCustomWordsToStorage();
         else saveVocabToStorage();
+
+        // Sync to Firebase if in Cloud Mode
+        if (isCloudMode && window.FirebaseSync) {
+            const updatedWord = sourceList[originalIdx];
+            if (isCustom) {
+                window.FirebaseSync.saveCustomWord(updatedWord);
+            } else {
+                window.FirebaseSync.saveProgress(updatedWord.id, updatedWord.box, updatedWord.nextReview);
+            }
+        }
     }
 
     // Go to next card in session
@@ -701,6 +720,11 @@ function handleAddWordForm(e) {
     state.customWords.push(newWord);
     saveCustomWordsToStorage();
 
+    // Sync to Firebase if in Cloud Mode
+    if (isCloudMode && window.FirebaseSync) {
+        window.FirebaseSync.saveCustomWord(newWord);
+    }
+
     // Reset Form
     document.getElementById('add-word-form').reset();
 
@@ -716,6 +740,11 @@ function deleteWordFromWordbook(id) {
 
     state.customWords = state.customWords.filter(w => w.id !== id);
     saveCustomWordsToStorage();
+
+    // Sync to Firebase if in Cloud Mode
+    if (isCloudMode && window.FirebaseSync) {
+        window.FirebaseSync.deleteCustomWord(id);
+    }
 
     // Sync
     renderWordbook();
@@ -794,14 +823,102 @@ function setUpTabNavigation() {
 // --- EVENT LISTENERS INITIALIZATION ---
 
 function initApp() {
-    // 1. Load data
-    loadState();
-    
-    // 2. Set initial dashboard statistics
-    renderDashboard();
-
-    // 3. Tab Routing Setup
+    // 1. Tab Routing Setup
     setUpTabNavigation();
+
+    // 2. Bind Auth UI buttons
+    document.getElementById('btn-google-login').addEventListener('click', handleGoogleLogin);
+    document.getElementById('btn-logout').addEventListener('click', handleGoogleLogout);
+    document.getElementById('btn-auth-skip').addEventListener('click', skipAuthOverlay);
+    document.getElementById('btn-trigger-login').addEventListener('click', showAuthOverlay);
+
+    // 3. Setup Firebase Auth & Data Sync Listener
+    if (window.FirebaseSync) {
+        window.FirebaseSync.onStateChanged(async (user) => {
+            const authOverlay = document.getElementById('auth-overlay');
+            const profileCard = document.getElementById('user-profile-card');
+            const guestBanner = document.getElementById('guest-mode-banner');
+
+            if (user) {
+                // Cloud Mode Activated!
+                isCloudMode = true;
+                authOverlay.classList.add('hidden');
+                profileCard.classList.remove('hidden');
+                guestBanner.classList.add('hidden');
+
+                // Render User Profile Card
+                document.getElementById('user-avatar-img').src = user.photoURL || 'https://www.gravatar.com/avatar/?d=mp';
+                document.getElementById('user-display-name').textContent = user.displayName || 'Học viên';
+
+                console.log("☁️ Syncing database progress with Firebase...");
+                
+                // Fetch progress from firestore
+                const cloudData = await window.FirebaseSync.loadUserData();
+                if (cloudData) {
+                    // Update local state with cloud data
+                    if (cloudData.profile) {
+                        state.streak = cloudData.profile.streak || 0;
+                        state.lastStudyDate = cloudData.profile.lastStudyDate || '';
+                        state.quizStats = cloudData.profile.quizStats || { totalAnswered: 0, correctAnswers: 0 };
+                    }
+                    if (cloudData.customWords) {
+                        state.customWords = cloudData.customWords;
+                    }
+                    if (cloudData.progress && cloudData.progress.length > 0) {
+                        // Merge box progress back into default vocabulary list
+                        cloudData.progress.forEach(progress => {
+                            const idx = state.vocabulary.findIndex(w => w.id === progress.id);
+                            if (idx !== -1) {
+                                state.vocabulary[idx].box = progress.box;
+                                state.vocabulary[idx].nextReview = progress.nextReview;
+                            }
+                        });
+                    }
+                } else {
+                    // Brand new Firebase user, write current state (initial deck) up to cloud
+                    await syncCurrentStateToCloud();
+                }
+
+                // Sync local backup
+                saveVocabToStorage();
+                saveCustomWordsToStorage();
+                saveStatsToStorage();
+
+                // Re-render views with user specific data
+                renderDashboard();
+            } else {
+                // Not authenticated (either Firebase is not configured, or user signed out, or skipped)
+                isCloudMode = false;
+                profileCard.classList.add('hidden');
+
+                if (window.FirebaseSync.isConfigured) {
+                    // Firebase is configured, but no user is signed in
+                    if (authSkip) {
+                        // User clicked skip, let them work in Guest mode
+                        authOverlay.classList.add('hidden');
+                        guestBanner.classList.remove('hidden');
+                    } else {
+                        // Force login overlay
+                        authOverlay.classList.remove('hidden');
+                        guestBanner.classList.add('hidden');
+                    }
+                } else {
+                    // Firebase is not configured at all (default app out of the box)
+                    authOverlay.classList.add('hidden');
+                    guestBanner.classList.remove('hidden');
+                    guestBanner.querySelector('.banner-text').textContent = 'Chế độ Khách (Offline)';
+                }
+
+                // Load offline local data
+                loadState();
+                renderDashboard();
+            }
+        });
+    } else {
+        // Fallback if script somehow not loaded, load offline local data
+        loadState();
+        renderDashboard();
+    }
 
     // 4. Wordbook Submit Action
     document.getElementById('add-word-form').addEventListener('submit', handleAddWordForm);
@@ -886,10 +1003,60 @@ function initApp() {
     // Asynchronously load SpeechSynthesis voices list
     if ('speechSynthesis' in window) {
         window.speechSynthesis.onvoiceschanged = () => {
-            // Re-render Word of the Day voice trigger once voices are fully loaded
             renderWordOfTheDay();
         };
     }
+}
+
+// Firebase Auth Actions
+async function handleGoogleLogin() {
+    try {
+        await window.FirebaseSync.login();
+    } catch (error) {
+        alert('Đăng nhập thất bại. Vui lòng kiểm tra kết nối mạng và thử lại!');
+    }
+}
+
+async function handleGoogleLogout() {
+    if (confirm('Bạn có chắc chắn muốn đăng xuất? Dữ liệu của bạn đã được lưu an toàn trên Cloud.')) {
+        authSkip = false;
+        await window.FirebaseSync.logout();
+    }
+}
+
+function skipAuthOverlay() {
+    authSkip = true;
+    document.getElementById('auth-overlay').classList.add('hidden');
+    document.getElementById('guest-mode-banner').classList.remove('hidden');
+    loadState();
+    renderDashboard();
+}
+
+function showAuthOverlay() {
+    authSkip = false;
+    document.getElementById('auth-overlay').classList.remove('hidden');
+    document.getElementById('guest-mode-banner').classList.add('hidden');
+}
+
+// Push all local state up to newly created Firebase profile
+async function syncCurrentStateToCloud() {
+    if (!window.FirebaseSync || !isCloudMode) return;
+    
+    // Save streak stats
+    await window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats);
+    
+    // Save custom words
+    for (const word of state.customWords) {
+        await window.FirebaseSync.saveCustomWord(word);
+    }
+    
+    // Save progress of vocabulary words that are active (box > 1 or reviewed)
+    const activeWords = state.vocabulary.filter(w => w.box > 1 || w.nextReview > 0);
+    for (const word of activeWords) {
+        await window.FirebaseSync.saveProgress(word.id, word.box, word.nextReview);
+    }
+    
+    console.log("Current state successfully synced up to Cloud!");
 }
 
 // Start application when DOM loads & Register Service Worker
