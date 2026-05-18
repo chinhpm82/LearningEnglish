@@ -1375,8 +1375,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('sw.js')
-                .then(reg => console.log('VocabFlow Service Worker registered successfully:', reg.scope))
-                .catch(err => console.log('VocabFlow Service Worker registration failed:', err));
+                .then(reg => console.log('LearningEnglish Service Worker registered successfully:', reg.scope))
+                .catch(err => console.log('LearningEnglish Service Worker registration failed:', err));
         });
     }
 });

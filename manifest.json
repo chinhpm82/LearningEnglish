@@ -1,6 +1,6 @@
 {
-  "name": "VocabFlow - Tự Học Tiếng Anh",
-  "short_name": "VocabFlow",
+  "name": "LearningEnglish - Tự Học Tiếng Anh",
+  "short_name": "LearningEnglish",
   "description": "Ứng dụng tự học tiếng Anh thông minh, trực quan và tối giản sử dụng Spaced Repetition",
   "start_url": "index.html",
   "display": "standalone",

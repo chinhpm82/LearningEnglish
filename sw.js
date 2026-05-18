@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vocabflow-v1';
+const CACHE_NAME = 'learningenglish-v1';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
