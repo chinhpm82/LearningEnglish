@@ -72,7 +72,9 @@ let state = {
     quizStats: {
         totalAnswered: 0,
         correctAnswers: 0
-    }
+    },
+    userLevel: '',       // 'Beginner', 'Intermediate', 'Advanced'
+    roadmapTasks: []     // Daily checklist tasks { text, completed }
 };
 
 // Flashcard Deck study state
@@ -121,6 +123,11 @@ function loadState() {
         if (storedQuizStats) {
             state.quizStats = JSON.parse(storedQuizStats);
         }
+
+        const storedLevel = localStorage.getItem('vocabflow_user_level');
+        const storedRoadmap = localStorage.getItem('vocabflow_roadmap_tasks');
+        if (storedLevel) state.userLevel = storedLevel;
+        if (storedRoadmap) state.roadmapTasks = JSON.parse(storedRoadmap);
     } catch (e) {
         console.error('Error reading localStorage data', e);
         // Fallback
@@ -142,10 +149,12 @@ function saveStatsToStorage() {
     localStorage.setItem('vocabflow_streak', state.streak.toString());
     localStorage.setItem('vocabflow_last_date', state.lastStudyDate);
     localStorage.setItem('vocabflow_quiz_stats', JSON.stringify(state.quizStats));
+    localStorage.setItem('vocabflow_user_level', state.userLevel);
+    localStorage.setItem('vocabflow_roadmap_tasks', JSON.stringify(state.roadmapTasks));
     
     // Sync to Firebase if in Cloud Mode
     if (isCloudMode && window.FirebaseSync) {
-        window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats);
+        window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks);
     }
 }
 
@@ -255,6 +264,9 @@ function renderDashboard() {
 
     // Render "Word of the Day"
     renderWordOfTheDay();
+
+    // Render Dynamic Learning Roadmap
+    renderRoadmap();
 }
 
 // Generate random "Word of the Day"
@@ -457,7 +469,18 @@ function initQuizSession(category = 'all') {
     const allWords = [...state.vocabulary, ...state.customWords];
     let sourcePool = [];
 
-    if (category === 'all') {
+    if (category === 'assessment') {
+        // Balanced sample of questions: 4 from oxford, 3 from academic, 3 from idioms
+        const oxfordPool = allWords.filter(w => w.category === 'oxford').sort(() => 0.5 - Math.random());
+        const academicPool = allWords.filter(w => w.category === 'academic').sort(() => 0.5 - Math.random());
+        const idiomsPool = allWords.filter(w => w.category === 'idioms').sort(() => 0.5 - Math.random());
+        
+        sourcePool = [
+            ...oxfordPool.slice(0, 4),
+            ...academicPool.slice(0, 3),
+            ...idiomsPool.slice(0, 3)
+        ].sort(() => 0.5 - Math.random());
+    } else if (category === 'all') {
         sourcePool = [...allWords];
     } else if (category === 'custom') {
         sourcePool = [...state.customWords];
@@ -617,15 +640,190 @@ function showQuizResults() {
     document.getElementById('result-time').textContent = `${durationSec} giây`;
     document.getElementById('result-accuracy').textContent = `${pct}%`;
 
+    const activeCategory = document.getElementById('quiz-category-select').value;
+
     // Dynamic result message
     const msgEl = document.getElementById('quiz-result-message');
-    if (pct >= 90) msgEl.textContent = '🌟 Xuất sắc! Kỷ lục gia ghi nhớ từ vựng!';
-    else if (pct >= 70) msgEl.textContent = '👍 Rất tốt! Tiếp tục phát huy nhé!';
-    else if (pct >= 50) msgEl.textContent = '📚 Khá tốt! Hãy ôn flashcard thêm một chút nữa.';
-    else msgEl.textContent = '💪 Cố lên! Chăm chỉ luyện tập để cải thiện điểm số.';
+    if (activeCategory === 'assessment') {
+        let level = 'Beginner';
+        let levelName = 'Sơ cấp (A1-A2)';
+        
+        if (quizScore >= 8) {
+            level = 'Advanced';
+            levelName = 'Cao cấp (C1-C2)';
+        } else if (quizScore >= 5) {
+            level = 'Intermediate';
+            levelName = 'Trung cấp (B1-B2)';
+        }
+        
+        state.userLevel = level;
+        state.roadmapTasks = generateRoadmapTasks(level);
+        saveStatsToStorage();
+        
+        msgEl.innerHTML = `🎓 <b>Kết quả Đánh giá Trình độ:</b><br>Trình độ hiện tại của bạn là <span class="level-badge ${level.toLowerCase()}" style="font-size:12px; padding: 4px 10px; box-shadow:none; line-height:1.2; display:inline-block; margin: 6px 0;">${levelName}</span>.<br>Hệ thống đã tự động kích hoạt Lộ trình học tập phù hợp riêng cho bạn tại trang Tổng quan!`;
+    } else {
+        if (pct >= 90) msgEl.textContent = '🌟 Xuất sắc! Kỷ lục gia ghi nhớ từ vựng!';
+        else if (pct >= 70) msgEl.textContent = '👍 Rất tốt! Tiếp tục phát huy nhé!';
+        else if (pct >= 50) msgEl.textContent = '📚 Khá tốt! Hãy ôn flashcard thêm một chút nữa.';
+        else msgEl.textContent = '💪 Cố lên! Chăm chỉ luyện tập để cải thiện điểm số.';
+    }
 
     // Synchronize overall stats wheel on dashboard
     renderDashboard();
+}
+
+// --- DYNAMIC LEARNING ROADMAP RENDERER & ALGORITHM ---
+
+function generateRoadmapTasks(level) {
+    if (level === 'Beginner') {
+        return [
+            { text: "Luyện 10 thẻ Flashcard bộ Oxford Essential thiết yếu", completed: false },
+            { text: "Làm đúng từ 5/10 câu trắc nghiệm Oxford", completed: false },
+            { text: "Luyện phát âm 3 câu giao tiếp hàng ngày", completed: false }
+        ];
+    } else if (level === 'Intermediate') {
+        return [
+            { text: "Ôn tập 15 thẻ Hộp Leitner (Hộp 2/3) cần xem lại", completed: false },
+            { text: "Đạt từ 7/10 điểm trắc nghiệm Thành ngữ & Cụm từ", completed: false },
+            { text: "Học 5 mẫu câu đàm thoại tiếng Anh thường nhật", completed: false }
+        ];
+    } else {
+        return [
+            { text: "Chinh phục 15 từ vựng học thuật IELTS nâng cao", completed: false },
+            { text: "Đạt điểm tối đa 10/10 Quiz học thuật nâng cao", completed: false },
+            { text: "Luyện đọc hiểu 4 mẫu câu giao tiếp công sở phức tạp", completed: false }
+        ];
+    }
+}
+
+function renderRoadmap() {
+    const container = document.getElementById('dashboard-roadmap-panel');
+    if (!container) return;
+
+    if (!state.userLevel) {
+        // Unassessed State
+        container.innerHTML = `
+            <div class="roadmap-unassessed">
+                <h3>📈 Khởi tạo Lộ trình Học tập Cá nhân hóa</h3>
+                <p>Bạn chưa thực hiện bài đánh giá trình độ năng lực ban đầu. Hãy hoàn thành một lượt trắc nghiệm xếp lớp gồm 10 câu hỏi để khám phá thế mạnh, điểm yếu và nhận lộ trình học tối ưu riêng biệt!</p>
+                <button class="btn-primary animate-glow" id="btn-roadmap-start-quiz" style="padding: 10px 20px; font-size:13px; border-radius:30px;">Làm bài đánh giá ngay</button>
+            </div>
+        `;
+        document.getElementById('btn-roadmap-start-quiz').addEventListener('click', () => {
+            // Switch to Quiz tab
+            document.getElementById('btn-quiz').click();
+            // Select assessment category
+            document.getElementById('quiz-category-select').value = 'assessment';
+            // Trigger start quiz
+            document.getElementById('btn-start-quiz').click();
+        });
+        return;
+    }
+
+    // Assessed State - Render dynamic roadmap!
+    let badgeClass = 'beginner';
+    let levelVN = 'Sơ cấp (A1-A2)';
+    let analysisVN = 'Bạn đang ở trình độ sơ cấp. Lộ trình tối ưu: Tập trung 100% học bộ từ vựng giao tiếp thiết yếu <b>Oxford Essential</b> và thực hành thẻ ghi nhớ Leitner mỗi ngày để củng cố nền tảng.';
+    let recommendations = [
+        { cat: 'Oxford Essential', action: 'Học ngay', key: 'oxford' },
+        { cat: 'Giao tiếp hàng ngày', action: 'Xem mẫu câu', key: 'communicative' }
+    ];
+
+    if (state.userLevel === 'Intermediate') {
+        badgeClass = 'intermediate';
+        levelVN = 'Trung cấp (B1-B2)';
+        analysisVN = 'Bạn đã có phản xạ từ vựng khá vững vàng. Lộ trình tối ưu: Luyện tập xen kẽ bộ từ <b>Oxford Essential</b> kết hợp với <b>Thành ngữ giao tiếp (Idioms)</b> để tự tin giao tiếp tự nhiên hơn.';
+        recommendations = [
+            { cat: 'Idioms & Phrases', action: 'Luyện tập', key: 'idioms' },
+            { cat: 'Giao tiếp hàng ngày', action: 'Học mẫu câu', key: 'communicative' }
+        ];
+    } else if (state.userLevel === 'Advanced') {
+        badgeClass = 'advanced';
+        levelVN = 'Cao cấp (C1-C2)';
+        analysisVN = 'Tuyệt vời! Vốn từ và khả năng hiểu của bạn rất rộng. Lộ trình tối ưu: Tập trung chinh phục bộ từ <b>Academic & IELTS</b> nâng cao và làm quen các mẫu câu đàm phán, thuyết trình tại công sở.';
+        recommendations = [
+            { cat: 'Academic & IELTS', action: 'Chinh phục', key: 'academic' },
+            { cat: 'Giao tiếp công sở', action: 'Xem mẫu câu', key: 'communicative' }
+        ];
+    }
+
+    // Build milestones checklist HTML
+    let tasksHTML = '';
+    state.roadmapTasks.forEach((task, idx) => {
+        tasksHTML += `
+            <div class="roadmap-task-item ${task.completed ? 'completed' : ''}" data-index="${idx}">
+                <div class="roadmap-task-checkbox">
+                    ${task.completed ? '✓' : ''}
+                </div>
+                <div class="roadmap-task-text">${task.text}</div>
+            </div>
+        `;
+    });
+
+    // Build recommendations HTML
+    let recsHTML = '';
+    recommendations.forEach(rec => {
+        recsHTML += `
+            <div class="rec-item">
+                <span class="rec-category">${rec.cat}</span>
+                <span class="rec-action" data-key="${rec.key}">${rec.action} →</span>
+            </div>
+        `;
+    });
+
+    container.innerHTML = `
+        <div class="roadmap-grid">
+            <!-- Left Column: Competency Badge & Analysis -->
+            <div class="roadmap-left-col">
+                <div class="roadmap-level-header">
+                    <span class="roadmap-level-title">Trình độ của bạn</span>
+                    <div class="level-badge ${badgeClass}">${levelVN}</div>
+                </div>
+                <div class="roadmap-analysis">
+                    <h4>🎯 Nhận định lộ trình học</h4>
+                    <p>${analysisVN}</p>
+                </div>
+            </div>
+
+            <!-- Right Column: Interactive Checklist & Rec Decks -->
+            <div class="roadmap-right-col">
+                <h3>📝 Nhiệm vụ ngày của bạn</h3>
+                <div class="roadmap-tasks-list">
+                    ${tasksHTML}
+                </div>
+                
+                <h3 style="margin-top: 16px;">💡 Tài liệu gợi ý học</h3>
+                <div class="roadmap-rec-list">
+                    ${recsHTML}
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Bind event listeners for dynamic items
+    // 1. Checklist toggling
+    container.querySelectorAll('.roadmap-task-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const idx = parseInt(item.getAttribute('data-index'), 10);
+            state.roadmapTasks[idx].completed = !state.roadmapTasks[idx].completed;
+            saveStatsToStorage();
+            renderRoadmap();
+        });
+    });
+
+    // 2. Recommendation links navigation
+    container.querySelectorAll('.rec-action').forEach(action => {
+        action.addEventListener('click', () => {
+            const key = action.getAttribute('data-key');
+            if (key === 'communicative') {
+                document.getElementById('btn-sentences').click();
+            } else {
+                document.getElementById('btn-flashcards').click();
+                document.getElementById('flashcard-category').value = key;
+                initFlashcardSession(key);
+            }
+        });
+    });
 }
 
 // --- PERSONAL WORDBOOK MANAGEMENT ---
@@ -860,6 +1058,8 @@ function initApp() {
                         state.streak = cloudData.profile.streak || 0;
                         state.lastStudyDate = cloudData.profile.lastStudyDate || '';
                         state.quizStats = cloudData.profile.quizStats || { totalAnswered: 0, correctAnswers: 0 };
+                        state.userLevel = cloudData.profile.userLevel || '';
+                        state.roadmapTasks = cloudData.profile.roadmapTasks || [];
                     }
                     if (cloudData.customWords) {
                         state.customWords = cloudData.customWords;
@@ -1043,7 +1243,7 @@ async function syncCurrentStateToCloud() {
     if (!window.FirebaseSync || !isCloudMode) return;
     
     // Save streak stats
-    await window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats);
+    await window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks);
     
     // Save custom words
     for (const word of state.customWords) {

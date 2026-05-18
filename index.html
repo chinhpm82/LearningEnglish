@@ -100,6 +100,14 @@
                     <p>Hôm nay là một ngày tuyệt vời để học thêm từ mới.</p>
                 </div>
 
+                <!-- Dynamic Learning Roadmap Panel -->
+                <div class="dashboard-panel card-roadmap" id="dashboard-roadmap-panel">
+                    <div class="roadmap-loading">
+                        <span class="pulse-dot"></span>
+                        <span>Đang khởi tạo lộ trình học tập cá nhân hóa của bạn...</span>
+                    </div>
+                </div>
+
                 <!-- Stats Grid -->
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -303,11 +311,12 @@
                         <div class="quiz-settings">
                             <label for="quiz-category-select">Chọn bộ từ vựng kiểm tra:</label>
                             <select id="quiz-category-select" class="styled-select">
-                                <option value="all">Tất cả từ vựng</option>
-                                <option value="oxford">Từ vựng thiết yếu (Oxford)</option>
-                                <option value="academic">Từ học thuật & IELTS</option>
-                                <option value="idioms">Thành ngữ & Cụm từ</option>
-                                <option value="custom">Sổ tay cá nhân</option>
+                                <option value="assessment">★ BÀI ĐÁNH GIÁ TRÌNH ĐỘ TỔNG QUÁT ★</option>
+                                <option value="all">Tất cả từ vựng (Luyện tập)</option>
+                                <option value="oxford">Từ vựng thiết yếu Oxford (Luyện tập)</option>
+                                <option value="academic">Từ học thuật & IELTS (Luyện tập)</option>
+                                <option value="idioms">Thành ngữ & Cụm từ (Luyện tập)</option>
+                                <option value="custom">Sổ tay cá nhân (Luyện tập)</option>
                             </select>
                         </div>
                         <button class="btn-primary btn-large animate-glow" id="btn-start-quiz">Bắt đầu ngay</button>

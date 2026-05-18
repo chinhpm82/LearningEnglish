@@ -35,7 +35,7 @@ const firebaseConfig = {
 };
 
 // Check if user has set real Firebase credentials
-const isConfigured = firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY_PLACEHOLDER";
+const isConfigured = firebaseConfig.apiKey !== "AIzaSyDr58jereWx6QVt6OXpD6RydU95T1xAaZ4" && firebaseConfig.projectId !== "learningenglish-5b83c";
 
 let app, auth, db, googleProvider;
 let currentUser = null;
@@ -136,8 +136,8 @@ window.FirebaseSync = {
         }
     },
 
-    // Save user profile stats (Streak, LastStudyDate, QuizStats, UserLevel, RoadmapTasks)
-    saveStreak: async (streak, lastStudyDate, quizStats, userLevel = '', roadmapTasks = []) => {
+    // Save user profile stats (Streak, LastStudyDate, QuizStats)
+    saveStreak: async (streak, lastStudyDate, quizStats) => {
         if (!isConfigured || !currentUser) return;
         try {
             const userRef = doc(db, "users", currentUser.uid);
@@ -148,12 +148,10 @@ window.FirebaseSync = {
                 streak: streak,
                 lastStudyDate: lastStudyDate,
                 quizStats: quizStats,
-                userLevel: userLevel,
-                roadmapTasks: roadmapTasks,
                 updatedAt: Date.now()
             }, { merge: true });
         } catch (e) {
-            console.error("Error saving streak and roadmap statistics to Firestore:", e);
+            console.error("Error saving streak statistics to Firestore:", e);
         }
     },
 

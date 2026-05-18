@@ -24,18 +24,16 @@ import {
 // --- FIREBASE CONFIGURATION (CẤU HÌNH HỆ THỐNG) ---
 // Bạn chỉ cần thay thế các chuỗi dưới đây bằng khóa thực tế lấy từ Firebase Console của bạn.
 const firebaseConfig = {
-  apiKey: "AIzaSyDr58jereWx6QVt6OXpD6RydU95T1xAaZ4",
-  authDomain: "learningenglish-5b83c.firebaseapp.com",
-  databaseURL: "https://learningenglish-5b83c-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "learningenglish-5b83c",
-  storageBucket: "learningenglish-5b83c.firebasestorage.app",
-  messagingSenderId: "1034946550291",
-  appId: "1:1034946550291:web:7d0230635c047ed1c17de6",
-  measurementId: "G-0YSGPWF7VM"
+    apiKey: "YOUR_API_KEY_PLACEHOLDER",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
 };
 
 // Check if user has set real Firebase credentials
-const isConfigured = firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY_PLACEHOLDER";
+const isConfigured = firebaseConfig.apiKey !== "YOUR_API_KEY_PLACEHOLDER" && firebaseConfig.projectId !== "YOUR_PROJECT_ID";
 
 let app, auth, db, googleProvider;
 let currentUser = null;
@@ -136,8 +134,8 @@ window.FirebaseSync = {
         }
     },
 
-    // Save user profile stats (Streak, LastStudyDate, QuizStats, UserLevel, RoadmapTasks)
-    saveStreak: async (streak, lastStudyDate, quizStats, userLevel = '', roadmapTasks = []) => {
+    // Save user profile stats (Streak, LastStudyDate, QuizStats)
+    saveStreak: async (streak, lastStudyDate, quizStats) => {
         if (!isConfigured || !currentUser) return;
         try {
             const userRef = doc(db, "users", currentUser.uid);
@@ -148,12 +146,10 @@ window.FirebaseSync = {
                 streak: streak,
                 lastStudyDate: lastStudyDate,
                 quizStats: quizStats,
-                userLevel: userLevel,
-                roadmapTasks: roadmapTasks,
                 updatedAt: Date.now()
             }, { merge: true });
         } catch (e) {
-            console.error("Error saving streak and roadmap statistics to Firestore:", e);
+            console.error("Error saving streak statistics to Firestore:", e);
         }
     },
 
