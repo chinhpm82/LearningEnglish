@@ -1378,8 +1378,30 @@ document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('sw.js')
-                .then(reg => console.log('LearningEnglish Service Worker registered successfully:', reg.scope))
+                .then(reg => {
+                    console.log('LearningEnglish Service Worker registered successfully:', reg.scope);
+                    
+                    // Check if there is an update waiting
+                    reg.onupdatefound = () => {
+                        const installingWorker = reg.installing;
+                        if (installingWorker) {
+                            installingWorker.onstatechange = () => {
+                                if (installingWorker.state === 'installed') {
+                                    if (navigator.serviceWorker.controller) {
+                                        console.log('New content is available; auto-reloading page to apply...');
+                                        window.location.reload();
+                                    }
+                                }
+                            };
+                        }
+                    };
+                })
                 .catch(err => console.log('LearningEnglish Service Worker registration failed:', err));
+        });
+        
+        // Reload page when new service worker takes over control
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            window.location.reload();
         });
     }
 });

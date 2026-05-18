@@ -1364,6 +1364,10 @@ h2 {
     color: var(--danger);
 }
 
+input, select, textarea, button {
+    font-family: inherit;
+}
+
 .styled-form input, 
 .styled-form select, 
 .styled-form textarea {
@@ -1376,6 +1380,11 @@ h2 {
     font-size: 13px;
     outline: none;
     transition: var(--transition-fast);
+}
+
+.styled-form input,
+.styled-form select {
+    height: 42px;
 }
 
 .styled-form input:focus, 
