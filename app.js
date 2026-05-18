@@ -427,9 +427,18 @@ function handleFlashcardAction(isCorrect) {
             if (word.box < 3) {
                 sourceList[originalIdx].box += 1;
             }
-            // Schedule next review based on Box weight
-            // Box 2: review in 3 days, Box 3: review in 7 days
-            const daysMultiplier = sourceList[originalIdx].box === 2 ? 3 : 7;
+            // Schedule next review based on Box weight & Adaptive student level (CEFR)
+            // Spaced Retrieval adapts dynamically to combat the forgetting curve:
+            // - Beginner: Needs faster recall (Box 2: 1.5 days, Box 3: 4 days)
+            // - Intermediate: Standard spacing (Box 2: 3 days, Box 3: 7 days)
+            // - Advanced: Stronger retention, wider spacing (Box 2: 5 days, Box 3: 12 days)
+            let daysMultiplier = sourceList[originalIdx].box === 2 ? 3 : 7;
+            if (state.userLevel === 'Beginner') {
+                daysMultiplier = sourceList[originalIdx].box === 2 ? 1.5 : 4;
+            } else if (state.userLevel === 'Advanced') {
+                daysMultiplier = sourceList[originalIdx].box === 2 ? 5 : 12;
+            }
+            
             sourceList[originalIdx].nextReview = now + (daysMultiplier * 24 * 60 * 60 * 1000);
         } else {
             // Downgrade to Box 1 (New) and schedule review immediately
