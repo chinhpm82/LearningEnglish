@@ -35,7 +35,7 @@ const firebaseConfig = {
 };
 
 // Check if user has set real Firebase credentials
-const isConfigured = firebaseConfig.apiKey !== "YOUR_API_KEY_PLACEHOLDER" && firebaseConfig.projectId !== "YOUR_PROJECT_ID";
+const isConfigured = firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY_PLACEHOLDER";
 
 let app, auth, db, googleProvider;
 let currentUser = null;
