@@ -3452,3 +3452,41 @@ input, select, textarea, button {
     border: 1px solid rgba(245, 158, 11, 0.2);
 }
 
+/* --- GLOWING RECOMMENDED CARD STYLE --- */
+.grammar-lesson-card.recommended {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(245, 158, 11, 0.04));
+    border: 1px dashed rgba(245, 158, 11, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.grammar-lesson-card.recommended::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 45%,
+        rgba(255, 255, 255, 0.05) 50%,
+        transparent 55%
+    );
+    transform: rotate(45deg);
+    animation: shine 4s infinite ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes shine {
+    0% { transform: translate(-30%, -30%) rotate(45deg); }
+    100% { transform: translate(30%, 30%) rotate(45deg); }
+}
+
+.grammar-lesson-card.recommended:hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(245, 158, 11, 0.08));
+    border-color: rgba(245, 158, 11, 0.7);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.15);
+}
+
+

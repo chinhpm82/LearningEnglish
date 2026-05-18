@@ -640,7 +640,10 @@
                         <div id="grammar-lesson-viewer" class="grammar-lesson-viewer hidden">
                             <div class="lesson-viewer-header">
                                 <h3 id="lesson-view-title">Tên chủ điểm học</h3>
-                                <span class="badge" id="lesson-view-category">Thì</span>
+                                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                                    <span class="badge" id="lesson-view-category">Thì</span>
+                                    <span class="badge" id="lesson-view-count" style="background: rgba(99, 102, 241, 0.15); color: #a5b4fc; border: 1px solid rgba(99, 102, 241, 0.3); font-size: 11px;">Đã học: 0 lần</span>
+                                </div>
                             </div>
 
                             <p id="lesson-view-description" class="lesson-description">Mô tả chi tiết</p>
@@ -701,8 +704,8 @@
                             <!-- Practice Success Screen -->
                             <div id="grammar-success-panel" class="grammar-success-panel hidden">
                                 <div class="success-icon animate-bounce">⭐</div>
-                                <h4>Xuất sắc! Bạn đã hoàn thành bài tập!</h4>
-                                <p>Bạn đã trả lời đúng tất cả các câu hỏi ngữ pháp và nhận được <strong>+5 Ngôi sao vàng ⭐</strong>!</p>
+                                <h4 id="grammar-success-title">Xuất sắc! Bạn đã hoàn thành bài tập!</h4>
+                                <p id="grammar-success-msg">Bạn đã trả lời đúng tất cả các câu hỏi ngữ pháp và nhận được <strong>+5 Ngôi sao vàng ⭐</strong>!</p>
                                 <button class="btn-secondary" id="btn-grammar-back-lesson" style="margin-top: 20px;">Quay lại bài học</button>
                             </div>
                         </div>

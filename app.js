@@ -1097,13 +1097,20 @@ function renderGrammarLessons(category = 'all') {
 
     listContainer.innerHTML = '';
     const filtered = category === 'all'
-        ? GRAMMAR_LESSONS
+        ? [...GRAMMAR_LESSONS]
         : GRAMMAR_LESSONS.filter(l => l.category === category);
 
     // Deterministic daily grammar recommendation based on current date
     const dateNum = new Date().getDate();
     const recommendedIndex = dateNum % GRAMMAR_LESSONS.length;
     const recommendedId = GRAMMAR_LESSONS[recommendedIndex].id;
+
+    // Place today's recommended lesson at the very top of the list
+    filtered.sort((a, b) => {
+        if (a.id === recommendedId) return -1;
+        if (b.id === recommendedId) return 1;
+        return 0;
+    });
 
     filtered.forEach(lesson => {
         const card = document.createElement('div');
@@ -1158,6 +1165,23 @@ function loadGrammarLesson(lessonId) {
     const catBadge = document.getElementById('lesson-view-category');
     catBadge.textContent = lesson.category === 'tenses' ? 'Thì trong tiếng Anh' : 'Cấu trúc câu';
     catBadge.className = `badge badge-${lesson.category}`;
+
+    // Study frequency badge
+    const studyCount = state.completedLessons.filter(id => id === lesson.id).length;
+    const countBadge = document.getElementById('lesson-view-count');
+    if (countBadge) {
+        if (studyCount === 0) {
+            countBadge.innerHTML = `🌱 Chưa học lần nào`;
+            countBadge.style.background = 'rgba(239, 68, 68, 0.15)';
+            countBadge.style.color = '#f87171';
+            countBadge.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+        } else {
+            countBadge.innerHTML = `⚡ Đã học: ${studyCount} lần`;
+            countBadge.style.background = 'rgba(16, 185, 129, 0.15)';
+            countBadge.style.color = '#34d399';
+            countBadge.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+        }
+    }
 
     document.getElementById('lesson-view-description').textContent = lesson.description;
     document.getElementById('lesson-view-formula').textContent = lesson.formula;
@@ -1301,10 +1325,22 @@ function nextGrammarPracticeQuestion() {
         state.completedLessons.push(lesson.id);
         saveStatsToStorage();
 
+        const totalTimes = studyCountBefore + 1;
+        const successTitleEl = document.getElementById('grammar-success-title');
+        const successMsgEl = document.getElementById('grammar-success-msg');
+
         if (studyCountBefore === 0) {
             awardStars(5, `Hoàn thành bài học "${lesson.title}"`);
+            if (successTitleEl) successTitleEl.textContent = `🎉 Tuyệt vời! Hoàn thành bài học!`;
+            if (successMsgEl) {
+                successMsgEl.innerHTML = `Chúc mừng bạn đã học thành công chủ điểm <strong>"${lesson.title}"</strong> lần đầu tiên! Bạn nhận được <strong>+5 Ngôi sao vàng ⭐</strong>.<br><br>💡 <em>Mẹo nhỏ: Học đi học lại nhiều lần sẽ giúp biến kiến thức ngữ pháp thành phản xạ tự nhiên của bạn!</em>`;
+            }
         } else {
-            awardStars(2, `Ôn tập thành công bài "${lesson.title}" (Lần ${studyCountBefore + 1})`);
+            awardStars(2, `Ôn tập thành công bài "${lesson.title}" (Lần ${totalTimes})`);
+            if (successTitleEl) successTitleEl.textContent = `🔥 Xuất sắc! Ôn tập liên tục!`;
+            if (successMsgEl) {
+                successMsgEl.innerHTML = `Bạn vừa xuất sắc ôn tập thành công chủ điểm <strong>"${lesson.title}"</strong> (Lần thứ <strong>${totalTimes}</strong>)! Bạn nhận được thêm <strong>+2 Ngôi sao vàng ⭐</strong>.<br><br>🚀 <em>Tuyệt vời! Bạn đang củng cố trí nhớ dài hạn cực kỳ tốt. Hãy duy trì phong độ và tiếp tục ôn tập nhé!</em>`;
+            }
         }
 
         // Re-render sidebar list to update "Đã xong ✅" status badge
