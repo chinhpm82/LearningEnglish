@@ -2,66 +2,7 @@
    VocabFlow - Application Engine (JavaScript Core)
    ========================================================================== */
 
-// --- INITIAL VOCABULARY DATASET ---
-const INITIAL_VOCABULARY = [
-    // 1. Oxford Essential Words (oxford)
-    { id: 'ox-1', word: 'Abandon', type: 'verb', ipa: '/əˈbændən/', meaning: 'Bỏ rơi, từ bỏ', example: 'The crew abandoned the sinking ship.', example_vi: 'Thủy thủ đoàn đã bỏ lại con tàu đang chìm.', category: 'oxford', box: 1, nextReview: 0 },
-    { id: 'ox-2', word: 'Benefit', type: 'noun', ipa: '/ˈbenɪfɪt/', meaning: 'Lợi ích, phúc lợi', example: 'There are many benefits to regular exercise.', example_vi: 'Có rất nhiều lợi ích từ việc tập thể dục đều đặn.', category: 'oxford', box: 1, nextReview: 0 },
-    { id: 'ox-3', word: 'Constant', type: 'adjective', ipa: '/ˈkɑːnstənt/', meaning: 'Không thay đổi, liên tục', example: 'The baby needs constant attention.', example_vi: 'Đứa bé cần được chú ý liên tục.', category: 'oxford', box: 1, nextReview: 0 },
-    { id: 'ox-4', word: 'Diverse', type: 'adjective', ipa: '/daɪˈvɜːrs/', meaning: 'Đa dạng, phong phú', example: 'London has a very diverse population.', example_vi: 'Luân Đôn có một dân số rất đa dạng.', category: 'oxford', box: 1, nextReview: 0 },
-    { id: 'ox-5', word: 'Emphasize', type: 'verb', ipa: '/ˈemfəsaɪz/', meaning: 'Nhấn mạnh, làm nổi bật', example: 'Our teacher emphasized the importance of grammar.', example_vi: 'Giáo viên của chúng tôi nhấn mạnh tầm quan trọng của ngữ pháp.', category: 'oxford', box: 1, nextReview: 0 },
-    { id: 'ox-6', word: 'Guarantee', type: 'verb', ipa: '/ˌɡærənˈtiː/', meaning: 'Bảo hành, cam đoan', example: 'We guarantee that our products are genuine.', example_vi: 'Chúng tôi cam đoan sản phẩm của chúng tôi là chính hãng.', category: 'oxford', box: 1, nextReview: 0 },
-    { id: 'ox-7', word: 'Hypothesis', type: 'noun', ipa: '/haɪˈpɑːθəsɪs/', meaning: 'Giả thuyết', example: 'Scientists proposed a new hypothesis.', example_vi: 'Các nhà khoa học đã đề xuất một giả thuyết mới.', category: 'oxford', box: 1, nextReview: 0 },
-    { id: 'ox-8', word: 'Illustrate', type: 'verb', ipa: '/ˈɪləstreɪt/', meaning: 'Minh họa, giải thích bằng tranh', example: 'This diagram illustrates how the machine works.', example_vi: 'Biểu đồ này minh họa cách thức hoạt động của máy.', category: 'oxford', box: 1, nextReview: 0 },
-    { id: 'ox-9', word: 'Justify', type: 'verb', ipa: '/ˈdʒʌstɪfaɪ/', meaning: 'Bào chữa, biện minh', example: 'How can you justify your bad behavior?', example_vi: 'Làm sao bạn có thể biện minh cho hành vi xấu của mình?', category: 'oxford', box: 1, nextReview: 0 },
-    { id: 'ox-10', word: 'Maintain', type: 'verb', ipa: '/meɪnˈteɪn/', meaning: 'Duy trì, bảo dưỡng', example: 'You must maintain a healthy lifestyle.', example_vi: 'Bạn phải duy trì một lối sống lành mạnh.', category: 'oxford', box: 1, nextReview: 0 },
 
-    // 2. Academic & IELTS Words (academic)
-    { id: 'ac-1', word: 'Acquire', type: 'verb', ipa: '/əˈkwaɪər/', meaning: 'Đạt được, thu hoạch được', example: 'She acquired a deep knowledge of art history.', example_vi: 'Cô ấy đã tích lũy được kiến thức sâu rộng về lịch sử nghệ thuật.', category: 'academic', box: 1, nextReview: 0 },
-    { id: 'ac-2', word: 'Consequence', type: 'noun', ipa: '/ˈkɑːnsəkwens/', meaning: 'Hệ quả, hậu quả', example: 'Actions always have consequences.', example_vi: 'Hành động luôn luôn đi kèm với hậu quả.', category: 'academic', box: 1, nextReview: 0 },
-    { id: 'ac-3', word: 'Equivalent', type: 'adjective', ipa: '/ɪˈkwɪvələnt/', meaning: 'Tương đương', example: 'Eight kilometers is equivalent to about five miles.', example_vi: 'Tám km tương đương với khoảng năm dặm.', category: 'academic', box: 1, nextReview: 0 },
-    { id: 'ac-4', word: 'Fluctuate', type: 'verb', ipa: '/ˈflʌktʃueɪt/', meaning: 'Dao động, biến động', example: 'Gold prices fluctuate daily.', example_vi: 'Giá vàng biến động hàng ngày.', category: 'academic', box: 1, nextReview: 0 },
-    { id: 'ac-5', word: 'Generate', type: 'verb', ipa: '/ˈdʒenəreɪt/', meaning: 'Tạo ra, phát sinh', example: 'Wind turbines generate clean electricity.', example_vi: 'Tua bin gió tạo ra điện năng sạch.', category: 'academic', box: 1, nextReview: 0 },
-    { id: 'ac-6', word: 'Hinder', type: 'verb', ipa: '/ˈhɪndər/', meaning: 'Cản trở, kìm hãm', example: 'Bad weather hindered our search efforts.', example_vi: 'Thời tiết xấu đã cản trở nỗ lực tìm kiếm của chúng tôi.', category: 'academic', box: 1, nextReview: 0 },
-    { id: 'ac-7', word: 'Inevitable', type: 'adjective', ipa: '/ɪnˈevɪtəbl/', meaning: 'Không thể tránh khỏi', example: 'Death is an inevitable part of life.', example_vi: 'Cái chết là một phần không thể tránh khỏi của cuộc sống.', category: 'academic', box: 1, nextReview: 0 },
-    { id: 'ac-8', word: 'Methodical', type: 'adjective', ipa: '/məˈθɑːdɪkl/', meaning: 'Có phương pháp, ngăn nắp', example: 'He is a methodical student who plans everything.', example_vi: 'Cậu ấy là một học sinh có quy củ, luôn lên kế hoạch cho mọi việc.', category: 'academic', box: 1, nextReview: 0 },
-    { id: 'ac-9', word: 'Obtain', type: 'verb', ipa: '/əbˈteɪn/', meaning: 'Đạt được, giành được', example: 'He obtained a visa after weeks of waiting.', example_vi: 'Anh ấy đã xin được visa sau nhiều tuần chờ đợi.', category: 'academic', box: 1, nextReview: 0 },
-    { id: 'ac-10', word: 'Prevalent', type: 'adjective', ipa: '/ˈprevələnt/', meaning: 'Phổ biến, thịnh hành', example: 'Flu is prevalent during winter months.', example_vi: 'Bệnh cúm rất phổ biến trong những tháng mùa đông.', category: 'academic', box: 1, nextReview: 0 },
-
-    // 3. Idioms & Phrasal Verbs (idioms)
-    { id: 'id-1', word: 'Bite the bullet', type: 'phrase', ipa: '/baɪt ðə ˈbʊlɪt/', meaning: 'Cắn răng chịu đựng, đối mặt khó khăn', example: 'I hate dentists, but I had to bite the bullet and go.', example_vi: 'Tôi ghét nha sĩ, nhưng tôi phải cắn răng chịu đựng để đi khám.', category: 'idioms', box: 1, nextReview: 0 },
-    { id: 'id-2', word: 'Break a leg', type: 'phrase', ipa: '/breɪk ə leɡ/', meaning: 'Chúc may mắn (thường dùng trong nghệ thuật)', example: 'Break a leg in your theater show tonight!', example_vi: 'Chúc buổi biểu diễn kịch tối nay của bạn thành công rực rỡ!', category: 'idioms', box: 1, nextReview: 0 },
-    { id: 'id-3', word: 'Call it a day', type: 'phrase', ipa: '/kɔːl ɪt ə deɪ/', meaning: 'Nghỉ tay, kết thúc ngày làm việc', example: 'We are all tired, let’s call it a day.', example_vi: 'Chúng ta đều mệt rồi, nghỉ tay thôi.', category: 'idioms', box: 1, nextReview: 0 },
-    { id: 'id-4', word: 'Under the weather', type: 'phrase', ipa: '/ˈʌndər ðə ˈweðər/', meaning: 'Mệt mỏi, không được khỏe', example: 'I will stay home because I feel under the weather.', example_vi: 'Tôi sẽ ở nhà vì cảm thấy người hơi mệt.', category: 'idioms', box: 1, nextReview: 0 },
-    { id: 'id-5', word: 'Spill the beans', type: 'phrase', ipa: '/spɪl ðə biːnz/', meaning: 'Tiết lộ bí mật', example: 'Don’t spill the beans about the surprise party!', example_vi: 'Đừng làm lộ bí mật về bữa tiệc bất ngờ nhé!', category: 'idioms', box: 1, nextReview: 0 }
-];
-
-// --- INITIAL COMMUNICATIVE SENTENCES ---
-const COMMUNICATIVE_SENTENCES = [
-    // Greeting
-    { english: 'How have you been lately?', vietnamese: 'Dạo này bạn thế nào?', category: 'greeting' },
-    { english: 'Long time no see! What’s new?', vietnamese: 'Lâu rồi không gặp! Có gì mới không?', category: 'greeting' },
-    { english: 'It’s a pleasure to meet you.', vietnamese: 'Rất hân hạnh được gặp bạn.', category: 'greeting' },
-    { english: 'Have a wonderful day ahead!', vietnamese: 'Chúc bạn một ngày mới tuyệt vời!', category: 'greeting' },
-    
-    // Travel
-    { english: 'Could you tell me how to get to the train station?', vietnamese: 'Bạn có thể chỉ cho tôi đường đến ga tàu hỏa được không?', category: 'travel' },
-    { english: 'How much is a ticket to the airport?', vietnamese: 'Một vé đi sân bay giá bao nhiêu?', category: 'travel' },
-    { english: 'Excuse me, is this seat taken?', vietnamese: 'Xin lỗi, chỗ này đã có ai ngồi chưa?', category: 'travel' },
-    { english: 'Can you recommend a good local restaurant?', vietnamese: 'Bạn có thể gợi ý một nhà hàng địa phương ngon không?', category: 'travel' },
-
-    // Dining & Shopping
-    { english: 'Could we see the menu and the wine list, please?', vietnamese: 'Cho chúng tôi xem thực đơn và danh sách rượu với?', category: 'dining' },
-    { english: 'I would like to order a medium-rare steak.', vietnamese: 'Tôi muốn đặt một phần bít tết chín vừa.', category: 'dining' },
-    { english: 'Excuse me, could we have the bill, please?', vietnamese: 'Xin lỗi, cho chúng tôi xin hóa đơn tính tiền được không?', category: 'dining' },
-    { english: 'Is there any discount on this item?', vietnamese: 'Mặt hàng này có được giảm giá không?', category: 'dining' },
-
-    // Work
-    { english: 'Let’s schedule a meeting to discuss the details.', vietnamese: 'Hãy lên lịch một cuộc họp để thảo luận chi tiết.', category: 'work' },
-    { english: 'What is the absolute deadline for this project?', vietnamese: 'Hạn chót tuyệt đối của dự án này là khi nào?', category: 'work' },
-    { english: 'I am currently working on this task and will finish soon.', vietnamese: 'Tôi đang làm nhiệm vụ này và sẽ sớm hoàn thành thôi.', category: 'work' },
-    { english: 'Thank you for your valuable feedback.', vietnamese: 'Cảm ơn sự phản hồi quý giá của bạn.', category: 'work' }
-];
 
 // --- GLOBAL APPLICATION STATE ---
 let state = {

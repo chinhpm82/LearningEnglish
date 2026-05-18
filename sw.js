@@ -1,9 +1,11 @@
-const CACHE_NAME = 'learningenglish-v1';
+const CACHE_NAME = 'learningenglish-v2';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './styles.css',
     './app.js',
+    './data/vocabulary-data.js',
+    './data/sentences-data.js',
     './manifest.json',
     './icon-192.png',
     './icon-512.png'
