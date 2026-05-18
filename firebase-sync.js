@@ -18,7 +18,10 @@ import {
     collection, 
     getDocs, 
     deleteDoc, 
-    updateDoc 
+    updateDoc,
+    query,
+    orderBy,
+    limit
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // --- FIREBASE CONFIGURATION (CẤU HÌNH HỆ THỐNG) ---
@@ -136,8 +139,8 @@ window.FirebaseSync = {
         }
     },
 
-    // Save user profile stats (Streak, LastStudyDate, QuizStats, UserLevel, RoadmapTasks)
-    saveStreak: async (streak, lastStudyDate, quizStats, userLevel = '', roadmapTasks = []) => {
+    // Save user profile stats (Streak, LastStudyDate, QuizStats, UserLevel, RoadmapTasks, Stars)
+    saveStreak: async (streak, lastStudyDate, quizStats, userLevel = '', roadmapTasks = [], stars = 0) => {
         if (!isConfigured || !currentUser) return;
         try {
             const userRef = doc(db, "users", currentUser.uid);
@@ -150,10 +153,29 @@ window.FirebaseSync = {
                 quizStats: quizStats,
                 userLevel: userLevel,
                 roadmapTasks: roadmapTasks,
+                stars: stars,
                 updatedAt: Date.now()
             }, { merge: true });
         } catch (e) {
             console.error("Error saving streak and roadmap statistics to Firestore:", e);
+        }
+    },
+
+    // Fetch global student leaderboard (top 15 sorted by stars)
+    loadLeaderboard: async () => {
+        if (!isConfigured) return null;
+        try {
+            const usersRef = collection(db, "users");
+            const q = query(usersRef, orderBy("stars", "desc"), limit(15));
+            const querySnapshot = await getDocs(q);
+            const leaderboard = [];
+            querySnapshot.forEach((docSnapshot) => {
+                leaderboard.push(docSnapshot.data());
+            });
+            return leaderboard;
+        } catch (e) {
+            console.error("Error loading global leaderboard from Firestore:", e);
+            return null;
         }
     },
 

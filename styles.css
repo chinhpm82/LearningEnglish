@@ -2286,3 +2286,178 @@ h2 {
     text-decoration: underline;
     cursor: pointer;
 }
+
+/* --- DYNAMIC GAMIFICATION & LEADERBOARD STYLES --- */
+
+.dashboard-stars-widget {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.05));
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    padding: 10px 18px;
+    border-radius: 16px;
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.dashboard-stars-widget:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+    border-color: rgba(251, 191, 36, 0.5);
+}
+
+.dashboard-stars-widget .stars-icon {
+    font-size: 20px;
+    filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.6));
+    animation: rotateStar 3s infinite linear;
+}
+
+@keyframes rotateStar {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.dashboard-stars-widget .stars-val {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 800;
+    color: #fbbf24;
+}
+
+.dashboard-stars-widget .stars-lbl {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.leaderboard-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px 0;
+}
+
+.leaderboard-card {
+    background: rgba(30, 41, 59, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.leaderboard-header-row {
+    display: grid;
+    grid-template-columns: 70px 50px 1fr 120px 120px;
+    align-items: center;
+    padding: 18px 24px;
+    background: rgba(15, 23, 42, 0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.leaderboard-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.leaderboard-row {
+    display: grid;
+    grid-template-columns: 70px 50px 1fr 120px 120px;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    transition: all 0.2s ease;
+}
+
+.leaderboard-row:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.leaderboard-row.current-user {
+    background: rgba(99, 102, 241, 0.12);
+    border-left: 4px solid var(--primary);
+    box-shadow: inset 0 0 15px rgba(99, 102, 241, 0.05);
+}
+
+.col-rank {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+}
+
+.col-rank .medal-icon {
+    font-size: 22px;
+}
+
+.leaderboard-row:nth-child(1) .col-rank { color: #f59e0b; }
+.leaderboard-row:nth-child(2) .col-rank { color: #94a3b8; }
+.leaderboard-row:nth-child(3) .col-rank { color: #b45309; }
+
+.col-avatar {
+    display: flex;
+    align-items: center;
+}
+
+.leaderboard-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    object-fit: cover;
+}
+
+.leaderboard-row.current-user .leaderboard-avatar {
+    border-color: var(--primary);
+    box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
+}
+
+.col-name {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #fff;
+    padding-left: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.leaderboard-row.current-user .col-name {
+    color: var(--primary-light);
+}
+
+.col-streak {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: #ef4444;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.col-stars {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 800;
+    color: #fbbf24;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.leaderboard-empty-state {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--text-muted);
+}

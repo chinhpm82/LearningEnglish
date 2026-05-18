@@ -74,7 +74,10 @@ let state = {
         correctAnswers: 0
     },
     userLevel: '',       // 'Beginner', 'Intermediate', 'Advanced'
-    roadmapTasks: []     // Daily checklist tasks { text, completed }
+    roadmapTasks: [],    // Daily checklist tasks { text, completed }
+    stars: 0,            // Gamification Gold Stars ⭐
+    currentUserEmail: '', // Authenticated user email
+    displayName: ''      // Authenticated user displayName
 };
 
 // Flashcard Deck study state
@@ -126,8 +129,10 @@ function loadState() {
 
         const storedLevel = localStorage.getItem('vocabflow_user_level');
         const storedRoadmap = localStorage.getItem('vocabflow_roadmap_tasks');
+        const storedStars = localStorage.getItem('vocabflow_stars');
         if (storedLevel) state.userLevel = storedLevel;
         if (storedRoadmap) state.roadmapTasks = JSON.parse(storedRoadmap);
+        if (storedStars) state.stars = parseInt(storedStars, 10);
     } catch (e) {
         console.error('Error reading localStorage data', e);
         // Fallback
@@ -151,10 +156,11 @@ function saveStatsToStorage() {
     localStorage.setItem('vocabflow_quiz_stats', JSON.stringify(state.quizStats));
     localStorage.setItem('vocabflow_user_level', state.userLevel);
     localStorage.setItem('vocabflow_roadmap_tasks', JSON.stringify(state.roadmapTasks));
+    localStorage.setItem('vocabflow_stars', state.stars.toString());
     
     // Sync to Firebase if in Cloud Mode
     if (isCloudMode && window.FirebaseSync) {
-        window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks);
+        window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars);
     }
 }
 
@@ -211,6 +217,18 @@ function checkAndUpdateStreak() {
 function renderDashboard() {
     const totalWordsCount = state.vocabulary.length + state.customWords.length;
     
+    // Update Gold Stars counter
+    const starsCountEl = document.getElementById('dashboard-stars-count');
+    if (starsCountEl) {
+        starsCountEl.textContent = state.stars;
+    }
+
+    // Update dynamic welcome greeting
+    const welcomeUserEl = document.getElementById('welcome-username');
+    if (welcomeUserEl) {
+        welcomeUserEl.textContent = state.displayName ? state.displayName.split(' ')[0] : 'Học viên';
+    }
+
     // Group all words (built-in + custom)
     const allWords = [...state.vocabulary, ...state.customWords];
     
@@ -468,6 +486,7 @@ function handleFlashcardAction(isCorrect) {
     } else {
         // Session ended
         alert('🎉 Chúc mừng! Bạn đã hoàn thành tất cả thẻ trong lượt này.');
+        awardStars(10, "Hoàn thành lượt học Flashcard");
         initFlashcardSession(document.getElementById('flashcard-category').value);
     }
 }
@@ -646,6 +665,12 @@ function showQuizResults() {
     const pct = Math.round((quizScore / quizQuestions.length) * 100);
 
     document.getElementById('result-score-val').textContent = `${quizScore} / ${quizQuestions.length}`;
+    
+    // Award Gold Stars for Quiz completion & accuracy!
+    const baseStars = 15;
+    const accuracyStars = quizScore * 2;
+    const totalStarsEarned = baseStars + accuracyStars;
+    awardStars(totalStarsEarned, `Hoàn thành trắc nghiệm (${quizScore}/10 câu đúng)`);
     document.getElementById('result-time').textContent = `${durationSec} giây`;
     document.getElementById('result-accuracy').textContent = `${pct}%`;
 
@@ -953,6 +978,7 @@ function handleAddWordForm(e) {
 
     state.customWords.push(newWord);
     saveCustomWordsToStorage();
+    awardStars(5, `Thêm từ mới "${wordVal}" vào Sổ tay`);
 
     // Sync to Firebase if in Cloud Mode
     if (isCloudMode && window.FirebaseSync) {
@@ -1049,6 +1075,8 @@ function setUpTabNavigation() {
                 renderSentences();
             } else if (targetId === 'dashboard-tab') {
                 renderDashboard();
+            } else if (targetId === 'leaderboard-tab') {
+                renderLeaderboard();
             }
         });
     });
@@ -1080,6 +1108,10 @@ function initApp() {
                 profileCard.classList.remove('hidden');
                 guestBanner.classList.add('hidden');
 
+                // Save email and display name to state
+                state.currentUserEmail = user.email || '';
+                state.displayName = user.displayName || '';
+
                 // Render User Profile Card
                 document.getElementById('user-avatar-img').src = user.photoURL || 'https://www.gravatar.com/avatar/?d=mp';
                 document.getElementById('user-display-name').textContent = user.displayName || 'Học viên';
@@ -1096,6 +1128,7 @@ function initApp() {
                         state.quizStats = cloudData.profile.quizStats || { totalAnswered: 0, correctAnswers: 0 };
                         state.userLevel = cloudData.profile.userLevel || '';
                         state.roadmapTasks = cloudData.profile.roadmapTasks || [];
+                        state.stars = cloudData.profile.stars || 0;
                     }
                     if (cloudData.customWords) {
                         state.customWords = cloudData.customWords;
@@ -1279,7 +1312,7 @@ async function syncCurrentStateToCloud() {
     if (!window.FirebaseSync || !isCloudMode) return;
     
     // Save streak stats
-    await window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks);
+    await window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars);
     
     // Save custom words
     for (const word of state.customWords) {
@@ -1308,3 +1341,137 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// --- GLOBAL GAMIFICATION & STARS CORE FUNCTIONS ---
+
+function awardStars(amount, reason) {
+    state.stars += amount;
+    saveStatsToStorage();
+    renderDashboard();
+    
+    // Show premium sliding star toast
+    showStarToast(amount, reason);
+}
+
+function showStarToast(amount, reason) {
+    let container = document.getElementById('star-toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'star-toast-container';
+        container.style.position = 'fixed';
+        container.style.bottom = '24px';
+        container.style.right = '24px';
+        container.style.zIndex = '9999';
+        container.style.display = 'flex';
+        container.style.flexDirection = 'column';
+        container.style.gap = '8px';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.style.background = 'rgba(15, 23, 42, 0.95)';
+    toast.style.border = '1px solid #fbbf24';
+    toast.style.borderRadius = '12px';
+    toast.style.padding = '12px 20px';
+    toast.style.color = '#fff';
+    toast.style.boxShadow = '0 10px 25px rgba(251, 191, 36, 0.2)';
+    toast.style.backdropFilter = 'blur(10px)';
+    toast.style.display = 'flex';
+    toast.style.alignItems = 'center';
+    toast.style.gap = '10px';
+    toast.style.transform = 'translateY(50px)';
+    toast.style.opacity = '0';
+    toast.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    
+    toast.innerHTML = `
+        <span style="font-size:20px; filter: drop-shadow(0 0 4px #fbbf24);">⭐</span>
+        <div>
+            <div style="font-weight:800; color:#fbbf24; font-size:14px;">+${amount} Gold Stars!</div>
+            <div style="font-size:11px; color:#94a3b8;">${reason}</div>
+        </div>
+    `;
+    
+    container.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.style.transform = 'translateY(0)';
+        toast.style.opacity = '1';
+    }, 50);
+
+    setTimeout(() => {
+        toast.style.transform = 'translateY(-20px)';
+        toast.style.opacity = '0';
+        setTimeout(() => {
+            toast.remove();
+        }, 300);
+    }, 3500);
+}
+
+// --- GLOBAL LEADERBOARD UI RENDERER ---
+
+async function renderLeaderboard() {
+    const listContainer = document.getElementById('leaderboard-users-list');
+    if (!listContainer) return;
+
+    if (!isCloudMode || !window.FirebaseSync) {
+        listContainer.innerHTML = `
+            <div class="leaderboard-empty-state">
+                <h3 style="color:#fff; margin-bottom: 8px;">🔒 Đua Top Bảng Xếp Hạng</h3>
+                <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 16px;">
+                    Tính năng Bảng xếp hạng yêu cầu kết nối mạng và tài khoản. Hãy Đăng nhập bằng Google để tranh tài cùng các học viên khác!
+                </p>
+                <button class="btn-primary animate-glow" id="btn-leaderboard-login" style="padding: 10px 20px; font-size:13px; border-radius:30px; cursor:pointer;">
+                    Đăng nhập ngay
+                </button>
+            </div>
+        `;
+        document.getElementById('btn-leaderboard-login').addEventListener('click', showAuthOverlay);
+        return;
+    }
+
+    listContainer.innerHTML = `
+        <div class="roadmap-loading">
+            <span class="pulse-dot"></span>
+            <span>Đang tải bảng xếp hạng trực tuyến...</span>
+        </div>
+    `;
+
+    const leaderboard = await window.FirebaseSync.loadLeaderboard();
+    if (!leaderboard || leaderboard.length === 0) {
+        listContainer.innerHTML = `
+            <div class="leaderboard-empty-state">
+                <p>Chưa có dữ liệu bảng xếp hạng. Hãy hoàn thành các bài học để trở thành người dẫn đầu!</p>
+            </div>
+        `;
+        return;
+    }
+
+    listContainer.innerHTML = '';
+    
+    leaderboard.forEach((user, idx) => {
+        const row = document.createElement('div');
+        row.className = `leaderboard-row ${user.email === state.currentUserEmail ? 'current-user' : ''}`;
+        
+        let rankDisplay = idx + 1;
+        if (idx === 0) rankDisplay = '<span class="medal-icon">🥇</span>';
+        else if (idx === 1) rankDisplay = '<span class="medal-icon">🥈</span>';
+        else if (idx === 2) rankDisplay = '<span class="medal-icon">🥉</span>';
+        
+        const avatarUrl = user.photoURL || 'https://www.gravatar.com/avatar/?d=mp';
+        const displayName = user.name || 'Học viên ẩn danh';
+        const userStreak = user.streak || 0;
+        const userStars = user.stars || 0;
+
+        row.innerHTML = `
+            <span class="col-rank">${rankDisplay}</span>
+            <div class="col-avatar">
+                <img src="${avatarUrl}" alt="Avatar" class="leaderboard-avatar">
+            </div>
+            <span class="col-name">${displayName}</span>
+            <span class="col-streak">${userStreak} 🔥</span>
+            <span class="col-stars">${userStars} ⭐</span>
+        `;
+        
+        listContainer.appendChild(row);
+    });
+}

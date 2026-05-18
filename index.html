@@ -76,6 +76,10 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                     <span>Câu giao tiếp</span>
                 </button>
+                <button class="nav-item" data-target="leaderboard-tab" id="btn-leaderboard">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <span>Bảng xếp hạng</span>
+                </button>
             </nav>
 
             <div class="user-streak-widget">
@@ -95,9 +99,17 @@
         <main class="app-main">
             <!-- TAB 1: DASHBOARD -->
             <section id="dashboard-tab" class="tab-content active">
-                <div class="welcome-header">
-                    <h2>Chào mừng trở lại! 👋</h2>
-                    <p>Hôm nay là một ngày tuyệt vời để học thêm từ mới.</p>
+                <div class="welcome-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                    <div>
+                        <h2>Chào mừng trở lại, <span id="welcome-username">Học viên</span>! 👋</h2>
+                        <p>Hôm nay là một ngày tuyệt vời để học thêm từ mới.</p>
+                    </div>
+                    <!-- Stars Counter Card on Dashboard Welcome Header -->
+                    <div class="dashboard-stars-widget animate-glow">
+                        <span class="stars-icon">⭐</span>
+                        <span class="stars-val" id="dashboard-stars-count">0</span>
+                        <span class="stars-lbl">Gold Stars</span>
+                    </div>
                 </div>
 
                 <!-- Dynamic Learning Roadmap Panel -->
@@ -495,6 +507,34 @@
                 <!-- Sentences Container Grid -->
                 <div class="sentences-grid" id="sentences-list-container">
                     <!-- Dynamic sentence cards -->
+                </div>
+            </section>
+
+            <!-- TAB 6: LEADERBOARD -->
+            <section id="leaderboard-tab" class="tab-content">
+                <div class="tab-title-row">
+                    <div>
+                        <h2>Bảng Xếp Hạng Học Viên 🏆</h2>
+                        <p>Thi đua tích luỹ Ngôi sao học tập ⭐ và Chuỗi ngày học liên tiếp 🔥 cùng những học viên khác.</p>
+                    </div>
+                </div>
+
+                <div class="leaderboard-container">
+                    <div class="leaderboard-card">
+                        <div class="leaderboard-header-row">
+                            <span class="col-rank">Hạng</span>
+                            <span class="col-avatar">Học viên</span>
+                            <span class="col-name"></span>
+                            <span class="col-streak">Chuỗi ngày 🔥</span>
+                            <span class="col-stars">Ngôi sao ⭐</span>
+                        </div>
+                        <div class="leaderboard-list" id="leaderboard-users-list">
+                            <div class="roadmap-loading">
+                                <span class="pulse-dot"></span>
+                                <span>Đang tải bảng xếp hạng trực tuyến...</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
