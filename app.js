@@ -67,6 +67,10 @@ function loadState() {
                 state.vocabulary = [...INITIAL_VOCABULARY, ...specList];
                 saveVocabToStorage();
             } else {
+                // Self-healing: Remove old duplicated words with number suffixes (e.g. "Algorithm 2")
+                const beforeLen = state.vocabulary.length;
+                state.vocabulary = state.vocabulary.filter(w => !/\s\d+$/.test(w.word));
+                
                 // Self-healing merge: Add any missing specialized words to the existing state
                 let merged = false;
                 specList.forEach(specWord => {
@@ -75,7 +79,7 @@ function loadState() {
                         merged = true;
                     }
                 });
-                if (merged) {
+                if (merged || state.vocabulary.length !== beforeLen) {
                     saveVocabToStorage();
                 }
             }
