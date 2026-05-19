@@ -48,98 +48,55 @@ let isCloudMode = false;
 let authSkip = false;
 
 // --- CORE UTILITY FUNCTIONS ---
-
-// Load data from LocalStorage
-function loadState() {
+// Load data from IndexedDB
+async function loadStateAsync() {
     try {
-        const storedVocab = localStorage.getItem('vocabflow_vocab');
-        const storedCustom = localStorage.getItem('vocabflow_custom');
-        const storedStreak = localStorage.getItem('vocabflow_streak');
-        const storedLastDate = localStorage.getItem('vocabflow_last_date');
-        const storedQuizStats = localStorage.getItem('vocabflow_quiz_stats');
+        console.log('Initializing IndexedDB...');
+        await LearningDB.initDB();
 
-        // Ensure SPECIALIZED_VOCABULARY is defined (loaded from specialized-data.js)
-        const specList = typeof SPECIALIZED_VOCABULARY !== 'undefined' ? SPECIALIZED_VOCABULARY : [];
+        // 1. Migrate old localStorage data if present
+        await LearningDB.migrateFromLocalStorage();
+
+        // 2. Ensure Database is seeded with seed files (Deduplicates automatically inside db-manager)
+        const initialVoc = typeof INITIAL_VOCABULARY !== 'undefined' ? INITIAL_VOCABULARY : [];
+        const specVoc = typeof SPECIALIZED_VOCABULARY !== 'undefined' ? SPECIALIZED_VOCABULARY : [];
+        await LearningDB.seedDatabase(initialVoc, specVoc);
+
+        // 3. Load vocabulary into global state
+        state.vocabulary = await LearningDB.getAllVocab();
+        console.log(`Loaded ${state.vocabulary.length} unique words from IndexedDB.`);
+
+        // 4. Load other progress variables from progress store
+        state.customWords = await LearningDB.getProgress('custom_words', []);
+        state.streak = await LearningDB.getProgress('streak', 0);
+        state.lastStudyDate = await LearningDB.getProgress('last_study_date', '');
+        state.quizStats = await LearningDB.getProgress('quiz_stats', { totalAnswered: 0, correctAnswers: 0 });
+        state.userLevel = await LearningDB.getProgress('user_level', 'Beginner');
+        state.lastTestScore = await LearningDB.getProgress('last_test_score', 0);
+        state.stars = await LearningDB.getProgress('stars', 0);
+        state.photoURL = await LearningDB.getProgress('photo_url', '');
+        state.displayName = await LearningDB.getProgress('display_name', '');
+        state.completedLessons = await LearningDB.getProgress('completed_lessons', []);
+        state.completedSentences = await LearningDB.getProgress('completed_sentences', []);
         
-        if (storedVocab) {
-            state.vocabulary = JSON.parse(storedVocab);
-            if (!Array.isArray(state.vocabulary) || state.vocabulary.length === 0) {
-                state.vocabulary = [...INITIAL_VOCABULARY, ...specList];
-                saveVocabToStorage();
-            } else {
-                // Self-healing: Remove old duplicated words with number suffixes (e.g. "Algorithm 2")
-                const beforeLen = state.vocabulary.length;
-                state.vocabulary = state.vocabulary.filter(w => !/\s\d+$/.test(w.word));
-                
-                // Self-healing merge: Add any missing specialized words to the existing state
-                let merged = false;
-                specList.forEach(specWord => {
-                    if (!state.vocabulary.some(w => w.id === specWord.id)) {
-                        state.vocabulary.push(specWord);
-                        merged = true;
-                    }
-                });
-                if (merged || state.vocabulary.length !== beforeLen) {
-                    saveVocabToStorage();
-                }
-            }
-        } else {
-            state.vocabulary = [...INITIAL_VOCABULARY, ...specList];
-            saveVocabToStorage();
-        }
-
-        if (storedCustom) {
-            state.customWords = JSON.parse(storedCustom);
-        } else {
-            state.customWords = [];
-        }
-
-        if (storedStreak) state.streak = parseInt(storedStreak, 10);
-        if (storedLastDate) state.lastStudyDate = storedLastDate;
-        
-        if (storedQuizStats) {
-            state.quizStats = JSON.parse(storedQuizStats);
-        }
-
-        const storedLevel = localStorage.getItem('vocabflow_user_level');
-        const storedTestScore = localStorage.getItem('vocabflow_last_test_score');
-        const storedRoadmap = localStorage.getItem('vocabflow_roadmap_tasks');
-        const storedStars = localStorage.getItem('vocabflow_stars');
-        const storedPhoto = localStorage.getItem('vocabflow_photo_url');
-        const storedDisplayName = localStorage.getItem('vocabflow_display_name');
-        const storedCompletedLessons = localStorage.getItem('vocabflow_completed_lessons');
-        const storedCompletedSentences = localStorage.getItem('vocabflow_completed_sentences');
-        
-        if (storedLevel) {
-            state.userLevel = storedLevel;
-        } else {
-            state.userLevel = 'Beginner';
-        }
-        
-        if (storedTestScore) {
-            state.lastTestScore = parseInt(storedTestScore, 10);
-        } else {
-            state.lastTestScore = 0;
-        }
-
+        const storedRoadmap = await LearningDB.getProgress('roadmap_tasks', null);
         if (storedRoadmap) {
-            state.roadmapTasks = JSON.parse(storedRoadmap);
+            state.roadmapTasks = storedRoadmap;
         } else {
             state.roadmapTasks = generateRoadmapTasks(state.userLevel);
+            await saveStatsToStorage();
         }
-        
-        if (storedStars) state.stars = parseInt(storedStars, 10);
-        if (storedPhoto) state.photoURL = storedPhoto;
-        if (storedDisplayName) state.displayName = storedDisplayName;
-        if (storedCompletedLessons) state.completedLessons = JSON.parse(storedCompletedLessons);
-        else state.completedLessons = [];
-        
-        if (storedCompletedSentences) state.completedSentences = JSON.parse(storedCompletedSentences);
-        else state.completedSentences = [];
+
+        // Keep localStorage for legacy or PWA basic indicators only
+        localStorage.setItem('vocabflow_user_level', state.userLevel);
+        localStorage.setItem('vocabflow_stars', state.stars.toString());
+        localStorage.setItem('vocabflow_display_name', state.displayName);
+        localStorage.setItem('vocabflow_photo_url', state.photoURL);
+
     } catch (e) {
-        console.error('Error reading localStorage data', e);
-        // Fallback
-        state.vocabulary = [...INITIAL_VOCABULARY];
+        console.error('Error reading IndexedDB database, falling back to LocalStorage', e);
+        // Fallback in case of absolute failure
+        state.vocabulary = [...(typeof INITIAL_VOCABULARY !== 'undefined' ? INITIAL_VOCABULARY : [])];
         state.customWords = [];
         state.completedLessons = [];
         state.completedSentences = [];
@@ -150,27 +107,44 @@ function loadState() {
 }
 
 // Save helpers
-function saveVocabToStorage() {
-    localStorage.setItem('vocabflow_vocab', JSON.stringify(state.vocabulary));
+async function saveVocabToStorage() {
+    // Only bulk save in IndexedDB if really needed. 
+    // Usually we update single words on-the-fly, but keeping this helper for global sync
+    await LearningDB.bulkUpdateVocab(state.vocabulary);
+}
+
+// Update single word in DB
+async function updateWordInDB(wordObj) {
+    try {
+        await LearningDB.updateVocabWord(wordObj);
+    } catch (e) {
+        console.error('Failed to update word in IndexedDB', e);
+    }
 }
 
 // Save custom words
-function saveCustomWordsToStorage() {
-    localStorage.setItem('vocabflow_custom', JSON.stringify(state.customWords));
+async function saveCustomWordsToStorage() {
+    await LearningDB.setProgress('custom_words', state.customWords);
 }
 
-function saveStatsToStorage() {
-    localStorage.setItem('vocabflow_streak', state.streak.toString());
-    localStorage.setItem('vocabflow_last_date', state.lastStudyDate);
-    localStorage.setItem('vocabflow_quiz_stats', JSON.stringify(state.quizStats));
+async function saveStatsToStorage() {
+    await LearningDB.setProgress('streak', state.streak);
+    await LearningDB.setProgress('last_study_date', state.lastStudyDate);
+    await LearningDB.setProgress('quiz_stats', state.quizStats);
+    await LearningDB.setProgress('user_level', state.userLevel);
+    await LearningDB.setProgress('last_test_score', state.lastTestScore);
+    await LearningDB.setProgress('roadmap_tasks', state.roadmapTasks);
+    await LearningDB.setProgress('stars', state.stars);
+    await LearningDB.setProgress('photo_url', state.photoURL);
+    await LearningDB.setProgress('display_name', state.displayName);
+    await LearningDB.setProgress('completed_lessons', state.completedLessons);
+    await LearningDB.setProgress('completed_sentences', state.completedSentences);
+
+    // Keep localStorage in sync for basic visual items
     localStorage.setItem('vocabflow_user_level', state.userLevel);
-    localStorage.setItem('vocabflow_last_test_score', state.lastTestScore.toString());
-    localStorage.setItem('vocabflow_roadmap_tasks', JSON.stringify(state.roadmapTasks));
     localStorage.setItem('vocabflow_stars', state.stars.toString());
-    localStorage.setItem('vocabflow_photo_url', state.photoURL);
     localStorage.setItem('vocabflow_display_name', state.displayName);
-    localStorage.setItem('vocabflow_completed_lessons', JSON.stringify(state.completedLessons));
-    localStorage.setItem('vocabflow_completed_sentences', JSON.stringify(state.completedSentences));
+    localStorage.setItem('vocabflow_photo_url', state.photoURL);
     
     // Sync to Firebase if in Cloud Mode
     if (isCloudMode && window.FirebaseSync) {
@@ -496,7 +470,7 @@ function toggleCardFlip() {
 }
 
 // Leitner SRS Scheduling Logic
-function handleFlashcardAction(isCorrect) {
+async function handleFlashcardAction(isCorrect) {
     if (flashcardDeck.length === 0) return;
     
     // Register study activity for Streak
@@ -542,9 +516,12 @@ function handleFlashcardAction(isCorrect) {
             sourceList[originalIdx].nextReview = now; // Ready immediately
         }
 
-        // Save
-        if (isCustom) saveCustomWordsToStorage();
-        else saveVocabToStorage();
+        // Save asynchronously
+        if (isCustom) {
+            await saveCustomWordsToStorage();
+        } else {
+            await updateWordInDB(sourceList[originalIdx]);
+        }
 
         // Sync to Firebase if in Cloud Mode
         if (isCloudMode && window.FirebaseSync) {
@@ -1023,7 +1000,7 @@ function renderWordbook(searchTerm = '') {
     });
 }
 
-function handleAddWordForm(e) {
+async function handleAddWordForm(e) {
     e.preventDefault();
 
     const wordVal = document.getElementById('form-word').value.trim();
@@ -1056,7 +1033,7 @@ function handleAddWordForm(e) {
     };
 
     state.customWords.push(newWord);
-    saveCustomWordsToStorage();
+    await saveCustomWordsToStorage();
     awardStars(5, `Thêm từ mới "${wordVal}" vào Sổ tay`);
 
     // Sync to Firebase if in Cloud Mode
@@ -1074,11 +1051,11 @@ function handleAddWordForm(e) {
     alert(`🎉 Đã thêm thành công từ "${wordVal}" vào Sổ tay của bạn!`);
 }
 
-function deleteWordFromWordbook(id) {
+async function deleteWordFromWordbook(id) {
     if (!confirm('Bạn có chắc chắn muốn xóa từ này khỏi Sổ tay?')) return;
 
     state.customWords = state.customWords.filter(w => w.id !== id);
-    saveCustomWordsToStorage();
+    await saveCustomWordsToStorage();
 
     // Sync to Firebase if in Cloud Mode
     if (isCloudMode && window.FirebaseSync) {
@@ -1519,6 +1496,9 @@ function initApp() {
             const profileCard = document.getElementById('user-profile-card');
             const guestBanner = document.getElementById('guest-mode-banner');
 
+            // Always ensure local state is loaded first
+            await loadStateAsync();
+
             if (user) {
                 // Cloud Mode Activated!
                 isCloudMode = true;
@@ -1570,9 +1550,9 @@ function initApp() {
                 }
 
                 // Sync local backup
-                saveVocabToStorage();
-                saveCustomWordsToStorage();
-                saveStatsToStorage();
+                await saveVocabToStorage();
+                await saveCustomWordsToStorage();
+                await saveStatsToStorage();
 
                 // Re-render views with user specific data
                 renderDashboard();
@@ -1599,15 +1579,16 @@ function initApp() {
                     guestBanner.querySelector('.banner-text').textContent = 'Chế độ Khách (Offline)';
                 }
 
-                // Load offline local data
-                loadState();
+                // Re-render dashboard for Guest
                 renderDashboard();
             }
         });
     } else {
         // Fallback if script somehow not loaded, load offline local data
-        loadState();
-        renderDashboard();
+        (async () => {
+            await loadStateAsync();
+            renderDashboard();
+        })();
     }
 
     // 4. Wordbook Submit Action
@@ -1745,11 +1726,11 @@ async function handleGoogleLogout() {
     }
 }
 
-function skipAuthOverlay() {
+async function skipAuthOverlay() {
     authSkip = true;
     document.getElementById('auth-overlay').classList.add('hidden');
     document.getElementById('guest-mode-banner').classList.remove('hidden');
-    loadState();
+    await loadStateAsync();
     renderDashboard();
 }
 
