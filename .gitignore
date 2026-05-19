@@ -12,3 +12,5 @@ scratch/
 .DS_Store
 Thumbs.db
 *.log
+.history/
+
