@@ -25,7 +25,8 @@ let state = {
     googlePhotoURL: '',   // Google authenticating user photoURL
     completedLessons: [], // Completed grammar lesson IDs
     completedSentences: [], // Completed communicative sentence english string IDs
-    stories_done: []      // Completed reading stories
+    stories_done: [],      // Completed reading stories
+    writingHighScores: {} // Store highest score reached on each writing topic permanently!
 };
 
 // Flashcard Deck study state
@@ -88,6 +89,7 @@ async function loadStateAsync() {
         state.completedLessons = await LearningDB.getProgress('completed_lessons', []);
         state.completedSentences = await LearningDB.getProgress('completed_sentences', []);
         state.stories_done = await LearningDB.getProgress('stories_done', []);
+        state.writingHighScores = await LearningDB.getProgress('writing_high_scores', {});
         storiesState.completedStories = state.stories_done;
         
         const storedRoadmap = await LearningDB.getProgress('roadmap_tasks', null);
@@ -156,6 +158,7 @@ async function saveStatsToStorage() {
     await LearningDB.setProgress('completed_lessons', state.completedLessons);
     await LearningDB.setProgress('completed_sentences', state.completedSentences);
     await LearningDB.setProgress('stories_done', state.stories_done);
+    await LearningDB.setProgress('writing_high_scores', state.writingHighScores);
 
     // Keep localStorage in sync for basic visual items
     localStorage.setItem('vocabflow_user_level', state.userLevel);
@@ -3374,20 +3377,24 @@ function gradeWritingEssay() {
         aiComment += `• Chúc mừng bạn đã trình bày cú pháp và quy tắc viết hoa cực kỳ chính xác!\n`;
     }
     
-    // Reward Stars (High Score Delta system)
+    // Reward Stars (Persistent High Score Delta system)
+    const topicId = currentWritingTopic.id || currentWritingTopic.topic;
+    const currentBest = state.writingHighScores[topicId] || 0;
+    
     const newStars = Math.round(finalScore / 5);
-    const prevStars = Math.round(writingTelemetry.bestScore / 5);
+    const prevStars = Math.round(currentBest / 5);
     const starsToAward = Math.max(0, newStars - prevStars);
     
     if (starsToAward > 0) {
         awardStars(starsToAward, `Kỷ lục luyện viết chủ đề "${currentWritingTopic.topic}" đạt ${finalScore} điểm`);
         aiComment += `\n🎁 **Phần thưởng:** Bạn đạt kỷ lục mới **${finalScore} điểm** và nhận được **+${starsToAward} ⭐** học tập!`;
     } else {
-        aiComment += `\n🎁 **Phần thưởng:** +0 ⭐ (Điểm số ${finalScore}/100 chưa vượt qua kỷ lục trước đó là ${writingTelemetry.bestScore}/100 trong lượt học này).`;
+        aiComment += `\n🎁 **Phần thưởng:** +0 ⭐ (Điểm số ${finalScore}/100 chưa vượt qua kỷ lục trước đó là ${currentBest}/100 của chủ đề này).`;
     }
     
-    // Save new best score
-    writingTelemetry.bestScore = Math.max(writingTelemetry.bestScore, finalScore);
+    // Save new best score permanently to database
+    state.writingHighScores[topicId] = Math.max(currentBest, finalScore);
+    saveStatsToStorage();
     
     // Display results in UI
     document.getElementById('writing-result-panel').classList.remove('hidden');
