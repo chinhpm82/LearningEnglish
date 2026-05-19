@@ -59,8 +59,7 @@ async function loadStateAsync() {
 
         // 2. Ensure Database is seeded with seed files (Deduplicates automatically inside db-manager)
         const initialVoc = typeof INITIAL_VOCABULARY !== 'undefined' ? INITIAL_VOCABULARY : [];
-        const specVoc = typeof SPECIALIZED_VOCABULARY !== 'undefined' ? SPECIALIZED_VOCABULARY : [];
-        await LearningDB.seedDatabase(initialVoc, specVoc);
+        await LearningDB.seedDatabase(initialVoc, []);
 
         // 3. Load vocabulary into global state
         state.vocabulary = await LearningDB.getAllVocab();

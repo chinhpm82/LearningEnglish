@@ -55,42 +55,36 @@ function initDB() {
  * Populate database with seed data if empty
  * Combines INITIAL_VOCABULARY and SPECIALIZED_VOCABULARY, deduplicates by word.toLowerCase()
  */
-async function seedDatabase(initialVocab, specVocab) {
+/**
+ * Populate database with seed data if empty
+ * Combines INITIAL_VOCABULARY, deduplicates by word.toLowerCase()
+ * If database already exists, performs automated self-healing to clean duplicate words and numbers
+ */
+async function seedDatabase(initialVocab, specVocab = []) {
     const db = await initDB();
     
     // Check if vocabulary store is empty
     const currentCount = await getVocabCount();
     if (currentCount > 0) {
-        // Database already initialized. Perform incremental syncing for any new seed words.
-        console.log(`IndexedDB already has ${currentCount} words. Checking for updates...`);
-        await syncNewSeedWords(initialVocab, specVocab);
+        console.log(`IndexedDB already has ${currentCount} words. Running Self-Healing & Sync...`);
+        await selfHealAndSyncDatabase(initialVocab);
         return;
     }
 
     console.log('Seeding IndexedDB for the first time...');
     
-    const combined = [...initialVocab, ...specVocab];
     const uniqueMap = new Map();
 
-    // Deduplicate by lowercase word, preferring fully populated objects
-    combined.forEach(item => {
+    initialVocab.forEach(item => {
         if (!item || !item.word) return;
         const key = item.word.toLowerCase().trim();
         if (!uniqueMap.has(key)) {
             uniqueMap.set(key, item);
-        } else {
-            // Keep the one with better specification (e.g. specialized category or details)
-            const existing = uniqueMap.get(key);
-            const isExistingSpecialized = existing.category.startsWith('spec-');
-            const isNewSpecialized = item.category.startsWith('spec-');
-            if (isNewSpecialized && !isExistingSpecialized) {
-                uniqueMap.set(key, item);
-            }
         }
     });
 
     const dedupedList = Array.from(uniqueMap.values());
-    console.log(`Deduplication: Reduced ${combined.length} words to ${dedupedList.length} unique words.`);
+    console.log(`Deduplication: Reduced seed to ${dedupedList.length} unique words.`);
 
     // Perform bulk insertion in a single transaction
     return new Promise((resolve, reject) => {
@@ -99,7 +93,9 @@ async function seedDatabase(initialVocab, specVocab) {
 
         dedupedList.forEach(item => {
             // Clean up old numbers from words if any slipped in
-            item.word = item.word.replace(/\s\d+$/, '');
+            item.word = cleanFieldName(item.word);
+            item.ipa = cleanFieldName(item.ipa);
+            item.example = cleanFieldName(item.example);
             store.put(item);
         });
 
@@ -116,45 +112,116 @@ async function seedDatabase(initialVocab, specVocab) {
 }
 
 /**
- * Synchronize any newly added seed words from JS files without losing existing user progress
+ * Clean field names from any digit suffix (e.g. "Notable90" -> "Notable", "/ˈnoʊtəbəl-90/" -> "/ˈnoʊtəbəl/")
  */
-async function syncNewSeedWords(initialVocab, specVocab) {
-    const db = await initDB();
-    const allWords = await getAllVocab();
-    const existingWordSet = new Set(allWords.map(w => w.word.toLowerCase().trim()));
-    
-    const combined = [...initialVocab, ...specVocab];
-    const newWords = [];
+function cleanFieldName(val) {
+    if (typeof val !== 'string') return val;
+    let cleaned = val.replace(/[- ]?\d+$/, '');
+    cleaned = cleaned.replace(/([a-zA-Z])\d+$/, '$1');
+    return cleaned.strip ? cleaned.strip() : cleaned.trim();
+}
 
-    combined.forEach(item => {
+/**
+ * Automated Database Self-Healing: Reads the entire IndexedDB vocabulary,
+ * cleans any word/ipa/example of numeric suffixes, deduplicates while preserving progress (Leitner Box),
+ * and syncs any new words from the seed file.
+ */
+async function selfHealAndSyncDatabase(seedVocab) {
+    const db = await initDB();
+    const currentVocab = await getAllVocab();
+    
+    const uniqueMap = new Map();
+    const idsToDelete = [];
+    let modifiedCount = 0;
+
+    currentVocab.forEach(item => {
         if (!item || !item.word) return;
-        const key = item.word.toLowerCase().trim();
-        if (!existingWordSet.has(key)) {
-            newWords.push(item);
-            existingWordSet.add(key); // prevent duplicates within seed list
+
+        const origWord = item.word;
+        const cleanWord = cleanFieldName(item.word);
+        const cleanIpa = cleanFieldName(item.ipa);
+        const cleanExample = cleanFieldName(item.example);
+
+        if (origWord !== cleanWord || item.ipa !== cleanIpa || item.example !== cleanExample) {
+            item.word = cleanWord;
+            item.ipa = cleanIpa;
+            item.example = cleanExample;
+            modifiedCount++;
+        }
+
+        const key = cleanWord.toLowerCase().trim();
+
+        if (uniqueMap.has(key)) {
+            // Duplicate found! Merge progress
+            const existing = uniqueMap.get(key);
+            // Preserve the higher Box level or nextReview progress
+            if ((item.box || 1) > (existing.box || 1)) {
+                existing.box = item.box;
+                existing.nextReview = item.nextReview;
+            }
+            // Mark duplicate item's ID for deletion
+            idsToDelete.push(item.id);
+        } else {
+            uniqueMap.set(key, item);
         }
     });
 
-    if (newWords.length > 0) {
-        console.log(`Sync: Found ${newWords.length} new words in seed files. Adding to database...`);
-        return new Promise((resolve, reject) => {
-            const transaction = db.transaction(['vocabulary'], 'readwrite');
-            const store = transaction.objectStore('vocabulary');
-            newWords.forEach(item => {
-                item.word = item.word.replace(/\s\d+$/, '');
-                store.put(item);
-            });
-            transaction.oncomplete = () => {
-                console.log(`Sync complete! Added ${newWords.length} new words.`);
-                resolve();
-            };
-            transaction.onerror = (e) => {
-                reject(e.target.error);
-            };
+    // Also check for any brand-new words in the seedVocab not present in uniqueMap
+    let newWordsAdded = 0;
+    seedVocab.forEach(seedItem => {
+        if (!seedItem || !seedItem.word) return;
+        const key = cleanFieldName(seedItem.word).toLowerCase().trim();
+        if (!uniqueMap.has(key)) {
+            seedItem.word = cleanFieldName(seedItem.word);
+            seedItem.ipa = cleanFieldName(seedItem.ipa);
+            seedItem.example = cleanFieldName(seedItem.example);
+            uniqueMap.set(key, seedItem);
+            newWordsAdded++;
+        }
+    });
+
+    // Write all cleaned/new words and delete duplicates in a transaction
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(['vocabulary'], 'readwrite');
+        const store = transaction.objectStore('vocabulary');
+
+        // 1. Put all cleaned unique words
+        uniqueMap.forEach(item => {
+            store.put(item);
         });
-    } else {
-        console.log('Sync: No new words found in seed files.');
+
+        // 2. Delete all duplicates
+        idsToDelete.forEach(id => {
+            store.delete(id);
+        });
+
+        transaction.oncomplete = () => {
+            console.log('IndexedDB Self-Healing Complete:');
+            console.log(`- Cleansed fields in ${modifiedCount} words.`);
+            printDeletedLogs(idsToDelete, newWordsAdded, uniqueMap.size);
+            resolve();
+        };
+
+        transaction.onerror = (e) => {
+            console.error('Self-healing transaction error:', e.target.error);
+            reject(e.target.error);
+        };
+    });
+}
+
+function printDeletedLogs(idsToDelete, newWordsAdded, totalSize) {
+    if (idsToDelete.length > 0) {
+        console.log(`- Deleted ${idsToDelete.length} duplicate/redundant word entries.`);
     }
+    if (newWordsAdded > 0) {
+        console.log(`- Seeded ${newWordsAdded} new vocabulary words.`);
+    }
+    console.log(`- Database size is now locked at a clean ${totalSize} words.`);
+}
+
+async function syncNewSeedWords(initialVocab, specVocab = []) {
+    // Handled dynamically inside selfHealAndSyncDatabase
+    return;
 }
 
 /**
