@@ -2884,6 +2884,20 @@ function showLongTransHint() {
 
 // --- AI Writing Room ---
 let currentWritingTopic = null;
+let writingTelemetry = {
+    startTime: null,
+    pasteCount: 0,
+    totalPastedChars: 0,
+    tabSwitches: 0,
+    hasPastedLargeBlock: false
+};
+
+// Listen for tab switching / application defocus
+window.addEventListener('blur', () => {
+    if (writingTelemetry.startTime && currentWritingTopic) {
+        writingTelemetry.tabSwitches++;
+    }
+});
 
 function getDifficultyFromUserLevel(level) {
     if (!level) return 'Beginner';
@@ -2937,6 +2951,16 @@ function initWritingRoom() {
     if (textarea) {
         textarea.value = '';
         textarea.oninput = handleWritingTextChange;
+        
+        // Listen for copy-paste to detect cheating
+        textarea.addEventListener('paste', (e) => {
+            const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+            writingTelemetry.pasteCount++;
+            writingTelemetry.totalPastedChars += pastedText.length;
+            if (pastedText.trim().length > 25) {
+                writingTelemetry.hasPastedLargeBlock = true;
+            }
+        });
     }
     
     const btnGrade = document.getElementById('btn-writing-grade');
@@ -2958,6 +2982,15 @@ function initWritingRoom() {
 
 function updateWritingTopic(topic) {
     const textarea = document.getElementById('writing-textarea');
+    
+    // Reset telemetry
+    writingTelemetry = {
+        startTime: null,
+        pasteCount: 0,
+        totalPastedChars: 0,
+        tabSwitches: 0,
+        hasPastedLargeBlock: false
+    };
     
     if (!topic) {
         currentWritingTopic = null;
@@ -3052,6 +3085,12 @@ function updateWritingTopic(topic) {
 
 function handleWritingTextChange() {
     const text = document.getElementById('writing-textarea').value;
+    
+    // Set writing start time on first keystroke
+    if (text.trim().length > 0 && !writingTelemetry.startTime) {
+        writingTelemetry.startTime = Date.now();
+    }
+    
     const words = text.trim().split(/\s+/).filter(w => w.length > 0);
     document.getElementById('writing-word-counter').textContent = `${words.length} từ`;
     
@@ -3210,14 +3249,74 @@ function gradeWritingEssay() {
         syntaxScore = Math.min(3, syntaxScore);
     }
 
+    // --- ACADEMIC INTEGRITY MONITORING SYSTEM (Copy-Paste & AI Detection) ---
+    const elapsedMs = Date.now() - (writingTelemetry.startTime || Date.now());
+    const elapsedMinutes = elapsedMs / 60000;
+    const wpm = elapsedMinutes > 0.05 ? essayLen / elapsedMinutes : 999;
+    
+    let integrityScore = 100;
+    let integrityReasons = [];
+    
+    if (writingTelemetry.hasPastedLargeBlock) {
+        integrityScore -= 70;
+        integrityReasons.push("Phát hiện dán một khối lượng lớn ký tự (Copy-paste block)");
+    } else if (writingTelemetry.pasteCount > 0) {
+        integrityScore -= (writingTelemetry.pasteCount * 15);
+        integrityReasons.push(`Phát hiện hành vi dán văn bản (${writingTelemetry.pasteCount} lần)`);
+    }
+    
+    if (wpm > 130 && essayLen > 25) {
+        integrityScore -= 45;
+        integrityReasons.push(`Tốc độ nhập liệu nhanh đến mức bất khả thi (${Math.round(wpm)} từ/phút)`);
+    } else if (wpm > 70 && essayLen > 25) {
+        integrityScore -= 20;
+        integrityReasons.push(`Tốc độ viết nhanh bất thường (${Math.round(wpm)} từ/phút)`);
+    }
+    
+    if (writingTelemetry.tabSwitches > 1) {
+        integrityScore -= Math.min(25, writingTelemetry.tabSwitches * 10);
+        integrityReasons.push(`Thoát tab/đổi ứng dụng khi đang làm bài (${writingTelemetry.tabSwitches} lần)`);
+    }
+    
+    // ChatGPT stylistic phrasing templates checks
+    const aiPhrases = [
+        "in today's fast-paced world", 
+        "in the modern era", 
+        "double-edged sword", 
+        "plays a crucial role", 
+        "vital role", 
+        "in conclusion", 
+        "essential tool", 
+        "not only", 
+        "digital era"
+    ];
+    let aiStyleMatches = 0;
+    aiPhrases.forEach(p => {
+        if (normalizedEssay.includes(p)) aiStyleMatches++;
+    });
+    
+    if (aiStyleMatches >= 3) {
+        integrityScore -= 20;
+        integrityReasons.push("Sử dụng văn phong khuôn mẫu kinh điển đặc trưng của ChatGPT/AI");
+    }
+    
+    integrityScore = Math.max(0, integrityScore);
+
     // Final Overall Score
     let totalScore = lengthScore + vocabScore + diversityScore + connectorScore + syntaxScore;
-    if (nonEnglishPenalty) totalScore = 0;
-    else if (spamPenalty) totalScore = Math.min(10, totalScore);
-    else if (shortLengthPenalty) totalScore = Math.min(12, totalScore);
+    
+    // Integrity deduction penalty
+    let finalScore = totalScore;
+    if (integrityScore < 95) {
+        finalScore = Math.round(totalScore * (integrityScore / 100));
+    }
+    
+    if (nonEnglishPenalty) finalScore = 0;
+    else if (spamPenalty) finalScore = Math.min(10, finalScore);
+    else if (shortLengthPenalty) finalScore = Math.min(12, finalScore);
     
     // Generate feedback comments
-    let aiComment = `**Đánh giá tổng quan:** Bài viết đạt **${totalScore}/100 điểm**. `;
+    let aiComment = `**Đánh giá tổng quan:** Bài viết đạt **${finalScore}/100 điểm**. `;
     if (levelMismatchComment) {
         aiComment += levelMismatchComment + " ";
     }
@@ -3229,13 +3328,21 @@ function gradeWritingEssay() {
     } else if (spamPenalty) {
         aiComment += `\n\n⚠️ **CẢNH BÁO LẶP TỪ RÁC (SPAM):** Chỉ số đa dạng từ vựng của bạn quá thấp (chỉ ${Math.round(ttr*100)}% từ duy nhất), phát hiện hành vi lặp lại từ hoặc sao chép vô nghĩa. Hệ thống đã áp dụng khung phạt lặp từ tối đa 10/100. Vui lòng viết các câu đa dạng và đầy đủ ý kiến!`;
     } else {
-        if (totalScore >= 85) {
+        if (finalScore >= 85) {
             aiComment += `Một bài viết tuyệt vời! Cấu trúc logic mạch lạc, hành văn tự nhiên và đáp ứng rất tốt yêu cầu đề bài. `;
-        } else if (totalScore >= 70) {
+        } else if (finalScore >= 70) {
             aiComment += `Bài viết khá tốt. Diễn đạt tương đối trôi chảy, tuy nhiên cần chú ý thêm cấu trúc câu hoặc từ vựng gợi ý để lập luận sắc sảo hơn. `;
         } else {
             aiComment += `Bài viết ở mức trung bình. Hãy tập trung cải thiện ngữ pháp cơ bản, cách viết hoa đầu câu và tăng cường độ dài bài viết. `;
         }
+    }
+    
+    if (integrityScore < 90 && !nonEnglishPenalty && !shortLengthPenalty && !spamPenalty) {
+        aiComment += `\n\n⚠️ **CẢNH BÁO GIÁM SÁT LIÊM CHÍNH HỌC THUẬT (${integrityScore}%):** Hệ thống phát hiện bạn có khả năng đã sao chép hoặc nhờ sự trợ giúp của AI ngoài vì các lý do:\n`;
+        integrityReasons.forEach(r => {
+            aiComment += `• ${r}\n`;
+        });
+        aiComment += `*(Lưu ý: Để nâng cao kỹ năng tiếng Anh thực chất, bạn nên tự tay gõ từng từ thay vì copy-paste từ các nguồn dịch thuật/AI. Điểm số của bạn đã bị khấu trừ tự động tương ứng.)*\n`;
     }
     
     aiComment += `\n\n**Ưu điểm:**\n`;
@@ -3266,16 +3373,30 @@ function gradeWritingEssay() {
     }
     
     // Reward Stars
-    const awardedStarsCount = Math.round(totalScore / 5);
-    awardStars(awardedStarsCount, `Luyện viết chủ đề "${currentWritingTopic.topic}" đạt ${totalScore} điểm`);
+    const awardedStarsCount = Math.round(finalScore / 5);
+    awardStars(awardedStarsCount, `Luyện viết chủ đề "${currentWritingTopic.topic}" đạt ${finalScore} điểm`);
     aiComment += `\n🎁 **Phần thưởng:** Bạn nhận được **+${awardedStarsCount} ⭐** vàng học tập!`;
     
     // Display results in UI
     document.getElementById('writing-result-panel').classList.remove('hidden');
-    document.getElementById('writing-score-val').textContent = totalScore;
+    document.getElementById('writing-score-val').textContent = finalScore;
     document.getElementById('writing-res-length').textContent = `${essayLen} từ (${essayLen >= targetMin && essayLen <= targetMax ? 'Đạt' : 'Cần điều chỉnh'})`;
     document.getElementById('writing-res-vocab').textContent = `${usedVocabCount} / ${currentWritingTopic.suggestedWords.length} từ`;
     document.getElementById('writing-res-ttr').textContent = `${Math.round(ttr * 100)}% (${ttr > 0.7 ? 'Rất phong phú' : 'Tương đối ổn'})`;
+    
+    const integritySpan = document.getElementById('writing-res-integrity');
+    if (integritySpan) {
+        if (integrityScore >= 90) {
+            integritySpan.textContent = `${integrityScore}% (Trung thực)`;
+            integritySpan.style.color = '#4ade80';
+        } else if (integrityScore >= 60) {
+            integritySpan.textContent = `${integrityScore}% (Cảnh báo)`;
+            integritySpan.style.color = '#facc15';
+        } else {
+            integritySpan.textContent = `⚠️ ${integrityScore}% (Nghi vấn Sao chép/AI)`;
+            integritySpan.style.color = '#f87171';
+        }
+    }
     
     const feedbackBox = document.getElementById('writing-ai-feedback');
     if (feedbackBox) {
