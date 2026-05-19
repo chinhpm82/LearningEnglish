@@ -2889,7 +2889,8 @@ let writingTelemetry = {
     pasteCount: 0,
     totalPastedChars: 0,
     tabSwitches: 0,
-    hasPastedLargeBlock: false
+    hasPastedLargeBlock: false,
+    bestScore: 0
 };
 
 // Listen for tab switching / application defocus
@@ -2989,7 +2990,8 @@ function updateWritingTopic(topic) {
         pasteCount: 0,
         totalPastedChars: 0,
         tabSwitches: 0,
-        hasPastedLargeBlock: false
+        hasPastedLargeBlock: false,
+        bestScore: 0
     };
     
     if (!topic) {
@@ -3372,10 +3374,20 @@ function gradeWritingEssay() {
         aiComment += `• Chúc mừng bạn đã trình bày cú pháp và quy tắc viết hoa cực kỳ chính xác!\n`;
     }
     
-    // Reward Stars
-    const awardedStarsCount = Math.round(finalScore / 5);
-    awardStars(awardedStarsCount, `Luyện viết chủ đề "${currentWritingTopic.topic}" đạt ${finalScore} điểm`);
-    aiComment += `\n🎁 **Phần thưởng:** Bạn nhận được **+${awardedStarsCount} ⭐** vàng học tập!`;
+    // Reward Stars (High Score Delta system)
+    const newStars = Math.round(finalScore / 5);
+    const prevStars = Math.round(writingTelemetry.bestScore / 5);
+    const starsToAward = Math.max(0, newStars - prevStars);
+    
+    if (starsToAward > 0) {
+        awardStars(starsToAward, `Kỷ lục luyện viết chủ đề "${currentWritingTopic.topic}" đạt ${finalScore} điểm`);
+        aiComment += `\n🎁 **Phần thưởng:** Bạn đạt kỷ lục mới **${finalScore} điểm** và nhận được **+${starsToAward} ⭐** học tập!`;
+    } else {
+        aiComment += `\n🎁 **Phần thưởng:** +0 ⭐ (Điểm số ${finalScore}/100 chưa vượt qua kỷ lục trước đó là ${writingTelemetry.bestScore}/100 trong lượt học này).`;
+    }
+    
+    // Save new best score
+    writingTelemetry.bestScore = Math.max(writingTelemetry.bestScore, finalScore);
     
     // Display results in UI
     document.getElementById('writing-result-panel').classList.remove('hidden');
