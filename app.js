@@ -648,14 +648,7 @@ function initFlashcardSession(category = 'all') {
     let filtered = [];
     if (category === 'all') {
         // Automatically suggest random words appropriate for the student's level
-        if (level === 'Beginner') {
-            filtered = allWords.filter(w => w.category === 'oxford' || w.category === 'custom');
-        } else if (level === 'Intermediate') {
-            filtered = allWords.filter(w => w.category === 'oxford' || w.category === 'idioms' || w.category === 'custom');
-        } else {
-            // Advanced
-            filtered = allWords.filter(w => w.category === 'oxford' || w.category === 'idioms' || w.category === 'academic' || w.category === 'custom');
-        }
+        filtered = filterWordsByLevel(allWords, level);
     } else if (category === 'custom') {
         filtered = [...state.customWords];
     } else {
@@ -790,9 +783,10 @@ async function handleFlashcardAction(isCorrect) {
             // - Intermediate: Standard spacing (Box 2: 3 days, Box 3: 7 days)
             // - Advanced: Stronger retention, wider spacing (Box 2: 5 days, Box 3: 12 days)
             let daysMultiplier = sourceList[originalIdx].box === 2 ? 3 : 7;
-            if (state.userLevel === 'Beginner') {
+            const lvl = state.userLevel || 'A1';
+            if (lvl === 'A1' || lvl === 'A2' || lvl === 'A3' || lvl === 'Beginner') {
                 daysMultiplier = sourceList[originalIdx].box === 2 ? 1.5 : 4;
-            } else if (state.userLevel === 'Advanced') {
+            } else if (lvl === 'C1' || lvl === 'C2' || lvl === 'Advanced') {
                 daysMultiplier = sourceList[originalIdx].box === 2 ? 5 : 12;
             }
             
@@ -1035,35 +1029,39 @@ function showQuizResults() {
         // Timed Assessment Rating Matrix (Độ chính xác + Tốc độ phản xạ)
         if (quizScore >= 8) {
             if (durationSec < 60) {
-                level = 'Advanced';
-                levelName = 'Cao cấp (C1-C2)';
+                level = 'C1';
+                levelName = 'Cao cấp (C1)';
             } else {
-                level = 'Intermediate';
-                levelName = 'Trung cấp (B1-B2)'; // Slower recall, downgraded to Intermediate
+                level = 'B1';
+                levelName = 'Trung cấp (B1)'; // Slower recall, downgraded to Intermediate
             }
         } else if (quizScore >= 5) {
             if (durationSec < 95) {
-                level = 'Intermediate';
-                levelName = 'Trung cấp (B1-B2)';
+                level = 'B1';
+                levelName = 'Trung cấp (B1)';
             } else {
-                level = 'Beginner';
-                levelName = 'Sơ cấp (A1-A2)'; // Too slow, downgraded to Beginner
+                level = 'A1';
+                levelName = 'Sơ cấp (A1)'; // Too slow, downgraded to Beginner
             }
         } else {
-            level = 'Beginner';
-            levelName = 'Sơ cấp (A1-A2)';
+            level = 'A1';
+            levelName = 'Sơ cấp (A1)';
         }
         
         state.userLevel = level;
-        state.lastTestScore = quizScore;
+        state.lastTestScore = quizScore * 1.6; // Scale 10-based score to 16-based score
         state.roadmapTasks = generateRoadmapTasks(level);
         saveStatsToStorage();
         
+        let badgeStyleClass = 'beginner';
+        if (level.startsWith('B')) badgeStyleClass = 'intermediate';
+        else if (level.startsWith('C')) badgeStyleClass = 'advanced';
+
         msgEl.innerHTML = `
             🎓 <b>KẾT QUẢ ĐÁNH GIÁ PHẢN XẠ & TRÌNH ĐỘ:</b><br>
             • Độ chính xác: <b>${quizScore}/10 câu đúng</b> (${pct}%)<br>
             • Thời gian hoàn thành: <b>${durationSec} giây</b> (${speedRating})<br>
-            • Xếp hạng trình độ: <span class="level-badge ${level.toLowerCase()}" style="font-size:12px; padding: 4px 10px; box-shadow:none; line-height:1.2; display:inline-block; margin: 6px 0;">${levelName}</span><br>
+            • Xếp hạng trình độ: <span class="level-badge ${badgeStyleClass}" style="font-size:12px; padding: 4px 10px; box-shadow:none; line-height:1.2; display:inline-block; margin: 6px 0;">${levelName}</span><br>
             <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 8px; line-height: 1.4;">Hệ thống đã phân tích tốc độ phản xạ và độ chính xác của bạn để tự động thiết lập Lộ trình học tập phù hợp nhất tại trang Tổng quan!</p>
         `;
     } else {
@@ -1080,13 +1078,13 @@ function showQuizResults() {
 // --- DYNAMIC LEARNING ROADMAP RENDERER & ALGORITHM ---
 
 function generateRoadmapTasks(level) {
-    if (level === 'Beginner') {
+    if (level === 'A1' || level === 'A2' || level === 'A3' || level === 'Beginner') {
         return [
             { text: "Luyện 10 thẻ Flashcard bộ Oxford Essential thiết yếu", completed: false },
             { text: "Làm đúng từ 5/10 câu trắc nghiệm Oxford", completed: false },
             { text: "Luyện phát âm 3 câu giao tiếp hàng ngày", completed: false }
         ];
-    } else if (level === 'Intermediate') {
+    } else if (level === 'B1' || level === 'B2' || level === 'B3' || level === 'Intermediate') {
         return [
             { text: "Ôn tập 15 thẻ Hộp Leitner (Hộp 2/3) cần xem lại", completed: false },
             { text: "Đạt từ 7/10 điểm trắc nghiệm Thành ngữ & Cụm từ", completed: false },
@@ -1135,7 +1133,9 @@ function autoCheckRoadmapTasks(progress) {
     
     let changed = false;
     
-    if (state.userLevel === 'Beginner') {
+    const lvl = state.userLevel || 'A1';
+
+    if (lvl === 'A1' || lvl === 'A2' || lvl === 'A3' || lvl === 'Beginner') {
         // Task 0: Luyện 10 thẻ Flashcard...
         if (progress.flashcards >= 10 && !state.roadmapTasks[0].completed) {
             state.roadmapTasks[0].completed = true;
@@ -1157,7 +1157,7 @@ function autoCheckRoadmapTasks(progress) {
             awardStars(5, "Hoàn thành: Luyện phát âm 3 câu giao tiếp!");
             showToastNotification("🎉 Hoàn thành nhiệm vụ: Luyện phát âm 3 câu giao tiếp! +5 ⭐");
         }
-    } else if (state.userLevel === 'Intermediate') {
+    } else if (lvl === 'B1' || lvl === 'B2' || lvl === 'B3' || lvl === 'Intermediate') {
         // Task 0: Ôn tập 15 thẻ Hộp Leitner...
         if (progress.flashcards >= 15 && !state.roadmapTasks[0].completed) {
             state.roadmapTasks[0].completed = true;
@@ -1242,18 +1242,28 @@ function renderRoadmap() {
         { cat: 'Giao tiếp hàng ngày', action: 'Xem mẫu câu', key: 'communicative' }
     ];
 
-    if (state.userLevel === 'Intermediate') {
+    const currentLvl = state.userLevel || 'A1';
+
+    if (currentLvl === 'A1' || currentLvl === 'A2' || currentLvl === 'A3') {
+        badgeClass = 'beginner';
+        levelVN = `Sơ cấp (${currentLvl})`;
+        analysisVN = `Bạn đang ở trình độ ${getCEFRLevelDisplayName(currentLvl)}. Lộ trình tối ưu: Tập trung 100% học bộ từ vựng giao tiếp thiết yếu <b>Oxford Essential</b> và thực hành thẻ ghi nhớ Leitner mỗi ngày để củng cố nền tảng.`;
+        recommendations = [
+            { cat: 'Oxford Essential', action: 'Học ngay', key: 'oxford' },
+            { cat: 'Giao tiếp hàng ngày', action: 'Xem mẫu câu', key: 'communicative' }
+        ];
+    } else if (currentLvl === 'B1' || currentLvl === 'B2' || currentLvl === 'B3') {
         badgeClass = 'intermediate';
-        levelVN = 'Trung cấp (B1-B2)';
-        analysisVN = 'Bạn đã có phản xạ từ vựng khá vững vàng. Lộ trình tối ưu: Luyện tập xen kẽ bộ từ <b>Oxford Essential</b> kết hợp với <b>Thành ngữ giao tiếp (Idioms)</b> để tự tin giao tiếp tự nhiên hơn.';
+        levelVN = `Trung cấp (${currentLvl})`;
+        analysisVN = `Bạn đã có phản xạ từ vựng khá vững vàng ở trình độ ${getCEFRLevelDisplayName(currentLvl)}. Lộ trình tối ưu: Luyện tập xen kẽ bộ từ <b>Oxford Essential</b> kết hợp với <b>Thành ngữ giao tiếp (Idioms)</b> để tự tin giao tiếp tự nhiên hơn.`;
         recommendations = [
             { cat: 'Idioms & Phrases', action: 'Luyện tập', key: 'idioms' },
             { cat: 'Giao tiếp hàng ngày', action: 'Học mẫu câu', key: 'communicative' }
         ];
-    } else if (state.userLevel === 'Advanced') {
+    } else if (currentLvl === 'C1' || currentLvl === 'C2') {
         badgeClass = 'advanced';
-        levelVN = 'Cao cấp (C1-C2)';
-        analysisVN = 'Tuyệt vời! Vốn từ và khả năng hiểu của bạn rất rộng. Lộ trình tối ưu: Tập trung chinh phục bộ từ <b>Academic & IELTS</b> nâng cao và làm quen các mẫu câu đàm phán, thuyết trình tại công sở.';
+        levelVN = `Cao cấp (${currentLvl})`;
+        analysisVN = `Tuyệt vời! Vốn từ và khả năng hiểu của bạn rất rộng ở trình độ ${getCEFRLevelDisplayName(currentLvl)}. Lộ trình tối ưu: Tập trung chinh phục bộ từ <b>Academic & IELTS</b> nâng cao và làm quen các mẫu câu đàm phán, thuyết trình tại công sở.`;
         recommendations = [
             { cat: 'Academic & IELTS', action: 'Chinh phục', key: 'academic' },
             { cat: 'Giao tiếp công sở', action: 'Xem mẫu câu', key: 'communicative' }
