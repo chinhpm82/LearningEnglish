@@ -2344,9 +2344,16 @@ function nextTranslation() {
     }
     renderTranslationCard();
 }
-
+function showTransHint() {
+    const item = transState.deck[transState.idx];
+    if (!item || !item.hints) return;
+    const container = document.getElementById('trans-hints');
+    transState.hintsShown++;
+    const hintIdx = Math.min(transState.hintsShown - 1, item.hints.length - 1);
+    if (hintIdx < item.hints.length) {
+        container.innerHTML += `<span class="hint-item">${item.hints[hintIdx]}</span> `;
+    }
 }
-
 // --- Sub-tabs translation switching logic ---
 document.getElementById('btn-sub-trans-short')?.addEventListener('click', () => {
     const btnShort = document.getElementById('btn-sub-trans-short');
