@@ -9,7 +9,7 @@ const PODCAST_DATA = [
         image: "🎵",
         duration: "6:12",
         transcript: [
-            { start: 0.0, end: 4.0, text: "Welcome to the VocabFlow Podcast, your daily dose of language wisdom." },
+            { start: 0.0, end: 4.0, text: "Welcome to the LearningEnglish Podcast, your daily dose of language wisdom." },
             { start: 4.5, end: 9.5, text: "Today, we are diving into a very pleasant topic: How listening to music can help you master English." },
             { start: 10.0, end: 14.5, text: "Have you ever wondered why song lyrics stay stuck in your head for days?" },
             { start: 15.0, end: 19.8, text: "It is because our brains love patterns, rhythm, and melody." },

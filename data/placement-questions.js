@@ -1,0 +1,242 @@
+/**
+ * ==========================================================================
+ * LearningEnglish - CEFR Entrance Placement Test Questions Dataset
+ * ==========================================================================
+ */
+
+const PLACEMENT_QUESTIONS = [
+    // --- 1. GRAMMAR SECTION (4 Questions) ---
+    {
+        id: "pq-g1",
+        section: "grammar",
+        level: "A1/A2",
+        question: "Choose the correct sentence:",
+        options: [
+            "She don't like drinking cold milk in the morning.",
+            "She doesn't like drinking cold milk in the morning.",
+            "She doesn't likes drinking cold milk in the morning.",
+            "She not likes drinking cold milk in the morning."
+        ],
+        answer: 1,
+        explanation: "Với chủ ngữ ngôi thứ ba số ít (She), ta dùng trợ động từ phủ định 'doesn't' + động từ nguyên thể 'like'."
+    },
+    {
+        id: "pq-g2",
+        section: "grammar",
+        level: "A3/B1",
+        question: "Yesterday, while I ______ my English vocabulary, the electricity suddenly went out.",
+        options: [
+            "am studying",
+            "studied",
+            "was studying",
+            "had studied"
+        ],
+        answer: 2,
+        explanation: "Sử dụng thì Quá khứ tiếp diễn (was studying) để diễn tả hành động đang xảy ra trong quá khứ thì có hành động khác xen vào (went out)."
+    },
+    {
+        id: "pq-g3",
+        section: "grammar",
+        level: "B2/B3",
+        question: "If we ______ enough stars yesterday, we would have unlocked the C1 advanced vocabulary level today.",
+        options: [
+            "collected",
+            "had collected",
+            "would collect",
+            "have collected"
+        ],
+        answer: 1,
+        explanation: "Câu điều kiện hỗn hợp (Mixed Conditional): diễn tả giả thiết trái ngược quá khứ ('had collected' - điều kiện loại 3) và kết quả trái ngược hiện tại ('would have unlocked' - kết quả loại 2)."
+    },
+    {
+        id: "pq-g4",
+        section: "grammar",
+        level: "C1/C2",
+        question: "______ did I realize that mastering English pronunciation required daily spoken practice.",
+        options: [
+            "Little",
+            "Only when",
+            "Seldom",
+            "Not until"
+        ],
+        answer: 0,
+        explanation: "Cấu trúc đảo ngữ với trạng từ phủ định 'Little' (Little did I realize...): Tôi gần như không hề nhận ra rằng..."
+    },
+
+    // --- 2. VOCABULARY SECTION (4 Questions) ---
+    {
+        id: "pq-v1",
+        section: "vocabulary",
+        level: "A1/A2",
+        question: "My father is a doctor. He works in a local ______.",
+        options: [
+            "office",
+            "factory",
+            "hospital",
+            "school"
+        ],
+        answer: 2,
+        explanation: "Bác sĩ (doctor) làm việc ở bệnh viện (hospital)."
+    },
+    {
+        id: "pq-v2",
+        section: "vocabulary",
+        level: "A3/B1",
+        question: "She decided to ______ smoking to improve her physical health.",
+        options: [
+            "give up",
+            "take up",
+            "put off",
+            "look after"
+        ],
+        answer: 0,
+        explanation: "Cụm động từ 'give up' nghĩa là từ bỏ (thói quen, sở thích, hành vi)."
+    },
+    {
+        id: "pq-v3",
+        section: "vocabulary",
+        level: "B2/B3",
+        question: "The teacher gave us a very ______ explanation, so everyone understood the math problem easily.",
+        options: [
+            "ambiguous",
+            "redundant",
+            "lucid",
+            "superficial"
+        ],
+        answer: 2,
+        explanation: "'Lucid' nghĩa là rõ ràng, dễ hiểu, minh bạch. Trái ngược hoàn toàn với ambiguous (mơ hồ) hay superficial (hời hợt)."
+    },
+    {
+        id: "pq-v4",
+        section: "vocabulary",
+        level: "C1/C2",
+        question: "In times of financial crisis, many businesses had no choice but to ______ their non-core employees.",
+        options: [
+            "liquidate",
+            "retrench",
+            "expel",
+            "recuperate"
+        ],
+        answer: 1,
+        explanation: "'Retrench' nghĩa là tinh giảm biên chế, cắt giảm nhân sự hoặc chi phí để tiết kiệm tài chính."
+    },
+
+    // --- 3. READING COMPREHENSION (4 Questions) ---
+    {
+        id: "pq-r1",
+        section: "reading",
+        level: "A1/A2",
+        question: "Read the text: 'Mary lives in London. She enjoys walking in Hyde Park every Sunday morning. However, she hates cold rain.' \n\nWhen does Mary walk in Hyde Park?",
+        options: [
+            "Every Saturday afternoon",
+            "Every Sunday morning",
+            "Only on rainy days",
+            "During the winter nights"
+        ],
+        answer: 1,
+        explanation: "Đoạn văn ghi rõ 'every Sunday morning' (mỗi sáng Chủ Nhật)."
+    },
+    {
+        id: "pq-r2",
+        section: "reading",
+        level: "A3/B1",
+        question: "Read the text: 'Regular exercise offers enormous benefits for mental health. Physical activities stimulate the release of endorphins, commonly known as feel-good hormones, which mitigate stress and elevate overall mood.' \n\nAccording to the text, what are endorphins?",
+        options: [
+            "A type of physical exercise",
+            "Hormones that relieve stress and boost mood",
+            "Mental illnesses caused by lack of sleep",
+            "Nutrients found in healthy organic food"
+        ],
+        answer: 1,
+        explanation: "Endorphins được định nghĩa là 'feel-good hormones, which mitigate stress and elevate overall mood' (hormone giảm stress và tăng tâm trạng)."
+    },
+    {
+        id: "pq-r3",
+        section: "reading",
+        level: "B2/B3",
+        question: "Read the text: 'The rise of artificial intelligence has revolutionized traditional job markets. While automation threatens repetitive manual jobs, it simultaneously spawns fresh opportunities in technology development, data analytics, and ethical AI auditing.' \n\nWhat is the main idea of this passage?",
+        options: [
+            "Artificial intelligence will completely destroy all human job opportunities.",
+            "Manual labor will become highly valued due to AI limits.",
+            "AI has a dual impact on employment, replacing repetitive tasks but creating new digital roles.",
+            "Ethical auditing is the only job safe from AI automation."
+        ],
+        answer: 2,
+        explanation: "Đoạn văn nêu rõ tác động kép của AI: đe dọa công việc thủ công lặp lại (automates repetitive jobs) nhưng đồng thời mở ra nhiều cơ hội mới (spawns fresh opportunities)."
+    },
+    {
+        id: "pq-r4",
+        section: "reading",
+        level: "C1/C2",
+        question: "Read the text: 'Critics argue that universal basic income (UBI) fosters labor market disincentives. Conversely, proponents contend that by establishing a financial safety net, UBI empowers marginalized individuals to pursue higher education or entrepreneurial ventures without fear of destitution.' \n\nWhich of the following can be inferred from the passage?",
+        options: [
+            "Proponents believe UBI makes people lazy and unwilling to work.",
+            "Both critics and proponents agree that UBI will increase bankruptcy rates.",
+            "UBI may act as a catalyst for entrepreneurship and self-improvement for lower-income groups.",
+            "Destitution is required to motivate individuals to pursue entrepreneurial ventures."
+        ],
+        answer: 2,
+        explanation: "Ta có thể suy luận (infer) từ đoạn văn: bằng việc tạo lưới an sinh (financial safety net), UBI giúp những người yếu thế có cơ hội tự do khởi nghiệp hoặc học lên cao (empowers marginalized individuals to pursue entrepreneurial ventures/higher education)."
+    },
+
+    // --- 4. LISTENING & CONVERSATIONAL REFLEX (4 Questions) ---
+    {
+        id: "pq-l1",
+        section: "listening",
+        level: "A1/A2",
+        question: "Conversation: \nJohn: 'Excuse me, could you tell me where the nearest train station is?' \nStranger: '__________________'",
+        options: [
+            "Yes, I would love to watch a train movie.",
+            "Go straight for two blocks, then turn left. It's next to the post office.",
+            "Trains are much faster than cars.",
+            "I have three train tickets."
+        ],
+        answer: 1,
+        explanation: "Câu hỏi đường đi ('where the nearest train station is') cần phản xạ chỉ dẫn đường đi phù hợp."
+    },
+    {
+        id: "pq-l2",
+        section: "listening",
+        level: "A3/B1",
+        question: "Conversation: \nDoctor: 'How long have you been suffering from these severe headaches?' \nPatient: '__________________'",
+        options: [
+            "I usually take some medicine from my bag.",
+            "For about four days now. They usually start in the afternoon.",
+            "Headaches are very common for old people.",
+            "My father also had a headache last week."
+        ],
+        answer: 1,
+        explanation: "Câu hỏi về thời lượng kéo dài triệu chứng bệnh ('How long have you been suffering...') đòi hỏi câu trả lời về khoảng thời gian ('For about four days now')."
+    },
+    {
+        id: "pq-l3",
+        section: "listening",
+        level: "B2/B3",
+        question: "Conversation: \nManager: 'We really need to cut down on our operational costs this quarter.' \nAssistant: '__________________'",
+        options: [
+            "Good idea, let's hire ten more high-salary employees right away.",
+            "I agree. We could transition to paperless invoicing and reduce office electricity usage.",
+            "Operational costs are always calculated annually, not quarterly.",
+            "I don't think paper has anything to do with our business operations."
+        ],
+        answer: 1,
+        explanation: "Đề xuất cắt giảm chi phí vận hành ('cut down on operational costs') tương thích với giải pháp cụ thể: chuyển sang hóa đơn điện tử và giảm điện tiêu dùng."
+    },
+    {
+        id: "pq-l4",
+        section: "listening",
+        level: "C1/C2",
+        question: "Conversation: \nCEO: 'I am afraid our competitor's new software launch has completely caught us off guard.' \nDirector: '__________________'",
+        options: [
+            "Congratulations! That is wonderful news for our software sales.",
+            "Indeed, we must quickly devise a contingency plan to mitigate our loss of market share.",
+            "Competitors are always friendly and keep us informed of their launch dates.",
+            "I prefer launching boats rather than software."
+        ],
+        answer: 1,
+        explanation: "Tình huống bị động/bất ngờ trước đối thủ ('caught us off guard') đòi hỏi phản xạ ứng biến: nhanh chóng lên phương án dự phòng (contingency plan) để giảm thiểu mất mát thị phần."
+    }
+];
+
+// Export to global scope
+window.PLACEMENT_QUESTIONS = PLACEMENT_QUESTIONS;

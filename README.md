@@ -1,12 +1,12 @@
-# VocabFlow - Tự Học Tiếng Anh Thông Minh 🚀
+# LearningEnglish - Tự Học Tiếng Anh Thông Minh 🚀
 
-**VocabFlow** là ứng dụng web Single-Page (SPA) tinh tế, gọn nhẹ và tối giản, được thiết kế đặc biệt dành riêng cho việc **tự học từ vựng và câu giao tiếp tiếng Anh** hiệu quả nhất mà **không cần server, cơ sở dữ liệu hay lưu trữ file phương tiện (audio/hình ảnh) đắt đỏ**.
+**LearningEnglish** là ứng dụng web Single-Page (SPA) tinh tế, gọn nhẹ và tối giản, được thiết kế đặc biệt dành riêng cho việc **tự học từ vựng và câu giao tiếp tiếng Anh** hiệu quả nhất mà **không cần server, cơ sở dữ liệu hay lưu trữ file phương tiện (audio/hình ảnh) đắt đỏ**.
 
-Ứng dụng được xây dựng theo triết lý tối ưu hóa tài nguyên tối đa: sử dụng hệ thống phát âm có sẵn của trình duyệt và lưu trữ dữ liệu hoàn toàn dưới LocalStorage của người học.
+Ứng dụng được xây dựng theo triết lý tối ưu hóa tài nguyên tối đa: sử dụng hệ thống phát âm có sẵn của trình duyệt và lưu trữ dữ liệu hoàn toàn dưới LocalStorage/IndexedDB của người học.
 
 ---
 
-## ✨ Điểm Nổi Bật Của VocabFlow
+## ✨ Điểm Nổi Bật Của LearningEnglish
 
 1.  **Hệ thống phát âm chuẩn (Không tốn băng thông)**: Tích hợp trực tiếp **Web Speech API (`window.speechSynthesis`)** để phát âm từ vựng và câu giao tiếp chuẩn giọng Mỹ/Anh hoàn toàn miễn phí và mượt mà.
 2.  **Học theo Phương pháp Leitner (Spaced Repetition)**: Thuật toán tự động tính toán thời gian ôn tập tối ưu cho từng từ dựa trên mức độ thuộc bài của bạn.
@@ -29,14 +29,14 @@
        │
        ├─► [Web Speech API] ──► (Phát âm giọng đọc Anh-Mỹ chuẩn miễn phí)
        │
-       └─► [LocalStorage] ────► (Lưu tiến trình học, Sổ tay cá nhân & Streak)
+       └─► [LocalStorage/IndexedDB] ──► (Lưu tiến trình học, Sổ tay cá nhân & Streak)
 ```
 
 ---
 
 ## ⚙️ Hướng Dẫn Chạy Ứng Dụng Cục Bộ (Locally)
 
-Vì VocabFlow là một ứng dụng client-side thuần túy, bạn không cần cài đặt NodeJS hay Python để chạy.
+Vì LearningEnglish là một ứng dụng client-side thuần túy, bạn không cần cài đặt NodeJS hay Python để chạy.
 
 *   **Cách 1 (Đơn giản nhất)**: Nhấp đúp (Double-click) chuột vào tệp `index.html` để mở trực tiếp trên trình duyệt (Chrome, Edge, Safari, Firefox).
 *   **Cách 2 (Sử dụng Dev Server - Khuyên Dùng)**: Nếu bạn có tiện ích mở rộng như **Live Server** trên VS Code, bạn có thể bấm **Go Live** để chạy ứng dụng trên cổng `http://127.0.0.1:5500`.
@@ -45,13 +45,13 @@ Vì VocabFlow là một ứng dụng client-side thuần túy, bạn không cầ
 
 ## 🚀 Triển Khai Lên Internet Hoàn Toàn Miễn Phí (GitHub Pages)
 
-Vì ứng dụng không cần backend, **GitHub Pages** là nơi tuyệt vời và miễn phí 100% để bạn đưa VocabFlow lên môi trường mạng để học trên mọi thiết bị di động cá nhân:
+Vì ứng dụng không cần backend, **GitHub Pages** là nơi tuyệt vời và miễn phí 100% để bạn đưa LearningEnglish lên môi trường mạng để học trên mọi thiết bị di động cá nhân:
 
 1.  Đẩy mã nguồn này lên một kho lưu trữ (Repository) trên tài khoản GitHub của bạn:
     ```bash
     git init
     git add .
-    git commit -m "Khởi tạo ứng dụng VocabFlow"
+    git commit -m "Khởi tạo ứng dụng LearningEnglish"
     git remote add origin <URL-KHO-LƯU-TRỮ-CỦA-BẠN>
     git branch -M main
     git push -u origin main
@@ -71,4 +71,4 @@ Vì ứng dụng không cần backend, **GitHub Pages** là nơi tuyệt vời v
 *   **Phím Mũi tên Phải (→)**: Đánh dấu từ "Đã thuộc" (Tăng cấp Hộp).
 *   **Phím Enter hoặc Phím V**: Phát âm từ vựng.
 
-Chúc bạn có những trải nghiệm tự học tiếng Anh tuyệt vời cùng VocabFlow!
+Chúc bạn có những trải nghiệm tự học tiếng Anh tuyệt vời cùng LearningEnglish!

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   VocabFlow - Application Engine (JavaScript Core)
+   Learning English - Application Engine (JavaScript Core)
    ========================================================================== */
 
 
@@ -14,8 +14,9 @@ let state = {
         totalAnswered: 0,
         correctAnswers: 0
     },
-    userLevel: 'Beginner',  // Default is 'Beginner' (lowest level)
+    userLevel: 'A1',  // Default is 'A1' (lowest level)
     lastTestScore: 0,       // Default placement test score is 0
+    placementStats: { grammar: 0, reading: 0, vocab: 0, listening: 0 }, // Sectional scores
     roadmapTasks: [],    // Daily checklist tasks { text, completed }
     stars: 0,            // Gamification Gold Stars ⭐
     currentUserEmail: '', // Authenticated user email
@@ -23,7 +24,8 @@ let state = {
     photoURL: '',         // Selected profile photoURL or custom animal emoji
     googlePhotoURL: '',   // Google authenticating user photoURL
     completedLessons: [], // Completed grammar lesson IDs
-    completedSentences: [] // Completed communicative sentence english string IDs
+    completedSentences: [], // Completed communicative sentence english string IDs
+    stories_done: []      // Completed reading stories
 };
 
 // Flashcard Deck study state
@@ -70,13 +72,23 @@ async function loadStateAsync() {
         state.streak = await LearningDB.getProgress('streak', 0);
         state.lastStudyDate = await LearningDB.getProgress('last_study_date', '');
         state.quizStats = await LearningDB.getProgress('quiz_stats', { totalAnswered: 0, correctAnswers: 0 });
-        state.userLevel = await LearningDB.getProgress('user_level', 'Beginner');
+        state.userLevel = await LearningDB.getProgress('user_level', 'A1');
+        if (state.userLevel === 'Beginner' || !state.userLevel) {
+            state.userLevel = 'A1';
+        } else if (state.userLevel === 'Intermediate') {
+            state.userLevel = 'B1';
+        } else if (state.userLevel === 'Advanced') {
+            state.userLevel = 'C1';
+        }
         state.lastTestScore = await LearningDB.getProgress('last_test_score', 0);
+        state.placementStats = await LearningDB.getProgress('placement_stats', { grammar: 0, reading: 0, vocab: 0, listening: 0 });
         state.stars = await LearningDB.getProgress('stars', 0);
         state.photoURL = await LearningDB.getProgress('photo_url', '');
         state.displayName = await LearningDB.getProgress('display_name', '');
         state.completedLessons = await LearningDB.getProgress('completed_lessons', []);
         state.completedSentences = await LearningDB.getProgress('completed_sentences', []);
+        state.stories_done = await LearningDB.getProgress('stories_done', []);
+        storiesState.completedStories = state.stories_done;
         
         const storedRoadmap = await LearningDB.getProgress('roadmap_tasks', null);
         if (storedRoadmap) {
@@ -136,12 +148,14 @@ async function saveStatsToStorage() {
     await LearningDB.setProgress('quiz_stats', state.quizStats);
     await LearningDB.setProgress('user_level', state.userLevel);
     await LearningDB.setProgress('last_test_score', state.lastTestScore);
+    await LearningDB.setProgress('placement_stats', state.placementStats);
     await LearningDB.setProgress('roadmap_tasks', state.roadmapTasks);
     await LearningDB.setProgress('stars', state.stars);
     await LearningDB.setProgress('photo_url', state.photoURL);
     await LearningDB.setProgress('display_name', state.displayName);
     await LearningDB.setProgress('completed_lessons', state.completedLessons);
     await LearningDB.setProgress('completed_sentences', state.completedSentences);
+    await LearningDB.setProgress('stories_done', state.stories_done);
 
     // Keep localStorage in sync for basic visual items
     localStorage.setItem('vocabflow_user_level', state.userLevel);
@@ -183,6 +197,12 @@ function updateSidebarStreakUI() {
     if (el) {
         el.textContent = state.streak;
     }
+
+    // Đồng bộ chỉ số streak trên thanh tiêu đề di động (Mobile Top Bar)
+    const mobileEl = document.getElementById('mobile-streak-val');
+    if (mobileEl) {
+        mobileEl.textContent = state.streak;
+    }
 }
 
 // Streak Calculation Logic
@@ -215,7 +235,262 @@ function checkAndUpdateStreak() {
 
 // --- RENDERING & UI SYNC ---
 
+function getCEFRLevelDisplayName(level) {
+    const map = {
+        'A1': 'Sơ cấp (A1)',
+        'A2': 'Sơ cấp (A2)',
+        'A3': 'Tiền trung cấp (A3)',
+        'B1': 'Trung cấp (B1)',
+        'B2': 'Trung cấp (B2)',
+        'B3': 'Tiền cao cấp (B3)',
+        'C1': 'Cao cấp (C1)',
+        'C2': 'Thành thạo (C2)'
+    };
+    return map[level] || 'Sơ cấp (A1)';
+}
+
+function filterWordsByLevel(allWords, level) {
+    if (level === 'A1') {
+        return allWords.filter(w => (w.category === 'oxford' && w.word.length < 6) || w.category === 'custom');
+    } else if (level === 'A2') {
+        return allWords.filter(w => (w.category === 'oxford' && w.word.length >= 6 && w.word.length <= 8) || w.category === 'custom');
+    } else if (level === 'A3') {
+        return allWords.filter(w => (w.category === 'oxford' && w.word.length > 8) || w.category === 'custom');
+    } else if (level === 'B1') {
+        return allWords.filter(w => w.category === 'oxford' || w.category === 'idioms' || w.category === 'custom');
+    } else if (level === 'B2') {
+        return allWords.filter(w => w.category === 'academic' || w.category === 'custom');
+    } else if (level === 'B3') {
+        return allWords.filter(w => w.category === 'academic' || w.category === 'idioms' || w.category === 'custom');
+    } else if (level === 'C1') {
+        return allWords.filter(w => (w.category && w.category.startsWith('spec-')) || w.category === 'custom');
+    } else {
+        return allWords;
+    }
+}
+
+function updateCEFRSkillsRadarBars(score, masteredVocab, totalVocab) {
+    const stats = state.placementStats || { grammar: 0, reading: 0, vocab: 0, listening: 0 };
+    
+    // 1. Vocabulary Skill formula
+    const rawVocabPct = totalVocab > 0 ? Math.round((masteredVocab / totalVocab) * 100) : 0;
+    const baseVocabSeed = Math.round((stats.vocab / 8) * 100);
+    const vocabPct = Math.min(100, Math.max(rawVocabPct, baseVocabSeed || 15));
+
+    // 2. Grammar Skill formula
+    const completedGrammarLessons = state.completedLessons ? state.completedLessons.length : 0;
+    const rawGrammarPct = Math.round((completedGrammarLessons / 12) * 100);
+    const baseGrammarSeed = Math.round((stats.grammar / 4) * 100);
+    const grammarPct = Math.min(100, Math.max(rawGrammarPct, baseGrammarSeed || 15));
+
+    // 3. Reading Skill formula
+    const completedStories = state.stories_done ? state.stories_done.length : 0;
+    const rawReadingPct = completedStories * 20; // 5 stories = 100%
+    const baseReadingSeed = Math.round((stats.reading / 4) * 100);
+    const readingPct = Math.min(100, Math.max(rawReadingPct, baseReadingSeed || 15));
+
+    // 4. Listening Skill formula
+    const completedSentences = state.completedSentences ? state.completedSentences.length : 0;
+    const rawListeningPct = Math.round((completedSentences / 20) * 100);
+    const baseListeningSeed = Math.round((stats.listening / 4) * 100);
+    const listeningPct = Math.min(100, Math.max(rawListeningPct, baseListeningSeed || 15));
+
+    // 5. Spoken & AI Essay formula
+    const quizAccPct = state.quizStats.totalAnswered > 0 ? Math.round((state.quizStats.correctAnswers / state.quizStats.totalAnswered) * 100) : 0;
+    const writingPct = Math.min(100, Math.max(quizAccPct || 10, Math.round((score / 16) * 100) || 15));
+
+    // Render bars in DOM
+    const barElements = {
+        'vocab': { bar: 'dashboard-skill-bar-vocab', txt: 'dashboard-skill-vocab', val: vocabPct },
+        'grammar': { bar: 'dashboard-skill-bar-grammar', txt: 'dashboard-skill-grammar', val: grammarPct },
+        'reading': { bar: 'dashboard-skill-bar-reading', txt: 'dashboard-skill-reading', val: readingPct },
+        'listening': { bar: 'dashboard-skill-bar-listening', txt: 'dashboard-skill-listening', val: listeningPct },
+        'writing': { bar: 'dashboard-skill-bar-writing', txt: 'dashboard-skill-writing', val: writingPct }
+    };
+
+    Object.keys(barElements).forEach(key => {
+        const item = barElements[key];
+        const barEl = document.getElementById(item.bar);
+        const txtEl = document.getElementById(item.txt);
+        if (barEl) barEl.style.width = `${item.val}%`;
+        if (txtEl) txtEl.textContent = `${item.val}%`;
+    });
+}
+
+let isPlacementQuizRunning = false;
+let currentPlacementQuestionIndex = 0;
+let placementUserAnswers = [];
+
+function triggerCEFRPlacementTestIfNew() {
+    if (state.lastTestScore === 0) {
+        const modal = document.getElementById('placement-test-modal');
+        if (modal) modal.classList.remove('hidden');
+    }
+}
+
+function startPlacementTestQuiz() {
+    document.getElementById('placement-intro-screen').classList.add('hidden');
+    document.getElementById('placement-quiz-screen').classList.remove('hidden');
+    document.getElementById('placement-result-screen').classList.add('hidden');
+
+    isPlacementQuizRunning = true;
+    currentPlacementQuestionIndex = 0;
+    placementUserAnswers = [];
+    showPlacementQuestion();
+}
+
+function skipPlacementTestQuiz() {
+    state.userLevel = 'A1';
+    state.lastTestScore = 1; // Seed a small score so it doesn't pop up again
+    state.placementStats = { grammar: 0, reading: 0, vocab: 0, listening: 0 };
+    
+    saveStatsToStorage();
+    const modal = document.getElementById('placement-test-modal');
+    if (modal) modal.classList.add('hidden');
+    renderDashboard();
+}
+
+function showPlacementQuestion() {
+    if (typeof PLACEMENT_QUESTIONS === 'undefined') return;
+    const q = PLACEMENT_QUESTIONS[currentPlacementQuestionIndex];
+    if (!q) return;
+
+    // Update section indicator and progress bar
+    const secIndicator = document.getElementById('placement-section-indicator');
+    const progText = document.getElementById('placement-progress-text');
+    const progBar = document.getElementById('placement-progress-bar');
+
+    const totalQs = PLACEMENT_QUESTIONS.length;
+    const progressPct = ((currentPlacementQuestionIndex) / totalQs) * 100;
+    if (progBar) progBar.style.width = `${progressPct}%`;
+    if (progText) progText.textContent = `Câu ${currentPlacementQuestionIndex + 1} / ${totalQs}`;
+
+    const sectionNames = {
+        'grammar': '📚 NGỮ PHÁP (GRAMMAR)',
+        'vocabulary': '🧩 TỪ VỰNG (VOCABULARY)',
+        'reading': '📖 ĐỌC HIỂU (READING COMPREHENSION)',
+        'listening': '🗣️ PHẢN XẠ & NGHE (REFLEX & LISTENING)'
+    };
+    if (secIndicator) secIndicator.textContent = sectionNames[q.section] || q.section.toUpperCase();
+
+    // Show question text
+    const qTextEl = document.getElementById('placement-question-text');
+    if (qTextEl) qTextEl.textContent = q.question;
+
+    // Build options
+    const optionsContainer = document.getElementById('placement-options-container');
+    if (optionsContainer) {
+        optionsContainer.innerHTML = '';
+
+        q.options.forEach((opt, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-option'; // Uses legacy beautiful quiz styling
+            btn.style.cssText = 'width: 100%; text-align: left; padding: 14px 18px; margin: 0; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; color: var(--text-main); font-size: 14px; cursor: pointer; transition: all 0.2s ease;';
+            
+            // Add hover triggers programmatically for rich feeling
+            btn.addEventListener('mouseenter', () => {
+                btn.style.background = 'rgba(255,255,255,0.06)';
+                btn.style.borderColor = 'var(--primary)';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.background = 'rgba(255,255,255,0.03)';
+                btn.style.borderColor = 'rgba(255,255,255,0.08)';
+            });
+
+            btn.textContent = opt;
+            btn.addEventListener('click', () => submitPlacementAnswer(idx));
+            optionsContainer.appendChild(btn);
+        });
+    }
+}
+
+function submitPlacementAnswer(selectedIdx) {
+    placementUserAnswers.push(selectedIdx);
+    
+    currentPlacementQuestionIndex++;
+    if (currentPlacementQuestionIndex < PLACEMENT_QUESTIONS.length) {
+        showPlacementQuestion();
+    } else {
+        finishPlacementTest();
+    }
+}
+
+function finishPlacementTest() {
+    isPlacementQuizRunning = false;
+
+    // Calculate score
+    let totalCorrect = 0;
+    let grammarCorrect = 0;
+    let readingCorrect = 0;
+    let vocabCorrect = 0;
+    let listeningCorrect = 0;
+
+    PLACEMENT_QUESTIONS.forEach((q, idx) => {
+        const userAns = placementUserAnswers[idx];
+        if (userAns === q.answer) {
+            totalCorrect++;
+            if (q.section === 'grammar') grammarCorrect++;
+            else if (q.section === 'reading') readingCorrect++;
+            else if (q.section === 'vocabulary') vocabCorrect++;
+            else if (q.section === 'listening') listeningCorrect++;
+        }
+    });
+
+    // Save sectional scores
+    state.placementStats = {
+        grammar: grammarCorrect,
+        reading: readingCorrect,
+        vocab: vocabCorrect,
+        listening: listeningCorrect
+    };
+
+    // Classify Level (A1 - C2)
+    let finalLevel = 'A1';
+    if (totalCorrect <= 2) finalLevel = 'A1';
+    else if (totalCorrect <= 4) finalLevel = 'A2';
+    else if (totalCorrect <= 6) finalLevel = 'A3';
+    else if (totalCorrect <= 8) finalLevel = 'B1';
+    else if (totalCorrect <= 10) finalLevel = 'B2';
+    else if (totalCorrect <= 12) finalLevel = 'B3';
+    else if (totalCorrect <= 14) finalLevel = 'C1';
+    else finalLevel = 'C2';
+
+    state.userLevel = finalLevel;
+    state.lastTestScore = totalCorrect;
+
+    // Update database & sync
+    saveStatsToStorage();
+
+    // Show Results Screen
+    document.getElementById('placement-intro-screen').classList.add('hidden');
+    document.getElementById('placement-quiz-screen').classList.add('hidden');
+    document.getElementById('placement-result-screen').classList.remove('hidden');
+
+    // Populate score visualizers
+    document.getElementById('placement-score-result').textContent = `${totalCorrect} / 16`;
+    document.getElementById('placement-level-result').textContent = finalLevel;
+
+    // Section breakdown numbers
+    document.getElementById('breakdown-grammar').textContent = `${grammarCorrect} / 4`;
+    document.getElementById('breakdown-reading').textContent = `${readingCorrect} / 4`;
+    document.getElementById('breakdown-vocab').textContent = `${vocabCorrect + listeningCorrect} / 8`;
+
+    // Section breakdown bars width
+    document.getElementById('bar-grammar').style.width = `${(grammarCorrect / 4) * 100}%`;
+    document.getElementById('bar-reading').style.width = `${(readingCorrect / 4) * 100}%`;
+    document.getElementById('bar-vocab').style.width = `${((vocabCorrect + listeningCorrect) / 8) * 100}%`;
+}
+
+function closePlacementTestModal() {
+    const modal = document.getElementById('placement-test-modal');
+    if (modal) modal.classList.add('hidden');
+    renderDashboard();
+}
+
 function renderDashboard() {
+    // Proactively check if placement test needs to be triggered
+    triggerCEFRPlacementTestIfNew();
+
     // Update Gold Stars counter
     const starsCountEl = document.getElementById('dashboard-stars-count');
     if (starsCountEl) {
@@ -229,47 +504,48 @@ function renderDashboard() {
     }
 
     // Update Private Assessment & Level (Confidential display for current student only)
-    const level = state.userLevel || 'Beginner';
+    const level = state.userLevel || 'A1';
     const score = state.lastTestScore !== undefined ? state.lastTestScore : 0;
     
-    let levelNameShort = 'Sơ cấp';
-    if (level === 'Intermediate') {
-        levelNameShort = 'Trung cấp';
-    } else if (level === 'Advanced') {
-        levelNameShort = 'Cao cấp';
-    }
+    const levelNameShort = getCEFRLevelDisplayName(level);
     
     const assessmentValEl = document.getElementById('dashboard-assessment-val');
     const assessmentLevelEl = document.getElementById('dashboard-assessment-level');
-    if (assessmentValEl) assessmentValEl.textContent = `${score}/10`;
+    if (assessmentValEl) assessmentValEl.textContent = `${score}/16`;
     if (assessmentLevelEl) assessmentLevelEl.textContent = `Trình độ: ${levelNameShort}`;
     
     const profileLevelText = document.getElementById('user-private-level-text');
     if (profileLevelText) {
-        profileLevelText.textContent = `${levelNameShort} (${score}/10)`;
+        profileLevelText.textContent = `${levelNameShort} (${score}/16)`;
     }
 
     // Group all words (built-in + custom)
     const allWords = [...state.vocabulary, ...state.customWords];
     
     // Filter syllabus words based on student's current level
-    let levelWords = allWords;
-    if (level === 'Beginner') {
-        levelWords = allWords.filter(w => w.category === 'oxford' || w.category === 'custom');
-    } else if (level === 'Intermediate') {
-        levelWords = allWords.filter(w => w.category === 'oxford' || w.category === 'idioms' || w.category === 'custom');
-    } else {
-        levelWords = allWords; // Advanced gets everything
-    }
+    const levelWords = filterWordsByLevel(allWords, level);
 
-    const totalWordsCount = levelWords.length;
-    const masteredCount = levelWords.filter(w => w.box === 3).length;
-    const learningCount = levelWords.filter(w => w.box === 2).length;
-    const newCount = levelWords.filter(w => w.box === 1).length;
-
-    // Calculate how many words are due for review (nextReview <= now)
+    // TỐI ƯU HÓA HIỆU NĂNG: Duyệt mảng 1 lần duy nhất để đếm các hộp Leitner và số lượng từ cần ôn tập
     const now = Date.now();
-    const reviewCount = levelWords.filter(w => w.nextReview <= now && w.box < 3).length;
+    const totalWordsCount = levelWords.length;
+    let masteredCount = 0;
+    let learningCount = 0;
+    let newCount = 0;
+    let reviewCount = 0;
+
+    for (let i = 0; i < totalWordsCount; i++) {
+        const w = levelWords[i];
+        if (w.box === 3) {
+            masteredCount++;
+        } else {
+            if (w.box === 2) learningCount++;
+            else if (w.box === 1) newCount++;
+            
+            if (w.nextReview <= now) {
+                reviewCount++;
+            }
+        }
+    }
 
     // Update Text Elements
     document.getElementById('stats-total-words').textContent = totalWordsCount;
@@ -311,6 +587,9 @@ function renderDashboard() {
     const offset = circumference - (progressPct / 100) * circumference;
     circle.style.strokeDashoffset = offset;
 
+    // --- UPDATE CEFR SKILL RADAR BARS ---
+    updateCEFRSkillsRadarBars(score, masteredCount, totalWordsCount);
+
     // Render "Word of the Day"
     renderWordOfTheDay();
 
@@ -323,15 +602,8 @@ function renderWordOfTheDay() {
     const allWords = [...state.vocabulary, ...state.customWords];
     if (allWords.length === 0) return;
 
-    const level = state.userLevel || 'Beginner';
-    let levelWords = allWords;
-    if (level === 'Beginner') {
-        levelWords = allWords.filter(w => w.category === 'oxford' || w.category === 'custom');
-    } else if (level === 'Intermediate') {
-        levelWords = allWords.filter(w => w.category === 'oxford' || w.category === 'idioms' || w.category === 'custom');
-    } else {
-        levelWords = allWords.filter(w => w.category === 'oxford' || w.category === 'idioms' || w.category === 'academic' || w.category === 'custom');
-    }
+    const level = state.userLevel || 'A1';
+    let levelWords = filterWordsByLevel(allWords, level);
 
     if (levelWords.length === 0) levelWords = allWords; // Fallback
 
@@ -1549,6 +1821,9 @@ function setUpTabNavigation() {
         item.addEventListener('click', () => {
             const targetId = item.getAttribute('data-target');
             
+            // Tự động đóng sidebar drawer di động sau khi chuyển mục học tập
+            closeMobileMenu();
+            
             // Toggle active menu states
             navItems.forEach(nav => nav.classList.remove('active'));
             item.classList.add('active');
@@ -1583,9 +1858,66 @@ function setUpTabNavigation() {
     });
 }
 
+// --- MOBILE RESPONSIVE DRAWER CORE FUNCTIONS ---
+
+function openMobileMenu() {
+    const hamburger = document.getElementById('btn-hamburger');
+    const appHeader = document.getElementById('app-header');
+    const overlay = document.getElementById('mobile-menu-overlay');
+    
+    if (hamburger && appHeader && overlay) {
+        hamburger.classList.add('open');
+        appHeader.classList.add('menu-active');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Khóa cuộn trang nền
+    }
+}
+
+function closeMobileMenu() {
+    const hamburger = document.getElementById('btn-hamburger');
+    const appHeader = document.getElementById('app-header');
+    const overlay = document.getElementById('mobile-menu-overlay');
+    
+    if (hamburger && appHeader && overlay) {
+        hamburger.classList.remove('open');
+        appHeader.classList.remove('menu-active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = ''; // Mở khóa cuộn trang nền
+    }
+}
+
+function initMobileMenuListeners() {
+    const hamburger = document.getElementById('btn-hamburger');
+    const closeBtn = document.getElementById('btn-close-drawer');
+    const overlay = document.getElementById('mobile-menu-overlay');
+    
+    if (hamburger) {
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = hamburger.classList.contains('open');
+            if (isOpen) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        });
+    }
+    
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeMobileMenu);
+    }
+    
+    if (overlay) {
+        overlay.addEventListener('click', closeMobileMenu);
+    }
+}
+
 // --- EVENT LISTENERS INITIALIZATION ---
 
 function initApp() {
+    // 0. Setup mobile navigation drawer triggers
+    initMobileMenuListeners();
+
     // 1. Tab Routing Setup
     setUpTabNavigation();
 
@@ -1612,6 +1944,15 @@ function initApp() {
     document.getElementById('btn-logout').addEventListener('click', handleGoogleLogout);
     document.getElementById('btn-auth-skip').addEventListener('click', skipAuthOverlay);
     document.getElementById('btn-trigger-login').addEventListener('click', showAuthOverlay);
+
+    // CEFR Entrance Placement Test Event Listeners
+    const btnStartPlacement = document.getElementById('btn-start-placement');
+    const btnSkipPlacement = document.getElementById('btn-skip-placement');
+    const btnEnterRoadmap = document.getElementById('btn-enter-roadmap');
+
+    if (btnStartPlacement) btnStartPlacement.addEventListener('click', startPlacementTestQuiz);
+    if (btnSkipPlacement) btnSkipPlacement.addEventListener('click', skipPlacementTestQuiz);
+    if (btnEnterRoadmap) btnEnterRoadmap.addEventListener('click', closePlacementTestModal);
 
     // 3. Setup Firebase Auth & Data Sync Listener
     if (window.FirebaseSync) {
@@ -2200,7 +2541,7 @@ function selectSpecializedCategory(category) {
 // ==========================================================================
 // STORIES MODULE
 // ==========================================================================
-const storiesState = { completedStories: JSON.parse(localStorage.getItem('le_stories_done') || '[]') };
+const storiesState = { completedStories: [] };
 
 function renderStoriesGrid(filter = 'all') {
     const grid = document.getElementById('stories-grid');
@@ -2268,7 +2609,8 @@ function openStory(story) {
                 `🎉 Bạn đúng ${correct}/${story.questions.length} câu!`;
             if (!storiesState.completedStories.includes(story.id)) {
                 storiesState.completedStories.push(story.id);
-                localStorage.setItem('le_stories_done', JSON.stringify(storiesState.completedStories));
+                state.stories_done = storiesState.completedStories;
+                saveStatsToStorage();
             }
         }
     });
