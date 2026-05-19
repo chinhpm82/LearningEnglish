@@ -86,6 +86,14 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
                     <span>Học ngữ pháp</span>
                 </button>
+                <button class="nav-item" data-target="stories-tab" id="btn-stories">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                    <span>Đọc truyện</span>
+                </button>
+                <button class="nav-item" data-target="translation-tab" id="btn-translation">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M5 8l6 6"></path><path d="M4 14l6-6 2-3"></path><path d="M2 5h12"></path><path d="M7 2h1"></path><path d="M22 22l-5-10-5 10"></path><path d="M14 18h6"></path></svg>
+                    <span>Dịch câu</span>
+                </button>
                 <button class="nav-item" data-target="leaderboard-tab" id="btn-leaderboard">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <span>Bảng xếp hạng</span>
@@ -347,7 +355,7 @@
                             <div class="spec-deck-info">
                                 <h4 class="spec-deck-name">Công nghệ Thông tin (IT)</h4>
                                 <p class="spec-deck-desc">Thuật toán, đệ quy, lập trình hướng đối tượng, bất đồng bộ, biên dịch...</p>
-                                <span class="spec-deck-badge badge-it">500 từ vựng</span>
+                                <span class="spec-deck-badge badge-it">95 từ vựng</span>
                             </div>
                         </div>
                         <!-- Card 2: Geography -->
@@ -356,7 +364,7 @@
                             <div class="spec-deck-info">
                                 <h4 class="spec-deck-name">Địa lý Phổ thông</h4>
                                 <p class="spec-deck-desc">Khí quyển, bán cầu, địa hình địa thế, lượng mưa, xói mòn bào mòn đất...</p>
-                                <span class="spec-deck-badge badge-geo">100 từ vựng</span>
+                                <span class="spec-deck-badge badge-geo">20 từ vựng</span>
                             </div>
                         </div>
                         <!-- Card 3: Biology -->
@@ -365,7 +373,7 @@
                             <div class="spec-deck-info">
                                 <h4 class="spec-deck-name">Sinh học Phổ thông</h4>
                                 <p class="spec-deck-desc">Quang hợp, hô hấp tế bào, nhiễm sắc thể, hệ sinh thái, sự tiến hóa...</p>
-                                <span class="spec-deck-badge badge-bio">100 từ vựng</span>
+                                <span class="spec-deck-badge badge-bio">20 từ vựng</span>
                             </div>
                         </div>
                         <!-- Card 4: Chemistry -->
@@ -374,7 +382,7 @@
                             <div class="spec-deck-info">
                                 <h4 class="spec-deck-name">Hóa học Phổ thông</h4>
                                 <p class="spec-deck-desc">Sự oxy hóa, chất xúc tác phân tử, liên kết cộng hóa trị, độ hòa tan...</p>
-                                <span class="spec-deck-badge badge-chem">100 từ vựng</span>
+                                <span class="spec-deck-badge badge-chem">19 từ vựng</span>
                             </div>
                         </div>
                         <!-- Card 5: Physics -->
@@ -383,7 +391,7 @@
                             <div class="spec-deck-info">
                                 <h4 class="spec-deck-name">Vật lý Phổ thông</h4>
                                 <p class="spec-deck-desc">Trọng lực lực hấp dẫn, vận tốc tốc độ có hướng, gia tốc, quán tính...</p>
-                                <span class="spec-deck-badge badge-phy">100 từ vựng</span>
+                                <span class="spec-deck-badge badge-phy">20 từ vựng</span>
                             </div>
                         </div>
                         <!-- Card 6: History -->
@@ -392,7 +400,7 @@
                             <div class="spec-deck-info">
                                 <h4 class="spec-deck-name">Lịch sử Phổ thông</h4>
                                 <p class="spec-deck-desc">Triều đại lịch sử, chế độ phong kiến, chủ quyền lãnh thổ, cách mạng...</p>
-                                <span class="spec-deck-badge badge-hist">100 từ vựng</span>
+                                <span class="spec-deck-badge badge-hist">20 từ vựng</span>
                             </div>
                         </div>
                     </div>
@@ -713,7 +721,95 @@
                 </div>
             </section>
 
-            <!-- TAB 7: LEADERBOARD -->
+            <!-- TAB 7: STORIES -->
+            <section id="stories-tab" class="tab-content">
+                <div class="tab-title-row">
+                    <div>
+                        <h2>Đọc Truyện Ngắn 📖</h2>
+                        <p>Luyện đọc hiểu qua các câu chuyện thú vị — giống Duolingo Stories!</p>
+                    </div>
+                    <div class="filter-group">
+                        <label for="story-level-filter">Trình độ:</label>
+                        <select id="story-level-filter" class="styled-select">
+                            <option value="all">Tất cả</option>
+                            <option value="Beginner">Sơ cấp</option>
+                            <option value="Intermediate">Trung cấp</option>
+                            <option value="Advanced">Nâng cao</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Story List Grid -->
+                <div class="stories-grid" id="stories-grid"></div>
+                <!-- Story Reader (hidden by default) -->
+                <div class="story-reader hidden" id="story-reader">
+                    <button class="btn-back-stories" id="btn-back-stories">← Quay lại danh sách</button>
+                    <div class="story-header">
+                        <span class="story-emoji" id="story-reader-emoji"></span>
+                        <h3 id="story-reader-title"></h3>
+                        <span class="story-level-badge" id="story-reader-level"></span>
+                    </div>
+                    <div class="story-body" id="story-reader-body"></div>
+                    <div class="story-vocab-section">
+                        <h4>📝 Từ vựng trong truyện</h4>
+                        <div class="story-vocab-list" id="story-vocab-list"></div>
+                    </div>
+                    <div class="story-quiz-section" id="story-quiz-section">
+                        <h4>🧠 Kiểm tra đọc hiểu</h4>
+                        <div id="story-quiz-container"></div>
+                    </div>
+                    <div class="story-result hidden" id="story-result">
+                        <div class="story-result-icon"></div>
+                        <p class="story-result-text" id="story-result-text"></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 8: TRANSLATION -->
+            <section id="translation-tab" class="tab-content">
+                <div class="tab-title-row">
+                    <div>
+                        <h2>Luyện Dịch Câu 🌐</h2>
+                        <p>Dịch câu Anh→Việt và Việt→Anh để rèn luyện khả năng viết.</p>
+                    </div>
+                    <div class="filter-group" style="display:flex;gap:10px;flex-wrap:wrap;">
+                        <select id="trans-dir-filter" class="styled-select">
+                            <option value="all">Tất cả</option>
+                            <option value="en-vi">Anh → Việt</option>
+                            <option value="vi-en">Việt → Anh</option>
+                        </select>
+                        <select id="trans-level-filter" class="styled-select">
+                            <option value="all">Mọi trình độ</option>
+                            <option value="Beginner">Sơ cấp</option>
+                            <option value="Intermediate">Trung cấp</option>
+                            <option value="Advanced">Nâng cao</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="translation-progress-bar">
+                    <div class="translation-progress-fill" id="trans-progress-fill" style="width:0%"></div>
+                </div>
+                <div class="translation-card" id="translation-card">
+                    <div class="trans-direction-badge" id="trans-dir-badge">Anh → Việt</div>
+                    <div class="trans-level-badge" id="trans-level-badge">Beginner</div>
+                    <p class="trans-source" id="trans-source"></p>
+                    <div class="trans-hints" id="trans-hints"></div>
+                    <textarea class="trans-input" id="trans-input" placeholder="Nhập bản dịch của bạn..." rows="3"></textarea>
+                    <div class="trans-actions">
+                        <button class="btn-secondary" id="btn-trans-hint">💡 Gợi ý</button>
+                        <button class="btn-primary" id="btn-trans-check">✅ Kiểm tra</button>
+                        <button class="btn-primary hidden" id="btn-trans-next">Câu tiếp →</button>
+                    </div>
+                    <div class="trans-feedback hidden" id="trans-feedback">
+                        <p class="trans-feedback-text" id="trans-feedback-text"></p>
+                        <p class="trans-answer" id="trans-answer"></p>
+                    </div>
+                </div>
+                <div class="trans-score-bar">
+                    <span>📊 Điểm: <strong id="trans-score">0</strong> / <span id="trans-total">0</span></span>
+                </div>
+            </section>
+
+            <!-- TAB 9: LEADERBOARD -->
             <section id="leaderboard-tab" class="tab-content">
                 <div class="tab-title-row">
                     <div>
@@ -795,6 +891,8 @@
     <script src="data/vocabulary-data.js"></script>
     <script src="data/specialized-data.js"></script>
     <script src="data/sentences-data.js"></script>
+    <script src="data/stories-data.js"></script>
+    <script src="data/translation-data.js"></script>
     <!-- Firebase Synchronization Bridge module -->
     <script type="module" src="firebase-sync.js"></script>
     <!-- Main JavaScript Logic -->

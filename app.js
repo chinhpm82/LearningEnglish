@@ -2051,3 +2051,214 @@ function selectSpecializedCategory(category) {
         showToastNotification(`📚 Đã nạp từ chuyên đề! Chúc bạn học tốt! ⚡`);
     }
 }
+
+// ==========================================================================
+// STORIES MODULE
+// ==========================================================================
+const storiesState = { completedStories: JSON.parse(localStorage.getItem('le_stories_done') || '[]') };
+
+function renderStoriesGrid(filter = 'all') {
+    const grid = document.getElementById('stories-grid');
+    if (!grid) return;
+    const stories = typeof STORIES_DATA !== 'undefined' ? STORIES_DATA : [];
+    const filtered = filter === 'all' ? stories : stories.filter(s => s.level === filter);
+    grid.innerHTML = '';
+    if (filtered.length === 0) { grid.innerHTML = '<p style="color:var(--text-secondary)">Không có truyện nào phù hợp.</p>'; return; }
+    filtered.forEach(story => {
+        const done = storiesState.completedStories.includes(story.id);
+        const card = document.createElement('div');
+        card.className = 'story-card';
+        card.innerHTML = `
+            <span class="story-card-emoji">${story.emoji}</span>
+            <div class="story-card-info">
+                <h4>${story.title}</h4>
+                <p>${story.paragraphs[0].substring(0, 80)}...</p>
+                <span class="story-card-level" data-level="${story.level}">${story.level}</span>
+                ${done ? '<span class="story-card-status">✅ Đã đọc</span>' : ''}
+            </div>`;
+        card.addEventListener('click', () => openStory(story));
+        grid.appendChild(card);
+    });
+}
+
+function openStory(story) {
+    const grid = document.getElementById('stories-grid');
+    const reader = document.getElementById('story-reader');
+    grid.classList.add('hidden');
+    reader.classList.remove('hidden');
+    document.getElementById('story-reader-emoji').textContent = story.emoji;
+    document.getElementById('story-reader-title').textContent = story.title;
+    document.getElementById('story-reader-level').textContent = story.level;
+    const body = document.getElementById('story-reader-body');
+    body.innerHTML = story.paragraphs.map(p => `<p>${p}</p>`).join('');
+    const vocabList = document.getElementById('story-vocab-list');
+    vocabList.innerHTML = story.vocab.map(v => `<span class="vocab-tag">${v}</span>`).join('');
+    const quizContainer = document.getElementById('story-quiz-container');
+    quizContainer.innerHTML = '';
+    const resultEl = document.getElementById('story-result');
+    resultEl.classList.add('hidden');
+    let answered = 0;
+    let correct = 0;
+    story.questions.forEach((q, qi) => {
+        const qDiv = document.createElement('div');
+        qDiv.className = 'story-quiz-q';
+        qDiv.innerHTML = `<p>${qi + 1}. ${q.q}</p><div class="quiz-opts">${q.opts.map((o, oi) =>
+            `<button class="quiz-opt-btn" data-qi="${qi}" data-oi="${oi}">${o}</button>`).join('')}</div>`;
+        quizContainer.appendChild(qDiv);
+    });
+    quizContainer.addEventListener('click', function handler(e) {
+        const btn = e.target.closest('.quiz-opt-btn');
+        if (!btn) return;
+        const qi = parseInt(btn.dataset.qi);
+        const oi = parseInt(btn.dataset.oi);
+        const qBtns = quizContainer.querySelectorAll(`.quiz-opt-btn[data-qi="${qi}"]`);
+        if (qBtns[0].classList.contains('disabled')) return;
+        qBtns.forEach(b => b.classList.add('disabled'));
+        if (oi === story.questions[qi].ans) { btn.classList.add('correct'); correct++; }
+        else { btn.classList.add('wrong'); qBtns[story.questions[qi].ans].classList.add('correct'); }
+        answered++;
+        if (answered === story.questions.length) {
+            resultEl.classList.remove('hidden');
+            document.getElementById('story-result-text').textContent =
+                `🎉 Bạn đúng ${correct}/${story.questions.length} câu!`;
+            if (!storiesState.completedStories.includes(story.id)) {
+                storiesState.completedStories.push(story.id);
+                localStorage.setItem('le_stories_done', JSON.stringify(storiesState.completedStories));
+            }
+        }
+    });
+}
+
+// ==========================================================================
+// TRANSLATION MODULE
+// ==========================================================================
+const transState = { deck: [], idx: 0, score: 0, hintsShown: 0 };
+
+function initTranslation() {
+    const data = typeof TRANSLATION_DATA !== 'undefined' ? TRANSLATION_DATA : [];
+    const dirFilter = document.getElementById('trans-dir-filter')?.value || 'all';
+    const lvlFilter = document.getElementById('trans-level-filter')?.value || 'all';
+    let filtered = data;
+    if (dirFilter !== 'all') filtered = filtered.filter(t => t.dir === dirFilter);
+    if (lvlFilter !== 'all') filtered = filtered.filter(t => t.level === lvlFilter);
+    // Shuffle
+    for (let i = filtered.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [filtered[i], filtered[j]] = [filtered[j], filtered[i]]; }
+    transState.deck = filtered;
+    transState.idx = 0;
+    transState.score = 0;
+    transState.hintsShown = 0;
+    document.getElementById('trans-score').textContent = '0';
+    document.getElementById('trans-total').textContent = filtered.length;
+    renderTranslationCard();
+}
+
+function renderTranslationCard() {
+    const card = document.getElementById('translation-card');
+    if (!card) return;
+    if (transState.deck.length === 0) {
+        card.innerHTML = '<p style="text-align:center;color:var(--text-secondary);padding:40px;">Không có đoạn dịch nào phù hợp. Hãy chọn bộ lọc khác.</p>';
+        return;
+    }
+    const item = transState.deck[transState.idx];
+    document.getElementById('trans-dir-badge').textContent = item.dir === 'en-vi' ? 'Anh → Việt' : 'Việt → Anh';
+    document.getElementById('trans-level-badge').textContent = item.level;
+    document.getElementById('trans-source').textContent = item.source;
+    document.getElementById('trans-hints').innerHTML = '';
+    document.getElementById('trans-input').value = '';
+    document.getElementById('trans-feedback').classList.add('hidden');
+    document.getElementById('trans-feedback').className = 'trans-feedback hidden';
+    document.getElementById('btn-trans-check').classList.remove('hidden');
+    document.getElementById('btn-trans-next').classList.add('hidden');
+    const progress = ((transState.idx) / transState.deck.length) * 100;
+    document.getElementById('trans-progress-fill').style.width = progress + '%';
+}
+
+function checkTranslation() {
+    const item = transState.deck[transState.idx];
+    const userInput = document.getElementById('trans-input').value.trim();
+    if (!userInput) { showToastNotification('⚠️ Vui lòng nhập bản dịch!'); return; }
+    const feedback = document.getElementById('trans-feedback');
+    feedback.classList.remove('hidden');
+    // Simple similarity check (normalize and compare)
+    const normalize = s => s.toLowerCase().replace(/[.,!?;:'"()]/g, '').replace(/\s+/g, ' ').trim();
+    const userNorm = normalize(userInput);
+    const ansNorm = normalize(item.answer);
+    // Calculate word overlap
+    const userWords = new Set(userNorm.split(' '));
+    const ansWords = new Set(ansNorm.split(' '));
+    let overlap = 0;
+    ansWords.forEach(w => { if (userWords.has(w)) overlap++; });
+    const similarity = overlap / Math.max(ansWords.size, 1);
+    if (similarity >= 0.6 || userNorm === ansNorm) {
+        feedback.className = 'trans-feedback correct';
+        document.getElementById('trans-feedback-text').textContent = '✅ Tuyệt vời! Bản dịch của bạn rất tốt!';
+        transState.score++;
+    } else {
+        feedback.className = 'trans-feedback wrong';
+        document.getElementById('trans-feedback-text').textContent = '❌ Chưa chính xác lắm. Hãy xem đáp án gợi ý:';
+    }
+    document.getElementById('trans-answer').textContent = '💡 Đáp án: ' + item.answer;
+    document.getElementById('trans-score').textContent = transState.score;
+    document.getElementById('btn-trans-check').classList.add('hidden');
+    document.getElementById('btn-trans-next').classList.remove('hidden');
+}
+
+function nextTranslation() {
+    transState.idx++;
+    if (transState.idx >= transState.deck.length) {
+        showToastNotification(`🎉 Hoàn thành! Điểm: ${transState.score}/${transState.deck.length}`);
+        transState.idx = 0;
+        initTranslation();
+        return;
+    }
+    renderTranslationCard();
+}
+
+function showTransHint() {
+    const item = transState.deck[transState.idx];
+    if (!item || !item.hints) return;
+    const container = document.getElementById('trans-hints');
+    transState.hintsShown++;
+    const hintIdx = Math.min(transState.hintsShown - 1, item.hints.length - 1);
+    if (hintIdx < item.hints.length) {
+        container.innerHTML += `<span class="hint-item">${item.hints[hintIdx]}</span> `;
+    }
+}
+
+// ==========================================================================
+// INIT & EVENT LISTENERS FOR NEW MODULES
+// ==========================================================================
+document.addEventListener('DOMContentLoaded', function() {
+    // Stories tab
+    const storyFilter = document.getElementById('story-level-filter');
+    if (storyFilter) {
+        storyFilter.addEventListener('change', () => renderStoriesGrid(storyFilter.value));
+    }
+    const btnBackStories = document.getElementById('btn-back-stories');
+    if (btnBackStories) {
+        btnBackStories.addEventListener('click', () => {
+            document.getElementById('stories-grid').classList.remove('hidden');
+            document.getElementById('story-reader').classList.add('hidden');
+            renderStoriesGrid(document.getElementById('story-level-filter')?.value || 'all');
+        });
+    }
+    // Render stories when tab becomes visible
+    const btnStories = document.getElementById('btn-stories');
+    if (btnStories) {
+        btnStories.addEventListener('click', () => renderStoriesGrid(document.getElementById('story-level-filter')?.value || 'all'));
+    }
+
+    // Translation tab
+    const btnTransCheck = document.getElementById('btn-trans-check');
+    if (btnTransCheck) btnTransCheck.addEventListener('click', checkTranslation);
+    const btnTransNext = document.getElementById('btn-trans-next');
+    if (btnTransNext) btnTransNext.addEventListener('click', nextTranslation);
+    const btnTransHint = document.getElementById('btn-trans-hint');
+    if (btnTransHint) btnTransHint.addEventListener('click', showTransHint);
+    const transDirFilter = document.getElementById('trans-dir-filter');
+    if (transDirFilter) transDirFilter.addEventListener('change', initTranslation);
+    const transLvlFilter = document.getElementById('trans-level-filter');
+    if (transLvlFilter) transLvlFilter.addEventListener('change', initTranslation);
+    const btnTranslation = document.getElementById('btn-translation');
+    if (btnTranslation) btnTranslation.addEventListener('click', initTranslation);
+});
