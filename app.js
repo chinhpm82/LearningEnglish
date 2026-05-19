@@ -2885,6 +2885,15 @@ function showLongTransHint() {
 // --- AI Writing Room ---
 let currentWritingTopic = null;
 
+function getDifficultyFromUserLevel(level) {
+    if (!level) return 'Beginner';
+    const l = level.toUpperCase();
+    if (l === 'A1' || l === 'A2') return 'Beginner';
+    if (l === 'B1' || l === 'B2') return 'Intermediate';
+    if (l === 'C1' || l === 'C2') return 'Advanced';
+    return 'Intermediate';
+}
+
 function initWritingRoom() {
     const topics = typeof WRITING_DATA !== 'undefined' ? WRITING_DATA : [];
     const select = document.getElementById('writing-topic-select');
@@ -2903,6 +2912,35 @@ function initWritingRoom() {
         const selected = topics.find(t => t.id === select.value);
         if (selected) updateWritingTopic(selected);
     };
+    
+    const btnRandom = document.getElementById('btn-writing-random');
+    if (btnRandom) {
+        btnRandom.onclick = () => {
+            const userDiff = getDifficultyFromUserLevel(state.userLevel);
+            let pool = topics.filter(t => t.level === userDiff);
+            
+            // Fallback if no topics found
+            if (pool.length === 0) pool = topics;
+            
+            // Filter out current topic to ensure surprise
+            let filteredPool = pool.filter(t => t.id !== select.value);
+            if (filteredPool.length === 0) filteredPool = pool;
+            
+            const randomTopic = filteredPool[Math.floor(Math.random() * filteredPool.length)];
+            if (randomTopic) {
+                select.value = randomTopic.id;
+                updateWritingTopic(randomTopic);
+                
+                const textarea = document.getElementById('writing-textarea');
+                if (textarea) {
+                    textarea.value = '';
+                    handleWritingTextChange();
+                }
+                
+                showToastNotification(`🎲 Chủ đề bất ngờ: "${randomTopic.topic}" phù hợp với trình độ hiện tại ${state.userLevel} (${randomTopic.level})!`);
+            }
+        };
+    }
     
     const textarea = document.getElementById('writing-textarea');
     if (textarea) {
@@ -3023,6 +3061,26 @@ function gradeWritingEssay() {
     if (currentWritingTopic.level === 'Intermediate') { targetMin = 80; targetMax = 120; }
     else if (currentWritingTopic.level === 'Advanced') { targetMin = 100; targetMax = 150; }
     
+    // --- ADAPTIVE CEFR EVALUATION ADJUSTMENTS ---
+    const userDiff = getDifficultyFromUserLevel(state.userLevel);
+    let levelMismatchComment = "";
+
+    // Adjust requirements if topic is more difficult than user's current level (be lenient)
+    if (currentWritingTopic.level === 'Advanced' && userDiff === 'Beginner') {
+        targetMin = Math.round(targetMin * 0.7); // 30% leniency
+        levelMismatchComment = `\n*(Lưu ý sư phạm: Do bạn thuộc trình độ Sơ cấp (${state.userLevel}) đang thử thách chủ đề Cao cấp (Advanced), hệ thống đã giảm 30% yêu cầu độ dài tối thiểu xuống còn **${targetMin} từ** để động viên bạn!)*\n`;
+    } else if (currentWritingTopic.level === 'Advanced' && userDiff === 'Intermediate') {
+        targetMin = Math.round(targetMin * 0.85); // 15% leniency
+        levelMismatchComment = `\n*(Lưu ý sư phạm: Bạn thuộc trình độ Trung cấp (${state.userLevel}) thử thách chủ đề Cao cấp (Advanced), hệ thống đã giảm 15% yêu cầu độ dài tối thiểu xuống còn **${targetMin} từ**!)*\n`;
+    } else if (currentWritingTopic.level === 'Intermediate' && userDiff === 'Beginner') {
+        targetMin = Math.round(targetMin * 0.8); // 20% leniency
+        levelMismatchComment = `\n*(Lưu ý sư phạm: Trình độ Sơ cấp (${state.userLevel}) thử thách chủ đề Trung cấp (Intermediate), yêu cầu độ dài tối thiểu đã được giảm xuống còn **${targetMin} từ**!)*\n`;
+    } else if (currentWritingTopic.level === 'Beginner' && userDiff === 'Advanced') {
+        // Strictness: raise min length slightly for advanced user writing beginner topic
+        targetMin = Math.round(targetMin * 1.2); 
+        levelMismatchComment = `\n*(Lưu ý sư phạm: Bạn thuộc trình độ Cao cấp (${state.userLevel}) đang viết chủ đề Sơ cấp (Beginner), hệ thống yêu cầu độ dài tối thiểu cao hơn một chút (**${targetMin} từ**) để đánh giá đầy đủ thực lực của bạn!)*\n`;
+    }
+    
     if (essayLen >= targetMin && essayLen <= targetMax) {
         lengthScore = 25;
     } else if (essayLen < targetMin) {
@@ -3119,6 +3177,9 @@ function gradeWritingEssay() {
     
     // Generate feedback comments
     let aiComment = `**Đánh giá tổng quan:** Bài viết đạt **${totalScore}/100 điểm**. `;
+    if (levelMismatchComment) {
+        aiComment += levelMismatchComment + " ";
+    }
     
     if (nonEnglishPenalty) {
         aiComment += `\n\n⚠️ **CẢNH BÁO NỘI DUNG KHÔNG HỢP LỆ:** Bài viết của bạn không chứa đủ số lượng từ tiếng Anh hợp lệ hoặc toàn ký tự rác. Vui lòng nhập một đoạn văn tiếng Anh thực tế có nghĩa!`;

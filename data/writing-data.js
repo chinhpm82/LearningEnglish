@@ -89,5 +89,143 @@ const WRITING_DATA = [
             "Provide a memorable concluding thought on keeping technology as a tool, not a replacement for human warmth."
         ],
         sampleAnswer: "Modern technology is undeniably a double-edged sword that has revolutionized human interaction. On one hand, digital platforms facilitate seamless communication, allowing family members separated by vast geographical distances to stay instantly connected. On the other hand, the excessive usage of smartphones poses a severe threat to genuine relationships. Virtual distractions often lead to a reduction in meaningful, face-to-face conversations, fostering emotional disconnect even when sitting in the same room. During family gatherings, screen addiction replaces warm human interaction. To combat this growing social issue, households must actively establish device-free zones and schedule periodic digital detoxes. Technology should remain a convenient tool to enhance our lives, rather than a barrier that isolates us from our loved ones."
+    },
+    {
+        id: "w5",
+        topic: "My Favorite Season",
+        level: "Beginner",
+        prompt: "Viết một đoạn văn ngắn (50-80 từ) miêu tả về mùa yêu thích nhất trong năm của bạn và các hoạt động bạn thường làm trong mùa này.",
+        englishPrompt: "Write a short paragraph (50-80 words) describing your favorite season of the year and the typical activities you enjoy during this time.",
+        suggestedWords: [
+            { word: "favorite", vi: "yêu thích" },
+            { word: "weather", vi: "thời tiết" },
+            { word: "outdoors", vi: "ngoài trời" },
+            { word: "breeze", vi: "cơn gió nhẹ" },
+            { word: "blossom", vi: "nở hoa" }
+        ],
+        outline: [
+            "State your favorite season clearly in the first sentence.",
+            "Describe the weather during this season.",
+            "Mention one or two activities you enjoy doing outdoors.",
+            "Explain why this season makes you feel happy or relaxed.",
+            "End with a short concluding thought."
+        ],
+        sampleAnswer: "My absolute favorite season is autumn because the weather is extremely pleasant and cool. During this season, there is always a gentle breeze, and the leaves on the trees turn beautiful shades of yellow and red. I love spending time outdoors, going for walks in the park, and taking gorgeous photographs. Autumn makes me feel incredibly relaxed and peaceful. It is the perfect time to enjoy hot tea and read books by the window."
+    },
+    {
+        id: "w6",
+        topic: "A Memorable Vacation",
+        level: "Beginner",
+        prompt: "Kể về một chuyến du lịch đáng nhớ của bạn (60-90 từ). Chuyến đi diễn ra ở đâu, bạn đi với ai và hoạt động nào làm bạn ấn tượng nhất?",
+        englishPrompt: "Write about a memorable vacation you had (60-90 words). Where did you go, who did you go with, and what activity impressed you the most?",
+        suggestedWords: [
+            { word: "vacation", vi: "kỳ nghỉ" },
+            { word: "memorable", vi: "đáng nhớ" },
+            { word: "explore", vi: "khám phá" },
+            { word: "scenery", vi: "phong cảnh" },
+            { word: "delicious", vi: "thơm ngon" }
+        ],
+        outline: [
+            "State where and when you went on this memorable vacation.",
+            "Mention who accompanied you (family, friends, or solo).",
+            "Describe the beautiful scenery or atmosphere of the place.",
+            "Talk about a specific highlight (eating delicious food or exploring nature).",
+            "Conclude with your feelings about the trip."
+        ],
+        sampleAnswer: "Last summer, I had a highly memorable vacation in Da Nang with my close friends. The scenery was absolutely stunning, with long sandy beaches and blue ocean waters. We woke up early to watch the sunrise and explored the famous Marble Mountains. In the evening, we tasted delicious local street food near the night market. This trip was a wonderful opportunity to relax and strengthen our friendship. I hope to return there soon."
+    },
+    {
+        id: "w7",
+        topic: "The Importance of Exercise",
+        level: "Intermediate",
+        prompt: "Thảo luận về tầm quan trọng của việc tập thể dục thường xuyên đối với sức khỏe thể chất và tinh thần (80-120 từ).",
+        englishPrompt: "Discuss the importance of regular physical exercise for both physical health and mental well-being (80-120 words).",
+        suggestedWords: [
+            { word: "vital", vi: "quan trọng, cốt lõi" },
+            { word: "physical health", vi: "sức khỏe thể chất" },
+            { word: "immune system", vi: "hệ miễn dịch" },
+            { word: "mental well-being", vi: "sức khỏe tinh thần" },
+            { word: "reduce stress", vi: "giảm căng thẳng" },
+            { word: "consistent", vi: "nhất quán, đều đặn" }
+        ],
+        outline: [
+            "State that regular exercise is vital for a healthy life.",
+            "Explain physical benefits (boosting the immune system, keeping fit).",
+            "Explain mental benefits (releasing endorphins, reducing stress and anxiety).",
+            "Recommend a consistent routine (like 30 minutes of walking or jogging daily).",
+            "Conclude by stating that small, daily efforts lead to a happier life."
+        ],
+        sampleAnswer: "Engaging in regular physical exercise is vital for maintaining an active lifestyle and achieving robust physical health. Firstly, consistent workouts boost our immune system, prevent chronic diseases, and keep our body strong. Secondly, exercise plays a key role in enhancing mental well-being. When we run or cycle, our brain releases endorphins, which effectively reduce stress, anxiety, and depression. Even a simple thirty-minute daily walk can drastically elevate our mood and energy levels. Ultimately, making a commitment to physical activity is a direct investment in our longevity and overall happiness."
+    },
+    {
+        id: "w8",
+        topic: "Fast Food vs Healthy Food",
+        level: "Intermediate",
+        prompt: "Viết đoạn văn nghị luận (80-120 từ) so sánh lợi ích và tác hại giữa thức ăn nhanh (fast food) và thực phẩm tự nấu lành mạnh (healthy home-cooked food).",
+        englishPrompt: "Write a comparison paragraph (80-120 words) analyzing the trade-offs between fast food and healthy home-cooked meals.",
+        suggestedWords: [
+            { word: "convenience", vi: "sự tiện lợi" },
+            { word: "nutrition", vi: "dinh dưỡng" },
+            { word: "preservatives", vi: "chất bảo quan" },
+            { word: "obesity", vi: "bệnh béo phì" },
+            { word: "home-cooked", vi: "tự nấu ở nhà" },
+            { word: "lifestyle", vi: "lối sống" }
+        ],
+        outline: [
+            "Introduce the debate between fast food and healthy home-cooked meals.",
+            "Acknowledge the main appeal of fast food (convenience, time-saving, taste).",
+            "Highlight the severe drawbacks (high calories, preservatives, risk of obesity).",
+            "Explain the benefits of home-cooked food (fresh nutrition, control over ingredients).",
+            "Conclude with a balanced recommendation for a healthy lifestyle."
+        ],
+        sampleAnswer: "In our fast-paced society, the choice between fast food and healthy home-cooked meals has become a crucial daily decision. Fast food offers undeniable convenience and saves precious time for busy workers. However, it often contains harmful preservatives, excessive sodium, and unhealthy fats, which dramatically increase the risk of obesity and cardiovascular issues. In contrast, preparing home-cooked meals allows complete control over fresh ingredients, ensuring balanced nutrition and promoting long-term health. While fast food is a tempting shortcut, prioritizing home-cooked dishes is essential to sustain a healthy lifestyle."
+    },
+    {
+        id: "w9",
+        topic: "Artificial Intelligence in Education",
+        level: "Advanced",
+        prompt: "Phân tích tác động và triển vọng của trí tuệ nhân tạo (AI) trong lĩnh vực giáo dục hiện đại (100-150 từ). AI sẽ giúp ích hay thay thế người thầy?",
+        englishPrompt: "Analyze the profound impact and future prospects of Artificial Intelligence (AI) in modern education (100-150 words). Will AI assist or completely replace teachers?",
+        suggestedWords: [
+            { word: "artificial intelligence", vi: "trí tuệ nhân tạo" },
+            { word: "personalized learning", vi: "học tập cá nhân hóa" },
+            { word: "curriculum", vi: "chương trình giảng dạy" },
+            { word: "facilitate", vi: "tạo điều kiện, trợ giúp" },
+            { word: "empathy", vi: "sự thấu cảm" },
+            { word: "critical thinking", vi: "tư duy phản biện" },
+            { word: "collaborator", vi: "người cộng tác" }
+        ],
+        outline: [
+            "Introduce AI as a revolutionary technology that is reshaping the educational landscape.",
+            "Discuss the primary benefits (personalized learning pathways, immediate feedback, flexible schedule).",
+            "Address the critical question: Can AI replace human teachers? (Highlight the lack of empathy, emotional intelligence, and mentorship in AI).",
+            "Argue that AI should act as a powerful collaborator/assistant rather than a complete replacement.",
+            "Conclude with a vision of a blended learning model where technology empowers human educators."
+        ],
+        sampleAnswer: "Artificial intelligence is undeniably transforming the landscape of modern education by facilitating personalized learning experiences. Sophisticated AI tools analyze student performance in real-time, tailoring the curriculum to individual needs and providing immediate, constructive feedback. However, the notion that AI will entirely replace human teachers is highly unrealistic. Educational excellence relies heavily on emotional intelligence, empathy, and mentorship—qualities that machines simply cannot replicate. While AI can draft lesson plans and grade essays efficiently, it lacks the ability to inspire, build character, and nurture critical thinking in young minds. Therefore, the future of education lies in a synergistic partnership where artificial intelligence acts as an invaluable collaborator, empowering human educators to focus on inspiring their students rather than performing administrative duties."
+    },
+    {
+        id: "w10",
+        topic: "Individual Action against Climate Change",
+        level: "Advanced",
+        prompt: "Bàn luận về vai trò của từng cá nhân trong cuộc chiến chống biến đổi khí hậu toàn cầu (100-150 từ). Liệu những hành động nhỏ có tạo nên sự khác biệt?",
+        englishPrompt: "Discuss the vital role of individual action in the global fight against climate change (100-150 words). Can small personal habits truly make a massive difference?",
+        suggestedWords: [
+            { word: "climate change", vi: "biến đổi khí hậu" },
+            { word: "sustainability", vi: "sự bền vững" },
+            { word: "carbon footprint", vi: "dấu chân carbon" },
+            { word: "renewable energy", vi: "năng lượng tái tạo" },
+            { word: "collective action", vi: "hành động tập thể" },
+            { word: "eco-friendly", vi: "thân thiện môi trường" },
+            { word: "mitigate", vi: "giảm thiểu tác động" }
+        ],
+        outline: [
+            "Introduce the climate change crisis and the common skepticism regarding individual contributions.",
+            "Argue that individual choices directly impact carbon footprints (e.g., reducing waste, using public transport).",
+            "Explain the ripple effect (how personal choices drive demand for eco-friendly products and trigger political change).",
+            "Emphasize that collective action is built upon individual sustainability habits.",
+            "End with a powerful call-to-action: a sustainable future is a shared responsibility."
+        ],
+        sampleAnswer: "Addressing the existential threat of climate change often feels overwhelming, leading many to believe that individual actions are insignificant. However, shifting toward personal sustainability is a critical prerequisite for global environmental recovery. Simple daily habits, such as reducing single-use plastic consumption, adopting energy-efficient appliances, and decreasing food waste, directly mitigate our collective carbon footprint. Furthermore, individual choices possess a powerful ripple effect; when consumers prioritize eco-friendly brands, they force multinational corporations to implement sustainable manufacturing methods. Collective action is, after all, the sum of micro-level individual commitments. We cannot rely solely on governmental policies to solve this crisis. Ultimately, saving our planet requires a shared responsibility where every small, conscious choice contributes to a greener, more sustainable future."
     }
 ];
