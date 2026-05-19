@@ -3662,9 +3662,53 @@ window.applyGrammarFix = applyGrammarFix;
 // --- Podcast Room Logic ---
 let activePodcast = null;
 let lastActiveLineEl = null;
+let customPodcasts = []; // Store custom uploaded podcasts in session memory
+
+function parseSRT(text) {
+    const lines = text.replace(/\r/g, '').split('\n');
+    const transcript = [];
+    let currentItem = null;
+    
+    const parseTime = (timeStr) => {
+        if (!timeStr) return 0;
+        const parts = timeStr.trim().replace(',', '.').split(':');
+        if (parts.length === 3) {
+            return parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(parts[2]);
+        }
+        return 0;
+    };
+    
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
+        
+        if (line.match(/^\d+$/)) {
+            if (currentItem) {
+                transcript.push(currentItem);
+            }
+            currentItem = { start: 0, end: 0, text: "" };
+        } else if (line.includes('-->')) {
+            const times = line.split('-->');
+            if (times.length === 2) {
+                if (!currentItem) {
+                    currentItem = { start: 0, end: 0, text: "" };
+                }
+                currentItem.start = parseTime(times[0]);
+                currentItem.end = parseTime(times[1]);
+            }
+        } else if (currentItem) {
+            currentItem.text = currentItem.text ? currentItem.text + " " + line : line;
+        }
+    }
+    if (currentItem) {
+        transcript.push(currentItem);
+    }
+    return transcript;
+}
 
 function initPodcastRoom() {
-    const list = typeof PODCAST_DATA !== 'undefined' ? PODCAST_DATA : [];
+    const defaultList = typeof PODCAST_DATA !== 'undefined' ? PODCAST_DATA : [];
+    const list = [...defaultList, ...customPodcasts];
     const container = document.getElementById('podcast-list-container');
     if (!container) return;
     
@@ -3686,6 +3730,83 @@ function initPodcastRoom() {
         item.onclick = () => selectPodcast(pod);
         container.appendChild(item);
     });
+
+    // Setup Custom Upload Trigger Buttons
+    const uploadTrigger = document.getElementById('btn-podcast-upload-trigger');
+    const uploadForm = document.getElementById('podcast-upload-form');
+    const btnCancel = document.getElementById('btn-pod-cancel-upload');
+    const btnSubmit = document.getElementById('btn-pod-submit-upload');
+    
+    if (uploadTrigger && uploadForm) {
+        uploadTrigger.onclick = () => {
+            uploadForm.classList.remove('hidden');
+        };
+    }
+    
+    if (btnCancel && uploadForm) {
+        btnCancel.onclick = () => {
+            uploadForm.classList.add('hidden');
+        };
+    }
+    
+    if (btnSubmit) {
+        btnSubmit.onclick = () => {
+            const titleInput = document.getElementById('upload-pod-title');
+            const audioInput = document.getElementById('upload-pod-audio');
+            const srtInput = document.getElementById('upload-pod-srt');
+            
+            if (!titleInput.value.trim() || !audioInput.files[0] || !srtInput.files[0]) {
+                showToastNotification("⚠️ Vui lòng nhập đầy đủ tiêu đề, chọn tệp MP3 và phụ đề SRT!");
+                return;
+            }
+            
+            const audioFile = audioInput.files[0];
+            const srtFile = srtInput.files[0];
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const srtText = e.target.result;
+                const transcript = parseSRT(srtText);
+                
+                if (transcript.length === 0) {
+                    showToastNotification("⚠️ Định dạng tệp SRT không hợp lệ hoặc rỗng!");
+                    return;
+                }
+                
+                // Create temporary Blob URL for local audio file
+                const audioUrl = URL.createObjectURL(audioFile);
+                
+                const newPod = {
+                    id: `custom-${Date.now()}`,
+                    title: titleInput.value.trim(),
+                    speaker: "Tệp tải lên (User)",
+                    level: "Custom",
+                    desc: "Bài nghe tải lên tự chọn từ thiết bị của học viên.",
+                    audioUrl: audioUrl,
+                    image: "📁",
+                    duration: "Tự chọn",
+                    transcript: transcript
+                };
+                
+                customPodcasts.push(newPod);
+                
+                // Refresh catalog list display
+                initPodcastRoom();
+                
+                // Load/Select the new custom podcast instantly
+                selectPodcast(newPod);
+                
+                // Reset form inputs
+                titleInput.value = '';
+                audioInput.value = '';
+                srtInput.value = '';
+                uploadForm.classList.add('hidden');
+                
+                showToastNotification("🎉 Tải lên bài nghe mới thành công! Sẵn sàng luyện tập.");
+            };
+            reader.readAsText(srtFile);
+        };
+    }
     
     // Setup Audio Player Event Listeners once
     const audio = document.getElementById('podcast-audio-element');

@@ -1034,8 +1034,38 @@
                     <div style="display: flex; flex-direction: column; gap: 20px;">
                         <!-- Podcast Selection List -->
                         <div class="dashboard-card" style="padding: 20px;">
-                            <h3 style="margin-top: 0; color: var(--accent); font-size: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; margin-bottom: 15px;">Danh Sách Bài Nghe</h3>
+                            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; margin-bottom: 15px;">
+                                <h3 style="margin: 0; color: var(--accent); font-size: 16px;">Danh Sách Bài Nghe</h3>
+                                <button class="btn-primary" id="btn-podcast-upload-trigger" style="padding: 5px 12px; font-size: 11px; display: flex; align-items: center; gap: 4px; border-radius: 8px; cursor: pointer; border: none; box-shadow: none; background: var(--accent); color: #fff;">
+                                    <span>➕ Thêm bài nghe</span>
+                                </button>
+                            </div>
                             <div id="podcast-list-container" style="display: flex; flex-direction: column; gap: 12px;"></div>
+                        </div>
+
+                        <!-- Collapsible Upload Form Widget -->
+                        <div id="podcast-upload-form" class="dashboard-card hidden" style="padding: 15px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.15); border-radius: 12px; display: flex; flex-direction: column; gap: 10px;">
+                            <h4 style="margin: 0; font-size: 13.5px; color: var(--accent);">➕ Thêm Bài Nghe Tự Chọn (.mp3 + .srt)</h4>
+                            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 12px;">
+                                <div>
+                                    <label style="display: block; margin-bottom: 3px; color: var(--text-muted);">Tiêu đề bài nghe:</label>
+                                    <input type="text" id="upload-pod-title" placeholder="Ví dụ: My Favorite Story..." style="width: 100%; padding: 6px 10px; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color:#fff; outline: none;">
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <div>
+                                        <label style="display: block; margin-bottom: 3px; color: var(--text-muted);">File Âm thanh (.mp3):</label>
+                                        <input type="file" id="upload-pod-audio" accept="audio/*" style="width: 100%; font-size: 11px; color:#fff;">
+                                    </div>
+                                    <div>
+                                        <label style="display: block; margin-bottom: 3px; color: var(--text-muted);">File Phụ đề (.srt / .vtt):</label>
+                                        <input type="file" id="upload-pod-srt" accept=".srt,.vtt" style="width: 100%; font-size: 11px; color:#fff;">
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 8px; margin-top: 5px;">
+                                    <button class="btn-primary" id="btn-pod-submit-upload" style="flex: 1; padding: 6px; border-radius: 6px; cursor: pointer; background: #4ade80; color: #fff; border:none;">Tải lên hệ thống</button>
+                                    <button class="btn-secondary" id="btn-pod-cancel-upload" style="padding: 6px 12px; border-radius: 6px; cursor: pointer; background: rgba(255,255,255,0.05); color:#fff; border: 1px solid rgba(255,255,255,0.1);">Hủy</button>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Audio Player Widget -->
