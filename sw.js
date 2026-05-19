@@ -1,4 +1,4 @@
-const CACHE_NAME = 'learningenglish-v16';
+const CACHE_NAME = 'learningenglish-v17';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -9,6 +9,7 @@ const ASSETS_TO_CACHE = [
     './data/grammar-data.js',
     './data/stories-data.js',
     './data/translation-data.js',
+    './data/placement-questions.js',
     './manifest.json',
     './icon-192.png',
     './icon-512.png'
