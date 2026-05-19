@@ -2896,48 +2896,39 @@ function getDifficultyFromUserLevel(level) {
 
 function initWritingRoom() {
     const topics = typeof WRITING_DATA !== 'undefined' ? WRITING_DATA : [];
-    const select = document.getElementById('writing-topic-select');
-    if (!select) return;
     
-    select.innerHTML = '';
-    topics.forEach((topic) => {
-        const opt = document.createElement('option');
-        opt.value = topic.id;
-        opt.textContent = `${topic.topic} (${topic.level})`;
-        select.appendChild(opt);
-    });
-    
-    // Event listeners
-    select.onchange = () => {
-        const selected = topics.find(t => t.id === select.value);
-        if (selected) updateWritingTopic(selected);
-    };
-    
+    // Bind Surprise Initializer button
     const btnRandom = document.getElementById('btn-writing-random');
+    const diffSelect = document.getElementById('writing-difficulty-select');
+    
     if (btnRandom) {
         btnRandom.onclick = () => {
-            const userDiff = getDifficultyFromUserLevel(state.userLevel);
-            let pool = topics.filter(t => t.level === userDiff);
+            const selectedDiff = diffSelect ? diffSelect.value : 'auto';
+            let targetDiff = selectedDiff;
             
-            // Fallback if no topics found
+            if (selectedDiff === 'auto') {
+                targetDiff = getDifficultyFromUserLevel(state.userLevel);
+            }
+            
+            let pool = topics.filter(t => t.level === targetDiff);
             if (pool.length === 0) pool = topics;
             
-            // Filter out current topic to ensure surprise
-            let filteredPool = pool.filter(t => t.id !== select.value);
-            if (filteredPool.length === 0) filteredPool = pool;
+            // Try to avoid repeating the current topic if possible
+            let filteredPool = pool;
+            if (currentWritingTopic) {
+                filteredPool = pool.filter(t => t.id !== currentWritingTopic.id);
+                if (filteredPool.length === 0) filteredPool = pool;
+            }
             
             const randomTopic = filteredPool[Math.floor(Math.random() * filteredPool.length)];
             if (randomTopic) {
-                select.value = randomTopic.id;
                 updateWritingTopic(randomTopic);
                 
-                const textarea = document.getElementById('writing-textarea');
-                if (textarea) {
-                    textarea.value = '';
-                    handleWritingTextChange();
-                }
+                const label = selectedDiff === 'auto' 
+                    ? `Phù hợp với trình độ hiện tại ${state.userLevel} (${randomTopic.level})`
+                    : `Trình độ ${randomTopic.level}`;
                 
-                showToastNotification(`🎲 Chủ đề bất ngờ: "${randomTopic.topic}" phù hợp với trình độ hiện tại ${state.userLevel} (${randomTopic.level})!`);
+                showToastNotification(`🎲 Đã khởi tạo chủ đề: "${randomTopic.topic}" (${label})!`);
             }
         };
     }
@@ -2961,52 +2952,102 @@ function initWritingRoom() {
         };
     }
     
-    document.getElementById('writing-result-panel')?.classList.add('hidden');
-    
-    if (topics.length > 0) {
-        updateWritingTopic(topics[0]);
-    }
+    // Start with placeholder locked state
+    updateWritingTopic(null);
 }
 
 function updateWritingTopic(topic) {
+    const textarea = document.getElementById('writing-textarea');
+    
+    if (!topic) {
+        currentWritingTopic = null;
+        const badge = document.getElementById('writing-level-badge');
+        if (badge) {
+            badge.textContent = 'Chưa khởi tạo';
+            badge.style.background = 'var(--text-muted)';
+        }
+        
+        document.getElementById('writing-prompt-text').textContent = 'Vui lòng chọn mức độ khó và nhấn nút "🎲 Khởi tạo chủ đề" ở trên để bắt đầu thử thách!';
+        document.getElementById('writing-prompt-en').textContent = 'Please select a difficulty level and click "🎲 Generate Topic" above to begin your writing challenge!';
+        
+        const outlineUl = document.getElementById('writing-outline-list');
+        if (outlineUl) {
+            outlineUl.innerHTML = '<li style="color: var(--text-muted); font-style: italic;">Chưa có dàn ý (Nhấp Khởi tạo chủ đề)</li>';
+        }
+        
+        const vocabDiv = document.getElementById('writing-vocab-checklist');
+        if (vocabDiv) {
+            vocabDiv.innerHTML = '<div style="color: var(--text-muted); font-style: italic; font-size: 13px;">Chưa có từ vựng gợi ý</div>';
+        }
+        
+        if (textarea) {
+            textarea.value = '';
+            textarea.disabled = true;
+            textarea.placeholder = '🔒 Khung viết đang khóa. Vui lòng bấm "🎲 Khởi tạo chủ đề" để mở khóa...';
+        }
+        document.getElementById('writing-word-counter').textContent = '0 từ';
+        document.getElementById('writing-result-panel')?.classList.add('hidden');
+        document.getElementById('writing-sample-answer')?.classList.add('hidden');
+        return;
+    }
+    
     currentWritingTopic = topic;
     
-    document.getElementById('writing-level-badge').textContent = topic.level;
+    // Set level badge background color based on level
+    const badge = document.getElementById('writing-level-badge');
+    if (badge) {
+        badge.textContent = topic.level;
+        if (topic.level === 'Beginner') badge.style.background = '#4ade80';
+        else if (topic.level === 'Intermediate') badge.style.background = '#facc15';
+        else if (topic.level === 'Advanced') badge.style.background = '#f87171';
+    }
+    
     document.getElementById('writing-prompt-text').textContent = topic.prompt;
     document.getElementById('writing-prompt-en').textContent = topic.englishPrompt;
     
     // Outline
     const outlineUl = document.getElementById('writing-outline-list');
-    outlineUl.innerHTML = '';
-    topic.outline.forEach(step => {
-        const li = document.createElement('li');
-        li.textContent = step;
-        outlineUl.appendChild(li);
-    });
+    if (outlineUl) {
+        outlineUl.innerHTML = '';
+        topic.outline.forEach(step => {
+            const li = document.createElement('li');
+            li.textContent = step;
+            outlineUl.appendChild(li);
+        });
+    }
     
     // Vocab Checklist
     const vocabDiv = document.getElementById('writing-vocab-checklist');
-    vocabDiv.innerHTML = '';
-    topic.suggestedWords.forEach(wordObj => {
-        const div = document.createElement('div');
-        div.className = 'vocab-check-item';
-        div.style = 'display: flex; align-items: center; gap: 8px; font-size: 13.5px; padding: 6px 12px; border-radius: 8px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); color: var(--text-light); transition: all 0.2s;';
-        div.setAttribute('data-word', wordObj.word.toLowerCase());
-        div.innerHTML = `
-            <span class="bullet" style="color: var(--text-muted);">⬜</span>
-            <span style="font-weight: 500; color: #fff;">${wordObj.word}</span>
-            <span style="font-size:12px; color:var(--text-muted);">(${wordObj.vi})</span>
-        `;
-        vocabDiv.appendChild(div);
-    });
+    if (vocabDiv) {
+        vocabDiv.innerHTML = '';
+        topic.suggestedWords.forEach(wordObj => {
+            const div = document.createElement('div');
+            div.className = 'vocab-check-item';
+            div.style = 'display: flex; align-items: center; gap: 8px; font-size: 13.5px; padding: 6px 12px; border-radius: 8px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); color: var(--text-light); transition: all 0.2s;';
+            div.setAttribute('data-word', wordObj.word.toLowerCase());
+            div.innerHTML = `
+                <span class="bullet" style="color: var(--text-muted);">⬜</span>
+                <span style="font-weight: 500; color: #fff;">${wordObj.word}</span>
+                <span style="font-size:12px; color:var(--text-muted);">(${wordObj.vi})</span>
+            `;
+            vocabDiv.appendChild(div);
+        });
+    }
     
     // Reset inputs
-    const textarea = document.getElementById('writing-textarea');
-    if (textarea) textarea.value = '';
+    if (textarea) {
+        textarea.value = '';
+        textarea.disabled = false;
+        textarea.placeholder = 'Nhấp vào đây và bắt đầu viết đoạn văn của bạn bằng tiếng Anh...';
+    }
     document.getElementById('writing-word-counter').textContent = '0 từ';
     document.getElementById('writing-result-panel')?.classList.add('hidden');
     document.getElementById('writing-sample-answer')?.classList.add('hidden');
-    document.getElementById('writing-sample-answer').textContent = topic.sampleAnswer;
+    
+    const sampleAnswerEl = document.getElementById('writing-sample-answer');
+    if (sampleAnswerEl) {
+        sampleAnswerEl.textContent = topic.sampleAnswer;
+    }
 }
 
 function handleWritingTextChange() {
