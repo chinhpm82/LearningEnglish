@@ -3716,3 +3716,14 @@ input, select, textarea, button {
     background: rgba(255,255,255,0.3);
 }
 
+/* Responsive podcast layout on mobile screens */
+@media (max-width: 768px) {
+    .podcast-layout {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+    #transcript-scroll-box {
+        max-height: 300px !important;
+    }
+}
+

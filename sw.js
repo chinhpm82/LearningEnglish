@@ -1,4 +1,4 @@
-const CACHE_NAME = 'learningenglish-v22';
+const CACHE_NAME = 'learningenglish-v23';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
