@@ -2169,7 +2169,17 @@ function initApp() {
     // 7. Quiz Interactions
     document.getElementById('btn-start-quiz').addEventListener('click', () => {
         const cat = document.getElementById('quiz-category-select').value;
-        initQuizSession(cat);
+        if (cat === 'assessment') {
+            const modal = document.getElementById('placement-test-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.getElementById('placement-intro-screen').classList.remove('hidden');
+                document.getElementById('placement-quiz-screen').classList.add('hidden');
+                document.getElementById('placement-result-screen').classList.add('hidden');
+            }
+        } else {
+            initQuizSession(cat);
+        }
     });
 
     document.getElementById('btn-quiz-next').addEventListener('click', handleQuizNext);
