@@ -3827,7 +3827,7 @@ function initPodcastRoom() {
     if (audio) {
         audio.ontimeupdate = handlePodcastTimeUpdate;
         audio.onended = () => {
-            if (playBtn) playBtn.innerHTML = `<svg id="play-icon-svg" viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px; color:#fff;"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+            if (playBtn) playBtn.innerHTML = `<svg id="play-icon-svg" viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px; color:#fff; margin-left: 2px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
         };
     }
     
@@ -3839,11 +3839,11 @@ function initPodcastRoom() {
             }
             if (audio.paused) {
                 audio.play();
-                playBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px; color:#fff;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
+                playBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px; color:#fff;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
                 checkAndUpdateStreak();
             } else {
                 audio.pause();
-                playBtn.innerHTML = `<svg id="play-icon-svg" viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px; color:#fff;"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+                playBtn.innerHTML = `<svg id="play-icon-svg" viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px; color:#fff; margin-left: 2px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
             }
         };
     }
@@ -3908,7 +3908,7 @@ function selectPodcast(podcast) {
     document.getElementById('player-time-duration').textContent = podcast.duration;
     
     // Play Button reset
-    document.getElementById('btn-player-play').innerHTML = `<svg id="play-icon-svg" viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px; color:#fff;"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+    document.getElementById('btn-player-play').innerHTML = `<svg id="play-icon-svg" viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px; color:#fff; margin-left: 2px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
     
     // RENDER TIMED TRANSCRIPT
     const transcriptBox = document.getElementById('transcript-scroll-box');
