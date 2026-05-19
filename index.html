@@ -94,6 +94,14 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M5 8l6 6"></path><path d="M4 14l6-6 2-3"></path><path d="M2 5h12"></path><path d="M7 2h1"></path><path d="M22 22l-5-10-5 10"></path><path d="M14 18h6"></path></svg>
                     <span>Dịch câu</span>
                 </button>
+                <button class="nav-item" data-target="writing-tab" id="btn-writing">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    <span>Viết đoạn & AI</span>
+                </button>
+                <button class="nav-item" data-target="podcast-tab" id="btn-podcast">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+                    <span>Nghe Podcast</span>
+                </button>
                 <button class="nav-item" data-target="leaderboard-tab" id="btn-leaderboard">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <span>Bảng xếp hạng</span>
@@ -259,12 +267,9 @@
                             <option value="oxford">Từ vựng thiết yếu (Oxford)</option>
                             <option value="academic">Từ học thuật & IELTS</option>
                             <option value="idioms">Thành ngữ & Cụm từ</option>
-                            <option value="spec-it">💻 Chuyên ngành CNTT (IT)</option>
-                            <option value="spec-geography">🌍 Địa lý Phổ thông</option>
-                            <option value="spec-biology">🌿 Sinh học Phổ thông</option>
-                            <option value="spec-chemistry">🧪 Hóa học Phổ thông</option>
-                            <option value="spec-physics">🌌 Vật lý Phổ thông</option>
-                            <option value="spec-history">📜 Lịch sử Phổ thông</option>
+                            <option value="spec-tech">💻 Chuyên ngành Công nghệ</option>
+                            <option value="spec-science">🧪 Khoa học Tự nhiên</option>
+                            <option value="spec-social">🌍 Khoa học Xã hội</option>
                             <option value="custom">Sổ tay cá nhân</option>
                         </select>
                     </div>
@@ -349,58 +354,31 @@
                     <p class="specialized-subtitle">Click chọn một chuyên đề để thực hành học thẻ Leitner Spaced-Repetition ngay lập tức.</p>
                     
                     <div class="specialized-grid">
-                        <!-- Card 1: IT -->
-                        <div class="spec-deck-card spec-it" onclick="selectSpecializedCategory('spec-it')">
+                        <!-- Card 1: Technology -->
+                        <div class="spec-deck-card spec-tech" onclick="selectSpecializedCategory('spec-tech')">
                             <div class="spec-deck-icon">💻</div>
                             <div class="spec-deck-info">
-                                <h4 class="spec-deck-name">Công nghệ Thông tin (IT)</h4>
-                                <p class="spec-deck-desc">Thuật toán, đệ quy, lập trình hướng đối tượng, bất đồng bộ, biên dịch...</p>
-                                <span class="spec-deck-badge badge-it">95 từ vựng</span>
+                                <h4 class="spec-deck-name">Chuyên ngành Công nghệ</h4>
+                                <p class="spec-deck-desc">Thuật toán, lập trình, an ninh mạng, mã hóa dữ liệu, trí tuệ nhân tạo (AI), điện toán đám mây...</p>
+                                <span class="spec-deck-badge badge-tech">120 từ vựng</span>
                             </div>
                         </div>
-                        <!-- Card 2: Geography -->
-                        <div class="spec-deck-card spec-geo" onclick="selectSpecializedCategory('spec-geography')">
-                            <div class="spec-deck-icon">🌍</div>
-                            <div class="spec-deck-info">
-                                <h4 class="spec-deck-name">Địa lý Phổ thông</h4>
-                                <p class="spec-deck-desc">Khí quyển, bán cầu, địa hình địa thế, lượng mưa, xói mòn bào mòn đất...</p>
-                                <span class="spec-deck-badge badge-geo">20 từ vựng</span>
-                            </div>
-                        </div>
-                        <!-- Card 3: Biology -->
-                        <div class="spec-deck-card spec-bio" onclick="selectSpecializedCategory('spec-biology')">
-                            <div class="spec-deck-icon">🌿</div>
-                            <div class="spec-deck-info">
-                                <h4 class="spec-deck-name">Sinh học Phổ thông</h4>
-                                <p class="spec-deck-desc">Quang hợp, hô hấp tế bào, nhiễm sắc thể, hệ sinh thái, sự tiến hóa...</p>
-                                <span class="spec-deck-badge badge-bio">20 từ vựng</span>
-                            </div>
-                        </div>
-                        <!-- Card 4: Chemistry -->
-                        <div class="spec-deck-card spec-chem" onclick="selectSpecializedCategory('spec-chemistry')">
+                        <!-- Card 2: Science -->
+                        <div class="spec-deck-card spec-science" onclick="selectSpecializedCategory('spec-science')">
                             <div class="spec-deck-icon">🧪</div>
                             <div class="spec-deck-info">
-                                <h4 class="spec-deck-name">Hóa học Phổ thông</h4>
-                                <p class="spec-deck-desc">Sự oxy hóa, chất xúc tác phân tử, liên kết cộng hóa trị, độ hòa tan...</p>
-                                <span class="spec-deck-badge badge-chem">19 từ vựng</span>
+                                <h4 class="spec-deck-name">Khoa học Tự nhiên</h4>
+                                <p class="spec-deck-desc">Vật lý, Hóa học, Sinh học, động năng, liên kết phân tử, quang hợp, di truyền, hệ sinh thái...</p>
+                                <span class="spec-deck-badge badge-science">89 từ vựng</span>
                             </div>
                         </div>
-                        <!-- Card 5: Physics -->
-                        <div class="spec-deck-card spec-phy" onclick="selectSpecializedCategory('spec-physics')">
-                            <div class="spec-deck-icon">🌌</div>
+                        <!-- Card 3: Social -->
+                        <div class="spec-deck-card spec-social" onclick="selectSpecializedCategory('spec-social')">
+                            <div class="spec-deck-icon">🌍</div>
                             <div class="spec-deck-info">
-                                <h4 class="spec-deck-name">Vật lý Phổ thông</h4>
-                                <p class="spec-deck-desc">Trọng lực lực hấp dẫn, vận tốc tốc độ có hướng, gia tốc, quán tính...</p>
-                                <span class="spec-deck-badge badge-phy">20 từ vựng</span>
-                            </div>
-                        </div>
-                        <!-- Card 6: History -->
-                        <div class="spec-deck-card spec-hist" onclick="selectSpecializedCategory('spec-history')">
-                            <div class="spec-deck-icon">📜</div>
-                            <div class="spec-deck-info">
-                                <h4 class="spec-deck-name">Lịch sử Phổ thông</h4>
-                                <p class="spec-deck-desc">Triều đại lịch sử, chế độ phong kiến, chủ quyền lãnh thổ, cách mạng...</p>
-                                <span class="spec-deck-badge badge-hist">20 từ vựng</span>
+                                <h4 class="spec-deck-name">Khoa học Xã hội</h4>
+                                <p class="spec-deck-desc">Địa lý, Lịch sử, Chính trị, văn minh cổ đại, triều đại phong kiến, địa hình, lòng yêu nước, ngoại giao...</p>
+                                <span class="spec-deck-badge badge-social">70 từ vựng</span>
                             </div>
                         </div>
                     </div>
@@ -425,12 +403,9 @@
                                 <option value="oxford">Từ vựng thiết yếu Oxford (Luyện tập)</option>
                                 <option value="academic">Từ học thuật & IELTS (Luyện tập)</option>
                                 <option value="idioms">Thành ngữ & Cụm từ (Luyện tập)</option>
-                                <option value="spec-it">💻 Chuyên ngành CNTT / IT (Luyện tập)</option>
-                                <option value="spec-geography">🌍 Địa lý Phổ thông (Luyện tập)</option>
-                                <option value="spec-biology">🌿 Sinh học Phổ thông (Luyện tập)</option>
-                                <option value="spec-chemistry">🧪 Hóa học Phổ thông (Luyện tập)</option>
-                                <option value="spec-physics">🌌 Vật lý Phổ thông (Luyện tập)</option>
-                                <option value="spec-history">📜 Lịch sử Phổ thông (Luyện tập)</option>
+                                <option value="spec-tech">💻 Chuyên ngành Công nghệ (Luyện tập)</option>
+                                <option value="spec-science">🧪 Khoa học Tự nhiên (Luyện tập)</option>
+                                <option value="spec-social">🌍 Khoa học Xã hội (Luyện tập)</option>
                                 <option value="custom">Sổ tay cá nhân (Luyện tập)</option>
                             </select>
                         </div>
@@ -768,12 +743,22 @@
             <section id="translation-tab" class="tab-content">
                 <div class="tab-title-row">
                     <div>
-                        <h2>Luyện Dịch Câu 🌐</h2>
-                        <p>Dịch câu Anh→Việt và Việt→Anh để rèn luyện khả năng viết.</p>
+                        <h2>Luyện Dịch Thuật 🌐</h2>
+                        <p>Dịch câu ngắn hoặc đoạn văn dài (Anh-Việt, Việt-Anh) để trau dồi cấu trúc câu và từ vựng.</p>
                     </div>
-                    <div class="filter-group" style="display:flex;gap:10px;flex-wrap:wrap;">
+                </div>
+
+                <!-- Sub Navigation Tabs for Translation -->
+                <div class="sub-tab-container" style="display: flex; gap: 15px; margin-bottom: 20px; border-bottom: 1.5px solid rgba(255,255,255,0.06); padding-bottom: 8px;">
+                    <button class="sub-tab-btn active" id="btn-sub-trans-short" style="background: none; border: none; color: #fff; font-size: 14px; font-weight: 600; padding: 8px 16px; cursor: pointer; border-radius: 8px; transition: all 0.2s ease; background: var(--accent); box-shadow: 0 4px 12px var(--shadow-color);">Dịch Câu Ngắn</button>
+                    <button class="sub-tab-btn" id="btn-sub-trans-long" style="background: none; border: none; color: var(--text-muted); font-size: 14px; font-weight: 500; padding: 8px 16px; cursor: pointer; border-radius: 8px; transition: all 0.2s ease;">Dịch Đoạn Văn Dài (5-7 Câu)</button>
+                </div>
+
+                <!-- Short Sentence Panel -->
+                <div id="trans-short-panel" class="trans-mode-panel">
+                    <div style="display:flex; justify-content:flex-end; gap:10px; margin-bottom: 15px; flex-wrap:wrap;">
                         <select id="trans-dir-filter" class="styled-select">
-                            <option value="all">Tất cả</option>
+                            <option value="all">Tất cả hướng dịch</option>
                             <option value="en-vi">Anh → Việt</option>
                             <option value="vi-en">Việt → Anh</option>
                         </select>
@@ -784,28 +769,244 @@
                             <option value="Advanced">Nâng cao</option>
                         </select>
                     </div>
-                </div>
-                <div class="translation-progress-bar">
-                    <div class="translation-progress-fill" id="trans-progress-fill" style="width:0%"></div>
-                </div>
-                <div class="translation-card" id="translation-card">
-                    <div class="trans-direction-badge" id="trans-dir-badge">Anh → Việt</div>
-                    <div class="trans-level-badge" id="trans-level-badge">Beginner</div>
-                    <p class="trans-source" id="trans-source"></p>
-                    <div class="trans-hints" id="trans-hints"></div>
-                    <textarea class="trans-input" id="trans-input" placeholder="Nhập bản dịch của bạn..." rows="3"></textarea>
-                    <div class="trans-actions">
-                        <button class="btn-secondary" id="btn-trans-hint">💡 Gợi ý</button>
-                        <button class="btn-primary" id="btn-trans-check">✅ Kiểm tra</button>
-                        <button class="btn-primary hidden" id="btn-trans-next">Câu tiếp →</button>
+                    <div class="translation-progress-bar">
+                        <div class="translation-progress-fill" id="trans-progress-fill" style="width:0%"></div>
                     </div>
-                    <div class="trans-feedback hidden" id="trans-feedback">
-                        <p class="trans-feedback-text" id="trans-feedback-text"></p>
-                        <p class="trans-answer" id="trans-answer"></p>
+                    <div class="translation-card" id="translation-card">
+                        <div class="trans-direction-badge" id="trans-dir-badge">Anh → Việt</div>
+                        <div class="trans-level-badge" id="trans-level-badge">Beginner</div>
+                        <p class="trans-source" id="trans-source"></p>
+                        <div class="trans-hints" id="trans-hints"></div>
+                        <textarea class="trans-input" id="trans-input" placeholder="Nhập bản dịch của bạn..." rows="3"></textarea>
+                        <div class="trans-actions">
+                            <button class="btn-secondary" id="btn-trans-hint">💡 Gợi ý</button>
+                            <button class="btn-primary" id="btn-trans-check">✅ Kiểm tra</button>
+                            <button class="btn-primary hidden" id="btn-trans-next">Câu tiếp →</button>
+                        </div>
+                        <div class="trans-feedback hidden" id="trans-feedback">
+                            <p class="trans-feedback-text" id="trans-feedback-text"></p>
+                            <p class="trans-answer" id="trans-answer"></p>
+                        </div>
+                    </div>
+                    <div class="trans-score-bar">
+                        <span>📊 Điểm dịch câu ngắn: <strong id="trans-score">0</strong> / <span id="trans-total">0</span></span>
                     </div>
                 </div>
-                <div class="trans-score-bar">
-                    <span>📊 Điểm: <strong id="trans-score">0</strong> / <span id="trans-total">0</span></span>
+
+                <!-- Long Paragraph Panel -->
+                <div id="trans-long-panel" class="trans-mode-panel hidden">
+                    <div style="display:flex; justify-content:flex-end; gap:10px; margin-bottom: 15px; flex-wrap:wrap;">
+                        <select id="trans-long-dir-filter" class="styled-select">
+                            <option value="all">Tất cả hướng dịch</option>
+                            <option value="en-vi">Anh → Việt</option>
+                            <option value="vi-en">Việt → Anh</option>
+                        </select>
+                    </div>
+                    <div class="translation-card" id="trans-long-card">
+                        <div class="trans-direction-badge" id="trans-long-dir-badge">Anh → Việt</div>
+                        <div class="trans-level-badge" id="trans-long-level-badge">Intermediate</div>
+                        <h3 id="trans-long-title" style="margin: 10px 0; color: var(--accent); font-size: 18px;">The Rise of Remote Work</h3>
+                        <p class="trans-source" id="trans-long-source" style="font-size: 15px; line-height: 1.6; max-height: none; color:#fff; user-select: text;"></p>
+                        <div class="trans-hints" id="trans-long-hints"></div>
+                        <div style="position: relative;">
+                            <textarea class="trans-input" id="trans-long-input" placeholder="Nhập bản dịch đoạn văn của bạn ở đây (5-7 câu)..." rows="6" style="padding-bottom: 30px;"></textarea>
+                            <div id="trans-long-word-count" style="position: absolute; bottom: 8px; right: 12px; font-size: 11px; color: var(--text-muted);">0 từ</div>
+                        </div>
+                        <div class="trans-actions">
+                            <button class="btn-secondary" id="btn-trans-long-hint">💡 Gợi ý từ vựng</button>
+                            <button class="btn-primary" id="btn-trans-long-check">✅ Nộp bài & Chấm điểm</button>
+                            <button class="btn-primary hidden" id="btn-trans-long-next">Đoạn tiếp theo →</button>
+                        </div>
+                        <div class="trans-feedback hidden" id="trans-long-feedback">
+                            <div class="grading-score-circle" style="text-align: center; margin-bottom: 15px;">
+                                <div style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Độ tương thích bản dịch</div>
+                                <div style="font-size: 36px; font-weight: 700; color: #4ade80; margin-top: 5px;" id="trans-long-score-pct">92%</div>
+                            </div>
+                            <div class="trans-feedback-text" id="trans-long-feedback-text" style="margin-bottom: 15px; padding: 12px; border-radius: 8px; background: rgba(74, 222, 128, 0.05); border: 1px dashed rgba(74, 222, 128, 0.2);"></div>
+                            <h4 style="margin: 15px 0 5px 0; color: var(--accent);">Bản dịch mẫu tham khảo:</h4>
+                            <p class="trans-answer" id="trans-long-answer" style="user-select: text; font-size: 14px; line-height: 1.5; color: var(--text-light); background: rgba(255,255,255,0.02); padding:12px; border-radius:8px;"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 9: WRITING & AI GRADER -->
+            <section id="writing-tab" class="tab-content">
+                <div class="tab-title-row">
+                    <div>
+                        <h2>Luyện Viết & AI Chấm Điểm ✍️</h2>
+                        <p>Viết các đoạn văn ngắn theo chủ đề định sẵn, áp dụng từ vựng gợi ý và nhận nhận xét thông minh.</p>
+                    </div>
+                </div>
+
+                <div class="writing-container" style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+                    <!-- Topic Selector Bar -->
+                    <div class="dashboard-card" style="padding: 15px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-weight: 500; color: var(--text-muted);">Chủ đề viết:</span>
+                            <select id="writing-topic-select" class="styled-select" style="min-width: 220px;"></select>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <span class="badge" id="writing-level-badge" style="background: var(--accent); padding: 5px 12px; border-radius: 8px;">Beginner</span>
+                        </div>
+                    </div>
+
+                    <!-- Main Workspace Splitter (Left: Workspace, Right: Prompt & Instructions) -->
+                    <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; align-items: start;" id="writing-workspace">
+                        <!-- Left Panel: Essay Text Area & Controls -->
+                        <div class="translation-card" style="margin: 0; padding: 20px;">
+                            <h3 style="margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; color: #fff;">
+                                <span>Khung Viết Bài</span>
+                            </h3>
+                            <div style="position: relative;">
+                                <textarea id="writing-textarea" placeholder="Nhấp vào đây và bắt đầu viết đoạn văn của bạn bằng tiếng Anh..." rows="10" style="width: 100%; border-radius: 12px; padding: 15px; background: rgba(0,0,0,0.15); border: 1.5px solid rgba(255,255,255,0.06); color:#fff; font-family:'Outfit',sans-serif; font-size:14.5px; line-height:1.6; resize:vertical; outline:none; transition: border-color 0.2s;"></textarea>
+                                <div id="writing-word-counter" style="position: absolute; bottom: 10px; right: 15px; font-size: 12px; color: var(--text-muted);">0 từ</div>
+                            </div>
+                            <div style="display: flex; justify-content: flex-end; margin-top: 15px;">
+                                <button class="btn-primary" id="btn-writing-grade" style="display: flex; align-items: center; gap: 8px;">
+                                    <span>🔍 Phân tích & AI Chấm Điểm</span>
+                                </button>
+                            </div>
+
+                            <!-- Grading Result Block -->
+                            <div class="story-element hidden" id="writing-result-panel" style="margin-top: 25px; padding: 20px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px;">
+                                <h3 style="margin-top: 0; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px; color:#fff;">
+                                    <span>📊 Báo Cáo Đánh Giá Bản Viết</span>
+                                    <span style="font-size: 13px; font-weight: normal; color: var(--text-muted);" id="writing-grade-time">Vừa xong</span>
+                                </h3>
+
+                                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px; margin-bottom: 20px; align-items: center;">
+                                    <!-- Score Circle -->
+                                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); border-radius: 50%; width: 140px; height: 140px; border: 4px solid var(--accent); margin: 0 auto; box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.2);">
+                                        <span style="font-size: 38px; font-weight: 700; color: #fff;" id="writing-score-val">85</span>
+                                        <span style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px;">Thang điểm 100</span>
+                                    </div>
+                                    <!-- Brief details -->
+                                    <div style="color: var(--text-light);">
+                                        <div style="margin-bottom: 8px; font-size:14px;"><strong style="color:var(--accent);">Độ dài:</strong> <span id="writing-res-length">82 từ (Đạt yêu cầu)</span></div>
+                                        <div style="margin-bottom: 8px; font-size:14px;"><strong style="color:var(--accent);">Sử dụng từ gợi ý:</strong> <span id="writing-res-vocab">3/5 từ</span></div>
+                                        <div style="margin-bottom: 8px; font-size:14px;"><strong style="color:var(--accent);">Mức độ đa dạng từ:</strong> <span id="writing-res-ttr">Rất tốt (84%)</span></div>
+                                    </div>
+                                </div>
+
+                                <!-- Detailed Feedback Tabs -->
+                                <div style="margin-bottom: 15px;">
+                                    <h4 style="margin: 0 0 8px 0; color: #fff;">💡 Nhận xét chi tiết của AI Grader:</h4>
+                                    <p id="writing-ai-feedback" style="font-size: 13.5px; line-height: 1.6; color: var(--text-light); background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px; border-left: 3.5px solid var(--accent);"></p>
+                                </div>
+
+                                <!-- Comparison Area -->
+                                <div style="margin-top: 15px;">
+                                    <h4 style="margin: 0 0 8px 0; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: space-between;" id="btn-toggle-writing-sample">
+                                        <span>📖 Xem Đoạn Văn Bản Mẫu Tham Khảo</span>
+                                        <span style="font-size:12px; color:var(--accent);">[Hiện/Ẩn]</span>
+                                    </h4>
+                                    <p id="writing-sample-answer" class="hidden" style="user-select: text; font-size: 13.5px; line-height: 1.6; color: var(--text-light); background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border: 1px dashed rgba(255,255,255,0.1);"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Topic Details & Outline & Suggested Words -->
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+                            <!-- Prompt & Outline Card -->
+                            <div class="dashboard-card" style="padding: 20px;">
+                                <h3 style="margin-top:0; color:var(--accent); font-size:16px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:8px;">Yêu cầu đề bài</h3>
+                                <p id="writing-prompt-text" style="font-weight: 500; font-size: 14px; line-height: 1.5; color:#fff; margin-bottom: 12px;"></p>
+                                <p id="writing-prompt-en" style="font-style: italic; font-size: 13px; color: var(--text-muted); margin-bottom: 16px;"></p>
+
+                                <h4 style="margin: 15px 0 8px 0; font-size: 14px; color:#fff;">📋 Gợi ý cấu trúc viết (Outline):</h4>
+                                <ul id="writing-outline-list" style="margin: 0; padding-left: 20px; font-size: 13px; color: var(--text-light); line-height: 1.6;"></ul>
+                            </div>
+
+                            <!-- Suggested Vocabulary Card -->
+                            <div class="dashboard-card" style="padding: 20px;">
+                                <h3 style="margin-top:0; color:var(--accent); font-size:16px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:8px;">Từ vựng gợi ý (Nên dùng)</h3>
+                                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Từ vựng đã dùng trong văn bản sẽ tự động sáng xanh để báo hiệu!</p>
+                                <div id="writing-vocab-checklist" style="display: flex; flex-direction: column; gap: 8px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 10: PODCAST LEARNING ROOM -->
+            <section id="podcast-tab" class="tab-content">
+                <div class="tab-title-row">
+                    <div>
+                        <h2>Luyện Nghe Podcast 🎧</h2>
+                        <p>Luyện nghe tiếng Anh kết hợp transcript cuộn động thông minh (karaoke-style). Click vào câu để nghe từ điểm đó!</p>
+                    </div>
+                </div>
+
+                <div class="podcast-layout" style="display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 20px; align-items: start;">
+                    <!-- Left Column: Podcast List & Player -->
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <!-- Podcast Selection List -->
+                        <div class="dashboard-card" style="padding: 20px;">
+                            <h3 style="margin-top: 0; color: var(--accent); font-size: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; margin-bottom: 15px;">Danh Sách Bài Nghe</h3>
+                            <div id="podcast-list-container" style="display: flex; flex-direction: column; gap: 12px;"></div>
+                        </div>
+
+                        <!-- Audio Player Widget -->
+                        <div class="dashboard-card" style="padding: 20px; background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; position: relative; overflow: hidden;">
+                            <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px;">
+                                <div id="player-art" style="font-size: 40px; width: 65px; height: 65px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border-radius: 12px;">🎵</div>
+                                <div style="flex: 1; min-width: 0;">
+                                    <h4 id="player-title" style="margin: 0 0 4px 0; font-size: 15px; color:#fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Chọn bài nghe để bắt đầu</h4>
+                                    <p id="player-speaker" style="margin: 0; font-size: 12.5px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></p>
+                                </div>
+                            </div>
+
+                            <!-- Hidden native audio tag -->
+                            <audio id="podcast-audio-element" style="display: none;"></audio>
+
+                            <!-- Audio Progress Bar -->
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                                <span id="player-time-current" style="font-size: 11px; color: var(--text-muted); width: 35px; text-align: right;">0:00</span>
+                                <input type="range" id="player-seekbar" min="0" max="100" value="0" style="flex: 1; cursor: pointer; height: 5px; border-radius: 3px; background: rgba(255,255,255,0.1); border:none; outline:none; -webkit-appearance: none;">
+                                <span id="player-time-duration" style="font-size: 11px; color: var(--text-muted); width: 35px;">0:00</span>
+                            </div>
+
+                            <!-- Controls Row -->
+                            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+                                <!-- Speed Control -->
+                                <button class="btn-secondary" id="btn-player-speed" style="padding: 6px 12px; font-size: 12px; min-width: 60px; border-radius: 10px; cursor: pointer;">1.0x</button>
+                                
+                                <!-- Playback Buttons -->
+                                <div style="display: flex; align-items: center; gap: 15px;">
+                                    <!-- Skip Backward 10s -->
+                                    <button class="btn-secondary" id="btn-player-skip-back" style="padding: 8px; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                                    </button>
+                                    <!-- Main Play/Pause -->
+                                    <button class="btn-primary" id="btn-player-play" style="padding: 10px; border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background: var(--accent); border-color: var(--accent); cursor: pointer;">
+                                        <svg id="play-icon-svg" viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px; color:#fff;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                    </button>
+                                    <!-- Skip Forward 10s -->
+                                    <button class="btn-secondary" id="btn-player-skip-forward" style="padding: 8px; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 0 .57-8.38l-5.67-5.67"/></svg>
+                                    </button>
+                                </div>
+
+                                <!-- Volume Control -->
+                                <div style="display:flex; align-items:center; gap:5px;">
+                                    <span style="font-size: 13px;">🔊</span>
+                                    <input type="range" id="player-volume" min="0" max="100" value="80" style="width: 60px; height: 4px; border-radius: 2px; -webkit-appearance: none; background: rgba(255,255,255,0.2); cursor: pointer;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Interactive Timing Transcript -->
+                    <div class="dashboard-card" style="padding: 20px; min-height: 400px; display: flex; flex-direction: column;">
+                        <h3 style="margin-top: 0; color: var(--accent); font-size: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+                            <span>Lời Thoại Cuộn Thông Minh (Interactive Transcript)</span>
+                            <span style="font-size: 11.5px; font-weight: normal; color: var(--text-muted);">Nhấp vào câu để tua tới câu đó</span>
+                        </h3>
+                        <div id="transcript-scroll-box" style="flex: 1; overflow-y: auto; max-height: 380px; padding: 10px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; border-radius: 8px; background: rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.03);">
+                            <div style="text-align: center; color: var(--text-muted); margin-top: 50px;">Vui lòng chọn một bài nghe bên trái để tải nội dung transcript...</div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -893,6 +1094,9 @@
     <script src="data/db-manager.js"></script>
     <script src="data/stories-data.js"></script>
     <script src="data/translation-data.js"></script>
+    <script src="data/long-translation-data.js"></script>
+    <script src="data/writing-data.js"></script>
+    <script src="data/podcast-data.js"></script>
     <!-- Firebase Synchronization Bridge module -->
     <script type="module" src="firebase-sync.js"></script>
     <!-- Main JavaScript Logic -->

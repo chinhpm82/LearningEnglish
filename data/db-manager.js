@@ -130,6 +130,14 @@ async function selfHealAndSyncDatabase(seedVocab) {
     const db = await initDB();
     const currentVocab = await getAllVocab();
     
+    // Map seedVocab by lowercase word for quick lookup
+    const seedMap = new Map();
+    seedVocab.forEach(item => {
+        if (item && item.word) {
+            seedMap.set(cleanFieldName(item.word).toLowerCase().trim(), item);
+        }
+    });
+    
     const uniqueMap = new Map();
     const idsToDelete = [];
     let modifiedCount = 0;
@@ -139,17 +147,35 @@ async function selfHealAndSyncDatabase(seedVocab) {
 
         const origWord = item.word;
         const cleanWord = cleanFieldName(item.word);
-        const cleanIpa = cleanFieldName(item.ipa);
-        const cleanExample = cleanFieldName(item.example);
-
-        if (origWord !== cleanWord || item.ipa !== cleanIpa || item.example !== cleanExample) {
-            item.word = cleanWord;
-            item.ipa = cleanIpa;
-            item.example = cleanExample;
-            modifiedCount++;
-        }
-
         const key = cleanWord.toLowerCase().trim();
+
+        // 1. If word is in seed map, update details from seed file (preserving box and nextReview)
+        if (seedMap.has(key)) {
+            const seedItem = seedMap.get(key);
+            const cleanIpa = cleanFieldName(seedItem.ipa);
+            const cleanExample = cleanFieldName(seedItem.example);
+            
+            if (item.word !== cleanWord || item.ipa !== cleanIpa || item.meaning !== seedItem.meaning || item.example !== cleanExample || item.example_vi !== seedItem.example_vi || item.category !== seedItem.category) {
+                item.word = cleanWord;
+                item.type = seedItem.type || item.type;
+                item.ipa = cleanIpa;
+                item.meaning = seedItem.meaning || item.meaning;
+                item.example = cleanExample;
+                item.example_vi = seedItem.example_vi || item.example_vi;
+                item.category = seedItem.category || item.category;
+                modifiedCount++;
+            }
+        } else {
+            // Fallback basic cleaning if not in seed
+            const cleanIpa = cleanFieldName(item.ipa);
+            const cleanExample = cleanFieldName(item.example);
+            if (origWord !== cleanWord || item.ipa !== cleanIpa || item.example !== cleanExample) {
+                item.word = cleanWord;
+                item.ipa = cleanIpa;
+                item.example = cleanExample;
+                modifiedCount++;
+            }
+        }
 
         if (uniqueMap.has(key)) {
             // Duplicate found! Merge progress

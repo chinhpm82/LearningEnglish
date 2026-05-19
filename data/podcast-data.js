@@ -1,0 +1,44 @@
+const PODCAST_DATA = [
+    {
+        id: "p1",
+        title: "Why Music Helps You Learn English",
+        speaker: "Sarah Jenkins (English Educator)",
+        level: "Intermediate",
+        desc: "An engaging exploration of how rhythm, rhyme, and repetition in songs can naturally boost your vocabulary and improve your English pronunciation.",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", // SoundHelix public stable stream
+        image: "🎵",
+        duration: "6:12",
+        transcript: [
+            { start: 0.0, end: 4.0, text: "Welcome to the VocabFlow Podcast, your daily dose of language wisdom." },
+            { start: 4.5, end: 9.5, text: "Today, we are diving into a very pleasant topic: How listening to music can help you master English." },
+            { start: 10.0, end: 14.5, text: "Have you ever wondered why song lyrics stay stuck in your head for days?" },
+            { start: 15.0, end: 19.8, text: "It is because our brains love patterns, rhythm, and melody." },
+            { start: 20.2, end: 24.5, text: "When you listen to a song, you are exposed to natural phrases and common vocabulary." },
+            { start: 25.0, end: 30.2, text: "Singing along helps improve your pronunciation, intonation, and linking sounds." },
+            { start: 31.0, end: 35.8, text: "Additionally, songs often contain idioms and slang that native speakers use daily." },
+            { start: 36.5, end: 42.0, text: "So, the next time you put on your headphones, remember: you are not just relaxing, you are studying!" },
+            { start: 42.5, end: 47.0, text: "Thank you for listening, and keep singing your way to English fluency!" }
+        ]
+    },
+    {
+        id: "p2",
+        title: "The Magic of Lifelong Learning",
+        speaker: "Professor David Miller",
+        level: "Advanced",
+        desc: "A short, profound lecture on how keeping your brain active with new languages and skills shields it from aging and broadens your human empathy.",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+        image: "🧠",
+        duration: "7:05",
+        transcript: [
+            { start: 0.0, end: 4.5, text: "Hello learners, and welcome back to our intellectual development lecture series." },
+            { start: 5.0, end: 10.2, text: "Today, we shall contemplate the profound concept of lifelong learning." },
+            { start: 11.0, end: 16.5, text: "In a rapidly evolving world, formal education is merely the starting point of our journey." },
+            { start: 17.0, end: 21.8, text: "Acquiring new languages and skills stimulates neural pathways and fosters cognitive resilience." },
+            { start: 22.5, end: 27.5, text: "It stretches our intellectual capacity, preventing mental decline as we grow older." },
+            { start: 28.0, end: 33.2, text: "More importantly, learning about different cultures teaches us empathy and perspective." },
+            { start: 34.0, end: 38.5, text: "It opens our minds to alternative ways of thinking, reducing biases." },
+            { start: 39.0, end: 43.8, text: "Remember, curiosity is the fuel of life; once you stop learning, you stop growing." },
+            { start: 44.5, end: 49.0, text: "Stay curious, stay humble, and continue exploring the vast horizons of knowledge." }
+        ]
+    }
+];

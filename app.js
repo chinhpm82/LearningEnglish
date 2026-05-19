@@ -91,6 +91,10 @@ async function loadStateAsync() {
         localStorage.setItem('vocabflow_stars', state.stars.toString());
         localStorage.setItem('vocabflow_display_name', state.displayName);
         localStorage.setItem('vocabflow_photo_url', state.photoURL);
+        
+        // Immediately update sidebar UI on load
+        updateSidebarStreakUI();
+        trackDailyActivity('init', 0);
 
     } catch (e) {
         console.error('Error reading IndexedDB database, falling back to LocalStorage', e);
@@ -173,6 +177,14 @@ function speakEnglish(text) {
     }
 }
 
+// Streak UI Update Helper (Ensures sidebar streak is always accurate across tabs)
+function updateSidebarStreakUI() {
+    const el = document.getElementById('streak-count-val');
+    if (el) {
+        el.textContent = state.streak;
+    }
+}
+
 // Streak Calculation Logic
 function checkAndUpdateStreak() {
     const today = new Date().toDateString();
@@ -180,12 +192,14 @@ function checkAndUpdateStreak() {
 
     if (state.lastStudyDate === today) {
         // Already studied today, streak remains same
+        updateSidebarStreakUI();
         return;
     } else if (state.lastStudyDate === yesterday) {
         // Studied yesterday, consecutive day study!
         state.streak += 1;
         state.lastStudyDate = today;
         saveStatsToStorage();
+        updateSidebarStreakUI();
     } else {
         // Broke the streak (gap > 1 day) or brand new user
         if (state.lastStudyDate === '') {
@@ -195,6 +209,7 @@ function checkAndUpdateStreak() {
         }
         state.lastStudyDate = today;
         saveStatsToStorage();
+        updateSidebarStreakUI();
     }
 }
 
@@ -474,6 +489,7 @@ async function handleFlashcardAction(isCorrect) {
     
     // Register study activity for Streak
     checkAndUpdateStreak();
+    trackDailyActivity('flashcard', 1);
     renderDashboard();
 
     const word = flashcardDeck[currentCardIndex];
@@ -729,6 +745,7 @@ function showQuizResults() {
     document.getElementById('result-accuracy').textContent = `${pct}%`;
 
     const activeCategory = document.getElementById('quiz-category-select').value;
+    trackDailyActivity('quiz', { correct: quizScore, total: quizQuestions.length, category: activeCategory });
 
     // Dynamic result message
     const msgEl = document.getElementById('quiz-result-message');
@@ -809,6 +826,114 @@ function generateRoadmapTasks(level) {
             { text: "Đạt điểm tối đa 10/10 Quiz học thuật nâng cao", completed: false },
             { text: "Luyện đọc hiểu 4 mẫu câu giao tiếp công sở phức tạp", completed: false }
         ];
+    }
+}
+
+// --- AUTO-CHECK DAILY ROADMAP TASKS SYSTEM ---
+function trackDailyActivity(activityType, value = 1) {
+    const todayStr = new Date().toLocaleDateString('en-US');
+    let progress = JSON.parse(localStorage.getItem('le_daily_progress') || '{}');
+    if (progress.date !== todayStr) {
+        progress = {
+            date: todayStr,
+            flashcards: 0,
+            quizCorrect: 0,
+            quizCategory: '',
+            sentences: 0
+        };
+    }
+    
+    if (activityType === 'flashcard') {
+        progress.flashcards += value;
+    } else if (activityType === 'quiz') {
+        if (value.correct > progress.quizCorrect) {
+            progress.quizCorrect = value.correct;
+            progress.quizCategory = value.category;
+        }
+    } else if (activityType === 'sentence') {
+        progress.sentences += value;
+    }
+    
+    localStorage.setItem('le_daily_progress', JSON.stringify(progress));
+    autoCheckRoadmapTasks(progress);
+}
+
+function autoCheckRoadmapTasks(progress) {
+    if (!state.roadmapTasks || state.roadmapTasks.length === 0) return;
+    
+    let changed = false;
+    
+    if (state.userLevel === 'Beginner') {
+        // Task 0: Luyện 10 thẻ Flashcard...
+        if (progress.flashcards >= 10 && !state.roadmapTasks[0].completed) {
+            state.roadmapTasks[0].completed = true;
+            changed = true;
+            awardStars(5, "Hoàn thành: Luyện 10 thẻ Flashcard!");
+            showToastNotification("🎉 Hoàn thành nhiệm vụ: Luyện 10 thẻ Flashcard! +5 ⭐");
+        }
+        // Task 1: Làm đúng từ 5/10 câu trắc nghiệm Oxford
+        if (progress.quizCorrect >= 5 && progress.quizCategory === 'oxford' && !state.roadmapTasks[1].completed) {
+            state.roadmapTasks[1].completed = true;
+            changed = true;
+            awardStars(5, "Hoàn thành: Đạt 5/10 trắc nghiệm Oxford!");
+            showToastNotification("🎉 Hoàn thành nhiệm vụ: Đạt 5/10 trắc nghiệm Oxford! +5 ⭐");
+        }
+        // Task 2: Luyện phát âm 3 câu giao tiếp hàng ngày
+        if (progress.sentences >= 3 && !state.roadmapTasks[2].completed) {
+            state.roadmapTasks[2].completed = true;
+            changed = true;
+            awardStars(5, "Hoàn thành: Luyện phát âm 3 câu giao tiếp!");
+            showToastNotification("🎉 Hoàn thành nhiệm vụ: Luyện phát âm 3 câu giao tiếp! +5 ⭐");
+        }
+    } else if (state.userLevel === 'Intermediate') {
+        // Task 0: Ôn tập 15 thẻ Hộp Leitner...
+        if (progress.flashcards >= 15 && !state.roadmapTasks[0].completed) {
+            state.roadmapTasks[0].completed = true;
+            changed = true;
+            awardStars(5, "Hoàn thành: Ôn tập 15 thẻ Flashcard!");
+            showToastNotification("🎉 Hoàn thành nhiệm vụ: Ôn tập 15 thẻ Flashcard! +5 ⭐");
+        }
+        // Task 1: Đạt từ 7/10 điểm trắc nghiệm Thành ngữ & Cụm từ
+        if (progress.quizCorrect >= 7 && progress.quizCategory === 'idioms' && !state.roadmapTasks[1].completed) {
+            state.roadmapTasks[1].completed = true;
+            changed = true;
+            awardStars(5, "Hoàn thành: Đạt 7/10 trắc nghiệm Thành ngữ!");
+            showToastNotification("🎉 Hoàn thành nhiệm vụ: Đạt 7/10 trắc nghiệm Thành ngữ! +5 ⭐");
+        }
+        // Task 2: Học 5 mẫu câu đàm thoại...
+        if (progress.sentences >= 5 && !state.roadmapTasks[2].completed) {
+            state.roadmapTasks[2].completed = true;
+            changed = true;
+            awardStars(5, "Hoàn thành: Học 5 mẫu câu đàm thoại!");
+            showToastNotification("🎉 Hoàn thành nhiệm vụ: Học 5 mẫu câu đàm thoại! +5 ⭐");
+        }
+    } else { // Advanced
+        // Task 0: Chinh phục 15 từ vựng học thuật IELTS nâng cao
+        if (progress.flashcards >= 15 && !state.roadmapTasks[0].completed) {
+            state.roadmapTasks[0].completed = true;
+            changed = true;
+            awardStars(5, "Hoàn thành: Chinh phục 15 từ học thuật!");
+            showToastNotification("🎉 Hoàn thành nhiệm vụ: Chinh phục 15 từ học thuật! +5 ⭐");
+        }
+        // Task 1: Đạt điểm tối đa 10/10 Quiz học thuật nâng cao
+        if (progress.quizCorrect === 10 && progress.quizCategory === 'academic' && !state.roadmapTasks[1].completed) {
+            state.roadmapTasks[1].completed = true;
+            changed = true;
+            awardStars(10, "Hoàn thành: Đạt 10/10 Quiz học thuật!");
+            showToastNotification("🏆 Hoàn thành nhiệm vụ: Đạt 10/10 Quiz học thuật! +10 ⭐");
+        }
+        // Task 2: Luyện đọc hiểu 4 mẫu câu giao tiếp công sở phức tạp
+        if (progress.sentences >= 4 && !state.roadmapTasks[2].completed) {
+            state.roadmapTasks[2].completed = true;
+            changed = true;
+            awardStars(5, "Hoàn thành: Luyện đọc hiểu 4 câu giao tiếp!");
+            showToastNotification("🎉 Hoàn thành nhiệm vụ: Luyện đọc hiểu 4 câu giao tiếp! +5 ⭐");
+        }
+    }
+    
+    if (changed) {
+        saveStatsToStorage();
+        renderRoadmap();
     }
 }
 
@@ -917,15 +1042,7 @@ function renderRoadmap() {
     `;
 
     // Bind event listeners for dynamic items
-    // 1. Checklist toggling
-    container.querySelectorAll('.roadmap-task-item').forEach(item => {
-        item.addEventListener('click', () => {
-            const idx = parseInt(item.getAttribute('data-index'), 10);
-            state.roadmapTasks[idx].completed = !state.roadmapTasks[idx].completed;
-            saveStatsToStorage();
-            renderRoadmap();
-        });
-    });
+    // 1. Checklist toggling is now fully automated via trackDailyActivity!
 
     // 2. Recommendation links navigation
     container.querySelectorAll('.rec-action').forEach(action => {
@@ -934,7 +1051,7 @@ function renderRoadmap() {
             if (key === 'communicative') {
                 document.getElementById('btn-sentences').click();
             } else {
-                document.getElementById('btn-flashcards').click();
+                document.getElementById('btn-flashcard').click();
                 document.getElementById('flashcard-category').value = key;
                 initFlashcardSession(key);
             }
@@ -1408,6 +1525,7 @@ function renderSentences(category = 'all') {
             if (!isLearned) {
                 state.completedSentences.push(item.english);
                 saveStatsToStorage();
+                trackDailyActivity('sentence', 1);
                 awardStars(1, `Đã thuộc câu giao tiếp: "${item.english.substring(0, 20)}..."`);
             } else {
                 state.completedSentences = state.completedSentences.filter(s => s !== item.english);
@@ -1453,6 +1571,13 @@ function setUpTabNavigation() {
                 renderDashboard();
             } else if (targetId === 'leaderboard-tab') {
                 renderLeaderboard();
+            } else if (targetId === 'translation-tab') {
+                initTranslation();
+                initLongTranslation();
+            } else if (targetId === 'writing-tab') {
+                initWritingRoom();
+            } else if (targetId === 'podcast-tab') {
+                initPodcastRoom();
             }
         });
     });
@@ -1529,6 +1654,7 @@ function initApp() {
                         state.stars = cloudData.profile.stars || 0;
                         state.photoURL = cloudData.profile.photoURL || '';
                         renderUserAvatar(state.photoURL || user.photoURL);
+                        updateSidebarStreakUI();
                     }
                     if (cloudData.customWords) {
                         state.customWords = cloudData.customWords;
@@ -1916,6 +2042,27 @@ async function renderLeaderboard() {
         const userStreak = user.streak || 0;
         const userStars = user.stars || 0;
 
+        // Self-healing synchronization: if the cloud leaderboard data is higher than local state, update local state
+        if (user.email && state.currentUserEmail && user.email.toLowerCase().trim() === state.currentUserEmail.toLowerCase().trim()) {
+            let needSave = false;
+            if (userStreak > state.streak) {
+                state.streak = userStreak;
+                needSave = true;
+            }
+            if (userStars > state.stars) {
+                state.stars = userStars;
+                needSave = true;
+            }
+            if (needSave) {
+                saveStatsToStorage();
+                updateSidebarStreakUI();
+                const starsCountEl = document.getElementById('dashboard-stars-count');
+                if (starsCountEl) {
+                    starsCountEl.textContent = state.stars;
+                }
+            }
+        }
+
         let avatarHtml = `<img src="${avatarUrl}" alt="Avatar" class="leaderboard-avatar">`;
         if (avatarUrl && avatarUrl.startsWith('emoji:')) {
             const emoji = avatarUrl.split(':')[1];
@@ -2198,15 +2345,629 @@ function nextTranslation() {
     renderTranslationCard();
 }
 
-function showTransHint() {
-    const item = transState.deck[transState.idx];
+}
+
+// --- Sub-tabs translation switching logic ---
+document.getElementById('btn-sub-trans-short')?.addEventListener('click', () => {
+    const btnShort = document.getElementById('btn-sub-trans-short');
+    const btnLong = document.getElementById('btn-sub-trans-long');
+    if (btnShort && btnLong) {
+        btnShort.classList.add('active');
+        btnShort.style.background = 'var(--accent)';
+        btnShort.style.color = '#fff';
+        btnShort.style.boxShadow = '0 4px 12px var(--shadow-color)';
+        btnShort.style.fontWeight = '600';
+
+        btnLong.classList.remove('active');
+        btnLong.style.background = 'none';
+        btnLong.style.color = 'var(--text-muted)';
+        btnLong.style.boxShadow = 'none';
+        btnLong.style.fontWeight = '500';
+    }
+
+    document.getElementById('trans-short-panel')?.classList.remove('hidden');
+    document.getElementById('trans-long-panel')?.classList.add('hidden');
+});
+
+document.getElementById('btn-sub-trans-long')?.addEventListener('click', () => {
+    const btnShort = document.getElementById('btn-sub-trans-short');
+    const btnLong = document.getElementById('btn-sub-trans-long');
+    if (btnShort && btnLong) {
+        btnLong.classList.add('active');
+        btnLong.style.background = 'var(--accent)';
+        btnLong.style.color = '#fff';
+        btnLong.style.boxShadow = '0 4px 12px var(--shadow-color)';
+        btnLong.style.fontWeight = '600';
+
+        btnShort.classList.remove('active');
+        btnShort.style.background = 'none';
+        btnShort.style.color = 'var(--text-muted)';
+        btnShort.style.boxShadow = 'none';
+        btnShort.style.fontWeight = '500';
+    }
+
+    document.getElementById('trans-long-panel')?.classList.remove('hidden');
+    document.getElementById('trans-short-panel')?.classList.add('hidden');
+    initLongTranslation();
+});
+
+// --- Long Translation Mode ---
+const longTransState = { deck: [], idx: 0, hintsShown: 0 };
+
+function initLongTranslation() {
+    const data = typeof LONG_TRANSLATION_DATA !== 'undefined' ? LONG_TRANSLATION_DATA : [];
+    const dirFilter = document.getElementById('trans-long-dir-filter')?.value || 'all';
+    let filtered = data;
+    if (dirFilter !== 'all') filtered = filtered.filter(t => t.dir === dirFilter);
+    // Shuffle
+    for (let i = filtered.length - 1; i > 0; i--) { 
+        const j = Math.floor(Math.random() * (i + 1)); 
+        [filtered[i], filtered[j]] = [filtered[j], filtered[i]]; 
+    }
+    longTransState.deck = filtered;
+    longTransState.idx = 0;
+    longTransState.hintsShown = 0;
+    renderLongTranslationCard();
+}
+
+function renderLongTranslationCard() {
+    const card = document.getElementById('trans-long-card');
+    if (!card) return;
+    if (longTransState.deck.length === 0) {
+        card.innerHTML = '<p style="text-align:center;color:var(--text-secondary);padding:40px;">Không có đoạn văn nào phù hợp. Hãy chọn bộ lọc khác.</p>';
+        return;
+    }
+    const item = longTransState.deck[longTransState.idx];
+    document.getElementById('trans-long-dir-badge').textContent = item.dir === 'en-vi' ? 'Anh → Việt' : 'Việt → Anh';
+    document.getElementById('trans-long-level-badge').textContent = item.level;
+    document.getElementById('trans-long-title').textContent = item.title;
+    document.getElementById('trans-long-source').textContent = item.source;
+    document.getElementById('trans-long-hints').innerHTML = '';
+    document.getElementById('trans-long-input').value = '';
+    document.getElementById('trans-long-feedback').classList.add('hidden');
+    document.getElementById('btn-trans-long-check').classList.remove('hidden');
+    document.getElementById('btn-trans-long-next').classList.add('hidden');
+    document.getElementById('trans-long-word-count').textContent = '0 từ';
+    longTransState.hintsShown = 0;
+}
+
+function checkLongTranslation() {
+    const item = longTransState.deck[longTransState.idx];
+    const userInput = document.getElementById('trans-long-input').value.trim();
+    if (!userInput) { showToastNotification('⚠️ Vui lòng nhập bản dịch!'); return; }
+    
+    const feedback = document.getElementById('trans-long-feedback');
+    feedback.classList.remove('hidden');
+    
+    // Smart Jaccard Similarity Checker for long paragraphs
+    const normalize = s => s.toLowerCase().replace(/[.,!?;:'"()\-–]/g, '').replace(/\s+/g, ' ').trim();
+    const userNorm = normalize(userInput);
+    const ansNorm = normalize(item.answer);
+    
+    const userWords = userNorm.split(' ').filter(w => w.length > 1);
+    const ansWords = ansNorm.split(' ').filter(w => w.length > 1);
+    
+    const userSet = new Set(userWords);
+    const ansSet = new Set(ansWords);
+    
+    let intersection = 0;
+    ansSet.forEach(w => { if (userSet.has(w)) intersection++; });
+    
+    let scorePct = Math.round((intersection / Math.max(ansSet.size, 1)) * 100);
+    if (scorePct > 100) scorePct = 100;
+    
+    const scorePctEl = document.getElementById('trans-long-score-pct');
+    scorePctEl.textContent = scorePct + '%';
+    
+    const feedbackTextEl = document.getElementById('trans-long-feedback-text');
+    if (scorePct >= 80) {
+        scorePctEl.style.color = '#4ade80';
+        feedbackTextEl.textContent = '🌟 Xuất sắc! Bản dịch của bạn cực kỳ chính xác và lưu loát so với bản dịch chuẩn. Cấu trúc câu và từ vựng đều được sử dụng rất tự nhiên.';
+        awardStars(15, "Hoàn thành dịch đoạn văn xuất sắc!");
+    } else if (scorePct >= 50) {
+        scorePctEl.style.color = '#60a5fa';
+        feedbackTextEl.textContent = '👍 Tốt! Bạn đã truyền đạt chính xác các ý chính của đoạn văn. Hãy xem thêm bản dịch mẫu để cải thiện cách diễn đạt tự nhiên hơn.';
+        awardStars(8, "Hoàn thành dịch đoạn văn khá tốt!");
+    } else {
+        scorePctEl.style.color = '#f87171';
+        feedbackTextEl.textContent = '✍️ Hãy cố gắng lên! Bản dịch của bạn chưa sát với ý nghĩa của đoạn văn. Vui lòng đối chiếu với bản dịch mẫu bên dưới để học hỏi thêm các cấu trúc câu.';
+    }
+    
+    document.getElementById('trans-long-answer').textContent = item.answer;
+    document.getElementById('btn-trans-long-check').classList.add('hidden');
+    document.getElementById('btn-trans-long-next').classList.remove('hidden');
+}
+
+function nextLongTranslation() {
+    longTransState.idx++;
+    if (longTransState.idx >= longTransState.deck.length) {
+        showToastNotification(`🎉 Bạn đã dịch hết tất cả các đoạn văn dài trong bộ lọc này!`);
+        longTransState.idx = 0;
+    }
+    renderLongTranslationCard();
+}
+
+function showLongTransHint() {
+    const item = longTransState.deck[longTransState.idx];
     if (!item || !item.hints) return;
-    const container = document.getElementById('trans-hints');
-    transState.hintsShown++;
-    const hintIdx = Math.min(transState.hintsShown - 1, item.hints.length - 1);
+    const container = document.getElementById('trans-long-hints');
+    longTransState.hintsShown++;
+    const hintIdx = Math.min(longTransState.hintsShown - 1, item.hints.length - 1);
     if (hintIdx < item.hints.length) {
         container.innerHTML += `<span class="hint-item">${item.hints[hintIdx]}</span> `;
     }
+}
+
+// --- AI Writing Room ---
+let currentWritingTopic = null;
+
+function initWritingRoom() {
+    const topics = typeof WRITING_DATA !== 'undefined' ? WRITING_DATA : [];
+    const select = document.getElementById('writing-topic-select');
+    if (!select) return;
+    
+    select.innerHTML = '';
+    topics.forEach((topic) => {
+        const opt = document.createElement('option');
+        opt.value = topic.id;
+        opt.textContent = `${topic.topic} (${topic.level})`;
+        select.appendChild(opt);
+    });
+    
+    // Event listeners
+    select.onchange = () => {
+        const selected = topics.find(t => t.id === select.value);
+        if (selected) updateWritingTopic(selected);
+    };
+    
+    const textarea = document.getElementById('writing-textarea');
+    if (textarea) {
+        textarea.value = '';
+        textarea.oninput = handleWritingTextChange;
+    }
+    
+    const btnGrade = document.getElementById('btn-writing-grade');
+    if (btnGrade) {
+        btnGrade.onclick = gradeWritingEssay;
+    }
+    
+    const toggleSample = document.getElementById('btn-toggle-writing-sample');
+    if (toggleSample) {
+        toggleSample.onclick = () => {
+            const el = document.getElementById('writing-sample-answer');
+            el?.classList.toggle('hidden');
+        };
+    }
+    
+    document.getElementById('writing-result-panel')?.classList.add('hidden');
+    
+    if (topics.length > 0) {
+        updateWritingTopic(topics[0]);
+    }
+}
+
+function updateWritingTopic(topic) {
+    currentWritingTopic = topic;
+    
+    document.getElementById('writing-level-badge').textContent = topic.level;
+    document.getElementById('writing-prompt-text').textContent = topic.prompt;
+    document.getElementById('writing-prompt-en').textContent = topic.englishPrompt;
+    
+    // Outline
+    const outlineUl = document.getElementById('writing-outline-list');
+    outlineUl.innerHTML = '';
+    topic.outline.forEach(step => {
+        const li = document.createElement('li');
+        li.textContent = step;
+        outlineUl.appendChild(li);
+    });
+    
+    // Vocab Checklist
+    const vocabDiv = document.getElementById('writing-vocab-checklist');
+    vocabDiv.innerHTML = '';
+    topic.suggestedWords.forEach(wordObj => {
+        const div = document.createElement('div');
+        div.className = 'vocab-check-item';
+        div.style = 'display: flex; align-items: center; gap: 8px; font-size: 13.5px; padding: 6px 12px; border-radius: 8px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); color: var(--text-light); transition: all 0.2s;';
+        div.setAttribute('data-word', wordObj.word.toLowerCase());
+        div.innerHTML = `
+            <span class="bullet" style="color: var(--text-muted);">⬜</span>
+            <span style="font-weight: 500; color: #fff;">${wordObj.word}</span>
+            <span style="font-size:12px; color:var(--text-muted);">(${wordObj.vi})</span>
+        `;
+        vocabDiv.appendChild(div);
+    });
+    
+    // Reset inputs
+    const textarea = document.getElementById('writing-textarea');
+    if (textarea) textarea.value = '';
+    document.getElementById('writing-word-counter').textContent = '0 từ';
+    document.getElementById('writing-result-panel')?.classList.add('hidden');
+    document.getElementById('writing-sample-answer')?.classList.add('hidden');
+    document.getElementById('writing-sample-answer').textContent = topic.sampleAnswer;
+}
+
+function handleWritingTextChange() {
+    const text = document.getElementById('writing-textarea').value;
+    const words = text.trim().split(/\s+/).filter(w => w.length > 0);
+    document.getElementById('writing-word-counter').textContent = `${words.length} từ`;
+    
+    const normalizedText = text.toLowerCase();
+    
+    // Live update vocabulary checklist
+    const checklistItems = document.querySelectorAll('.vocab-check-item');
+    checklistItems.forEach(item => {
+        const word = item.getAttribute('data-word');
+        const escapedWord = word.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        const regex = new RegExp('\\b' + escapedWord, 'i');
+        const isFound = regex.test(normalizedText);
+        
+        const bullet = item.querySelector('.bullet');
+        if (isFound) {
+            item.style.background = 'rgba(74, 222, 128, 0.08)';
+            item.style.borderColor = 'rgba(74, 222, 128, 0.2)';
+            if (bullet) {
+                bullet.textContent = '✅';
+                bullet.style.color = '#4ade80';
+            }
+        } else {
+            item.style.background = 'rgba(255,255,255,0.02)';
+            item.style.borderColor = 'rgba(255,255,255,0.04)';
+            if (bullet) {
+                bullet.textContent = '⬜';
+                bullet.style.color = 'var(--text-muted)';
+            }
+        }
+    });
+}
+
+function gradeWritingEssay() {
+    if (!currentWritingTopic) return;
+    const essay = document.getElementById('writing-textarea').value.trim();
+    if (!essay) {
+        showToastNotification('⚠️ Vui lòng viết nội dung trước khi chấm điểm!');
+        return;
+    }
+    
+    const words = essay.split(/\s+/).filter(w => w.length > 0);
+    const essayLen = words.length;
+    
+    // 1. Length Score (25 points max)
+    let lengthScore = 0;
+    let targetMin = 50;
+    let targetMax = 80;
+    if (currentWritingTopic.level === 'Intermediate') { targetMin = 80; targetMax = 120; }
+    else if (currentWritingTopic.level === 'Advanced') { targetMin = 100; targetMax = 150; }
+    
+    if (essayLen >= targetMin && essayLen <= targetMax) {
+        lengthScore = 25;
+    } else if (essayLen < targetMin) {
+        const ratio = essayLen / targetMin;
+        lengthScore = Math.round(ratio * 20);
+    } else {
+        lengthScore = Math.max(15, 25 - Math.round((essayLen - targetMax) / 10));
+    }
+    
+    // 2. Vocabulary Score (25 points max - 5 points per suggested word)
+    let usedVocabCount = 0;
+    const usedWordsList = [];
+    const normalizedEssay = essay.toLowerCase();
+    currentWritingTopic.suggestedWords.forEach(wordObj => {
+        const escaped = wordObj.word.toLowerCase().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        const regex = new RegExp('\\b' + escaped, 'i');
+        if (regex.test(normalizedEssay)) {
+            usedVocabCount++;
+            usedWordsList.push(wordObj.word);
+        }
+    });
+    const vocabScore = Math.min(25, usedVocabCount * 5);
+    
+    // 3. Lexical Diversity (TTR) (20 points max)
+    const uniqueWords = new Set(words.map(w => w.toLowerCase().replace(/[.,!?;:'"()]/g, '')));
+    const ttr = uniqueWords.size / Math.max(1, essayLen);
+    const diversityScore = Math.round(ttr * 20);
+    
+    // 4. Structural Connectors Score (15 points max)
+    const connectors = ['firstly', 'secondly', 'thirdly', 'furthermore', 'moreover', 'additionally', 'however', 'on the other hand', 'in addition', 'therefore', 'ultimately', 'in conclusion', 'to sum up', 'first of all', 'last but not least'];
+    const foundConnectors = [];
+    connectors.forEach(c => {
+        if (normalizedEssay.includes(c)) {
+            foundConnectors.push(c);
+        }
+    });
+    const connectorScore = Math.min(15, foundConnectors.length * 5);
+    
+    // 5. Basic Syntax / Capitalization (15 points max)
+    let syntaxScore = 15;
+    const sentences = essay.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
+    let capErrors = 0;
+    sentences.forEach(s => {
+        const firstChar = s.charAt(0);
+        if (firstChar && firstChar !== firstChar.toUpperCase()) {
+            capErrors++;
+        }
+    });
+    syntaxScore = Math.max(5, 15 - (capErrors * 3));
+    
+    // Final Overall Score
+    const totalScore = lengthScore + vocabScore + diversityScore + connectorScore + syntaxScore;
+    
+    // Generate feedback comments
+    let aiComment = `**Đánh giá tổng quan:** Bài viết đạt **${totalScore}/100 điểm**. `;
+    if (totalScore >= 85) {
+        aiComment += `Một bài viết tuyệt vời! Cấu trúc logic mạch lạc, hành văn tự nhiên và đáp ứng rất tốt yêu cầu đề bài. `;
+    } else if (totalScore >= 70) {
+        aiComment += `Bài viết khá tốt. Diễn đạt tương đối trôi chảy, tuy nhiên cần chú ý thêm cấu trúc câu hoặc từ vựng gợi ý để lập luận sắc sảo hơn. `;
+    } else {
+        aiComment += `Bài viết ở mức trung bình. Hãy tập trung cải thiện ngữ pháp cơ bản, cách viết hoa đầu câu và tăng cường độ dài bài viết. `;
+    }
+    
+    aiComment += `\n\n**Ưu điểm:**\n`;
+    aiComment += `• Độ dài thực tế: **${essayLen} từ** (Mục tiêu: ${targetMin}-${targetMax} từ).\n`;
+    if (usedVocabCount > 0) {
+        aiComment += `• Bạn đã lồng ghép thành công các từ gợi ý: *${usedWordsList.join(', ')}* vào ngữ cảnh rất phù hợp.\n`;
+    } else {
+        aiComment += `• Bài viết có sự phong phú về từ vựng (đạt ${Math.round(ttr*100)}% chỉ số từ duy nhất).\n`;
+    }
+    if (foundConnectors.length > 0) {
+        aiComment += `• Cấu trúc liên kết ý tốt nhờ các từ nối: *${foundConnectors.join(', ')}*.\n`;
+    }
+    
+    aiComment += `\n**Điểm cần khắc phục:**\n`;
+    if (essayLen < targetMin) {
+        aiComment += `• Bài viết hơi ngắn. Hãy cố gắng triển khai thêm các ý trong phần Gợi ý cấu trúc (Outline) ở cột bên phải.\n`;
+    } else if (essayLen > targetMax) {
+        aiComment += `• Bài viết hơi dài hơn mục tiêu. Cố gắng cô đọng ý tư để câu văn súc tích hơn.\n`;
+    }
+    const missedWords = currentWritingTopic.suggestedWords.filter(w => !usedWordsList.includes(w.word));
+    if (missedWords.length > 0) {
+        aiComment += `• Nên bổ sung thêm các từ vựng cốt lõi còn thiếu: *${missedWords.map(w => w.word).join(', ')}* để nâng cao chiều sâu học thuật.\n`;
+    }
+    if (capErrors > 0) {
+        aiComment += `• Chú ý sửa lỗi chính tả: Có **${capErrors} lỗi** chưa viết hoa ký tự đầu tiên của câu sau dấu chấm.\n`;
+    } else {
+        aiComment += `• Chúc mừng bạn đã trình bày cú pháp và quy tắc viết hoa cực kỳ chính xác!\n`;
+    }
+    
+    // Reward Stars
+    const awardedStarsCount = Math.round(totalScore / 5);
+    awardStars(awardedStarsCount, `Luyện viết chủ đề "${currentWritingTopic.topic}" đạt ${totalScore} điểm`);
+    aiComment += `\n🎁 **Phần thưởng:** Bạn nhận được **+${awardedStarsCount} ⭐** vàng học tập!`;
+    
+    // Display results in UI
+    document.getElementById('writing-result-panel').classList.remove('hidden');
+    document.getElementById('writing-score-val').textContent = totalScore;
+    document.getElementById('writing-res-length').textContent = `${essayLen} từ (${essayLen >= targetMin && essayLen <= targetMax ? 'Đạt' : 'Cần điều chỉnh'})`;
+    document.getElementById('writing-res-vocab').textContent = `${usedVocabCount} / ${currentWritingTopic.suggestedWords.length} từ`;
+    document.getElementById('writing-res-ttr').textContent = `${Math.round(ttr * 100)}% (${ttr > 0.7 ? 'Rất phong phú' : 'Tương đối ổn'})`;
+    
+    const feedbackBox = document.getElementById('writing-ai-feedback');
+    if (feedbackBox) {
+        feedbackBox.innerHTML = aiComment.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>');
+    }
+    
+    document.getElementById('writing-result-panel').scrollIntoView({ behavior: 'smooth' });
+}
+
+// --- Podcast Room Logic ---
+let activePodcast = null;
+let lastActiveLineEl = null;
+
+function initPodcastRoom() {
+    const list = typeof PODCAST_DATA !== 'undefined' ? PODCAST_DATA : [];
+    const container = document.getElementById('podcast-list-container');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    list.forEach(pod => {
+        const item = document.createElement('div');
+        item.className = 'roadmap-task-item';
+        item.style = 'cursor: pointer; padding: 12px; margin-bottom: 5px;';
+        item.innerHTML = `
+            <div style="font-size:24px;">${pod.image}</div>
+            <div style="flex:1; min-width:0;">
+                <div style="font-weight: 600; color: #fff; font-size:14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${pod.title}</div>
+                <div style="font-size: 11.5px; color: var(--text-muted); display:flex; justify-content:space-between; margin-top:3px;">
+                    <span>🎙️ ${pod.speaker}</span>
+                    <span style="color:var(--accent); font-weight:500;">⏱️ ${pod.duration}</span>
+                </div>
+            </div>
+        `;
+        item.onclick = () => selectPodcast(pod);
+        container.appendChild(item);
+    });
+    
+    // Setup Audio Player Event Listeners once
+    const audio = document.getElementById('podcast-audio-element');
+    const playBtn = document.getElementById('btn-player-play');
+    const skipBack = document.getElementById('btn-player-skip-back');
+    const skipForward = document.getElementById('btn-player-skip-forward');
+    const seekbar = document.getElementById('player-seekbar');
+    const speedBtn = document.getElementById('btn-player-speed');
+    const volumeRange = document.getElementById('player-volume');
+    
+    if (audio) {
+        audio.ontimeupdate = handlePodcastTimeUpdate;
+        audio.onended = () => {
+            if (playBtn) playBtn.innerHTML = `<svg id="play-icon-svg" viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px; color:#fff;"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+        };
+    }
+    
+    if (playBtn) {
+        playBtn.onclick = () => {
+            if (!activePodcast) {
+                showToastNotification('⚠️ Vui lòng chọn một bài nghe từ danh sách bên trái!');
+                return;
+            }
+            if (audio.paused) {
+                audio.play();
+                playBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px; color:#fff;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
+                checkAndUpdateStreak();
+            } else {
+                audio.pause();
+                playBtn.innerHTML = `<svg id="play-icon-svg" viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px; color:#fff;"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+            }
+        };
+    }
+    
+    if (skipBack) {
+        skipBack.onclick = () => {
+            audio.currentTime = Math.max(0, audio.currentTime - 10);
+        };
+    }
+    
+    if (skipForward) {
+        skipForward.onclick = () => {
+            audio.currentTime = Math.min(audio.duration || 1000, audio.currentTime + 10);
+        };
+    }
+    
+    if (seekbar) {
+        seekbar.oninput = () => {
+            if (!audio.duration) return;
+            const targetTime = (seekbar.value / 100) * audio.duration;
+            audio.currentTime = targetTime;
+        };
+    }
+    
+    if (speedBtn) {
+        const speeds = [1.0, 1.25, 1.5, 0.75];
+        let currentSpeedIdx = 0;
+        speedBtn.onclick = () => {
+            currentSpeedIdx = (currentSpeedIdx + 1) % speeds.length;
+            const newSpeed = speeds[currentSpeedIdx];
+            audio.playbackRate = newSpeed;
+            speedBtn.textContent = newSpeed + 'x';
+        };
+    }
+    
+    if (volumeRange) {
+        volumeRange.oninput = () => {
+            audio.volume = volumeRange.value / 100;
+        };
+    }
+    
+    if (list.length > 0) {
+        selectPodcast(list[0]);
+    }
+}
+
+function selectPodcast(podcast) {
+    activePodcast = podcast;
+    lastActiveLineEl = null;
+    
+    document.getElementById('player-art').textContent = podcast.image;
+    document.getElementById('player-title').textContent = podcast.title;
+    document.getElementById('player-speaker').textContent = `🎙️ ${podcast.speaker} (${podcast.level})`;
+    
+    const audio = document.getElementById('podcast-audio-element');
+    audio.src = podcast.audioUrl;
+    audio.load();
+    
+    // Reset Seekbar
+    document.getElementById('player-seekbar').value = 0;
+    document.getElementById('player-time-current').textContent = '0:00';
+    document.getElementById('player-time-duration').textContent = podcast.duration;
+    
+    // Play Button reset
+    document.getElementById('btn-player-play').innerHTML = `<svg id="play-icon-svg" viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px; color:#fff;"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+    
+    // RENDER TIMED TRANSCRIPT
+    const transcriptBox = document.getElementById('transcript-scroll-box');
+    if (!transcriptBox) return;
+    transcriptBox.innerHTML = '';
+    
+    podcast.transcript.forEach((line, idx) => {
+        const div = document.createElement('div');
+        div.className = 'transcript-line';
+        div.style = 'padding: 10px 14px; border-radius: 10px; cursor: pointer; transition: all 0.25s ease; color: var(--text-light); font-size: 14px; line-height: 1.6; border: 1px solid transparent; display: flex; gap: 10px; align-items: flex-start; background: rgba(255,255,255,0.01);';
+        div.setAttribute('data-start', line.start);
+        div.setAttribute('data-end', line.end);
+        div.setAttribute('data-index', idx);
+        
+        div.innerHTML = `
+            <span style="font-size:11px; color:var(--text-muted); background:rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 5px; margin-top:2px;">${formatTimeStr(line.start)}</span>
+            <div style="flex:1; user-select: text;">${line.text}</div>
+            <span style="font-size:12px; color:var(--accent); font-weight:bold;">🔊</span>
+        `;
+        
+        // Hover effects in JS
+        div.onmouseenter = () => {
+            if (!div.classList.contains('active')) {
+                div.style.background = 'rgba(255,255,255,0.04)';
+            }
+        };
+        div.onmouseleave = () => {
+            if (!div.classList.contains('active')) {
+                div.style.background = 'rgba(255,255,255,0.01)';
+            }
+        };
+        
+        div.onclick = () => {
+            audio.currentTime = parseFloat(line.start);
+            if (audio.paused) {
+                document.getElementById('btn-player-play').click();
+            }
+        };
+        
+        transcriptBox.appendChild(div);
+    });
+}
+
+function handlePodcastTimeUpdate() {
+    const audio = document.getElementById('podcast-audio-element');
+    const seekbar = document.getElementById('player-seekbar');
+    const timeCurrent = document.getElementById('player-time-current');
+    const timeDuration = document.getElementById('player-time-duration');
+    
+    if (!audio || !audio.duration) return;
+    
+    // Update seekbar
+    const pct = (audio.currentTime / audio.duration) * 100;
+    if (seekbar) seekbar.value = pct;
+    
+    if (timeCurrent) timeCurrent.textContent = formatTimeStr(audio.currentTime);
+    if (timeDuration) timeDuration.textContent = formatTimeStr(audio.duration);
+    
+    // TIMING HIGHLIGHT & AUTO-SCROLL KARAOKE
+    const currentTime = audio.currentTime;
+    const lines = document.querySelectorAll('.transcript-line');
+    let activeLine = null;
+    
+    lines.forEach(line => {
+        const start = parseFloat(line.getAttribute('data-start'));
+        const end = parseFloat(line.getAttribute('data-end'));
+        
+        if (currentTime >= start && currentTime <= end) {
+            activeLine = line;
+        }
+    });
+    
+    if (activeLine && activeLine !== lastActiveLineEl) {
+        if (lastActiveLineEl) {
+            lastActiveLineEl.classList.remove('active');
+            lastActiveLineEl.style.background = 'rgba(255,255,255,0.01)';
+            lastActiveLineEl.style.borderColor = 'transparent';
+            lastActiveLineEl.style.color = 'var(--text-light)';
+            lastActiveLineEl.style.fontWeight = 'normal';
+        }
+        
+        activeLine.classList.add('active');
+        activeLine.style.background = 'linear-gradient(90deg, rgba(var(--accent-rgb), 0.15) 0%, rgba(var(--accent-rgb), 0.03) 100%)';
+        activeLine.style.borderColor = 'rgba(var(--accent-rgb), 0.3)';
+        activeLine.style.color = '#fff';
+        activeLine.style.fontWeight = 'bold';
+        
+        activeLine.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        lastActiveLineEl = activeLine;
+    }
+}
+
+function formatTimeStr(secs) {
+    const m = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
 }
 
 // ==========================================================================
@@ -2245,4 +3006,25 @@ document.addEventListener('DOMContentLoaded', function() {
     if (transLvlFilter) transLvlFilter.addEventListener('change', initTranslation);
     const btnTranslation = document.getElementById('btn-translation');
     if (btnTranslation) btnTranslation.addEventListener('click', initTranslation);
+
+    // Long translation tab
+    const btnTransLongCheck = document.getElementById('btn-trans-long-check');
+    if (btnTransLongCheck) btnTransLongCheck.addEventListener('click', checkLongTranslation);
+    const btnTransLongNext = document.getElementById('btn-trans-long-next');
+    if (btnTransLongNext) btnTransLongNext.addEventListener('click', nextLongTranslation);
+    const btnTransLongHint = document.getElementById('btn-trans-long-hint');
+    if (btnTransLongHint) btnTransLongHint.addEventListener('click', showLongTransHint);
+    const transLongDirFilter = document.getElementById('trans-long-dir-filter');
+    if (transLongDirFilter) transLongDirFilter.addEventListener('change', initLongTranslation);
+
+    // Live counter for long translation
+    const transLongInput = document.getElementById('trans-long-input');
+    if (transLongInput) {
+        transLongInput.addEventListener('input', () => {
+            const text = transLongInput.value.trim();
+            const words = text ? text.split(/\s+/).length : 0;
+            const cntEl = document.getElementById('trans-long-word-count');
+            if (cntEl) cntEl.textContent = `${words} từ`;
+        });
+    }
 });
