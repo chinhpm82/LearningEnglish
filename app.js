@@ -3044,12 +3044,12 @@ function gradeWritingEssay() {
             usedWordsList.push(wordObj.word);
         }
     });
-    const vocabScore = Math.min(25, usedVocabCount * 5);
+    let vocabScore = Math.min(25, usedVocabCount * 5);
     
     // 3. Lexical Diversity (TTR) (20 points max)
     const uniqueWords = new Set(words.map(w => w.toLowerCase().replace(/[.,!?;:'"()]/g, '')));
     const ttr = uniqueWords.size / Math.max(1, essayLen);
-    const diversityScore = Math.round(ttr * 20);
+    let diversityScore = Math.round(ttr * 20);
     
     // 4. Structural Connectors Score (15 points max)
     const connectors = ['firstly', 'secondly', 'thirdly', 'furthermore', 'moreover', 'additionally', 'however', 'on the other hand', 'in addition', 'therefore', 'ultimately', 'in conclusion', 'to sum up', 'first of all', 'last but not least'];
@@ -3059,7 +3059,7 @@ function gradeWritingEssay() {
             foundConnectors.push(c);
         }
     });
-    const connectorScore = Math.min(15, foundConnectors.length * 5);
+    let connectorScore = Math.min(15, foundConnectors.length * 5);
     
     // 5. Basic Syntax / Capitalization (15 points max)
     let syntaxScore = 15;
@@ -3073,17 +3073,67 @@ function gradeWritingEssay() {
     });
     syntaxScore = Math.max(5, 15 - (capErrors * 3));
     
+    // --- PEDAGOGICAL SAFETY & ANTI-EXPLOIT VALIDATION ---
+    let shortLengthPenalty = false;
+    let spamPenalty = false;
+    let nonEnglishPenalty = false;
+
+    // Count real English alphabetic tokens
+    const englishWordRegex = /[a-zA-Z]{2,}/g;
+    const englishWordsCount = (normalizedEssay.match(englishWordRegex) || []).length;
+
+    if (englishWordsCount < 5) {
+        nonEnglishPenalty = true;
+    } else if (essayLen < 15) {
+        shortLengthPenalty = true;
+    } else if (essayLen > 15 && ttr < 0.28) {
+        spamPenalty = true;
+    }
+
+    // Adaptively apply scores or penalties
+    if (nonEnglishPenalty) {
+        lengthScore = 0;
+        vocabScore = 0;
+        diversityScore = 0;
+        connectorScore = 0;
+        syntaxScore = 0;
+    } else if (shortLengthPenalty) {
+        lengthScore = Math.round((essayLen / 15) * 3); // Max 3 pts
+        vocabScore = Math.min(2, vocabScore);
+        diversityScore = Math.min(2, diversityScore); // 2 words shouldn't get 20 pts for TTR!
+        connectorScore = 0;
+        syntaxScore = Math.min(3, syntaxScore);
+    } else if (spamPenalty) {
+        lengthScore = Math.round(lengthScore * 0.1);
+        vocabScore = Math.round(vocabScore * 0.1);
+        diversityScore = 1;
+        connectorScore = Math.round(connectorScore * 0.1);
+        syntaxScore = Math.min(3, syntaxScore);
+    }
+
     // Final Overall Score
-    const totalScore = lengthScore + vocabScore + diversityScore + connectorScore + syntaxScore;
+    let totalScore = lengthScore + vocabScore + diversityScore + connectorScore + syntaxScore;
+    if (nonEnglishPenalty) totalScore = 0;
+    else if (spamPenalty) totalScore = Math.min(10, totalScore);
+    else if (shortLengthPenalty) totalScore = Math.min(12, totalScore);
     
     // Generate feedback comments
     let aiComment = `**Đánh giá tổng quan:** Bài viết đạt **${totalScore}/100 điểm**. `;
-    if (totalScore >= 85) {
-        aiComment += `Một bài viết tuyệt vời! Cấu trúc logic mạch lạc, hành văn tự nhiên và đáp ứng rất tốt yêu cầu đề bài. `;
-    } else if (totalScore >= 70) {
-        aiComment += `Bài viết khá tốt. Diễn đạt tương đối trôi chảy, tuy nhiên cần chú ý thêm cấu trúc câu hoặc từ vựng gợi ý để lập luận sắc sảo hơn. `;
+    
+    if (nonEnglishPenalty) {
+        aiComment += `\n\n⚠️ **CẢNH BÁO NỘI DUNG KHÔNG HỢP LỆ:** Bài viết của bạn không chứa đủ số lượng từ tiếng Anh hợp lệ hoặc toàn ký tự rác. Vui lòng nhập một đoạn văn tiếng Anh thực tế có nghĩa!`;
+    } else if (shortLengthPenalty) {
+        aiComment += `\n\n⚠️ **BÀI VIẾT QUÁ NGẮN:** Bài viết của bạn cực kỳ ngắn (chỉ có ${essayLen} từ, dưới ngưỡng tối thiểu 15 từ). Ở độ dài này, hệ thống áp dụng khung phạt độ dài nghiêm khắc để đảm bảo tính công bằng (điểm tối đa 12/100). Hãy viết ít nhất một đoạn văn hoàn chỉnh!`;
+    } else if (spamPenalty) {
+        aiComment += `\n\n⚠️ **CẢNH BÁO LẶP TỪ RÁC (SPAM):** Chỉ số đa dạng từ vựng của bạn quá thấp (chỉ ${Math.round(ttr*100)}% từ duy nhất), phát hiện hành vi lặp lại từ hoặc sao chép vô nghĩa. Hệ thống đã áp dụng khung phạt lặp từ tối đa 10/100. Vui lòng viết các câu đa dạng và đầy đủ ý kiến!`;
     } else {
-        aiComment += `Bài viết ở mức trung bình. Hãy tập trung cải thiện ngữ pháp cơ bản, cách viết hoa đầu câu và tăng cường độ dài bài viết. `;
+        if (totalScore >= 85) {
+            aiComment += `Một bài viết tuyệt vời! Cấu trúc logic mạch lạc, hành văn tự nhiên và đáp ứng rất tốt yêu cầu đề bài. `;
+        } else if (totalScore >= 70) {
+            aiComment += `Bài viết khá tốt. Diễn đạt tương đối trôi chảy, tuy nhiên cần chú ý thêm cấu trúc câu hoặc từ vựng gợi ý để lập luận sắc sảo hơn. `;
+        } else {
+            aiComment += `Bài viết ở mức trung bình. Hãy tập trung cải thiện ngữ pháp cơ bản, cách viết hoa đầu câu và tăng cường độ dài bài viết. `;
+        }
     }
     
     aiComment += `\n\n**Ưu điểm:**\n`;
