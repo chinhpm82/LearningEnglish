@@ -1684,7 +1684,17 @@ function initApp() {
             } else {
                 // Not authenticated (either Firebase is not configured, or user signed out, or skipped)
                 isCloudMode = false;
-                profileCard.classList.add('hidden');
+                profileCard.classList.remove('hidden');
+
+                // Render Guest profile values
+                renderUserAvatar(state.photoURL || 'emoji:🦊');
+                document.getElementById('user-display-name').textContent = state.displayName || 'Học viên (Khách)';
+
+                const logoutBtn = document.getElementById('btn-logout');
+                if (logoutBtn) {
+                    logoutBtn.textContent = 'Đăng nhập';
+                    logoutBtn.title = 'Đăng nhập tài khoản Google';
+                }
 
                 if (window.FirebaseSync.isConfigured) {
                     // Firebase is configured, but no user is signed in
@@ -1845,6 +1855,10 @@ async function handleGoogleLogin() {
 }
 
 async function handleGoogleLogout() {
+    if (!isCloudMode) {
+        showAuthOverlay();
+        return;
+    }
     if (confirm('Bạn có chắc chắn muốn đăng xuất? Dữ liệu của bạn đã được lưu an toàn trên Cloud.')) {
         authSkip = false;
         await window.FirebaseSync.logout();
