@@ -2599,8 +2599,9 @@ function openStory(story) {
     body.innerHTML = story.paragraphs.map(p => `<p>${p}</p>`).join('');
     const vocabList = document.getElementById('story-vocab-list');
     vocabList.innerHTML = story.vocab.map(v => `<span class="vocab-tag">${v}</span>`).join('');
-    const quizContainer = document.getElementById('story-quiz-container');
-    quizContainer.innerHTML = '';
+    const originalQuizContainer = document.getElementById('story-quiz-container');
+    const quizContainer = originalQuizContainer.cloneNode(false);
+    originalQuizContainer.parentNode.replaceChild(quizContainer, originalQuizContainer);
     const resultEl = document.getElementById('story-result');
     resultEl.classList.add('hidden');
     let answered = 0;
