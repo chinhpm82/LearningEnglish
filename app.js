@@ -3402,9 +3402,250 @@ function gradeWritingEssay() {
     if (feedbackBox) {
         feedbackBox.innerHTML = aiComment.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>');
     }
+
+    // --- GRAMMAR & SPELLING HEURISTICS ENGINE ---
+    const grammarErrors = analyzeGrammarErrors(essay);
+    const grammarPanel = document.getElementById('writing-grammar-panel');
+    const grammarCount = document.getElementById('writing-grammar-count');
+    const grammarList = document.getElementById('writing-grammar-list');
+    
+    if (grammarPanel && grammarCount && grammarList) {
+        grammarList.innerHTML = '';
+        
+        if (grammarErrors.length > 0) {
+            grammarPanel.style.display = 'block';
+            grammarCount.textContent = `${grammarErrors.length} lỗi`;
+            
+            grammarErrors.forEach(err => {
+                const item = document.createElement('div');
+                item.className = 'dashboard-card';
+                item.style = 'padding: 12px 15px; border-left: 4px solid #f87171; background: rgba(248, 113, 113, 0.03); display: flex; flex-direction: column; gap: 8px; margin-bottom: 5px;';
+                
+                // Escape quotes for safe HTML attributes binding
+                const escapedOriginal = err.original.replace(/'/g, "\\'");
+                const escapedSuggested = err.suggested.replace(/'/g, "\\'");
+                
+                item.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+                        <div style="font-size: 14px; font-weight: 500;">
+                            <span style="color: #f87171; text-decoration: line-through; margin-right: 8px;">${err.original}</span>
+                            <span style="color: #4ade80; font-weight: 600;">➔ ${err.suggested}</span>
+                        </div>
+                        <button class="btn-primary" style="padding: 4px 10px; font-size: 11px; background: #4ade80; border: none; box-shadow: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 4px;" onclick="applyGrammarFix('${err.id}', '${escapedOriginal}', '${escapedSuggested}')">
+                            <span>💡 Tự động sửa</span>
+                        </button>
+                    </div>
+                    <div style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
+                        ${err.explanation}
+                    </div>
+                `;
+                grammarList.appendChild(item);
+            });
+        } else {
+            grammarPanel.style.display = 'none';
+        }
+    }
     
     document.getElementById('writing-result-panel').scrollIntoView({ behavior: 'smooth' });
 }
+
+function analyzeGrammarErrors(essay) {
+    const errors = [];
+    const normalized = essay.toLowerCase();
+    
+    const rules = [
+        // Subject-Verb Agreement: He/She/It go/want/like/have
+        {
+            regex: /\b(he|she|it)\s+(go)\b/gi,
+            replace: "$1 goes",
+            explanation: "Chủ ngữ ngôi thứ ba số ít (he, she, it) yêu cầu động từ thêm đuôi '-es'.",
+            type: "grammar"
+        },
+        {
+            regex: /\b(he|she|it)\s+(want)\b/gi,
+            replace: "$1 wants",
+            explanation: "Chủ ngữ ngôi thứ ba số ít yêu cầu động từ thêm đuôi '-s'.",
+            type: "grammar"
+        },
+        {
+            regex: /\b(he|she|it)\s+(like)\b/gi,
+            replace: "$1 likes",
+            explanation: "Chủ ngữ ngôi thứ ba số ít yêu cầu động từ thêm đuôi '-s'.",
+            type: "grammar"
+        },
+        {
+            regex: /\b(he|she|it)\s+(have)\b/gi,
+            replace: "$1 has",
+            explanation: "Chủ ngữ ngôi thứ ba số ít yêu cầu động từ chia thành dạng số ít 'has'.",
+            type: "grammar"
+        },
+        {
+            regex: /\b(he|she|it)\s+(do)\b/gi,
+            replace: "$1 does",
+            explanation: "Chủ ngữ ngôi thứ ba số ít yêu cầu động từ chia thành 'does'.",
+            type: "grammar"
+        },
+        
+        // Consonant-Vowel Article Mismatch
+        {
+            regex: /\b(a)\s+(apple|orange|egg|elephant|idea|hour|umbrella|actor|artist|honest)\b/gi,
+            replace: "an $2",
+            explanation: "Sử dụng mạo từ 'an' trước các từ bắt đầu bằng một nguyên âm (hoặc âm câm như 'h' trong 'hour').",
+            type: "grammar"
+        },
+        {
+            regex: /\b(an)\s+(book|car|house|university|uniform|man|woman|cat|dog|table)\b/gi,
+            replace: "a $2",
+            explanation: "Sử dụng mạo từ 'a' trước danh từ bắt đầu bằng phụ âm (hoặc âm 'u' phát âm như /ju:/ như 'university').",
+            type: "grammar"
+        },
+        
+        // Modal Verb mismatch
+        {
+            regex: /\b(can|could|should|must|will|would|shall|might|may)\s+to\s+([a-z]+)\b/gi,
+            replace: "$1 $2",
+            explanation: "Sau các động từ khuyết thiếu (modal verbs) phải là động từ nguyên mẫu không 'to' (bare infinitive).",
+            type: "grammar"
+        },
+        {
+            regex: /\b(should|would|could|must|can)\s+going\b/gi,
+            replace: "$1 go",
+            explanation: "Sau động từ khuyết thiếu phải là động từ nguyên mẫu dạng bare infinitive.",
+            type: "grammar"
+        },
+        
+        // Double Comparison
+        {
+            regex: /\bmore\s+(better|worse|easier|faster|harder|taller|shorter|bigger|smaller)\b/gi,
+            replace: "$1",
+            explanation: "Tránh sử dụng từ so sánh kép 'more' cùng với tính từ so sánh ngắn đã thêm đuôi '-er'.",
+            type: "style"
+        },
+        
+        // Typical Preposition Mistakes
+        {
+            regex: /\b(discuss)\s+about\b/gi,
+            replace: "$1",
+            explanation: "'Discuss' là ngoại động từ trực tiếp, không đi kèm giới từ 'about'. (Ví dụ: 'discuss the plan').",
+            type: "style"
+        },
+        {
+            regex: /\b(marry)\s+with\b/gi,
+            replace: "$1",
+            explanation: "'Marry' đi trực tiếp với tân ngữ danh từ chỉ người, không sử dụng với giới từ 'with'.",
+            type: "grammar"
+        },
+        {
+            regex: /\b(depend)\s+of\b/gi,
+            replace: "$1 on",
+            explanation: "Cụm động từ chính xác là 'depend on' (phụ thuộc vào), không dùng 'depend of'.",
+            type: "grammar"
+        },
+        {
+            regex: /\b(listen)\s+music\b/gi,
+            replace: "$1 to music",
+            explanation: "Động từ 'listen' cần đi kèm giới từ 'to' khi có tân ngữ theo sau ('listen to music').",
+            type: "grammar"
+        },
+        {
+            regex: /\b(good)\s+in\s+(english|math|science|sports|art|music)\b/gi,
+            replace: "$1 at $2",
+            explanation: "Để diễn tả giỏi một lĩnh vực nào đó, hãy dùng giới từ 'at' ('good at English').",
+            type: "grammar"
+        },
+        {
+            regex: /\b(interested)\s+on\b/gi,
+            replace: "$1 in",
+            explanation: "Cấu trúc đúng để thể hiện sự quan tâm là 'be interested in', không đi kèm 'on'.",
+            type: "grammar"
+        },
+        
+        // Double Negatives
+        {
+            regex: /\b(don't|doesn't|didn't|can't|cannot|won't)\s+have\s+nothing\b/gi,
+            replace: "$1 have anything",
+            explanation: "Sử dụng phủ định kép là sai ngữ pháp trong tiếng Anh chuẩn. Hãy đổi 'nothing' thành 'anything'.",
+            type: "grammar"
+        },
+        {
+            regex: /\b(don't|doesn't|didn't|can't|cannot|won't)\s+see\s+nobody\b/gi,
+            replace: "$1 see anybody",
+            explanation: "Sử dụng phủ định kép là sai ngữ pháp trong tiếng Anh chuẩn. Hãy đổi 'nobody' thành 'anybody'.",
+            type: "grammar"
+        },
+        
+        // Singular Plural mismatch (Quantifier mismatch)
+        {
+            regex: /\bmany\s+(person|book|day|year|friend|student|teacher|child)\b/gi,
+            explanation: "Từ định lượng 'many' bắt buộc phải đi kèm danh từ số nhiều tương ứng.",
+            type: "grammar",
+            customReplace: (match) => {
+                const map = {
+                    "many person": "many people",
+                    "many book": "many books",
+                    "many day": "many days",
+                    "many year": "many years",
+                    "many friend": "many friends",
+                    "many student": "many students",
+                    "many teacher": "many teachers",
+                    "many child": "many children"
+                };
+                return map[match.toLowerCase()] || match;
+            }
+        }
+    ];
+    
+    rules.forEach((rule, idx) => {
+        // Reset last index
+        rule.regex.lastIndex = 0;
+        const matches = [...essay.matchAll(rule.regex)];
+        
+        matches.forEach(m => {
+            const originalText = m[0];
+            let suggestedText = "";
+            if (rule.customReplace) {
+                suggestedText = rule.customReplace(originalText);
+            } else {
+                suggestedText = originalText.replace(rule.regex, rule.replace);
+            }
+            
+            // Avoid duplicate error logs
+            if (!errors.some(e => e.original === originalText && e.index === m.index)) {
+                errors.push({
+                    id: `err-${idx}-${m.index}`,
+                    original: originalText,
+                    suggested: suggestedText,
+                    explanation: rule.explanation,
+                    type: rule.type,
+                    index: m.index
+                });
+            }
+        });
+    });
+    
+    return errors;
+}
+
+function applyGrammarFix(errorId, originalText, suggestedText) {
+    const textarea = document.getElementById('writing-textarea');
+    if (!textarea) return;
+    
+    const currentVal = textarea.value;
+    // Replace the exact matching original phrase
+    const newVal = currentVal.replace(originalText, suggestedText);
+    textarea.value = newVal;
+    
+    // Trigger word counter and updates
+    handleWritingTextChange();
+    
+    // Animate a toast notification
+    showToastNotification(`💡 Đã tự động sửa lỗi: "${originalText}" thành "${suggestedText}"!`);
+    
+    // Re-grade to reflect the perfect new score!
+    gradeWritingEssay();
+}
+
+window.applyGrammarFix = applyGrammarFix;
 
 // --- Podcast Room Logic ---
 let activePodcast = null;

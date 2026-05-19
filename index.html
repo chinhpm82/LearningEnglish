@@ -975,6 +975,17 @@
                                     <p id="writing-ai-feedback" style="font-size: 13.5px; line-height: 1.6; color: var(--text-light); background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px; border-left: 3.5px solid var(--accent);"></p>
                                 </div>
 
+                                <!-- Grammatical & Spelling Corrections -->
+                                <div style="margin-bottom: 20px; display: none;" id="writing-grammar-panel">
+                                    <h4 style="margin: 0 0 10px 0; color: #fff; display: flex; align-items: center; gap: 8px;">
+                                        <span>🔍 Phân Tích Lỗi Ngữ Pháp & Gợi Ý Sửa Đổi:</span>
+                                        <span class="badge" id="writing-grammar-count" style="background: #f87171; color: #fff; font-size:11px; padding: 3px 8px; border-radius: 6px;">0 lỗi</span>
+                                    </h4>
+                                    <div id="writing-grammar-list" style="display: flex; flex-direction: column; gap: 10px;">
+                                        <!-- Error items populated dynamically -->
+                                    </div>
+                                </div>
+
                                 <!-- Comparison Area -->
                                 <div style="margin-top: 15px;">
                                     <h4 style="margin: 0 0 8px 0; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: space-between;" id="btn-toggle-writing-sample">
