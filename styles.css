@@ -2680,7 +2680,7 @@ input, select, textarea, button {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    overflow-y: auto;
+    overflow: hidden; /* Prevent double scrollbar conflict */
 }
 
 .grammar-category-selector {
@@ -2735,6 +2735,8 @@ input, select, textarea, button {
     flex-direction: column;
     gap: 6px;
     text-align: left;
+    flex-shrink: 0; /* Prevent the card from shrinking in flex lists */
+    min-height: fit-content;
 }
 
 .grammar-lesson-card:hover {

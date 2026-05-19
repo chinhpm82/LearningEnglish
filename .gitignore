@@ -1,0 +1,14 @@
+# Node / Packages
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Gemini API & Assistant Directories
+.gemini/
+scratch/
+
+# OS/System files
+.DS_Store
+Thumbs.db
+*.log
