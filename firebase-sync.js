@@ -426,6 +426,11 @@ window.FirebaseSync = {
             }
         }, (error) => {
             console.error("Error listening to room:", error);
+            // Notify user about permission issue
+            if (error.code === 'permission-denied') {
+                alert("⚠️ Lỗi quyền truy cập Firestore!\n\nKhông thể theo dõi phòng thi đấu. Vui lòng kiểm tra Firestore Security Rules cho collection 'challenge_rooms'.");
+            }
+            callback(null);
         });
     },
 
@@ -446,6 +451,10 @@ window.FirebaseSync = {
             callback(rooms);
         }, (error) => {
             console.error("Error listening to rooms list:", error);
+            if (error.code === 'permission-denied') {
+                alert("⚠️ Lỗi quyền truy cập Firestore!\n\nKhông thể tải danh sách phòng. Vui lòng kiểm tra Firestore Security Rules.");
+            }
+            callback([]);
         });
     }
 };

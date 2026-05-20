@@ -112,9 +112,9 @@
                     // Reset login button texts
                     if (btnChallengeLogin) btnChallengeLogin.textContent = "Đăng nhập bằng Google để chơi";
                     
-                    // If challenge tab is currently active, transition to Lobby instantly
+                    // Only transition to Lobby if challenge tab is active AND user is NOT currently in a room
                     const challengeTab = document.getElementById("challenge-tab");
-                    if (challengeTab && challengeTab.classList.contains("active")) {
+                    if (challengeTab && challengeTab.classList.contains("active") && !activeRoomId) {
                         initChallengeTab();
                     }
                 }
@@ -356,13 +356,25 @@
 
     // Host creates a room document
     async function createMultiplayerRoom() {
-        if (!window.FirebaseSync || typeof state === "undefined") return;
+        if (!window.FirebaseSync || typeof state === "undefined") {
+            console.error("[Challenge] createRoom blocked: FirebaseSync or state not available");
+            return;
+        }
+
+        const user = window.FirebaseSync.getCurrentUser();
+        if (!user) {
+            console.error("[Challenge] createRoom blocked: no authenticated user");
+            return;
+        }
+
+        // Enforce 1 room per user: if already in a room, block creation
+        if (activeRoomId) {
+            alert("Bạn đang ở trong phòng #" + activeRoomId + ". Vui lòng thoát phòng hiện tại trước khi tạo phòng mới!");
+            return;
+        }
 
         const topic = document.getElementById("create-room-topic").value;
         const roomId = Math.floor(100000 + Math.random() * 900000).toString();
-        const user = window.FirebaseSync.getCurrentUser();
-
-        if (!user) return;
 
         const playerInfo = {
             uid: user.uid,
@@ -376,8 +388,11 @@
             return;
         }
 
+        console.log("[Challenge] Creating room", roomId, "topic:", topic);
+
         try {
             await window.FirebaseSync.createRoom(roomId, topic, generatedQuestions, playerInfo);
+            console.log("[Challenge] Room created successfully, switching to room view");
             activeRoomId = roomId;
 
             if (roomsListUnsubscribe) {
@@ -388,17 +403,29 @@
             switchChallengeSubView("challenge-room-view");
             listenActiveRoom(roomId);
         } catch (e) {
-            alert("Lỗi tạo phòng thi đấu. Vui lòng thử lại!");
-            console.error(e);
+            console.error("[Challenge] Error creating room:", e);
+            alert("Lỗi tạo phòng thi đấu: " + (e.message || "Vui lòng thử lại!") + "\n\nNếu lỗi liên quan đến permission, hãy kiểm tra Firestore Security Rules.");
         }
     }
 
     // Join a multiplayer room
     async function joinMultiplayerRoom(roomId) {
-        if (!window.FirebaseSync || typeof state === "undefined") return;
+        if (!window.FirebaseSync || typeof state === "undefined") {
+            console.error("[Challenge] joinRoom blocked: FirebaseSync or state not available");
+            return;
+        }
 
         const user = window.FirebaseSync.getCurrentUser();
-        if (!user) return;
+        if (!user) {
+            console.error("[Challenge] joinRoom blocked: no authenticated user");
+            return;
+        }
+
+        // Enforce 1 room per user
+        if (activeRoomId) {
+            alert("Bạn đang ở trong phòng #" + activeRoomId + ". Vui lòng thoát phòng hiện tại trước!");
+            return;
+        }
 
         const playerInfo = {
             uid: user.uid,
@@ -406,8 +433,11 @@
             photoURL: state.photoURL || user.photoURL || "🐱"
         };
 
+        console.log("[Challenge] Joining room", roomId);
+
         try {
             await window.FirebaseSync.joinRoom(roomId, playerInfo);
+            console.log("[Challenge] Joined room successfully, switching to room view");
             activeRoomId = roomId;
 
             if (roomsListUnsubscribe) {
@@ -418,8 +448,8 @@
             switchChallengeSubView("challenge-room-view");
             listenActiveRoom(roomId);
         } catch (e) {
-            alert("Phòng đấu đã đầy hoặc không còn tồn tại!");
-            console.error(e);
+            console.error("[Challenge] Error joining room:", e);
+            alert("Không thể tham gia phòng: " + (e.message || "Phòng đấu đã đầy hoặc không còn tồn tại!") + "\n\nNếu lỗi liên quan đến permission, hãy kiểm tra Firestore Security Rules.");
             startRoomsListListener();
         }
     }
