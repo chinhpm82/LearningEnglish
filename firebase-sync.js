@@ -447,14 +447,15 @@ window.FirebaseSync = {
         const roomsRef = collection(db, "challenge_rooms");
         const q = query(
             roomsRef,
-            where("status", "==", "waiting"),
-            orderBy("createdAt", "desc")
+            where("status", "==", "waiting")
         );
         return onSnapshot(q, (snapshot) => {
             const rooms = [];
             snapshot.forEach((doc) => {
                 rooms.push(doc.data());
             });
+            // Sort by createdAt descending in-memory to bypass the requirement of a composite index
+            rooms.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
             callback(rooms);
         }, (error) => {
             console.error("Error listening to rooms list:", error);
