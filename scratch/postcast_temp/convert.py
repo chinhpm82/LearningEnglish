@@ -47,62 +47,82 @@ def convert_file(input_path, output_path):
 
     print(f"\n📖 Reading transcript from: {os.path.basename(input_path)}")
     with open(input_path, "r", encoding="utf-8") as f:
-        content = f.read()
+        lines = f.readlines()
 
-    # Find all pattern occurrences of type [00:15] or [01:02:15]
-    # This regex matches timestamps enclosed in square brackets
-    pattern = re.compile(r"\[(\d{1,2}:\d{2}(?::\d{2})?)\]")
-    
-    # Split content by the timestamp tags
-    splits = pattern.split(content)
-    
-    # The first element is text before the first timestamp (usually empty)
-    # Subsequent elements alternate between: timestamp, text, timestamp, text...
+    # Regex patterns
+    # 1. Range Pattern: 0:00 - 0:04 Section 3. or [00:00 - 00:04] Hello
+    range_pattern = re.compile(r"^\[?(\d{1,2}:\d{2}(?::\d{2})?)\s*[-–—]\s*(\d{1,2}:\d{2}(?::\d{2})?)\]?\s*(.*)$")
+    # 2. Single Pattern: [00:00] Hello or 00:00 Hello
+    single_pattern = re.compile(r"^\[?(\d{1,2}:\d{2}(?::\d{2})?)\]?\s*(.*)$")
+
     raw_blocks = []
-    
-    # If the file starts with text before the first tag, save it starting at 0.0
-    if splits[0].strip():
-        raw_blocks.append({
-            "start": 0.0,
-            "text": re.sub(r"\s+", " ", splits[0]).strip()
-        })
 
-    # Timestamps are at odd indices, text is at even indices
-    for i in range(1, len(splits), 2):
-        time_tag = splits[i]
-        text_content = splits[i+1] if i+1 < len(splits) else ""
-        
-        start_sec = parse_timestamp(time_tag)
-        if start_sec is not None:
-            # Clean up text (replace double newlines and double spaces)
-            text_cleaned = re.sub(r"\s+", " ", text_content).strip()
-            if text_cleaned:
+    for line in lines:
+        line_str = line.strip()
+        if not line_str:
+            continue
+
+        # Try matching range first
+        range_match = range_pattern.match(line_str)
+        if range_match:
+            start_sec = parse_timestamp(range_match.group(1))
+            end_sec = parse_timestamp(range_match.group(2))
+            text = range_match.group(3).strip()
+            if start_sec is not None and end_sec is not None:
                 raw_blocks.append({
                     "start": start_sec,
-                    "text": text_cleaned
+                    "end": end_sec,
+                    "text": text
                 })
+            continue
+
+        # Try matching single timestamp next
+        single_match = single_pattern.match(line_str)
+        if single_match:
+            start_sec = parse_timestamp(single_match.group(1))
+            text = single_match.group(2).strip()
+            if start_sec is not None:
+                raw_blocks.append({
+                    "start": start_sec,
+                    "end": None,
+                    "text": text
+                })
+            continue
+
+        # If neither matches, it is text continuation of the previous block
+        if raw_blocks:
+            raw_blocks[-1]["text"] += " " + line_str
+        else:
+            # Fallback if text starts before any timestamp
+            raw_blocks.append({
+                "start": 0.0,
+                "end": None,
+                "text": line_str
+            })
 
     if not raw_blocks:
-        print("❌ Error: No timestamp patterns of form [MM:SS] found in the file!")
+        print("❌ Error: No recognizable timestamp pattern found in the file!")
         return False
 
-    # Sort blocks by start time to guarantee order
+    # Sort blocks by start time
     raw_blocks.sort(key=lambda x: x["start"])
 
     srt_entries = []
     for i in range(len(raw_blocks)):
         start_sec = raw_blocks[i]["start"]
-        text = raw_blocks[i]["text"]
+        text = re.sub(r"\s+", " ", raw_blocks[i]["text"]).strip()
         
-        # End time is the start of the next block
-        if i < len(raw_blocks) - 1:
+        # Determine End time
+        if raw_blocks[i].get("end") is not None:
+            end_sec = raw_blocks[i]["end"]
+        elif i < len(raw_blocks) - 1:
             end_sec = raw_blocks[i + 1]["start"]
         else:
-            # Last block duration is estimated based on text length (min 5s)
+            # Last block duration based on word count
             word_count = len(text.split())
             end_sec = start_sec + max(5.0, word_count * 0.4)
 
-        # Safety: avoid overlapping or zero-duration blocks
+        # Safety checking
         if end_sec <= start_sec:
             end_sec = start_sec + 2.0
 
