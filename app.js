@@ -700,10 +700,16 @@ function renderFlashcard() {
     document.getElementById('card-front-ipa').textContent = card.ipa || '';
     
     const boxBadge = document.getElementById('card-box-badge');
-    boxBadge.textContent = `Hộp ${card.box}`;
-    if (card.box === 1) boxBadge.style.color = 'var(--warning)';
-    else if (card.box === 2) boxBadge.style.color = 'var(--primary-light)';
-    else boxBadge.style.color = 'var(--success)';
+    if (card.box === 1) {
+        boxBadge.textContent = 'Từ mới';
+        boxBadge.style.color = 'var(--warning)';
+    } else if (card.box === 2) {
+        boxBadge.textContent = 'Đang học';
+        boxBadge.style.color = 'var(--primary-light)';
+    } else {
+        boxBadge.textContent = 'Đã thuộc';
+        boxBadge.style.color = 'var(--success)';
+    }
 
     // Card Back
     document.getElementById('card-back-meaning').textContent = card.meaning;
@@ -1089,7 +1095,7 @@ function generateRoadmapTasks(level) {
         ];
     } else if (level === 'B1' || level === 'B2' || level === 'B3' || level === 'Intermediate') {
         return [
-            { text: "Ôn tập 15 thẻ Hộp Leitner (Hộp 2/3) cần xem lại", completed: false },
+            { text: "Ôn tập 15 từ vựng đang học cần xem lại", completed: false },
             { text: "Đạt từ 7/10 điểm trắc nghiệm Thành ngữ & Cụm từ", completed: false },
             { text: "Học 5 mẫu câu đàm thoại tiếng Anh thường nhật", completed: false }
         ];
