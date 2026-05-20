@@ -439,14 +439,28 @@
         const roomCodeDisplay = document.getElementById("room-code-display");
         const roomTopicDisplay = document.getElementById("room-topic-display");
         const btnRoomReady = document.getElementById("btn-room-ready");
+        const btnRoomLeave = document.getElementById("btn-room-leave");
 
         roomCodeDisplay.textContent = roomId;
 
         activeRoomUnsubscribe = window.FirebaseSync.listenRoom(roomId, (roomData) => {
+            const user = window.FirebaseSync.getCurrentUser();
+            if (!user) return;
+
             if (!roomData) {
                 // Room dissolved
                 cleanupActiveRoomState();
                 alert("Phòng thi đấu đã bị giải tán.");
+                switchChallengeSubView("challenge-lobby-view");
+                startRoomsListListener();
+                return;
+            }
+
+            // Check if current user has been kicked by the host
+            const isKicked = !roomData.players || !roomData.players[user.uid];
+            if (isKicked) {
+                cleanupActiveRoomState();
+                alert("Bạn đã bị chủ phòng mời ra khỏi phòng (Kicked)!");
                 switchChallengeSubView("challenge-lobby-view");
                 startRoomsListListener();
                 return;
@@ -463,9 +477,20 @@
             roomPlayersCount.textContent = players.length;
             roomPlayersList.innerHTML = "";
 
-            const user = window.FirebaseSync.getCurrentUser();
             let isMeHost = roomData.creatorId === user.uid;
 
+            // Update Leave button styles and texts dynamically based on user identity
+            if (btnRoomLeave) {
+                if (isMeHost) {
+                    btnRoomLeave.textContent = "🗑️ Hủy phòng";
+                    btnRoomLeave.className = "btn-action btn-incorrect animate-glow";
+                } else {
+                    btnRoomLeave.textContent = "🚪 Rời phòng";
+                    btnRoomLeave.className = "btn-action btn-incorrect";
+                }
+            }
+
+            // Render player cards
             players.forEach(p => {
                 const isMe = p.uid === user.uid;
                 const isHost = p.uid === roomData.creatorId;
@@ -480,9 +505,35 @@
                     badgeClass = "badge-ready";
                 }
 
+                // Show Kick Button only to Host on other player cards
+                let kickBtnHTML = "";
+                if (isMeHost && !isHost) {
+                    kickBtnHTML = `
+                        <button class="btn-kick-player animate-glow" data-uid="${p.uid}" style="
+                            position: absolute;
+                            top: 8px;
+                            right: 8px;
+                            background: rgba(239, 68, 68, 0.15);
+                            border: 1px solid rgba(239, 68, 68, 0.4);
+                            color: var(--danger);
+                            padding: 2px 6px;
+                            font-size: 10px;
+                            font-weight: 700;
+                            border-radius: 6px;
+                            cursor: pointer;
+                            transition: all 0.2s ease;
+                            z-index: 10;
+                        " title="Mời người chơi này ra khỏi phòng">
+                            Kick ❌
+                        </button>
+                    `;
+                }
+
                 const card = document.createElement("div");
                 card.className = `player-lobby-card animate-glow ${isMe ? "player-card-me" : ""} ${p.isReady ? "player-ready-card" : ""}`;
+                card.style.position = "relative"; // Ensure relative for kick button positioning
                 card.innerHTML = `
+                    ${kickBtnHTML}
                     <div class="player-card-avatar-wrapper">
                         ${getAvatarHTML(p.photoURL)}
                     </div>
@@ -494,22 +545,56 @@
                     </span>
                 `;
                 roomPlayersList.appendChild(card);
-
-                if (isMe) {
-                    if (isHost) {
-                        btnRoomReady.style.display = "none";
-                    } else {
-                        btnRoomReady.style.display = "block";
-                        if (p.isReady) {
-                            btnRoomReady.textContent = "Bỏ Sẵn Sàng ❌";
-                            btnRoomReady.className = "btn-action btn-incorrect animate-glow";
-                        } else {
-                            btnRoomReady.textContent = "Sẵn Sàng 👍";
-                            btnRoomReady.className = "btn-action btn-correct animate-glow";
-                        }
-                    }
-                }
             });
+
+            // Bind click events to Kick buttons
+            if (isMeHost) {
+                roomPlayersList.querySelectorAll(".btn-kick-player").forEach(btn => {
+                    btn.addEventListener("click", async (e) => {
+                        e.stopPropagation();
+                        const targetUid = btn.getAttribute("data-uid");
+                        const targetPlayer = roomData.players[targetUid];
+                        if (confirm(`Bạn có chắc chắn muốn kick người chơi "${targetPlayer.name}" khỏi phòng?`)) {
+                            await window.FirebaseSync.leaveRoom(roomId, targetUid, false);
+                        }
+                    });
+                });
+            }
+
+            // Sync players ready status
+            const allGuestsReady = players.length >= 2 && players.every(p => p.isReady || p.uid === roomData.creatorId);
+
+            // Configure Active / Ready button behaviors dynamically
+            if (isMeHost) {
+                btnRoomReady.style.display = "block";
+                btnRoomReady.style.cssText = "opacity: 1; pointer-events: auto; padding: 10px 24px; border-radius: 12px; font-weight: 700; border: none;";
+                
+                if (players.length < 2) {
+                    btnRoomReady.textContent = "Chờ người chơi tham gia... ⏳";
+                    btnRoomReady.className = "btn-action btn-correct disabled";
+                    btnRoomReady.style.cssText += "opacity: 0.6; cursor: not-allowed; pointer-events: none;";
+                } else if (!allGuestsReady) {
+                    btnRoomReady.textContent = "Chờ người chơi Sẵn sàng... ⌛";
+                    btnRoomReady.className = "btn-action btn-correct disabled";
+                    btnRoomReady.style.cssText += "opacity: 0.6; cursor: not-allowed; pointer-events: none;";
+                } else {
+                    btnRoomReady.textContent = "Bắt Đầu Trận Đấu ⚔️";
+                    btnRoomReady.className = "btn-action btn-correct animate-glow";
+                    btnRoomReady.style.cssText += "cursor: pointer; background: var(--success); box-shadow: 0 0 15px var(--success-glow);";
+                }
+            } else {
+                btnRoomReady.style.display = "block";
+                btnRoomReady.style.cssText = "opacity: 1; cursor: pointer; pointer-events: auto; padding: 10px 24px; border-radius: 12px; font-weight: 700; border: none;";
+                
+                const myPlayer = roomData.players[user.uid];
+                if (myPlayer && myPlayer.isReady) {
+                    btnRoomReady.textContent = "Bỏ Sẵn Sàng ❌";
+                    btnRoomReady.className = "btn-action btn-incorrect animate-glow";
+                } else {
+                    btnRoomReady.textContent = "Sẵn Sàng 👍";
+                    btnRoomReady.className = "btn-action btn-correct animate-glow";
+                }
+            }
 
             // Action checking: status playing transition
             if (roomData.status === "playing") {
@@ -525,19 +610,8 @@
                 return;
             }
 
-            // Sync live scoreboard if playing status is active (handles reconnect or live update)
-            if (roomData.status === "playing") {
-                updateLiveScoreboard(roomData.players);
-                
-                const allFinished = players.every(p => p.finished);
-                if (allFinished) {
-                    showFinalResults(roomData);
-                }
-                return;
-            }
-
             // Auto Countdown triggers if all players are ready
-            const allPlayersReady = players.length >= 1 && players.every(p => p.isReady || p.uid === roomData.creatorId);
+            const allPlayersReady = players.length >= 2 && players.every(p => p.isReady || p.uid === roomData.creatorId);
 
             if (allPlayersReady) {
                 if (!countdownActive) {
@@ -573,20 +647,26 @@
         });
     }
 
-    // Toggle ready status of a player
+    // Toggle ready status of a player or Start the match if Host
     async function togglePlayerReady() {
         if (!window.FirebaseSync || !activeRoomId) return;
         const user = window.FirebaseSync.getCurrentUser();
         if (!user) return;
 
-        // Retrieve current ready status from DOM class or state
         const btnRoomReady = document.getElementById("btn-room-ready");
-        const currentReadyState = btnRoomReady.classList.contains("btn-incorrect");
+        
+        // Host Action Trigger: Starts the match immediately
+        if (btnRoomReady.textContent.includes("Bắt Đầu")) {
+            await window.FirebaseSync.startGame(activeRoomId);
+            return;
+        }
 
+        // Guest Action Trigger: Toggles ready state
+        const currentReadyState = btnRoomReady.classList.contains("btn-incorrect");
         await window.FirebaseSync.updatePlayerReady(activeRoomId, user.uid, !currentReadyState);
     }
 
-    // Leave the active room
+    // Leave or Dissolve the active room
     async function leaveCurrentRoom() {
         if (!window.FirebaseSync || !activeRoomId) {
             cleanupActiveRoomState();
@@ -598,22 +678,22 @@
         const user = window.FirebaseSync.getCurrentUser();
         if (!user) return;
 
-        try {
-            // Check if we are the host or last player
-            const roomRef = activeRoomId;
-            
-            // To figure out if last player: retrieve room snapshot once or dissolve if creator
-            // To ensure safety, let's fetch current room state
-            let isLast = true;
-            if (activeRoomUnsubscribe) {
-                // If listener is active, we can check players count
-                // If host leaves, dissolve the room automatically to prevent empty hosts
-                // Otherwise, if guest leaves, check if players.length <= 1
-                isLast = true; // Default dissolve host
-            }
+        const btnRoomLeave = document.getElementById("btn-room-leave");
+        const isHost = btnRoomLeave.textContent.includes("Hủy");
 
+        let confirmMsg = "Bạn có chắc chắn muốn rời phòng thi đấu này?";
+        if (isHost) {
+            confirmMsg = "Bạn có chắc chắn muốn HỦY phòng thi đấu này? Tất cả người chơi khác sẽ bị mời ra sảnh chờ.";
+        }
+
+        if (!confirm(confirmMsg)) return;
+
+        try {
+            const roomIdToLeave = activeRoomId;
             cleanupActiveRoomState();
-            await window.FirebaseSync.leaveRoom(roomRef, user.uid, isLast);
+
+            // Host leaves dissolves the room document (isLast = true), Guests just remove their keys (isLast = false)
+            await window.FirebaseSync.leaveRoom(roomIdToLeave, user.uid, isHost);
             
             switchChallengeSubView("challenge-lobby-view");
             startRoomsListListener();
@@ -637,16 +717,13 @@
     // --- GAMEPLAY LOOP ORCHESTRATION ---
 
     function gameplayListener(roomId) {
-        // Keep listening to player score updates dynamically during gameplay
         if (activeRoomUnsubscribe) activeRoomUnsubscribe();
 
         activeRoomUnsubscribe = window.FirebaseSync.listenRoom(roomId, (roomData) => {
             if (!roomData) return;
 
-            // Render live scoreboard updates instantly
             updateLiveScoreboard(roomData.players);
 
-            // Handle final results transition if ALL players have finished
             const players = Object.values(roomData.players || {});
             const allFinished = players.every(p => p.finished);
 
@@ -663,10 +740,7 @@
 
         switchChallengeSubView("challenge-play-view");
         
-        // Start listening to scores and finishes
         gameplayListener(roomData.id);
-
-        // Show the first question
         showQuestion(0);
     }
 
@@ -677,10 +751,8 @@
         if (!user) return;
 
         if (index >= questions.length) {
-            // Signal database that current player has finished
             window.FirebaseSync.updatePlayerFinished(activeRoomId, user.uid);
 
-            // Show waiting for opponents inside gameplay screen
             const optionsContainer = document.getElementById("challenge-options-container");
             optionsContainer.innerHTML = "";
 
@@ -724,7 +796,6 @@
 
                 const isCorrect = (idx === qObj.answer);
 
-                // Highlight correct and incorrect choices
                 Array.from(optionsContainer.children).forEach((child, cIdx) => {
                     child.classList.add("disabled");
                     if (cIdx === qObj.answer) {
@@ -738,15 +809,12 @@
                     localScore += 10;
                 }
 
-                // Audio Pronunciation
                 if (qObj.en && typeof speakEnglish !== "undefined") {
                     speakEnglish(qObj.en);
                 }
 
-                // Sync new score and answer details to Firestore
                 await window.FirebaseSync.updatePlayerScore(activeRoomId, user.uid, localScore, index, idx, isCorrect);
 
-                // Show feedback for 2 seconds then continue
                 setTimeout(() => {
                     showQuestion(index + 1);
                 }, 2000);
@@ -755,7 +823,6 @@
             optionsContainer.appendChild(btn);
         });
 
-        // 15 seconds gameplay timer
         let timeLeft = 15;
         const timerFg = document.getElementById("challenge-timer-fg");
         const timerText = document.getElementById("challenge-timer-text");
@@ -774,7 +841,6 @@
                 clearInterval(timerInterval);
                 optionSelected = true;
 
-                // Mark incorrect and sync
                 Array.from(optionsContainer.children).forEach((child, cIdx) => {
                     child.classList.add("disabled");
                     if (cIdx === qObj.answer) {
@@ -842,12 +908,10 @@
         const maxScore = sorted[0].score;
         const myScore = roomData.players[user.uid]?.score || 0;
 
-        // Calculate gold stars prize
         let reward = 2; // Participation reward
         if (myScore === maxScore && maxScore > 0) {
             reward = 10; // Winner reward
         } else if (players.length > 1 && myScore > 0) {
-            // Check if tied with someone else
             const scores = players.map(p => p.score);
             const duplicates = scores.filter((item, index) => scores.indexOf(item) !== index);
             if (duplicates.includes(myScore)) {
@@ -855,22 +919,18 @@
             }
         }
 
-        // Award stars to the state and synchronize to database
         if (typeof state !== "undefined") {
             const currentStars = state.stars || 0;
             state.stars = currentStars + reward;
 
-            // Sync stats to Firebase & LocalStorage
             if (typeof saveStatsToStorage === "function") {
                 saveStatsToStorage();
             }
             
-            // Explicitly sync back dashboard stars display if on page
             const dbStarsCount = document.getElementById("dashboard-stars-count");
             if (dbStarsCount) dbStarsCount.textContent = state.stars;
         }
 
-        // Render Winner Alert
         let bannerText = `Trận đấu đã kết thúc! Bạn nhận được <strong style="color: var(--warning); font-size: 18px; text-shadow: 0 0 10px var(--warning-glow);">+${reward} ⭐ Gold Stars</strong>!`;
         if (reward === 10) {
             bannerText = `👑 CHIẾN THẮNG TUYỆT VỜI! Bạn giành giải Nhất và nhận <strong style="color: var(--warning); font-size: 19px; text-shadow: 0 0 10px var(--warning-glow);">+10 ⭐ Gold Stars</strong>!`;
@@ -879,7 +939,6 @@
         }
         document.getElementById("challenge-result-banner").innerHTML = bannerText;
 
-        // Populate Placement Board
         const finalScoreboard = document.getElementById("challenge-final-scoreboard");
         finalScoreboard.innerHTML = "";
 
@@ -890,7 +949,6 @@
             else if (idx === 2) rankEmoji = "🥉";
             else rankEmoji = `<span style="font-weight: 700; color: var(--text-muted);">${idx + 1}</span>`;
 
-            // Display who won what stars
             let starPrize = "+2 ⭐";
             if (p.score === maxScore && maxScore > 0) {
                 starPrize = "+10 ⭐";
@@ -932,7 +990,6 @@
             finalScoreboard.appendChild(row);
         });
 
-        // Collapsible Answers Review Accordion
         const reviewList = document.getElementById("challenge-review-list");
         reviewList.innerHTML = "";
 
@@ -984,7 +1041,6 @@
                 </div>
             `;
 
-            // Pronounce button handler
             const speakBtn = item.querySelector(".btn-speak-mini");
             if (speakBtn && q.en) {
                 speakBtn.addEventListener("click", (e) => {
@@ -993,7 +1049,6 @@
                 });
             }
 
-            // Click header to toggle open
             const header = item.querySelector(".review-header");
             const body = item.querySelector(".review-body");
             const icon = item.querySelector(".review-toggle-icon");
