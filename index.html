@@ -1362,21 +1362,34 @@
                 <button id="btn-auth-skip" class="btn-link">Tiếp tục dưới chế độ Khách (Offline)</button>
             </div>
         </div>
-    <!-- Avatar Chooser Modal -->
+    <!-- Edit Profile Modal -->
     <div id="avatar-modal" class="auth-overlay hidden">
         <div class="auth-card" style="max-width: 420px; padding: 24px;">
-            <h3 style="color:#fff; margin-bottom: 8px; font-size: 18px;">Chọn Thú Cưng Đại Diện 🐾</h3>
+            <h3 style="color:#fff; margin-bottom: 8px; font-size: 18px;">Chỉnh Sửa Hồ Sơ 👤</h3>
             <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
-                Chọn một con vật ngộ nghĩnh thể hiện cá tính của bạn. Tất cả học viên khác sẽ thấy ảnh đại diện này của bạn trên Bảng xếp hạng!
+                Thay đổi tên hiển thị và thú cưng đại diện. Thông tin này sẽ hiển thị trên Bảng xếp hạng và các cuộc thi Đấu trường!
             </p>
             
+            <!-- Name Input Group -->
+            <div style="margin-bottom: 18px; text-align: left;">
+                <label style="display: block; font-size: 11px; font-weight: 700; color: var(--primary-light); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Tên hiển thị:</label>
+                <input type="text" id="input-profile-name" placeholder="Nhập tên hiển thị..." style="width: 100%; padding: 10px 14px; border-radius: 8px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); color: #fff; font-size: 13.5px; font-weight: 600; box-sizing: border-box; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'">
+            </div>
+
+            <!-- Avatar Selection Group -->
+            <div style="text-align: left; margin-bottom: 10px;">
+                <label style="display: block; font-size: 11px; font-weight: 700; color: var(--primary-light); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Chọn đại diện thú cưng 🐾:</label>
+            </div>
             <div class="avatar-grid" id="avatar-emoji-grid">
                 <!-- 12 dynamic animal options will be injected by JS -->
             </div>
             
-            <div style="display: flex; gap: 10px; width: 100%; margin-top: 20px;">
-                <button id="btn-avatar-use-google" class="btn-secondary" style="flex:1; font-size:12.5px; padding: 10px; border-radius: 12px; cursor: pointer;">Dùng ảnh Google</button>
-                <button id="btn-avatar-cancel" class="btn-primary" style="flex:1; font-size:12.5px; padding: 10px; border-radius: 12px; background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.1); color: #fff; cursor: pointer;">Đóng</button>
+            <div style="display: flex; flex-direction: column; gap: 8px; width: 100%; margin-top: 20px;">
+                <button id="btn-avatar-save" class="btn-primary" style="width: 100%; font-size: 13px; padding: 11px; border-radius: 12px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px var(--shadow-color);">Lưu Thay Đổi</button>
+                <div style="display: flex; gap: 8px; width: 100%;">
+                    <button id="btn-avatar-use-google" class="btn-secondary" style="flex:1; font-size: 11.5px; padding: 9px; border-radius: 10px; cursor: pointer;">Dùng ảnh Google</button>
+                    <button id="btn-avatar-cancel" class="btn-primary" style="flex:1; font-size: 11.5px; padding: 9px; border-radius: 10px; background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.1); color: #fff; cursor: pointer;">Hủy</button>
+                </div>
             </div>
         </div>
     </div>

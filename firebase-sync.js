@@ -143,13 +143,13 @@ window.FirebaseSync = {
         }
     },
 
-    // Save user profile stats (Streak, LastStudyDate, QuizStats, UserLevel, RoadmapTasks, Stars, CustomPhotoURL)
-    saveStreak: async (streak, lastStudyDate, quizStats, userLevel = '', roadmapTasks = [], stars = 0, customPhotoURL = '') => {
+    // Save user profile stats (Streak, LastStudyDate, QuizStats, UserLevel, RoadmapTasks, Stars, CustomPhotoURL, CustomDisplayName)
+    saveStreak: async (streak, lastStudyDate, quizStats, userLevel = '', roadmapTasks = [], stars = 0, customPhotoURL = '', customDisplayName = '') => {
         if (!isConfigured || !currentUser) return;
         try {
             const userRef = doc(db, "users", currentUser.uid);
             await setDoc(userRef, {
-                name: currentUser.displayName,
+                name: customDisplayName || currentUser.displayName,
                 email: currentUser.email,
                 photoURL: customPhotoURL || currentUser.photoURL,
                 streak: streak,

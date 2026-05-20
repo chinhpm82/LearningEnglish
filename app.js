@@ -1992,12 +1992,12 @@ function initApp() {
 
                 // Save email, display name and Google Photo to state
                 state.currentUserEmail = user.email || '';
-                state.displayName = user.displayName || '';
+                state.displayName = state.displayName || user.displayName || '';
                 state.googlePhotoURL = user.photoURL || '';
 
                 // Render User Profile Card
                 renderUserAvatar(state.photoURL || user.photoURL);
-                document.getElementById('user-display-name').textContent = user.displayName || 'Học viên';
+                document.getElementById('user-display-name').textContent = state.displayName || 'Học viên';
 
                 console.log("☁️ Syncing database progress with Firebase...");
                 
@@ -2013,7 +2013,9 @@ function initApp() {
                         state.roadmapTasks = cloudData.profile.roadmapTasks || [];
                         state.stars = cloudData.profile.stars || 0;
                         state.photoURL = cloudData.profile.photoURL || '';
+                        state.displayName = cloudData.profile.name || state.displayName || user.displayName || '';
                         renderUserAvatar(state.photoURL || user.photoURL);
+                        document.getElementById('user-display-name').textContent = state.displayName || 'Học viên';
                         updateSidebarStreakUI();
                     }
                     if (cloudData.customWords) {
@@ -2095,9 +2097,13 @@ function initApp() {
         avatarOpenBtn.addEventListener('click', () => {
             if (isCloudMode) {
                 document.getElementById('avatar-modal').classList.remove('hidden');
+                const nameInput = document.getElementById('input-profile-name');
+                if (nameInput) {
+                    nameInput.value = state.displayName || '';
+                }
                 renderAvatarModalChoices();
             } else {
-                alert('Vui lòng đăng nhập để sử dụng tính năng đổi ảnh đại diện thú cưng ngộ nghĩnh!');
+                alert('Vui lòng đăng nhập để sử dụng tính năng chỉnh sửa hồ sơ!');
             }
         });
     }
@@ -2106,6 +2112,30 @@ function initApp() {
     if (avatarCancelBtn) {
         avatarCancelBtn.addEventListener('click', () => {
             document.getElementById('avatar-modal').classList.add('hidden');
+        });
+    }
+
+    const avatarSaveBtn = document.getElementById('btn-avatar-save');
+    if (avatarSaveBtn) {
+        avatarSaveBtn.addEventListener('click', async () => {
+            const nameInput = document.getElementById('input-profile-name');
+            const newName = nameInput ? nameInput.value.trim() : '';
+            if (newName) {
+                state.displayName = newName;
+                document.getElementById('user-display-name').textContent = newName;
+            }
+            
+            if (typeof tempSelectedAvatar !== 'undefined' && tempSelectedAvatar) {
+                state.photoURL = tempSelectedAvatar;
+                renderUserAvatar(tempSelectedAvatar);
+            }
+            
+            // Save locally & Sync to Firebase Firestore
+            await saveStatsToStorage();
+            
+            document.getElementById('avatar-modal').classList.add('hidden');
+            showToastNotification("👤 Đã cập nhật hồ sơ cá nhân thành công!");
+            awardStars(5, "Cập nhật hồ sơ cá nhân");
         });
     }
     
@@ -2507,16 +2537,18 @@ function renderUserAvatar(avatarUrl) {
     }
 }
 
+let tempSelectedAvatar = '';
+
 function renderAvatarModalChoices() {
     const grid = document.getElementById('avatar-emoji-grid');
     if (!grid) return;
     grid.innerHTML = '';
     
-    const currentAvatar = state.photoURL || '';
+    tempSelectedAvatar = state.photoURL || '';
 
     ANIMAL_AVATARS.forEach(item => {
         const choice = document.createElement('div');
-        const isSelected = currentAvatar === 'emoji:' + item.emoji;
+        const isSelected = tempSelectedAvatar === 'emoji:' + item.emoji;
         choice.className = `avatar-choice-item ${isSelected ? 'selected' : ''}`;
         
         choice.innerHTML = `
@@ -2527,21 +2559,7 @@ function renderAvatarModalChoices() {
         choice.addEventListener('click', () => {
             document.querySelectorAll('.avatar-choice-item').forEach(c => c.classList.remove('selected'));
             choice.classList.add('selected');
-            
-            const selectedAvatarString = 'emoji:' + item.emoji;
-            state.photoURL = selectedAvatarString;
-            
-            // Apply locally
-            renderUserAvatar(selectedAvatarString);
-            
-            // Save & Sync to Firebase Firestore
-            saveStatsToStorage();
-            
-            // Close modal after selection
-            setTimeout(() => {
-                document.getElementById('avatar-modal').classList.add('hidden');
-                awardStars(5, `Đổi sang đại diện ${item.label} ${item.emoji}`);
-            }, 300);
+            tempSelectedAvatar = 'emoji:' + item.emoji;
         });
         
         grid.appendChild(choice);
