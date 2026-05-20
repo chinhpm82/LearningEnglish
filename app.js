@@ -2094,8 +2094,8 @@ function initApp() {
 
                 const logoutBtn = document.getElementById('btn-logout');
                 if (logoutBtn) {
-                    logoutBtn.textContent = 'Đăng nhập';
-                    logoutBtn.title = 'Đăng nhập tài khoản Google';
+                    logoutBtn.textContent = 'Đăng xuất';
+                    logoutBtn.title = 'Đăng xuất tài khoản Google';
                 }
 
                 if (window.FirebaseSync.isConfigured) {
