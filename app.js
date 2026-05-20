@@ -2101,16 +2101,19 @@ function initApp() {
     const avatarOpenBtn = document.getElementById('btn-open-avatar-modal');
     if (avatarOpenBtn) {
         avatarOpenBtn.addEventListener('click', () => {
-            if (isCloudMode) {
-                document.getElementById('avatar-modal').classList.remove('hidden');
-                const nameInput = document.getElementById('input-profile-name');
-                if (nameInput) {
-                    nameInput.value = state.displayName || '';
-                }
-                renderAvatarModalChoices();
-            } else {
-                alert('Vui lòng đăng nhập để sử dụng tính năng chỉnh sửa hồ sơ!');
+            document.getElementById('avatar-modal').classList.remove('hidden');
+            const nameInput = document.getElementById('input-profile-name');
+            if (nameInput) {
+                nameInput.value = state.displayName || '';
             }
+            
+            // Dynamically show/hide Google avatar sync button based on cloud status
+            const googleBtn = document.getElementById('btn-avatar-use-google');
+            if (googleBtn) {
+                googleBtn.style.display = isCloudMode ? 'block' : 'none';
+            }
+            
+            renderAvatarModalChoices();
         });
     }
     
