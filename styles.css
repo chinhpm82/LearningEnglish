@@ -2822,6 +2822,35 @@ input, select, textarea, button {
     box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
 }
 
+/* Responsive mobile overrides for global leaderboard */
+@media (max-width: 600px) {
+    .leaderboard-header-row,
+    .leaderboard-row {
+        grid-template-columns: 35px 40px 1fr 55px 60px;
+        padding: 12px 14px;
+        font-size: 11px;
+    }
+    .col-rank {
+        font-size: 13px;
+    }
+    .col-rank .medal-icon {
+        font-size: 16px;
+    }
+    .col-name {
+        font-size: 12.5px;
+        padding-left: 6px;
+    }
+    .col-streak,
+    .col-stars {
+        font-size: 12.5px;
+    }
+    .leaderboard-header-row .col-streak,
+    .leaderboard-header-row .col-stars {
+        white-space: normal;
+        line-height: 1.2;
+    }
+}
+
 /* --- TAB: GRAMMAR LEARNING SYSTEM --- */
 .grammar-layout {
     display: grid;

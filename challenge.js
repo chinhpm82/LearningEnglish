@@ -941,12 +941,12 @@
 
         let reward = 2; // Participation reward
         if (myScore === maxScore && maxScore > 0) {
-            reward = 10; // Winner reward
+            reward = 15; // Winner reward
         } else if (players.length > 1 && myScore > 0) {
             const scores = players.map(p => p.score);
             const duplicates = scores.filter((item, index) => scores.indexOf(item) !== index);
             if (duplicates.includes(myScore)) {
-                reward = 5; // Tie reward
+                reward = 8; // Tie reward
             }
         }
 
@@ -963,10 +963,10 @@
         }
 
         let bannerText = `Trận đấu đã kết thúc! Bạn nhận được <strong style="color: var(--warning); font-size: 18px; text-shadow: 0 0 10px var(--warning-glow);">+${reward} ⭐ Gold Stars</strong>!`;
-        if (reward === 10) {
-            bannerText = `👑 CHIẾN THẮNG TUYỆT VỜI! Bạn giành giải Nhất và nhận <strong style="color: var(--warning); font-size: 19px; text-shadow: 0 0 10px var(--warning-glow);">+10 ⭐ Gold Stars</strong>!`;
-        } else if (reward === 5) {
-            bannerText = `🤝 ĐỒNG HẠNG / HÒA ĐIỂM! Bạn nhận phần thưởng chia đều <strong style="color: var(--warning); font-size: 19px; text-shadow: 0 0 10px var(--warning-glow);">+5 ⭐ Gold Stars</strong>!`;
+        if (reward === 15) {
+            bannerText = `👑 CHIẾN THẮNG TUYỆT VỜI! Bạn giành giải Nhất và nhận <strong style="color: var(--warning); font-size: 19px; text-shadow: 0 0 10px var(--warning-glow);">+15 ⭐ Gold Stars</strong>!`;
+        } else if (reward === 8) {
+            bannerText = `🤝 ĐỒNG HẠNG / HÒA ĐIỂM! Bạn nhận phần thưởng chia đều <strong style="color: var(--warning); font-size: 19px; text-shadow: 0 0 10px var(--warning-glow);">+8 ⭐ Gold Stars</strong>!`;
         }
         document.getElementById("challenge-result-banner").innerHTML = bannerText;
 

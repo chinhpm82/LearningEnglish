@@ -154,6 +154,8 @@ window.FirebaseSync = {
     // Save user profile stats (Streak, LastStudyDate, QuizStats, UserLevel, RoadmapTasks, Stars, CustomPhotoURL, CustomDisplayName)
     saveStreak: async (streak, lastStudyDate, quizStats, userLevel = '', roadmapTasks = [], stars = 0, customPhotoURL = '', customDisplayName = '') => {
         if (!isConfigured || !currentUser) return;
+        
+        // 1. Save to private Firestore profile document
         try {
             const userRef = doc(db, "users", currentUser.uid);
             await setDoc(userRef, {
@@ -168,41 +170,46 @@ window.FirebaseSync = {
                 stars: stars,
                 updatedAt: Date.now()
             }, { merge: true });
-            
-            // Also sync public leaderboard data to Realtime Database
+        } catch (e) {
+            console.error("Error saving streak and roadmap statistics to Firestore:", e);
+        }
+
+        // 2. Also sync public leaderboard data to Realtime Database independently
+        try {
             if (rtdb) {
                 const leaderboardNodeRef = rtdbRef(rtdb, `leaderboard/${currentUser.uid}`);
-                rtdbSet(leaderboardNodeRef, {
+                await rtdbSet(leaderboardNodeRef, {
                     name: customDisplayName || currentUser.displayName || '',
                     email: currentUser.email || '',
                     photoURL: customPhotoURL || currentUser.photoURL || '',
                     streak: streak,
                     stars: stars,
                     updatedAt: Date.now()
-                }).catch(e => console.warn("RTDB leaderboard sync error:", e));
+                });
+                console.log("✅ Synced user stats to RTDB Leaderboard.");
             }
         } catch (e) {
-            console.error("Error saving streak and roadmap statistics to Firestore:", e);
+            console.warn("RTDB leaderboard sync error:", e);
         }
     },
 
     // Ensure a minimal user profile exists in Realtime Database leaderboard node (called on every login)
     // Writes to /leaderboard/{uid} - public data readable by all authenticated users
-    ensureUserProfile: async () => {
+    ensureUserProfile: async (stars = 0, streak = 0, customPhotoURL = '', customDisplayName = '') => {
         if (!isConfigured || !currentUser || !rtdb) return;
         try {
             const leaderboardNodeRef = rtdbRef(rtdb, `leaderboard/${currentUser.uid}`);
             const snapshot = await rtdbGet(leaderboardNodeRef);
             if (!snapshot.exists() || snapshot.val().stars === undefined) {
                 await rtdbSet(leaderboardNodeRef, {
-                    name: currentUser.displayName || '',
+                    name: customDisplayName || currentUser.displayName || '',
                     email: currentUser.email || '',
-                    photoURL: currentUser.photoURL || '',
-                    streak: 0,
-                    stars: 0,
+                    photoURL: customPhotoURL || currentUser.photoURL || '',
+                    streak: streak,
+                    stars: stars,
                     updatedAt: Date.now()
                 });
-                console.log("✅ Ensured user profile exists in RTDB leaderboard.");
+                console.log("✅ Ensured user profile exists in RTDB leaderboard with local stats.");
             }
         } catch (e) {
             console.error("Error ensuring user profile in RTDB leaderboard:", e);

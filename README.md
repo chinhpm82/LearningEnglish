@@ -6,6 +6,17 @@
 
 ---
 
+## ⚠️ LƯU Ý QUAN TRỌNG CHO DEVELOPERS & CODING AGENTS
+
+Hệ thống đánh giá, thang điểm trắc nghiệm, thuật toán thích ứng CEFR, cách tính chuỗi học tập (streak), phân loại từ vựng và cơ chế tính sao (stars) của ứng dụng đều tuân thủ nghiêm ngặt theo các tiêu chuẩn học thuật cốt lõi.
+
+👉 **Trước khi thay đổi bất kỳ dòng mã nào liên quan đến logic chấm điểm, tính năng game hóa, hoặc dữ liệu khóa học**, bạn **BẮT BUỘC** phải đọc và tuân theo chỉ dẫn chi tiết tại:
+*   [**Tài liệu Quy tắc Học thuật (.rules/academic_rules.md)**](file:///.rules/academic_rules.md)
+
+Mọi thay đổi tùy tiện không thông qua tài liệu này có thể làm ảnh hưởng tiêu cực đến trải nghiệm sư phạm và chất lượng đánh giá học viên!
+
+---
+
 ## ✨ Điểm Nổi Bật Của LearningEnglish
 
 1.  **Hệ thống phát âm chuẩn (Không tốn băng thông)**: Tích hợp trực tiếp **Web Speech API (`window.speechSynthesis`)** để phát âm từ vựng và câu giao tiếp chuẩn giọng Mỹ/Anh hoàn toàn miễn phí và mượt mà.

@@ -169,7 +169,7 @@ async function saveStatsToStorage() {
     
     // Sync to Firebase if in Cloud Mode
     if (isCloudMode && window.FirebaseSync) {
-        window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars, state.photoURL, state.displayName);
+        await window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars, state.photoURL, state.displayName);
     }
 }
 
@@ -1036,8 +1036,8 @@ function showQuizResults() {
     document.getElementById('result-score-val').textContent = `${quizScore} / ${quizQuestions.length}`;
     
     // Award Gold Stars for Quiz completion & accuracy!
-    const baseStars = 15;
-    const accuracyStars = quizScore * 2;
+    const baseStars = 5;
+    const accuracyStars = quizScore * 1;
     const totalStarsEarned = baseStars + accuracyStars;
     awardStars(totalStarsEarned, `Hoàn thành trắc nghiệm (${quizScore}/10 câu đúng)`);
     document.getElementById('result-time').textContent = `${durationSec} giây`;
@@ -1748,16 +1748,16 @@ function nextGrammarPracticeQuestion() {
         const successMsgEl = document.getElementById('grammar-success-msg');
 
         if (studyCountBefore === 0) {
-            awardStars(5, `Hoàn thành bài học "${lesson.title}"`);
+            awardStars(10, `Hoàn thành bài học "${lesson.title}"`);
             if (successTitleEl) successTitleEl.textContent = `🎉 Tuyệt vời! Hoàn thành bài học!`;
             if (successMsgEl) {
-                successMsgEl.innerHTML = `Chúc mừng bạn đã học thành công chủ điểm <strong>"${lesson.title}"</strong> lần đầu tiên! Bạn nhận được <strong>+5 Ngôi sao vàng ⭐</strong>.<br><br>💡 <em>Mẹo nhỏ: Học đi học lại nhiều lần sẽ giúp biến kiến thức ngữ pháp thành phản xạ tự nhiên của bạn!</em>`;
+                successMsgEl.innerHTML = `Chúc mừng bạn đã học thành công chủ điểm <strong>"${lesson.title}"</strong> lần đầu tiên! Bạn nhận được <strong>+10 Ngôi sao vàng ⭐</strong>.<br><br>💡 <em>Mẹo nhỏ: Học đi học lại nhiều lần sẽ giúp biến kiến thức ngữ pháp thành phản xạ tự nhiên của bạn!</em>`;
             }
         } else {
-            awardStars(2, `Ôn tập thành công bài "${lesson.title}" (Lần ${totalTimes})`);
+            awardStars(4, `Ôn tập thành công bài "${lesson.title}" (Lần ${totalTimes})`);
             if (successTitleEl) successTitleEl.textContent = `🔥 Xuất sắc! Ôn tập liên tục!`;
             if (successMsgEl) {
-                successMsgEl.innerHTML = `Bạn vừa xuất sắc ôn tập thành công chủ điểm <strong>"${lesson.title}"</strong> (Lần thứ <strong>${totalTimes}</strong>)! Bạn nhận được thêm <strong>+2 Ngôi sao vàng ⭐</strong>.<br><br>🚀 <em>Tuyệt vời! Bạn đang củng cố trí nhớ dài hạn cực kỳ tốt. Hãy duy trì phong độ và tiếp tục ôn tập nhé!</em>`;
+                successMsgEl.innerHTML = `Bạn vừa xuất sắc ôn tập thành công chủ điểm <strong>"${lesson.title}"</strong> (Lần thứ <strong>${totalTimes}</strong>)! Bạn nhận được thêm <strong>+4 Ngôi sao vàng ⭐</strong>.<br><br>🚀 <em>Tuyệt vời! Bạn đang củng cố trí nhớ dài hạn cực kỳ tốt. Hãy duy trì phong độ và tiếp tục ôn tập nhé!</em>`;
             }
         }
 
@@ -2092,7 +2092,7 @@ function initApp() {
                 renderDashboard();
 
                 // Ensure user has a Firestore document with at least stars field (for leaderboard visibility)
-                window.FirebaseSync.ensureUserProfile();
+                window.FirebaseSync.ensureUserProfile(state.stars, state.streak, state.photoURL, state.displayName);
 
                 console.log("☁️ Syncing database progress with Firebase...");
                 
@@ -2284,18 +2284,18 @@ function initApp() {
             
             document.getElementById('avatar-modal').classList.add('hidden');
             showToastNotification("👤 Đã cập nhật hồ sơ cá nhân thành công!");
-            awardStars(5, "Cập nhật hồ sơ cá nhân");
+            await awardStars(5, "Cập nhật hồ sơ cá nhân");
         });
     }
     
     const avatarGoogleBtn = document.getElementById('btn-avatar-use-google');
     if (avatarGoogleBtn) {
-        avatarGoogleBtn.addEventListener('click', () => {
+        avatarGoogleBtn.addEventListener('click', async () => {
             state.photoURL = '';
             renderUserAvatar(state.googlePhotoURL);
-            saveStatsToStorage();
+            await saveStatsToStorage();
             document.getElementById('avatar-modal').classList.add('hidden');
-            awardStars(2, "Đồng bộ lại ảnh đại diện Google");
+            await awardStars(2, "Đồng bộ lại ảnh đại diện Google");
         });
     }
 
@@ -2496,10 +2496,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // --- GLOBAL GAMIFICATION & STARS CORE FUNCTIONS ---
 
-function awardStars(amount, reason) {
+async function awardStars(amount, reason) {
     state.stars += amount;
-    saveStatsToStorage();
+    await saveStatsToStorage();
     renderDashboard();
+    
+    // Auto re-render leaderboard if current user is active on leaderboard tab
+    const activeTab = document.querySelector('.sidebar-menu li.active');
+    if (activeTab && activeTab.getAttribute('data-target') === 'leaderboard-tab') {
+        renderLeaderboard();
+    }
     
     // Show premium sliding star toast
     showStarToast(amount, reason);
@@ -2614,17 +2620,35 @@ async function renderLeaderboard() {
         const userStreak = user.streak || 0;
         const userStars = user.stars || 0;
 
-        // Self-healing synchronization: if the cloud leaderboard data is higher than local state, update local state
+        // Self-healing synchronization: two-way sync between local state and cloud leaderboard data
         if (user.email && state.currentUserEmail && user.email.toLowerCase().trim() === state.currentUserEmail.toLowerCase().trim()) {
             let needSave = false;
+            let needPush = false;
+            
+            // 1. Check for pulling higher values from cloud
             if (userStreak > state.streak) {
                 state.streak = userStreak;
                 needSave = true;
+            } else if (state.streak > userStreak) {
+                needPush = true;
             }
+            
             if (userStars > state.stars) {
                 state.stars = userStars;
                 needSave = true;
+            } else if (state.stars > userStars) {
+                needPush = true;
             }
+
+            // 2. Check if custom profile changes are missing from the public leaderboard node
+            if (user.name !== state.displayName && state.displayName) {
+                needPush = true;
+            }
+            if (user.photoURL !== state.photoURL && state.photoURL) {
+                needPush = true;
+            }
+
+            // Execute the appropriate action
             if (needSave) {
                 saveStatsToStorage();
                 updateSidebarStreakUI();
@@ -2632,6 +2656,18 @@ async function renderLeaderboard() {
                 if (starsCountEl) {
                     starsCountEl.textContent = state.stars;
                 }
+            } else if (needPush) {
+                console.log("🔄 Self-Healing: Pushing superior local achievements to RTDB Leaderboard...");
+                window.FirebaseSync.saveStreak(
+                    state.streak, 
+                    state.lastStudyDate, 
+                    state.quizStats, 
+                    state.userLevel, 
+                    state.roadmapTasks, 
+                    state.stars, 
+                    state.photoURL, 
+                    state.displayName
+                );
             }
         }
 
@@ -3032,11 +3068,11 @@ function checkLongTranslation() {
     if (scorePct >= 80) {
         scorePctEl.style.color = '#4ade80';
         feedbackTextEl.textContent = '🌟 Xuất sắc! Bản dịch của bạn cực kỳ chính xác và lưu loát so với bản dịch chuẩn. Cấu trúc câu và từ vựng đều được sử dụng rất tự nhiên.';
-        awardStars(15, "Hoàn thành dịch đoạn văn xuất sắc!");
+        awardStars(30, "Hoàn thành dịch đoạn văn xuất sắc!");
     } else if (scorePct >= 50) {
         scorePctEl.style.color = '#60a5fa';
         feedbackTextEl.textContent = '👍 Tốt! Bạn đã truyền đạt chính xác các ý chính của đoạn văn. Hãy xem thêm bản dịch mẫu để cải thiện cách diễn đạt tự nhiên hơn.';
-        awardStars(8, "Hoàn thành dịch đoạn văn khá tốt!");
+        awardStars(15, "Hoàn thành dịch đoạn văn khá tốt!");
     } else {
         scorePctEl.style.color = '#f87171';
         feedbackTextEl.textContent = '✍️ Hãy cố gắng lên! Bản dịch của bạn chưa sát với ý nghĩa của đoạn văn. Vui lòng đối chiếu với bản dịch mẫu bên dưới để học hỏi thêm các cấu trúc câu.';
@@ -3563,8 +3599,8 @@ function gradeWritingEssay() {
     const topicId = currentWritingTopic.id || currentWritingTopic.topic;
     const currentBest = state.writingHighScores[topicId] || 0;
     
-    const newStars = Math.round(finalScore / 5);
-    const prevStars = Math.round(currentBest / 5);
+    const newStars = Math.round(finalScore / 2);
+    const prevStars = Math.round(currentBest / 2);
     const starsToAward = Math.max(0, newStars - prevStars);
     
     if (starsToAward > 0) {
