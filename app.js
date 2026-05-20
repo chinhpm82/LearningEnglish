@@ -2091,6 +2091,9 @@ function initApp() {
                 // Render local dashboard immediately to prevent "loading user data forever" visual hang
                 renderDashboard();
 
+                // Ensure user has a Firestore document with at least stars field (for leaderboard visibility)
+                window.FirebaseSync.ensureUserProfile();
+
                 console.log("☁️ Syncing database progress with Firebase...");
                 
                 try {

@@ -165,6 +165,29 @@ window.FirebaseSync = {
         }
     },
 
+    // Ensure a minimal user profile document exists in Firestore (called on every login)
+    // Uses merge:true so it never overwrites existing data, only fills in missing fields
+    ensureUserProfile: async () => {
+        if (!isConfigured || !currentUser) return;
+        try {
+            const userRef = doc(db, "users", currentUser.uid);
+            const userSnap = await getDoc(userRef);
+            if (!userSnap.exists() || userSnap.data().stars === undefined) {
+                await setDoc(userRef, {
+                    name: currentUser.displayName || '',
+                    email: currentUser.email || '',
+                    photoURL: currentUser.photoURL || '',
+                    streak: 0,
+                    stars: 0,
+                    updatedAt: Date.now()
+                }, { merge: true });
+                console.log("✅ Ensured user profile exists in Firestore for leaderboard visibility.");
+            }
+        } catch (e) {
+            console.error("Error ensuring user profile in Firestore:", e);
+        }
+    },
+
     // Fetch global student leaderboard (top 15 sorted by stars)
     loadLeaderboard: async () => {
         if (!isConfigured) return null;
