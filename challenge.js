@@ -562,17 +562,20 @@
             }
 
             // Sync players ready status
-            const allGuestsReady = players.length >= 2 && players.every(p => p.isReady || p.uid === roomData.creatorId);
+            // Allow solo play: if only 1 player (host), always ready.
+            // If 2+ players, all guests must be ready.
+            const allGuestsReady = players.length === 1 || (players.length >= 2 && players.every(p => p.isReady || p.uid === roomData.creatorId));
 
             // Configure Active / Ready button behaviors dynamically
             if (isMeHost) {
                 btnRoomReady.style.display = "block";
                 btnRoomReady.style.cssText = "opacity: 1; pointer-events: auto; padding: 10px 24px; border-radius: 12px; font-weight: 700; border: none;";
                 
-                if (players.length < 2) {
-                    btnRoomReady.textContent = "Chờ người chơi tham gia... ⏳";
-                    btnRoomReady.className = "btn-action btn-correct disabled";
-                    btnRoomReady.style.cssText += "opacity: 0.6; cursor: not-allowed; pointer-events: none;";
+                if (players.length === 1) {
+                    // Solo mode: host can start immediately for practice
+                    btnRoomReady.textContent = "🎯 Luyện Tập 1 Mình";
+                    btnRoomReady.className = "btn-action btn-correct animate-glow";
+                    btnRoomReady.style.cssText += "cursor: pointer; background: var(--success); box-shadow: 0 0 15px var(--success-glow);";
                 } else if (!allGuestsReady) {
                     btnRoomReady.textContent = "Chờ người chơi Sẵn sàng... ⌛";
                     btnRoomReady.className = "btn-action btn-correct disabled";
@@ -610,7 +613,7 @@
                 return;
             }
 
-            // Auto Countdown triggers if all players are ready
+            // Auto Countdown triggers if all players are ready (2+ players only, solo starts manually)
             const allPlayersReady = players.length >= 2 && players.every(p => p.isReady || p.uid === roomData.creatorId);
 
             if (allPlayersReady) {
@@ -655,8 +658,8 @@
 
         const btnRoomReady = document.getElementById("btn-room-ready");
         
-        // Host Action Trigger: Starts the match immediately
-        if (btnRoomReady.textContent.includes("Bắt Đầu")) {
+        // Host Action Trigger: Starts the match immediately (includes solo "Luyện Tập" button)
+        if (btnRoomReady.textContent.includes("Bắt Đầu") || btnRoomReady.textContent.includes("Luyện Tập")) {
             await window.FirebaseSync.startGame(activeRoomId);
             return;
         }
@@ -676,17 +679,15 @@
         }
 
         const user = window.FirebaseSync.getCurrentUser();
-        if (!user) return;
-
-        const btnRoomLeave = document.getElementById("btn-room-leave");
-        const isHost = btnRoomLeave.textContent.includes("Hủy");
-
-        let confirmMsg = "Bạn có chắc chắn muốn rời phòng thi đấu này?";
-        if (isHost) {
-            confirmMsg = "Bạn có chắc chắn muốn HỦY phòng thi đấu này? Tất cả người chơi khác sẽ bị mời ra sảnh chờ.";
+        if (!user) {
+            cleanupActiveRoomState();
+            switchChallengeSubView("challenge-lobby-view");
+            startRoomsListListener();
+            return;
         }
 
-        if (!confirm(confirmMsg)) return;
+        const btnRoomLeave = document.getElementById("btn-room-leave");
+        const isHost = btnRoomLeave && btnRoomLeave.textContent.includes("Hủy");
 
         try {
             const roomIdToLeave = activeRoomId;
