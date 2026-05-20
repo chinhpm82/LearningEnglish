@@ -7,6 +7,10 @@ yarn-error.log*
 # Gemini API & Assistant Directories
 .gemini/
 scratch/
+.agents/
+.rules/
+agent/
+
 
 # OS/System files
 .DS_Store

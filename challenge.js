@@ -1024,6 +1024,50 @@
         const reviewList = document.getElementById("challenge-review-list");
         reviewList.innerHTML = "";
 
+        // Calculate user summary statistics
+        let correctCount = 0;
+        let unansweredCount = 0;
+        questions.forEach((q, qIdx) => {
+            const playerAnswer = roomData.players[user.uid]?.answers?.[qIdx];
+            const mySelectedIdx = playerAnswer ? playerAnswer.selectedIndex : -1;
+            const isMyCorrect = playerAnswer ? playerAnswer.isCorrect : false;
+            if (isMyCorrect) {
+                correctCount++;
+            } else if (mySelectedIdx === -1) {
+                unansweredCount++;
+            }
+        });
+        const incorrectCount = questions.length - correctCount - unansweredCount;
+
+        // Add a premium styled summary card at the top of the review list
+        const summaryCard = document.createElement("div");
+        summaryCard.style.cssText = `
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 16px 20px;
+            border-radius: 14px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        `;
+        summaryCard.innerHTML = `
+            <div>
+                <h4 style="margin: 0 0 4px 0; color: #fff; font-size: 14.5px;">Tổng Kết Kết Quả Của Bạn</h4>
+                <p style="margin: 0; font-size: 12px; color: var(--text-muted);">
+                    Bạn đã trả lời đúng <strong style="color: var(--success); font-size: 13.5px;">${correctCount}/${questions.length}</strong> câu hỏi.
+                </p>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span style="background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.15); padding: 4px 8px; border-radius: 8px; font-size: 11.5px; color: var(--success); font-weight: 600;">✔️ Đúng: ${correctCount}</span>
+                <span style="background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.15); padding: 4px 8px; border-radius: 8px; font-size: 11.5px; color: var(--danger); font-weight: 600;">❌ Sai: ${incorrectCount}</span>
+                <span style="background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.15); padding: 4px 8px; border-radius: 8px; font-size: 11.5px; color: var(--warning); font-weight: 600;">⏳ Bỏ qua: ${unansweredCount}</span>
+            </div>
+        `;
+        reviewList.appendChild(summaryCard);
+
         questions.forEach((q, qIdx) => {
             const playerAnswer = roomData.players[user.uid]?.answers?.[qIdx];
             const mySelectedIdx = playerAnswer ? playerAnswer.selectedIndex : -1;
@@ -1032,13 +1076,38 @@
             const item = document.createElement("div");
             item.className = `review-question-card ${isMyCorrect ? "review-correct" : mySelectedIdx === -1 ? "review-unanswered" : "review-incorrect"}`;
             
+            // Build Status Badge
+            let statusBadge = "";
+            if (isMyCorrect) {
+                statusBadge = `<span style="background: rgba(16,185,129,0.1); color: var(--success); border: 1px solid rgba(16,185,129,0.2); font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 600; white-space: nowrap;">Chính xác ✅</span>`;
+            } else if (mySelectedIdx === -1) {
+                statusBadge = `<span style="background: rgba(245,158,11,0.1); color: var(--warning); border: 1px solid rgba(245,158,11,0.2); font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 600; white-space: nowrap;">Chưa trả lời ⏳</span>`;
+            } else {
+                statusBadge = `<span style="background: rgba(239,68,68,0.1); color: var(--danger); border: 1px solid rgba(239,68,68,0.2); font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 600; white-space: nowrap;">Chưa đúng ❌</span>`;
+            }
+
+            // Build detailed explanation text blocks
+            let choiceText = "";
+            if (mySelectedIdx === -1) {
+                choiceText = `<span style="color: var(--warning); font-weight: 600;">Bạn đã không chọn đáp án (Hết thời gian) ⏳</span>`;
+            } else if (isMyCorrect) {
+                choiceText = `<span style="color: var(--success); font-weight: 600;">"${q.options[mySelectedIdx]}" (Đúng) ✅</span>`;
+            } else {
+                choiceText = `<span style="color: var(--danger); font-weight: 600;">"${q.options[mySelectedIdx]}" (Sai) ❌</span>`;
+            }
+
+            const correctOptionText = q.options[q.answer];
+            
             item.innerHTML = `
                 <div class="review-header" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                    <div style="max-width: 85%;">
+                    <div style="max-width: 75%;">
                         <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">CÂU HỎI ${qIdx + 1}</span>
                         <strong style="color: #fff; font-size: 14px; line-height: 1.5;">${q.q}</strong>
                     </div>
-                    <span class="review-toggle-icon" style="font-size: 14px; color: var(--text-muted); transition: transform 0.3s;">▼</span>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        ${statusBadge}
+                        <span class="review-toggle-icon" style="font-size: 14px; color: var(--text-muted); transition: transform 0.3s;">▼</span>
+                    </div>
                 </div>
                 <div class="review-body hidden" style="padding: 0 16px 16px 16px; border-top: 1px solid rgba(255,255,255,0.03); margin-top: 4px;">
                     <div class="review-options-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0;">
@@ -1059,6 +1128,17 @@
                             `;
                         }).join("")}
                     </div>
+
+                    <!-- Breakdown section displaying selections and correct choice -->
+                    <div style="background: rgba(0,0,0,0.12); border: 1px solid rgba(255,255,255,0.02); padding: 12px 16px; border-radius: 10px; margin-bottom: 12px; font-size: 13px; line-height: 1.6;">
+                        <div style="margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+                            <span>👤</span> <strong>Lựa chọn của bạn:</strong> ${choiceText}
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span>🎯</span> <strong>Đáp án đúng:</strong> <span style="color: var(--success); font-weight: 600;">"${correctOptionText}"</span>
+                        </div>
+                    </div>
+
                     <div style="display: flex; gap: 8px; align-items: flex-start; margin-top: 12px; background: rgba(0,0,0,0.15); padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.02);">
                         ${q.en ? `
                             <button class="btn-speak-mini" style="background: var(--primary-glow); border: 1px solid rgba(99,102,241,0.2); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0;" title="Nghe phát âm">
@@ -1066,7 +1146,7 @@
                             </button>
                         ` : ""}
                         <div style="font-size: 13px; color: var(--text-muted); line-height: 1.5; white-space: pre-wrap; flex: 1;">
-                            ${q.explanation}
+                            <strong>💡 Giải nghĩa & Bài học:</strong> ${q.explanation}
                         </div>
                     </div>
                 </div>
