@@ -6,6 +6,193 @@
 const PODCAST_DATA = [
     {
         "id": "p-1",
+        "title": "EnglishPodcast01",
+        "speaker": "Unknown Speaker",
+        "level": "Podcast Level",
+        "desc": "Luyện nghe bài học tiếng Anh chủ đề: EnglishPodcast01.",
+        "audioUrl": "podcasts/EnglishPodcast01.mp3",
+        "image": "🎙️",
+        "duration": "Auto",
+        "transcript": [
+            {
+                "start": 0.0,
+                "end": 4.0,
+                "text": "Hello, Tourist Information Centre, Mike speaking. How can I help you?"
+            },
+            {
+                "start": 4.0,
+                "end": 11.0,
+                "text": "Oh, hi. I wanted to find out about cookery classes. I believe there are some one-day classes for tourists?"
+            },
+            {
+                "start": 11.0,
+                "end": 25.0,
+                "text": "Well, they're open to everyone, but tourists are always welcome. Okay, let me give you some details of what's available. There are several classes. One very popular one is at the Food Studio."
+            },
+            {
+                "start": 25.0,
+                "end": 26.0,
+                "text": "Okay."
+            },
+            {
+                "start": 26.0,
+                "end": 32.0,
+                "text": "They focus on seasonal products, and as well as teaching you how to cook them, they also show you how to choose them."
+            },
+            {
+                "start": 32.0,
+                "end": 36.0,
+                "text": "Right, that sounds good. How big are the classes?"
+            },
+            {
+                "start": 36.0,
+                "end": 40.0,
+                "text": "I'm not sure exactly, but they'll be quite small."
+            },
+            {
+                "start": 40.0,
+                "end": 42.0,
+                "text": "And could I get a private lesson there?"
+            },
+            {
+                "start": 42.0,
+                "end": 54.0,
+                "text": "I think so. Let me check. Yes, they do offer those. Though, in fact, most of the people who attend the classes find it's a nice way of getting to know one another."
+            },
+            {
+                "start": 54.0,
+                "end": 56.0,
+                "text": "I suppose it must be, yes."
+            },
+            {
+                "start": 56.0,
+                "end": 65.0,
+                "text": "And this company has a special deal for clients where they offer a discount of 20% if you return for a further class."
+            },
+            {
+                "start": 65.0,
+                "end": 68.0,
+                "text": "Okay. But you said there were several classes?"
+            },
+            {
+                "start": 68.0,
+                "end": 85.0,
+                "text": "That's right. Another one you might be interested in is Bond's Cookery School. They're quite new. They just opened six months ago, but I've heard good things about them. They concentrate on teaching you to prepare healthy food. And they have quite a lot of specialist staff."
+            },
+            {
+                "start": 85.0,
+                "end": 91.0,
+                "text": "So, is that food for people on a diet and things like that? I don't know if I'd be interested in that."
+            },
+            {
+                "start": 91.0,
+                "end": 106.0,
+                "text": "Well, I don't think they particularly focus on low-calorie diets or weight loss. It's more to do with recipes that look at specific needs, like including ingredients that will help build up your bones and make them stronger, that sort of thing."
+            },
+            {
+                "start": 106.0,
+                "end": 112.0,
+                "text": "I see. Well, I might be interested. I'm not sure. Do they have a website I could check?"
+            },
+            {
+                "start": 112.0,
+                "end": 131.0,
+                "text": "Yes, just key in the name of the school, it'll come up. And if you want to know more about them, every Thursday evening they have a lecture at the school. It's free and you don't need to book or anything, just turn up at 7:30. And that might give you an idea of whether you want to go to an actual class."
+            },
+            {
+                "start": 131.0,
+                "end": 147.0,
+                "text": "Okay, there's one more place you might be interested in. That's got a rather strange name. It's called the Arreza Centre. That's spelled A-R-R-E-Z-A."
+            },
+            {
+                "start": 147.0,
+                "end": 148.0,
+                "text": "Okay."
+            },
+            {
+                "start": 148.0,
+                "end": 157.0,
+                "text": "They've got a very good reputation. They do a bit of meat and fish cookery, but they mostly specialize in vegetarian dishes."
+            },
+            {
+                "start": 157.0,
+                "end": 169.0,
+                "text": "Right. That's certainly an area I'd like to learn more about. I've got lots of friends who don't eat meat. In fact, I think I might have seen that school today. Is it just by the market?"
+            },
+            {
+                "start": 169.0,
+                "end": 189.0,
+                "text": "That's right. So they don't have any problem getting their ingredients. They're right next door. And they also offer a special two-hour course in how to use a knife. They cover all the different skills: buying them, sharpening, chopping techniques. It gets booked up quickly, though, so you'd need to check it was available."
+            },
+            {
+                "start": 189.0,
+                "end": 199.0,
+                "text": "Right. Well, thank you very much. I'll go and check that out..."
+            },
+            {
+                "start": 199.0,
+                "end": 216.0,
+                "text": "Good evening, everyone. My name's Phil Sutton, and I'm chairman of the Highways Committee. We've called this meeting to inform members of the public about the new regulations for traffic and parking we're proposing for Granford."
+            },
+            {
+                "start": 216.0,
+                "end": 248.0,
+                "text": "I'll start by summarizing these changes before we open the meeting to questions. So, why do we need to make these changes to traffic systems in Granford? Well, we're very aware that traffic is becoming an increasing problem. It's been especially noticeable with the increase in heavy traffic while they've been building the new hospital. But it's the overall rise in the volume of traffic of all kinds that's concerning us."
+            },
+            {
+                "start": 248.0,
+                "end": 291.0,
+                "text": "To date, there's not been any increase in traffic accidents, but that's not something we want to see happen, obviously. We recently carried out a survey of local residents, and their responses were interesting. People were very concerned about the lack of visibility on some roads due to cars parked along the sides of the roads. We'd expected complaints about the congestion near the school when parents are dropping off their children or picking them up, but this wasn't on top of the list. And nor were noise and fumes from trucks and lorries, though they were mentioned by some people."
+            },
+            {
+                "start": 291.0,
+                "end": 324.0,
+                "text": "We think these new traffic regulations would make a lot of difference. But we still have a long way to go. We've managed to keep our proposals within budget, just, so they can be covered by the council. But of course, it's no good introducing new regulations if we don't have a way of making sure that everyone obeys them. And that's an area we're still working on with the help of representatives from the police force."
+            },
+            {
+                "start": 324.0,
+                "end": 352.0,
+                "text": "Okay, so this slide shows a map of the central area of Granford with the High Street in the middle and School Road on the right. Now, we already have a set of traffic lights in the High Street at the junction with Station Road, but we're planning to have another set at the other end, at the School Road junction, to regulate the flow of traffic along the High Street."
+            },
+            {
+                "start": 352.0,
+                "end": 377.0,
+                "text": "We've decided we definitely need a pedestrian crossing. We considered putting this on School Road just outside the school, but in the end, we decided that could lead to a lot of traffic congestion. So we decided to locate it on the High Street, crossing the road in front of the supermarket. That's a very busy area, so it should help things there."
+            },
+            {
+                "start": 377.0,
+                "end": 393.0,
+                "text": "We are proposing some changes to parking. At present, parking isn't allowed on the High Street outside the library, but we're going to change that and allow parking there. But not at the other end of the High Street near School Road."
+            },
+            {
+                "start": 393.0,
+                "end": 412.0,
+                "text": "There'll be a new \"No Parking\" sign on School Road, just by the entrance to the school, forbidding parking for 25 meters. This should improve visibility for drivers and pedestrians, especially on the bend just to the north of the school."
+            },
+            {
+                "start": 412.0,
+                "end": 433.0,
+                "text": "As far as disabled drivers are concerned, at present, they have parking outside the supermarket, but lorries also use those spaces. So we've got two new disabled parking spaces on the side road up towards the bank. It's not ideal, but probably better than the present arrangement."
+            },
+            {
+                "start": 433.0,
+                "end": 447.0,
+                "text": "We also plan to widen the pavement on School Road. We think we can manage to get an extra half meter on the bend just before you get to the school, on the same side of the road."
+            },
+            {
+                "start": 447.0,
+                "end": 467.0,
+                "text": "Finally, we've introduced new restrictions on loading and unloading for the supermarket, so lorries will only be allowed to stop there before 8:00 AM. That's the supermarket on School Road. We kept to the existing arrangements with the High Street supermarket."
+            },
+            {
+                "start": 467.0,
+                "end": 473.0,
+                "text": "Okay, so that's about it. Now, if."
+            }
+        ]
+    },
+    {
+        "id": "p-2",
         "title": "The Magic of Lifelong Learning",
         "speaker": "Professor David Miller",
         "level": "Podcast Level",
@@ -62,7 +249,7 @@ const PODCAST_DATA = [
         ]
     },
     {
-        "id": "p-2",
+        "id": "p-3",
         "title": "Why Music Helps You Learn English",
         "speaker": "Sarah Jenkins",
         "level": "Podcast Level",
