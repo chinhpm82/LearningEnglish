@@ -1,4 +1,4 @@
-const CACHE_NAME = 'learningenglish-v31';
+const CACHE_NAME = 'learningenglish-v32';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -12,7 +12,9 @@ const ASSETS_TO_CACHE = [
     './data/placement-questions.js',
     './manifest.json',
     './icon-192.png',
-    './icon-512.png'
+    './icon-512.png',
+    './favicon.svg',
+    './favicon.ico'
 ];
 
 // Install Event - Caching Assets
