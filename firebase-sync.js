@@ -426,11 +426,11 @@ window.FirebaseSync = {
             }
         }, (error) => {
             console.error("Error listening to room:", error);
-            // Notify user about permission issue
+            // Only show alert for permission issues, but do NOT call callback(null)
+            // because that would falsely trigger "room dissolved" and kick user back to lobby
             if (error.code === 'permission-denied') {
-                alert("⚠️ Lỗi quyền truy cập Firestore!\n\nKhông thể theo dõi phòng thi đấu. Vui lòng kiểm tra Firestore Security Rules cho collection 'challenge_rooms'.");
+                alert("⚠️ Lỗi kết nối Firestore!\n\nCloud Firestore API có thể chưa được bật. Vui lòng:\n1. Truy cập: https://console.developers.google.com/apis/api/firestore.googleapis.com/overview?project=learningenglish-5b83c\n2. Bật API\n3. Kiểm tra Firestore Security Rules");
             }
-            callback(null);
         });
     },
 
