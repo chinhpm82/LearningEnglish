@@ -169,7 +169,7 @@ async function saveStatsToStorage() {
     
     // Sync to Firebase if in Cloud Mode
     if (isCloudMode && window.FirebaseSync) {
-        window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars, state.photoURL);
+        window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars, state.photoURL, state.displayName);
     }
 }
 
@@ -504,7 +504,11 @@ function renderDashboard() {
     // Update dynamic welcome greeting
     const welcomeUserEl = document.getElementById('welcome-username');
     if (welcomeUserEl) {
-        welcomeUserEl.textContent = state.displayName ? state.displayName.split(' ')[0] : 'Học viên';
+        if (isCloudMode) {
+            welcomeUserEl.textContent = state.displayName ? state.displayName.split(' ')[0] : 'Học viên';
+        } else {
+            welcomeUserEl.textContent = 'Khách';
+        }
     }
 
     // Update Private Assessment & Level (Confidential display for current student only)
@@ -1987,7 +1991,11 @@ function initApp() {
             const guestBanner = document.getElementById('guest-mode-banner');
 
             // Always ensure local state is loaded first
-            await loadStateAsync();
+            try {
+                await loadStateAsync();
+            } catch (err) {
+                console.error("Error loading local state:", err);
+            }
 
             if (user) {
                 // Cloud Mode Activated!
@@ -2005,58 +2013,84 @@ function initApp() {
                 renderUserAvatar(state.photoURL || user.photoURL);
                 document.getElementById('user-display-name').textContent = state.displayName || 'Học viên';
 
+                // Allow edit pointer and show edit badge
+                document.getElementById('btn-open-avatar-modal').style.cursor = 'pointer';
+                const editOverlay = document.querySelector('.avatar-edit-overlay');
+                if (editOverlay) editOverlay.style.display = 'flex';
+
+                // Render local dashboard immediately to prevent "loading user data forever" visual hang
+                renderDashboard();
+
                 console.log("☁️ Syncing database progress with Firebase...");
                 
-                // Fetch progress from firestore
-                const cloudData = await window.FirebaseSync.loadUserData();
-                if (cloudData) {
-                    // Update local state with cloud data
-                    if (cloudData.profile) {
-                        state.streak = cloudData.profile.streak || 0;
-                        state.lastStudyDate = cloudData.profile.lastStudyDate || '';
-                        state.quizStats = cloudData.profile.quizStats || { totalAnswered: 0, correctAnswers: 0 };
-                        state.userLevel = cloudData.profile.userLevel || '';
-                        state.roadmapTasks = cloudData.profile.roadmapTasks || [];
-                        state.stars = cloudData.profile.stars || 0;
-                        state.photoURL = cloudData.profile.photoURL || '';
-                        state.displayName = cloudData.profile.name || state.displayName || user.displayName || '';
-                        renderUserAvatar(state.photoURL || user.photoURL);
-                        document.getElementById('user-display-name').textContent = state.displayName || 'Học viên';
-                        updateSidebarStreakUI();
+                try {
+                    // 5-second timeout promise for cloud loading
+                    const timeout = (ms) => new Promise((_, reject) => 
+                        setTimeout(() => reject(new Error("Timeout")), ms)
+                    );
+                    
+                    const cloudData = await Promise.race([
+                        window.FirebaseSync.loadUserData(),
+                        timeout(5000)
+                    ]);
+
+                    if (cloudData) {
+                        // Update local state with cloud data
+                        if (cloudData.profile) {
+                            state.streak = cloudData.profile.streak || 0;
+                            state.lastStudyDate = cloudData.profile.lastStudyDate || '';
+                            state.quizStats = cloudData.profile.quizStats || { totalAnswered: 0, correctAnswers: 0 };
+                            state.userLevel = cloudData.profile.userLevel || '';
+                            state.roadmapTasks = cloudData.profile.roadmapTasks || [];
+                            state.stars = cloudData.profile.stars || 0;
+                            state.photoURL = cloudData.profile.photoURL || '';
+                            state.displayName = cloudData.profile.name || state.displayName || user.displayName || '';
+                            renderUserAvatar(state.photoURL || user.photoURL);
+                            document.getElementById('user-display-name').textContent = state.displayName || 'Học viên';
+                            updateSidebarStreakUI();
+                        }
+                        if (cloudData.customWords) {
+                            state.customWords = cloudData.customWords;
+                        }
+                        if (cloudData.progress && cloudData.progress.length > 0) {
+                            // Merge box progress back into default vocabulary list
+                            cloudData.progress.forEach(progress => {
+                                const idx = state.vocabulary.findIndex(w => w.id === progress.id);
+                                if (idx !== -1) {
+                                    state.vocabulary[idx].box = progress.box;
+                                    state.vocabulary[idx].nextReview = progress.nextReview;
+                                }
+                            });
+                        }
+
+                        // Sync local backup
+                        await saveVocabToStorage();
+                        await saveCustomWordsToStorage();
+                        await saveStatsToStorage();
+                    } else {
+                        // Brand new Firebase user, write current state (initial deck) up to cloud
+                        await syncCurrentStateToCloud();
                     }
-                    if (cloudData.customWords) {
-                        state.customWords = cloudData.customWords;
-                    }
-                    if (cloudData.progress && cloudData.progress.length > 0) {
-                        // Merge box progress back into default vocabulary list
-                        cloudData.progress.forEach(progress => {
-                            const idx = state.vocabulary.findIndex(w => w.id === progress.id);
-                            if (idx !== -1) {
-                                state.vocabulary[idx].box = progress.box;
-                                state.vocabulary[idx].nextReview = progress.nextReview;
-                            }
-                        });
-                    }
-                } else {
-                    // Brand new Firebase user, write current state (initial deck) up to cloud
-                    await syncCurrentStateToCloud();
+                } catch (error) {
+                    console.warn("⚠️ Firebase sync delayed or timed out. Operating in offline-fallback mode.", error);
+                    showToastNotification("⚠️ Kết nối mạng không ổn định. Đang tải dữ liệu từ bộ nhớ cục bộ!");
                 }
 
-                // Sync local backup
-                await saveVocabToStorage();
-                await saveCustomWordsToStorage();
-                await saveStatsToStorage();
-
-                // Re-render views with user specific data
+                // Re-render views with up-to-date user specific data
                 renderDashboard();
             } else {
                 // Not authenticated (either Firebase is not configured, or user signed out, or skipped)
                 isCloudMode = false;
                 profileCard.classList.remove('hidden');
 
-                // Render Guest profile values
-                renderUserAvatar(state.photoURL || 'emoji:🦊');
-                document.getElementById('user-display-name').textContent = state.displayName || 'Học viên (Khách)';
+                // Render Guest profile values (force default guest avatar and name)
+                renderUserAvatar('emoji:🦊');
+                document.getElementById('user-display-name').textContent = 'Học viên (Khách)';
+
+                // Disable edit pointer and hide edit badge
+                document.getElementById('btn-open-avatar-modal').style.cursor = 'default';
+                const editOverlay = document.querySelector('.avatar-edit-overlay');
+                if (editOverlay) editOverlay.style.display = 'none';
 
                 const logoutBtn = document.getElementById('btn-logout');
                 if (logoutBtn) {
@@ -2101,6 +2135,10 @@ function initApp() {
     const avatarOpenBtn = document.getElementById('btn-open-avatar-modal');
     if (avatarOpenBtn) {
         avatarOpenBtn.addEventListener('click', () => {
+            if (!isCloudMode) {
+                alert("Vui lòng đăng nhập bằng Google để đổi tên và ảnh đại diện!");
+                return;
+            }
             document.getElementById('avatar-modal').classList.remove('hidden');
             const nameInput = document.getElementById('input-profile-name');
             if (nameInput) {
@@ -2301,7 +2339,7 @@ async function syncCurrentStateToCloud() {
     if (!window.FirebaseSync || !isCloudMode) return;
     
     // Save streak stats
-    await window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars, state.photoURL);
+    await window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars, state.photoURL, state.displayName);
     
     // Save custom words
     for (const word of state.customWords) {
