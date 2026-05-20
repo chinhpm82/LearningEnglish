@@ -2059,7 +2059,10 @@ function initApp() {
                 // Cloud Mode Activated!
                 isCloudMode = true;
                 if (authOverlay) authOverlay.classList.add('hidden');
-                if (profileCard) profileCard.classList.remove('hidden');
+                if (profileCard) {
+                    profileCard.classList.remove('hidden');
+                    profileCard.style.cursor = 'pointer';
+                }
                 if (guestBanner) guestBanner.classList.add('hidden');
 
                 // Save email, display name and Google Photo to state
@@ -2077,6 +2080,13 @@ function initApp() {
                 if (avatarBtn) avatarBtn.style.cursor = 'pointer';
                 const editOverlay = document.querySelector('.avatar-edit-overlay');
                 if (editOverlay) editOverlay.style.display = 'flex';
+
+                // Reset logout button text to "Đăng xuất" (may have been changed to "Đăng nhập" during guest mode)
+                const logoutBtnLogin = document.getElementById('btn-logout');
+                if (logoutBtnLogin) {
+                    logoutBtnLogin.textContent = 'Đăng xuất';
+                    logoutBtnLogin.title = 'Đăng xuất tài khoản Google';
+                }
 
                 // Render local dashboard immediately to prevent "loading user data forever" visual hang
                 renderDashboard();
@@ -2145,7 +2155,10 @@ function initApp() {
             } else {
                 // Not authenticated (either Firebase is not configured, or user signed out, or skipped)
                 isCloudMode = false;
-                if (profileCard) profileCard.classList.remove('hidden');
+                if (profileCard) {
+                    profileCard.classList.remove('hidden');
+                    profileCard.style.cursor = 'default';
+                }
 
                 // Cleanse Cached Profile Details on Logout
                 state.displayName = "";
@@ -2212,11 +2225,15 @@ function initApp() {
     // 4. Wordbook Submit Action
     document.getElementById('add-word-form').addEventListener('submit', handleAddWordForm);
 
-    // Avatar Selector Dialog bindings
-    const avatarOpenBtn = document.getElementById('btn-open-avatar-modal');
-    if (avatarOpenBtn) {
-        avatarOpenBtn.addEventListener('click', (e) => {
-            if (e) e.stopPropagation();
+    // Avatar Selector Dialog bindings — bind on the entire profile card for larger clickable area
+    const profileCardClickable = document.getElementById('user-profile-card');
+    if (profileCardClickable) {
+        profileCardClickable.addEventListener('click', (e) => {
+            // Ignore clicks on the logout button itself (let its own handler run)
+            if (e.target.closest('#btn-logout')) {
+                return;
+            }
+            e.stopPropagation();
             if (!isCloudMode || !state.currentUserEmail) {
                 alert("Vui lòng đăng nhập bằng Google để đổi tên và ảnh đại diện!");
                 return;
