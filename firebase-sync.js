@@ -21,7 +21,10 @@ import {
     updateDoc,
     query,
     orderBy,
-    limit
+    limit,
+    onSnapshot,
+    where,
+    deleteField
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // --- FIREBASE CONFIGURATION (CẤU HÌNH HỆ THỐNG) ---
@@ -60,6 +63,7 @@ if (isConfigured) {
 // --- GLOBAL BRIDGE TO APP.JS ---
 window.FirebaseSync = {
     isConfigured: isConfigured,
+    getCurrentUser: () => currentUser,
     
     // Login with Google Popup
     login: async () => {
@@ -218,5 +222,167 @@ window.FirebaseSync = {
             console.error("Error loading user profile dataset from Firestore:", e);
             return null;
         }
+    },
+
+    // --- REAL-TIME MULTIPLAYER (ENGLISH CHALLENGE) ---
+    // Create a new multiplayer room document
+    createRoom: async (roomId, topic, questions, playerInfo) => {
+        if (!isConfigured || !currentUser) return null;
+        try {
+            const roomRef = doc(db, "challenge_rooms", roomId);
+            const roomData = {
+                id: roomId,
+                topic: topic,
+                questions: questions,
+                status: "waiting",
+                creatorId: playerInfo.uid,
+                createdAt: Date.now(),
+                players: {
+                    [playerInfo.uid]: {
+                        uid: playerInfo.uid,
+                        name: playerInfo.name,
+                        photoURL: playerInfo.photoURL,
+                        isReady: true, // Host is ready by default
+                        score: 0,
+                        finished: false
+                    }
+                }
+            };
+            await setDoc(roomRef, roomData);
+            return roomData;
+        } catch (e) {
+            console.error("Error creating room:", e);
+            throw e;
+        }
+    },
+
+    // Join an existing multiplayer room
+    joinRoom: async (roomId, playerInfo) => {
+        if (!isConfigured || !currentUser) return;
+        try {
+            const roomRef = doc(db, "challenge_rooms", roomId);
+            const updateData = {};
+            updateData[`players.${playerInfo.uid}`] = {
+                uid: playerInfo.uid,
+                name: playerInfo.name,
+                photoURL: playerInfo.photoURL,
+                isReady: false,
+                score: 0,
+                finished: false
+            };
+            await updateDoc(roomRef, updateData);
+        } catch (e) {
+            console.error("Error joining room:", e);
+            throw e;
+        }
+    },
+
+    // Update ready state of a player in a room
+    updatePlayerReady: async (roomId, uid, isReady) => {
+        if (!isConfigured) return;
+        try {
+            const roomRef = doc(db, "challenge_rooms", roomId);
+            const updateData = {};
+            updateData[`players.${uid}.isReady`] = isReady;
+            await updateDoc(roomRef, updateData);
+        } catch (e) {
+            console.error("Error updating ready state:", e);
+        }
+    },
+
+    // Update real-time gameplay score and answer choices
+    updatePlayerScore: async (roomId, uid, score, qIndex, selectedIndex, isCorrect) => {
+        if (!isConfigured) return;
+        try {
+            const roomRef = doc(db, "challenge_rooms", roomId);
+            const updateData = {};
+            updateData[`players.${uid}.score`] = score;
+            updateData[`players.${uid}.answers.${qIndex}`] = {
+                selectedIndex: selectedIndex,
+                isCorrect: isCorrect
+            };
+            await updateDoc(roomRef, updateData);
+        } catch (e) {
+            console.error("Error updating player score:", e);
+        }
+    },
+
+    // Mark player as finished
+    updatePlayerFinished: async (roomId, uid) => {
+        if (!isConfigured) return;
+        try {
+            const roomRef = doc(db, "challenge_rooms", roomId);
+            const updateData = {};
+            updateData[`players.${uid}.finished`] = true;
+            await updateDoc(roomRef, updateData);
+        } catch (e) {
+            console.error("Error setting player finished:", e);
+        }
+    },
+
+    // Creator starts the multiplayer challenge
+    startGame: async (roomId) => {
+        if (!isConfigured) return;
+        try {
+            const roomRef = doc(db, "challenge_rooms", roomId);
+            await updateDoc(roomRef, {
+                status: "playing",
+                startedAt: Date.now()
+            });
+        } catch (e) {
+            console.error("Error starting game:", e);
+        }
+    },
+
+    // Leave multiplayer room
+    leaveRoom: async (roomId, uid, isLast) => {
+        if (!isConfigured) return;
+        try {
+            const roomRef = doc(db, "challenge_rooms", roomId);
+            if (isLast) {
+                await deleteDoc(roomRef);
+            } else {
+                const updateData = {};
+                updateData[`players.${uid}`] = deleteField();
+                await updateDoc(roomRef, updateData);
+            }
+        } catch (e) {
+            console.error("Error leaving room:", e);
+        }
+    },
+
+    // Listen to real-time changes in a single active room
+    listenRoom: (roomId, callback) => {
+        if (!isConfigured) return () => {};
+        const roomRef = doc(db, "challenge_rooms", roomId);
+        return onSnapshot(roomRef, (snapshot) => {
+            if (snapshot.exists()) {
+                callback(snapshot.data());
+            } else {
+                callback(null);
+            }
+        }, (error) => {
+            console.error("Error listening to room:", error);
+        });
+    },
+
+    // Listen to all active waiting rooms for lobby room listing
+    listenRoomsList: (callback) => {
+        if (!isConfigured) return () => {};
+        const roomsRef = collection(db, "challenge_rooms");
+        const q = query(
+            roomsRef,
+            where("status", "==", "waiting"),
+            orderBy("createdAt", "desc")
+        );
+        return onSnapshot(q, (snapshot) => {
+            const rooms = [];
+            snapshot.forEach((doc) => {
+                rooms.push(doc.data());
+            });
+            callback(rooms);
+        }, (error) => {
+            console.error("Error listening to rooms list:", error);
+        });
     }
 };

@@ -126,6 +126,15 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <span>Bảng xếp hạng</span>
                 </button>
+                <button class="nav-item" data-target="challenge-tab" id="btn-challenge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>Đấu trực tuyến ⚔️</span>
+                </button>
             </nav>
 
             <div class="user-streak-widget">
@@ -1166,6 +1175,163 @@
                     </div>
                 </div>
             </section>
+
+            <!-- TAB 10: ENGLISH CHALLENGE MULTIPLAYER -->
+            <section id="challenge-tab" class="tab-content">
+                <!-- Guest Mode Restriction Screen -->
+                <div id="challenge-guest-view" class="challenge-panel text-center hidden">
+                    <div class="challenge-hero-icon" style="font-size: 64px; margin-bottom: 20px;">⚔️</div>
+                    <h2>Đấu Trường Trực Tuyến ⚔️</h2>
+                    <p class="subtitle" style="margin-bottom: 24px;">Tính năng thi đấu thời gian thực yêu cầu đăng nhập tài khoản Google để lưu trữ tiến trình và kết nối với các đối thủ khác.</p>
+                    <button class="btn-primary btn-large animate-glow" id="btn-challenge-login">Đăng nhập bằng Google để chơi</button>
+                </div>
+
+                <!-- Lobby View -->
+                <div id="challenge-lobby-view" class="challenge-lobby-container">
+                    <div class="lobby-header-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+                        <div>
+                            <h2>Đấu Trường Trực Tuyến ⚔️</h2>
+                            <p>Tạo phòng hoặc tham gia phòng thi đấu Tiếng Anh thời gian thực cùng bạn bè!</p>
+                        </div>
+                        <button class="btn-primary animate-glow" id="btn-lobby-create-trigger">➕ Tạo Phòng Thi Đấu</button>
+                    </div>
+
+                    <div class="lobby-content-row">
+                        <!-- Active Rooms List -->
+                        <div class="lobby-rooms-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: var(--radius-lg);">
+                            <h3 style="margin-bottom: 16px; font-size: 16px;">Phòng Chờ Thi Đấu Trực Tuyến (<span id="lobby-rooms-count">0</span>)</h3>
+                            <div class="rooms-list-grid" id="lobby-rooms-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+                                <!-- Dynamic Rooms injected here -->
+                                <div class="empty-state-list text-center" style="grid-column: 1 / -1; padding: 40px 20px;">
+                                    <div class="empty-icon" style="font-size: 40px; margin-bottom: 12px;">🎮</div>
+                                    <h4 style="margin-bottom: 6px; color: #fff;">Chưa có phòng thi đấu nào đang chờ</h4>
+                                    <p style="color: var(--text-muted); font-size: 13px;">Hãy nhấn nút "Tạo Phòng Thi Đấu" để làm chủ phòng đấu đầu tiên!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Create Room Modal/Popup Dialog -->
+                    <div id="create-room-modal" class="auth-overlay hidden">
+                        <div class="auth-card" style="max-width: 450px; padding: 28px;">
+                            <h3 style="color:#fff; margin-bottom: 8px; font-size: 18px;">Tạo Phòng Đấu Trực Tuyến ⚔️</h3>
+                            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+                                Chọn một chủ đề câu hỏi để thử thách tài năng tiếng Anh của các đối thủ khác!
+                            </p>
+                            
+                            <div class="form-group" style="margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
+                                <label for="create-room-topic" style="color: #fff; font-size: 13.5px; font-weight: 600; text-align: left;">Chủ đề câu hỏi:</label>
+                                <select id="create-room-topic" class="styled-select" style="width: 100%;">
+                                    <option value="vocabulary">🧩 Từ vựng thiết yếu (Oxford & Academic)</option>
+                                    <option value="grammar">📚 Ngữ pháp (Grammar lessons)</option>
+                                    <option value="sentences">🗣️ Giao tiếp phản xạ (Communication sentences)</option>
+                                </select>
+                            </div>
+
+                            <div style="display: flex; gap: 12px; width: 100%; margin-top: 24px;">
+                                <button id="btn-create-room-cancel" class="btn-secondary" style="flex:1; font-size:13px; padding: 11px; border-radius: 12px; cursor: pointer;">Hủy bỏ</button>
+                                <button id="btn-create-room-confirm" class="btn-primary" style="flex:1; font-size:13px; padding: 11px; border-radius: 12px; cursor: pointer;">Tạo phòng</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Room Lobby View -->
+                <div id="challenge-room-view" class="challenge-room-container hidden">
+                    <div class="room-header-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+                        <div>
+                            <h2>Phòng Thi Đấu: <span id="room-code-display" style="color: var(--primary); font-family: monospace; font-size: 24px; font-weight: 800; letter-spacing: 2px;">000000</span></h2>
+                            <p>Chủ đề: <span id="room-topic-display" style="font-weight: 700; color: #fff;">Chưa rõ</span></p>
+                        </div>
+                        <div class="room-action-buttons" style="display: flex; gap: 12px;">
+                            <button class="btn-action btn-incorrect" id="btn-room-leave" style="padding: 10px 18px; border-radius: 12px; cursor: pointer; border: none;">🚪 Rời phòng</button>
+                            <button class="btn-action btn-correct" id="btn-room-ready" style="padding: 10px 24px; border-radius: 12px; font-weight: 700; cursor: pointer; border: none;">Sẵn Sàng 👍</button>
+                        </div>
+                    </div>
+
+                    <!-- Room Countdown Alert -->
+                    <div id="room-countdown-banner" class="room-countdown-banner hidden">
+                        ⚡ TRẬN ĐẤU SẼ TỰ ĐỘNG BẮT ĐẦU TRONG: <span id="room-countdown-sec">5</span> GIÂY! ⚡
+                    </div>
+
+                    <!-- Players List in Room -->
+                    <div class="players-lobby-grid" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: var(--radius-lg);">
+                        <h3 style="margin-bottom: 20px;">Thành viên đã tham gia (<span id="room-players-count">1</span>/5)</h3>
+                        <div class="players-list-row" id="room-players-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+                            <!-- Dynamic Player Cards Injected here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Play View -->
+                <div id="challenge-play-view" class="challenge-play-container hidden">
+                    <div class="play-grid-layout" style="display: grid; grid-template-columns: 1fr 300px; gap: 24px; align-items: start;">
+                        <!-- Left Side: Main Quiz Area -->
+                        <div class="quiz-play-panel" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 28px; border-radius: var(--radius-lg);">
+                            <div class="quiz-header-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                <span class="quiz-question-counter" id="challenge-question-counter" style="font-size: 14px; font-weight: 700; color: var(--text-muted);">Câu hỏi 1 / 10</span>
+                                <!-- Circular countdown timer -->
+                                <div class="challenge-timer-wrapper" style="position: relative; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+                                    <svg class="circular-timer" viewBox="0 0 40 40" style="position: absolute; top:0; left:0; width:100%; height:100%; transform: rotate(-90deg);">
+                                        <circle class="bg" cx="20" cy="20" r="18" style="fill: none; stroke: rgba(255,255,255,0.06); stroke-width: 3;" />
+                                        <circle class="fg" cx="20" cy="20" r="18" id="challenge-timer-fg" style="fill: none; stroke: var(--primary); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 113.1; stroke-dashoffset: 0; transition: stroke-dashoffset 0.1s linear;" />
+                                    </svg>
+                                    <div class="challenge-timer-val" id="challenge-timer-text" style="font-size: 15px; font-weight: 800; color: #fff; z-index: 1;">15</div>
+                                </div>
+                            </div>
+
+                            <div class="question-box" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: var(--radius-md); margin-bottom: 24px; text-align: center;">
+                                <span class="question-label" style="font-size: 11px; text-transform: uppercase; color: var(--primary); font-weight: 800; letter-spacing: 1px; display: block; margin-bottom: 8px;">CHỌN ĐÁP ÁN ĐÚNG:</span>
+                                <h3 class="question-text" id="challenge-question-text" style="font-size: 18px; line-height: 1.6; color: #fff; font-weight: 600;">Question loading...</h3>
+                            </div>
+
+                            <div class="options-grid" id="challenge-options-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                                <!-- 4 interactive option cards -->
+                            </div>
+                        </div>
+
+                        <!-- Right Side: Real-Time Live Scoreboard -->
+                        <div class="live-scoreboard-panel" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: var(--radius-lg); max-height: 500px; overflow-y: auto;">
+                            <h3 style="font-size: 14px; margin-bottom: 4px; color: #fff;">BẢNG XẾP HẠNG LÂM THỜI 📊</h3>
+                            <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 8px;">Điểm số cập nhật tức thời từ Firestore</p>
+                            <div class="live-scoreboard-list" id="challenge-live-scoreboard" style="display: flex; flex-direction: column; gap: 12px;">
+                                <!-- Real-time players and scores -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results View -->
+                <div id="challenge-results-view" class="challenge-results-container hidden">
+                    <div class="result-panel text-center" style="max-width: 800px; margin: 0 auto; width: 100%;">
+                        <div class="result-crown" style="font-size: 64px; margin-bottom: 12px;">🏆</div>
+                        <h2 style="margin-bottom: 8px;">KẾT QUẢ THỬ THÁCH ĐẤU TRƯỜNG ⚔️</h2>
+                        <p class="subtitle" id="challenge-result-banner" style="color: var(--text-muted); font-size: 14px; margin-bottom: 32px;">Trận đấu đã kết thúc! Hãy chúc mừng người chiến thắng!</p>
+
+                        <!-- Final Placement Board -->
+                        <div class="final-placement-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: var(--radius-lg); margin-bottom: 32px;">
+                            <h3 style="margin-bottom: 18px; font-size: 16px; text-align: left;">Bảng Xếp Hạng Chung Cuộc & Phần Thưởng</h3>
+                            <div class="final-leaderboard-list" id="challenge-final-scoreboard" style="display: flex; flex-direction: column; gap: 12px;">
+                                <!-- Dynamic sorted scoreboard with prizes displayed -->
+                            </div>
+                        </div>
+
+                        <!-- Educational Answers Review -->
+                        <div class="answers-review-card" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 24px; border-radius: var(--radius-lg); text-align: left;">
+                            <h3 style="margin-bottom: 6px; font-size: 16px;">Ôn Tập Chi Tiết Đáp Án 📚</h3>
+                            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 20px;">Kiểm tra kỹ lại các câu trả lời của bạn cùng phần giải nghĩa giáo dục:</p>
+                            <div class="review-questions-list" id="challenge-review-list" style="display: flex; flex-direction: column; gap: 16px;">
+                                <!-- Collapsible review blocks with educational details -->
+                            </div>
+                        </div>
+
+                        <div class="result-actions" style="margin-top: 36px; display: flex; gap: 16px; justify-content: center;">
+                            <button class="btn-primary" id="btn-challenge-return-lobby" style="padding: 12px 28px; border-radius: 12px; font-weight: 700; cursor: pointer;">Quay lại Đấu trường</button>
+                            <button class="btn-secondary" id="btn-challenge-go-dashboard" style="padding: 12px 28px; border-radius: 12px; cursor: pointer;">Về Tổng quan</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
@@ -1343,5 +1509,7 @@
     <script type="module" src="firebase-sync.js"></script>
     <!-- Main JavaScript Logic -->
     <script src="app.js" defer></script>
+    <!-- Multiplayer Challenge Logic -->
+    <script src="challenge.js" defer></script>
 </body>
 </html>

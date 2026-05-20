@@ -3727,3 +3727,293 @@ input, select, textarea, button {
     }
 }
 
+/* ==========================================================================
+   MULTIPLAYER ONLINE ARENA - ENGLISH CHALLENGE STYLES
+   ========================================================================== */
+
+/* Restriction Guest & Hero screen styling */
+.challenge-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    padding: 48px 32px;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    max-width: 600px;
+    margin: 40px auto;
+    animation: fadeIn 0.4s ease-out;
+}
+.challenge-hero-icon {
+    animation: bounce 2s infinite ease-in-out;
+}
+
+/* Active Waiting Rooms Lobby styling */
+.room-lobby-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+}
+.room-lobby-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary-light);
+    box-shadow: 0 8px 25px var(--primary-glow);
+}
+.room-card-code {
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+.btn-join-room:hover {
+    background: var(--primary) !important;
+    color: #fff !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 12px var(--primary-glow);
+}
+
+/* Room Lobby Players styling */
+.room-countdown-banner {
+    background: linear-gradient(90deg, rgba(239, 68, 68, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #fff;
+    font-weight: 800;
+    text-align: center;
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 20px;
+    font-size: 14.5px;
+    letter-spacing: 1px;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+    animation: pulse 1.2s infinite;
+}
+
+.players-lobby-grid {
+    animation: fadeIn 0.4s ease-out;
+}
+.player-lobby-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+}
+.player-lobby-card.player-ready-card {
+    border-color: var(--success);
+    box-shadow: 0 0 15px var(--success-glow);
+}
+.player-lobby-card.player-card-me {
+    border: 2px solid var(--primary);
+    background: rgba(99, 102, 241, 0.03);
+}
+
+/* Player Avatar Rendering styling */
+.player-card-avatar-wrapper {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    overflow: hidden;
+    margin-bottom: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.player-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.player-avatar-emoji {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+.player-lobby-card.player-ready-card .player-card-avatar-wrapper {
+    border-color: var(--success);
+}
+
+.player-card-name {
+    font-size: 14.5px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Status Badges styling */
+.player-status-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    display: inline-block;
+}
+.badge-ready {
+    background: var(--success-glow);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.badge-waiting {
+    background: var(--warning-glow);
+    color: var(--warning);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+.badge-host {
+    background: var(--primary-glow);
+    color: var(--primary-light);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+/* Option Cards and Buttons styling */
+.options-grid {
+    margin-top: 20px;
+}
+.option-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    padding: 18px 24px;
+    border-radius: var(--radius-md);
+    color: #fff;
+    font-size: 15px;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    width: 100%;
+    box-sizing: border-box;
+}
+.option-card:hover:not(.disabled) {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: var(--primary-light);
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 5px 15px var(--primary-glow);
+}
+.option-card .option-prefix {
+    font-weight: 700;
+    color: var(--primary-light);
+    margin-right: 12px;
+    font-size: 16px;
+}
+.option-card.correct {
+    background: var(--success-glow) !important;
+    border-color: var(--success) !important;
+    box-shadow: 0 0 15px var(--success-glow);
+    color: #fff;
+}
+.option-card.incorrect {
+    background: var(--danger-glow) !important;
+    border-color: var(--danger) !important;
+    box-shadow: 0 0 15px var(--danger-glow);
+    color: #fff;
+}
+.option-card.disabled {
+    pointer-events: none;
+    opacity: 0.65;
+}
+.option-card.disabled.correct, .option-card.disabled.incorrect {
+    opacity: 1;
+}
+
+/* Scoreboard item list stylings */
+.live-score-item {
+    transition: all 0.25s ease;
+    animation: fadeIn 0.3s ease-out;
+}
+.live-score-item.live-score-me {
+    border-color: var(--primary) !important;
+    background: rgba(99, 102, 241, 0.08) !important;
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.15);
+}
+
+.final-score-item.final-score-me {
+    border-color: var(--warning) !important;
+    background: rgba(245, 158, 11, 0.05) !important;
+    box-shadow: 0 0 15px var(--warning-glow);
+}
+
+/* Collapsible Review Card styling */
+.review-question-card {
+    border-left: 4px solid var(--text-muted);
+}
+.review-question-card.review-correct {
+    border-left-color: var(--success);
+}
+.review-question-card.review-incorrect {
+    border-left-color: var(--danger);
+}
+.review-question-card.review-unanswered {
+    border-left-color: var(--warning);
+}
+.review-opt {
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    font-weight: 500;
+}
+.review-opt.opt-correct {
+    background: var(--success-glow) !important;
+    border: 1px solid var(--success) !important;
+    color: #fff;
+}
+.review-opt.opt-incorrect {
+    background: var(--danger-glow) !important;
+    border: 1px solid var(--danger) !important;
+    color: #fff;
+}
+.review-opt.opt-normal {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Extra animations */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Styled Dropdown select overrides */
+.styled-select {
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    color: #fff;
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.styled-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 8px var(--primary-glow);
+    outline: none;
+}
+
+
