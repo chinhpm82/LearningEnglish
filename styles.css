@@ -127,6 +127,12 @@ body {
     100% { transform: translate(40px, 40px) scale(1.15); }
 }
 
+/* --- MOBILE GLOBAL DEFAULTS --- */
+.mobile-top-bar,
+.mobile-menu-overlay {
+    display: none;
+}
+
 /* --- APP CONTAINER LAYOUT --- */
 .app-container {
     display: grid;
@@ -1823,6 +1829,7 @@ input, select, textarea, button {
 
     /* --- MOBILE DRAWER SLIDING OVERLAY --- */
     .mobile-menu-overlay {
+        display: block;
         position: fixed;
         top: 0;
         left: 0;

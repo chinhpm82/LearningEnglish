@@ -26,7 +26,8 @@ let state = {
     completedLessons: [], // Completed grammar lesson IDs
     completedSentences: [], // Completed communicative sentence english string IDs
     stories_done: [],      // Completed reading stories
-    writingHighScores: {} // Store highest score reached on each writing topic permanently!
+    writingHighScores: {}, // Store highest score reached on each writing topic permanently!
+    currentWotd: null      // Selected Word of the Day
 };
 
 // Flashcard Deck study state
@@ -601,7 +602,7 @@ function renderDashboard() {
 }
 
 // Generate random "Word of the Day"
-function renderWordOfTheDay() {
+function renderWordOfTheDay(forceRefresh = false) {
     const allWords = [...state.vocabulary, ...state.customWords];
     if (allWords.length === 0) return;
 
@@ -610,10 +611,13 @@ function renderWordOfTheDay() {
 
     if (levelWords.length === 0) levelWords = allWords; // Fallback
 
-    // Pick a deterministic word of the day using the current date
-    const dateNum = new Date().getDate();
-    const index = dateNum % levelWords.length;
-    const wotd = levelWords[index];
+    // If we don't have a word selected yet, or we force refresh, pick a random one
+    if (!state.currentWotd || forceRefresh) {
+        const randomIndex = Math.floor(Math.random() * levelWords.length);
+        state.currentWotd = levelWords[randomIndex];
+    }
+
+    const wotd = state.currentWotd;
 
     document.getElementById('wotd-word').textContent = wotd.word;
     document.getElementById('wotd-type').textContent = wotd.type;
@@ -624,10 +628,12 @@ function renderWordOfTheDay() {
 
     // Attach click to voice
     const voiceBtn = document.getElementById('wotd-speak-btn');
-    // Remove old listeners
-    const newBtn = voiceBtn.cloneNode(true);
-    voiceBtn.parentNode.replaceChild(newBtn, voiceBtn);
-    newBtn.addEventListener('click', () => speakEnglish(wotd.word));
+    if (voiceBtn) {
+        // Remove old listeners
+        const newBtn = voiceBtn.cloneNode(true);
+        voiceBtn.parentNode.replaceChild(newBtn, voiceBtn);
+        newBtn.addEventListener('click', () => speakEnglish(wotd.word));
+    }
 }
 
 // --- FLASHCARD ENGINE (LEITNER SRS SYSTEM) ---
@@ -2242,6 +2248,14 @@ function initApp() {
         window.speechSynthesis.onvoiceschanged = () => {
             renderWordOfTheDay();
         };
+    }
+
+    // Refresh WOTD event listener
+    const refreshWotdBtn = document.getElementById('wotd-refresh-btn');
+    if (refreshWotdBtn) {
+        refreshWotdBtn.addEventListener('click', () => {
+            renderWordOfTheDay(true);
+        });
     }
 }
 

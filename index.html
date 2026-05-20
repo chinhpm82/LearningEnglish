@@ -311,7 +311,12 @@
                     <div class="dashboard-panel card-word-day">
                         <div class="panel-header">
                             <h3>Từ vựng hôm nay</h3>
-                            <span class="badge">Đề xuất</span>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <button class="btn-voice-small" id="wotd-refresh-btn" title="Đổi từ khác">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"></path><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                                </button>
+                                <span class="badge">Đề xuất</span>
+                            </div>
                         </div>
                         <div class="word-day-content" id="word-of-the-day-container">
                             <div class="word-day-main">
