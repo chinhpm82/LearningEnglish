@@ -13,6 +13,8 @@ scratch/
 Thumbs.db
 *.log
 .history/
+.antigravitycli/
+
 
 
 
