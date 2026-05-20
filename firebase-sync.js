@@ -26,6 +26,13 @@ import {
     where,
     deleteField
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import {
+    getDatabase,
+    ref as rtdbRef,
+    set as rtdbSet,
+    get as rtdbGet,
+    child as rtdbChild
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
 // --- FIREBASE CONFIGURATION (CẤU HÌNH HỆ THỐNG) ---
 // Bạn chỉ cần thay thế các chuỗi dưới đây bằng khóa thực tế lấy từ Firebase Console của bạn.
@@ -43,7 +50,7 @@ const firebaseConfig = {
 // Check if user has set real Firebase credentials
 const isConfigured = firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY_PLACEHOLDER";
 
-let app, auth, db, googleProvider;
+let app, auth, db, rtdb, googleProvider;
 let currentUser = null;
 
 if (isConfigured) {
@@ -51,6 +58,7 @@ if (isConfigured) {
         app = initializeApp(firebaseConfig);
         auth = getAuth(app);
         db = getFirestore(app);
+        rtdb = getDatabase(app);
         googleProvider = new GoogleAuthProvider();
         console.log("☁️ Firebase initialized in Cloud Sync mode.");
     } catch (error) {
@@ -160,48 +168,80 @@ window.FirebaseSync = {
                 stars: stars,
                 updatedAt: Date.now()
             }, { merge: true });
+            
+            // Also sync public leaderboard data to Realtime Database
+            if (rtdb) {
+                const leaderboardNodeRef = rtdbRef(rtdb, `leaderboard/${currentUser.uid}`);
+                rtdbSet(leaderboardNodeRef, {
+                    name: customDisplayName || currentUser.displayName || '',
+                    email: currentUser.email || '',
+                    photoURL: customPhotoURL || currentUser.photoURL || '',
+                    streak: streak,
+                    stars: stars,
+                    updatedAt: Date.now()
+                }).catch(e => console.warn("RTDB leaderboard sync error:", e));
+            }
         } catch (e) {
             console.error("Error saving streak and roadmap statistics to Firestore:", e);
         }
     },
 
-    // Ensure a minimal user profile document exists in Firestore (called on every login)
-    // Uses merge:true so it never overwrites existing data, only fills in missing fields
+    // Ensure a minimal user profile exists in Realtime Database leaderboard node (called on every login)
+    // Writes to /leaderboard/{uid} - public data readable by all authenticated users
     ensureUserProfile: async () => {
-        if (!isConfigured || !currentUser) return;
+        if (!isConfigured || !currentUser || !rtdb) return;
         try {
-            const userRef = doc(db, "users", currentUser.uid);
-            const userSnap = await getDoc(userRef);
-            if (!userSnap.exists() || userSnap.data().stars === undefined) {
-                await setDoc(userRef, {
+            const leaderboardNodeRef = rtdbRef(rtdb, `leaderboard/${currentUser.uid}`);
+            const snapshot = await rtdbGet(leaderboardNodeRef);
+            if (!snapshot.exists() || snapshot.val().stars === undefined) {
+                await rtdbSet(leaderboardNodeRef, {
                     name: currentUser.displayName || '',
                     email: currentUser.email || '',
                     photoURL: currentUser.photoURL || '',
                     streak: 0,
                     stars: 0,
                     updatedAt: Date.now()
-                }, { merge: true });
-                console.log("✅ Ensured user profile exists in Firestore for leaderboard visibility.");
+                });
+                console.log("✅ Ensured user profile exists in RTDB leaderboard.");
             }
         } catch (e) {
-            console.error("Error ensuring user profile in Firestore:", e);
+            console.error("Error ensuring user profile in RTDB leaderboard:", e);
         }
     },
 
-    // Fetch global student leaderboard (top 15 sorted by stars)
-    loadLeaderboard: async () => {
-        if (!isConfigured) return null;
+    // Update leaderboard entry in Realtime Database (called when stats change)
+    updateLeaderboardEntry: async (stars = 0, streak = 0, customPhotoURL = '', customDisplayName = '') => {
+        if (!isConfigured || !currentUser || !rtdb) return;
         try {
-            const usersRef = collection(db, "users");
-            const q = query(usersRef, orderBy("stars", "desc"), limit(15));
-            const querySnapshot = await getDocs(q);
-            const leaderboard = [];
-            querySnapshot.forEach((docSnapshot) => {
-                leaderboard.push(docSnapshot.data());
+            const leaderboardNodeRef = rtdbRef(rtdb, `leaderboard/${currentUser.uid}`);
+            await rtdbSet(leaderboardNodeRef, {
+                name: customDisplayName || currentUser.displayName || '',
+                email: currentUser.email || '',
+                photoURL: customPhotoURL || currentUser.photoURL || '',
+                streak: streak,
+                stars: stars,
+                updatedAt: Date.now()
             });
-            return leaderboard;
         } catch (e) {
-            console.error("Error loading global leaderboard from Firestore:", e);
+            console.error("Error updating RTDB leaderboard entry:", e);
+        }
+    },
+
+    // Fetch global student leaderboard from Realtime Database (sorted by stars desc)
+    loadLeaderboard: async () => {
+        if (!isConfigured || !rtdb) return null;
+        try {
+            const leaderboardRef = rtdbRef(rtdb, 'leaderboard');
+            const snapshot = await rtdbGet(leaderboardRef);
+            if (!snapshot.exists()) return [];
+            
+            const data = snapshot.val();
+            const leaderboard = Object.values(data);
+            // Sort by stars descending, then by streak descending
+            leaderboard.sort((a, b) => (b.stars || 0) - (a.stars || 0) || (b.streak || 0) - (a.streak || 0));
+            return leaderboard.slice(0, 15);
+        } catch (e) {
+            console.error("Error loading leaderboard from RTDB:", e);
             return null;
         }
     },

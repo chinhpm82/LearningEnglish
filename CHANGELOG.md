@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Bảng xếp hạng chỉ hiện 1 người dùng**: Chuyển đổi hệ thống Bảng xếp hạng (Leaderboard) từ Firestore sang **Firebase Realtime Database** (`/leaderboard/{uid}`). Firestore Security Rules trước đó chỉ cho phép mỗi user đọc document của chính mình, khiến query collection-wide chỉ trả về 1 kết quả. RTDB cho phép tất cả user đã xác thực đọc toàn bộ node `/leaderboard`, đảm bảo mọi học viên đều hiện trên bảng xếp hạng.
+- Đồng bộ tự động dữ liệu leaderboard (tên, ảnh, sao, streak) lên RTDB mỗi khi `saveStreak` chạy.
+- Tự động tạo profile leaderboard cho user mới ngay khi đăng nhập thành công (`ensureUserProfile`).
+
 ### Added
 - Tích hợp nút **"Đổi từ khác" (🔄)** ở tiêu đề bảng "Từ vựng hôm nay" trên Dashboard giúp đổi từ ngẫu nhiên tức thì.
 
