@@ -386,3 +386,7 @@ window.FirebaseSync = {
         });
     }
 };
+
+// Dispatch ready event to notify app.js that FirebaseSync module is fully loaded
+window.dispatchEvent(new CustomEvent('FirebaseSyncReady'));
+

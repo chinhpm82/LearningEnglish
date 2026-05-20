@@ -1894,8 +1894,7 @@ input, select, textarea, button {
     }
 
     .brand {
-        margin-bottom: 30px;
-        padding-right: 30px; /* space for close button */
+        display: none !important;
     }
 
     /* Nav menu inside Drawer */

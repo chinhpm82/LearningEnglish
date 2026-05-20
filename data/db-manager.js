@@ -140,6 +140,7 @@ async function selfHealAndSyncDatabase(seedVocab) {
     
     const uniqueMap = new Map();
     const idsToDelete = [];
+    const keysToPut = new Set();
     let modifiedCount = 0;
 
     currentVocab.forEach(item => {
@@ -148,6 +149,7 @@ async function selfHealAndSyncDatabase(seedVocab) {
         const origWord = item.word;
         const cleanWord = cleanFieldName(item.word);
         const key = cleanWord.toLowerCase().trim();
+        let isChanged = false;
 
         // 1. If word is in seed map, update details from seed file (preserving box and nextReview)
         if (seedMap.has(key)) {
@@ -164,6 +166,7 @@ async function selfHealAndSyncDatabase(seedVocab) {
                 item.example_vi = seedItem.example_vi || item.example_vi;
                 item.category = seedItem.category || item.category;
                 modifiedCount++;
+                isChanged = true;
             }
         } else {
             // Fallback basic cleaning if not in seed
@@ -174,6 +177,7 @@ async function selfHealAndSyncDatabase(seedVocab) {
                 item.ipa = cleanIpa;
                 item.example = cleanExample;
                 modifiedCount++;
+                isChanged = true;
             }
         }
 
@@ -184,11 +188,15 @@ async function selfHealAndSyncDatabase(seedVocab) {
             if ((item.box || 1) > (existing.box || 1)) {
                 existing.box = item.box;
                 existing.nextReview = item.nextReview;
+                keysToPut.add(key);
             }
             // Mark duplicate item's ID for deletion
             idsToDelete.push(item.id);
         } else {
             uniqueMap.set(key, item);
+            if (isChanged) {
+                keysToPut.add(key);
+            }
         }
     });
 
@@ -202,18 +210,26 @@ async function selfHealAndSyncDatabase(seedVocab) {
             seedItem.ipa = cleanFieldName(seedItem.ipa);
             seedItem.example = cleanFieldName(seedItem.example);
             uniqueMap.set(key, seedItem);
+            keysToPut.add(key);
             newWordsAdded++;
         }
     });
 
-    // Write all cleaned/new words and delete duplicates in a transaction
+    // Write only cleaned/new words and delete duplicates in a transaction
     return new Promise((resolve, reject) => {
+        if (keysToPut.size === 0 && idsToDelete.length === 0) {
+            console.log('IndexedDB is already clean and healthy. Skipping database rewrite.');
+            resolve();
+            return;
+        }
+
         const transaction = db.transaction(['vocabulary'], 'readwrite');
         const store = transaction.objectStore('vocabulary');
 
-        // 1. Put all cleaned unique words
-        uniqueMap.forEach(item => {
-            store.put(item);
+        // 1. Put only modified or new unique words
+        keysToPut.forEach(key => {
+            const item = uniqueMap.get(key);
+            if (item) store.put(item);
         });
 
         // 2. Delete all duplicates

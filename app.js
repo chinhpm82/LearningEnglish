@@ -615,10 +615,24 @@ function renderWordOfTheDay(forceRefresh = false) {
 
     if (levelWords.length === 0) levelWords = allWords; // Fallback
 
-    // If we don't have a word selected yet, or we force refresh, pick a random one
-    if (!state.currentWotd || forceRefresh) {
+    const todayStr = new Date().toLocaleDateString('en-US');
+    let storedWotdData = null;
+    try {
+        storedWotdData = JSON.parse(localStorage.getItem('le_wotd_data') || 'null');
+    } catch (e) {
+        storedWotdData = null;
+    }
+
+    if (forceRefresh || !state.currentWotd || !storedWotdData || storedWotdData.date !== todayStr) {
         const randomIndex = Math.floor(Math.random() * levelWords.length);
         state.currentWotd = levelWords[randomIndex];
+        localStorage.setItem('le_wotd_data', JSON.stringify({
+            date: todayStr,
+            wordId: state.currentWotd.id
+        }));
+    } else if (storedWotdData && storedWotdData.date === todayStr && !state.currentWotd) {
+        const foundWord = allWords.find(w => w.id === storedWotdData.wordId);
+        state.currentWotd = foundWord || levelWords[Math.floor(Math.random() * levelWords.length)];
     }
 
     const wotd = state.currentWotd;
@@ -1148,7 +1162,9 @@ function trackDailyActivity(activityType, value = 1) {
 }
 
 function autoCheckRoadmapTasks(progress) {
-    if (!state.roadmapTasks || state.roadmapTasks.length === 0) return;
+    if (!state.roadmapTasks || state.roadmapTasks.length < 3) {
+        state.roadmapTasks = generateRoadmapTasks(state.userLevel || 'A1');
+    }
     
     let changed = false;
     
@@ -1250,6 +1266,10 @@ function renderRoadmap() {
             document.getElementById('btn-start-quiz').click();
         });
         return;
+    }
+
+    if (!state.roadmapTasks || state.roadmapTasks.length < 3) {
+        state.roadmapTasks = generateRoadmapTasks(state.userLevel || 'A1');
     }
 
     // Assessed State - Render dynamic roadmap!
@@ -1944,6 +1964,43 @@ function initMobileMenuListeners() {
 // --- EVENT LISTENERS INITIALIZATION ---
 
 function initApp() {
+    // Load local state and render dashboard immediately on startup (Offline-First!)
+    (async () => {
+        try {
+            await loadStateAsync();
+            renderDashboard();
+
+            // Setup Firebase Sync sequentially AFTER local DB load completes (No more race conditions!)
+            if (window.FirebaseSync) {
+                setupAuthAndSync();
+            } else {
+                window.addEventListener('FirebaseSyncReady', setupAuthAndSync);
+            }
+
+            // Safety timeout fallback (3 seconds) to ensure Guest Mode works if network is down or sync hangs
+            setTimeout(() => {
+                if (!isCloudMode && !window.hasBoundAuthListener) {
+                    console.warn("⚠️ Firebase sync load timed out. Running in guest fallback.");
+                    const authOverlay = document.getElementById('auth-overlay');
+                    const guestBanner = document.getElementById('guest-mode-banner');
+                    if (authSkip) {
+                        if (authOverlay) authOverlay.classList.add('hidden');
+                        if (guestBanner) guestBanner.classList.remove('hidden');
+                    }
+                }
+            }, 3000);
+        } catch (err) {
+            console.error("Error loading initial local state:", err);
+            
+            // Fast failover to Firebase sync setup even if IndexedDB fails
+            if (window.FirebaseSync) {
+                setupAuthAndSync();
+            } else {
+                window.addEventListener('FirebaseSyncReady', setupAuthAndSync);
+            }
+        }
+    })();
+
     // 0. Setup mobile navigation drawer triggers
     initMobileMenuListeners();
 
@@ -1984,25 +2041,26 @@ function initApp() {
     if (btnEnterRoadmap) btnEnterRoadmap.addEventListener('click', closePlacementTestModal);
 
     // 3. Setup Firebase Auth & Data Sync Listener
-    if (window.FirebaseSync) {
+    function setupAuthAndSync() {
+        if (!window.FirebaseSync) return;
+        
+        // Prevent double binding
+        if (window.hasBoundAuthListener) return;
+        window.hasBoundAuthListener = true;
+        
+        console.log("🔥 FirebaseSync loaded, setting up Auth state listener...");
+        
         window.FirebaseSync.onStateChanged(async (user) => {
             const authOverlay = document.getElementById('auth-overlay');
             const profileCard = document.getElementById('user-profile-card');
             const guestBanner = document.getElementById('guest-mode-banner');
 
-            // Always ensure local state is loaded first
-            try {
-                await loadStateAsync();
-            } catch (err) {
-                console.error("Error loading local state:", err);
-            }
-
             if (user) {
                 // Cloud Mode Activated!
                 isCloudMode = true;
-                authOverlay.classList.add('hidden');
-                profileCard.classList.remove('hidden');
-                guestBanner.classList.add('hidden');
+                if (authOverlay) authOverlay.classList.add('hidden');
+                if (profileCard) profileCard.classList.remove('hidden');
+                if (guestBanner) guestBanner.classList.add('hidden');
 
                 // Save email, display name and Google Photo to state
                 state.currentUserEmail = user.email || '';
@@ -2011,10 +2069,12 @@ function initApp() {
 
                 // Render User Profile Card
                 renderUserAvatar(state.photoURL || user.photoURL);
-                document.getElementById('user-display-name').textContent = state.displayName || 'Học viên';
+                const userNameEl = document.getElementById('user-display-name');
+                if (userNameEl) userNameEl.textContent = state.displayName || 'Học viên';
 
                 // Allow edit pointer and show edit badge
-                document.getElementById('btn-open-avatar-modal').style.cursor = 'pointer';
+                const avatarBtn = document.getElementById('btn-open-avatar-modal');
+                if (avatarBtn) avatarBtn.style.cursor = 'pointer';
                 const editOverlay = document.querySelector('.avatar-edit-overlay');
                 if (editOverlay) editOverlay.style.display = 'flex';
 
@@ -2042,11 +2102,15 @@ function initApp() {
                             state.quizStats = cloudData.profile.quizStats || { totalAnswered: 0, correctAnswers: 0 };
                             state.userLevel = cloudData.profile.userLevel || '';
                             state.roadmapTasks = cloudData.profile.roadmapTasks || [];
+                            if (!state.roadmapTasks || state.roadmapTasks.length < 3) {
+                                state.roadmapTasks = generateRoadmapTasks(state.userLevel || 'A1');
+                            }
                             state.stars = cloudData.profile.stars || 0;
                             state.photoURL = cloudData.profile.photoURL || '';
                             state.displayName = cloudData.profile.name || state.displayName || user.displayName || '';
                             renderUserAvatar(state.photoURL || user.photoURL);
-                            document.getElementById('user-display-name').textContent = state.displayName || 'Học viên';
+                            const userNameEl2 = document.getElementById('user-display-name');
+                            if (userNameEl2) userNameEl2.textContent = state.displayName || 'Học viên';
                             updateSidebarStreakUI();
                         }
                         if (cloudData.customWords) {
@@ -2081,52 +2145,69 @@ function initApp() {
             } else {
                 // Not authenticated (either Firebase is not configured, or user signed out, or skipped)
                 isCloudMode = false;
-                profileCard.classList.remove('hidden');
+                if (profileCard) profileCard.classList.remove('hidden');
+
+                // Cleanse Cached Profile Details on Logout
+                state.displayName = "";
+                state.photoURL = "";
+                state.googlePhotoURL = "";
+                state.currentUserEmail = "";
+
+                // Clear in storage
+                await LearningDB.setProgress('display_name', '');
+                await LearningDB.setProgress('photo_url', '');
+                await LearningDB.setProgress('google_photo_url', '');
+                await LearningDB.setProgress('user_email', '');
+                localStorage.removeItem('vocabflow_display_name');
+                localStorage.removeItem('vocabflow_photo_url');
 
                 // Render Guest profile values (force default guest avatar and name)
                 renderUserAvatar('emoji:🦊');
-                document.getElementById('user-display-name').textContent = 'Học viên (Khách)';
+                const userNameEl = document.getElementById('user-display-name');
+                if (userNameEl) userNameEl.textContent = 'Học viên (Khách)';
 
                 // Disable edit pointer and hide edit badge
-                document.getElementById('btn-open-avatar-modal').style.cursor = 'default';
+                const avatarBtn = document.getElementById('btn-open-avatar-modal');
+                if (avatarBtn) avatarBtn.style.cursor = 'default';
                 const editOverlay = document.querySelector('.avatar-edit-overlay');
                 if (editOverlay) editOverlay.style.display = 'none';
 
                 const logoutBtn = document.getElementById('btn-logout');
                 if (logoutBtn) {
-                    logoutBtn.textContent = 'Đăng xuất';
-                    logoutBtn.title = 'Đăng xuất tài khoản Google';
+                    logoutBtn.textContent = 'Đăng nhập';
+                    logoutBtn.title = 'Đăng nhập tài khoản Google';
                 }
+
+                // Hide avatar modal if open
+                const avatarModal = document.getElementById('avatar-modal');
+                if (avatarModal) avatarModal.classList.add('hidden');
 
                 if (window.FirebaseSync.isConfigured) {
                     // Firebase is configured, but no user is signed in
                     if (authSkip) {
                         // User clicked skip, let them work in Guest mode
-                        authOverlay.classList.add('hidden');
-                        guestBanner.classList.remove('hidden');
+                        if (authOverlay) authOverlay.classList.add('hidden');
+                        if (guestBanner) guestBanner.classList.remove('hidden');
                     } else {
                         // Force login overlay
-                        authOverlay.classList.remove('hidden');
-                        guestBanner.classList.add('hidden');
+                        if (authOverlay) authOverlay.classList.remove('hidden');
+                        if (guestBanner) guestBanner.classList.add('hidden');
                     }
                 } else {
                     // Firebase is not configured at all (default app out of the box)
-                    authOverlay.classList.add('hidden');
-                    guestBanner.classList.remove('hidden');
-                    guestBanner.querySelector('.banner-text').textContent = 'Chế độ Khách (Offline)';
+                    if (authOverlay) authOverlay.classList.add('hidden');
+                    if (guestBanner) guestBanner.classList.remove('hidden');
+                    const bannerText = guestBanner ? guestBanner.querySelector('.banner-text') : null;
+                    if (bannerText) bannerText.textContent = 'Chế độ Khách (Offline)';
                 }
 
                 // Re-render dashboard for Guest
                 renderDashboard();
             }
         });
-    } else {
-        // Fallback if script somehow not loaded, load offline local data
-        (async () => {
-            await loadStateAsync();
-            renderDashboard();
-        })();
     }
+
+
 
     // 4. Wordbook Submit Action
     document.getElementById('add-word-form').addEventListener('submit', handleAddWordForm);
@@ -2134,8 +2215,9 @@ function initApp() {
     // Avatar Selector Dialog bindings
     const avatarOpenBtn = document.getElementById('btn-open-avatar-modal');
     if (avatarOpenBtn) {
-        avatarOpenBtn.addEventListener('click', () => {
-            if (!isCloudMode) {
+        avatarOpenBtn.addEventListener('click', (e) => {
+            if (e) e.stopPropagation();
+            if (!isCloudMode || !state.currentUserEmail) {
                 alert("Vui lòng đăng nhập bằng Google để đổi tên và ảnh đại diện!");
                 return;
             }
@@ -2309,7 +2391,8 @@ async function handleGoogleLogin() {
     }
 }
 
-async function handleGoogleLogout() {
+async function handleGoogleLogout(e) {
+    if (e) e.stopPropagation();
     if (!isCloudMode) {
         showAuthOverlay();
         return;
