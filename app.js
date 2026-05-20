@@ -3888,6 +3888,8 @@ window.applyGrammarFix = applyGrammarFix;
 let activePodcast = null;
 let lastActiveLineEl = null;
 let customPodcasts = []; // Store custom uploaded podcasts in session memory
+let podcastList = []; // Global catalog list
+let currentPodcastMode = 'list'; // 'list' | 'loop' | 'single'
 
 function parseSRT(text) {
     const lines = text.replace(/\r/g, '').split('\n');
@@ -3933,12 +3935,12 @@ function parseSRT(text) {
 
 function initPodcastRoom() {
     const defaultList = typeof PODCAST_DATA !== 'undefined' ? PODCAST_DATA : [];
-    const list = [...defaultList, ...customPodcasts];
+    podcastList = [...defaultList, ...customPodcasts];
     const container = document.getElementById('podcast-list-container');
     if (!container) return;
     
     container.innerHTML = '';
-    list.forEach(pod => {
+    podcastList.forEach(pod => {
         const item = document.createElement('div');
         item.className = 'roadmap-task-item';
         item.style = 'cursor: pointer; padding: 12px; margin-bottom: 5px;';
@@ -3952,7 +3954,7 @@ function initPodcastRoom() {
                 </div>
             </div>
         `;
-        item.onclick = () => selectPodcast(pod);
+        item.onclick = () => selectPodcast(pod, false);
         container.appendChild(item);
     });
 
@@ -4019,7 +4021,7 @@ function initPodcastRoom() {
                 initPodcastRoom();
                 
                 // Load/Select the new custom podcast instantly
-                selectPodcast(newPod);
+                selectPodcast(newPod, false);
                 
                 // Reset form inputs
                 titleInput.value = '';
@@ -4036,17 +4038,37 @@ function initPodcastRoom() {
     // Setup Audio Player Event Listeners once
     const audio = document.getElementById('podcast-audio-element');
     const playBtn = document.getElementById('btn-player-play');
+    const prevBtn = document.getElementById('btn-player-prev');
+    const nextBtn = document.getElementById('btn-player-next');
     const skipBack = document.getElementById('btn-player-skip-back');
     const skipForward = document.getElementById('btn-player-skip-forward');
     const seekbar = document.getElementById('player-seekbar');
     const speedBtn = document.getElementById('btn-player-speed');
+    const modeBtn = document.getElementById('btn-player-mode');
+    const modeIcon = document.getElementById('player-mode-icon');
+    const modeText = document.getElementById('player-mode-text');
     const volumeRange = document.getElementById('player-volume');
     
     if (audio) {
         audio.ontimeupdate = handlePodcastTimeUpdate;
-        audio.onended = () => {
-            if (playBtn) playBtn.innerHTML = `<svg id="play-icon-svg" viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px; color:#fff; margin-left: 2px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+        
+        // Unified native play event binding (ensures 100% sync from any source)
+        audio.onplay = () => {
+            if (playBtn) {
+                playBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px; color:#fff;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
+            }
+            checkAndUpdateStreak();
         };
+        
+        // Unified native pause event binding
+        audio.onpause = () => {
+            if (playBtn) {
+                playBtn.innerHTML = `<svg id="play-icon-svg" viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px; color:#fff; margin-left: 2px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+            }
+        };
+        
+        // Unified native ended event binding
+        audio.onended = handlePodcastEnded;
     }
     
     if (playBtn) {
@@ -4056,13 +4078,37 @@ function initPodcastRoom() {
                 return;
             }
             if (audio.paused) {
-                audio.play();
-                playBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px; color:#fff;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
-                checkAndUpdateStreak();
+                // Fix for Mobile Web playback resume issue:
+                // If it has ended or reached near the end, reset currentTime to 0 so play() starts fresh and cleanly.
+                if (audio.ended || audio.currentTime >= audio.duration - 0.5) {
+                    audio.currentTime = 0;
+                }
+                audio.play().catch(err => {
+                    console.error("Audio playback error:", err);
+                });
             } else {
                 audio.pause();
-                playBtn.innerHTML = `<svg id="play-icon-svg" viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px; color:#fff; margin-left: 2px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
             }
+        };
+    }
+    
+    if (prevBtn) {
+        prevBtn.onclick = () => {
+            if (!activePodcast) {
+                showToastNotification('⚠️ Vui lòng chọn một bài nghe từ danh sách bên trái!');
+                return;
+            }
+            playPrevPodcast();
+        };
+    }
+    
+    if (nextBtn) {
+        nextBtn.onclick = () => {
+            if (!activePodcast) {
+                showToastNotification('⚠️ Vui lòng chọn một bài nghe từ danh sách bên trái!');
+                return;
+            }
+            playNextPodcast();
         };
     }
     
@@ -4097,18 +4143,114 @@ function initPodcastRoom() {
         };
     }
     
+    // Playback Mode initialization & logic
+    if (modeIcon && modeText && modeBtn) {
+        if (currentPodcastMode === 'list') {
+            modeIcon.textContent = '➡️';
+            modeText.textContent = 'Liên tiếp';
+            modeBtn.title = "Phát liên tiếp đến hết danh sách";
+        } else if (currentPodcastMode === 'loop') {
+            modeIcon.textContent = '🔁';
+            modeText.textContent = 'Vòng lặp';
+            modeBtn.title = "Phát vòng lặp danh sách (vô tận)";
+        } else {
+            modeIcon.textContent = '🔂';
+            modeText.textContent = 'Phát 1 lần';
+            modeBtn.title = "Phát hết bài hiện tại rồi dừng";
+        }
+    }
+    
+    if (modeBtn) {
+        modeBtn.onclick = () => {
+            if (currentPodcastMode === 'list') {
+                currentPodcastMode = 'loop';
+                if (modeIcon) modeIcon.textContent = '🔁';
+                if (modeText) modeText.textContent = 'Vòng lặp';
+                modeBtn.title = "Phát vòng lặp danh sách (vô tận)";
+                showToastNotification("🔁 Chế độ phát: Vòng lặp danh sách");
+            } else if (currentPodcastMode === 'loop') {
+                currentPodcastMode = 'single';
+                if (modeIcon) modeIcon.textContent = '🔂';
+                if (modeText) modeText.textContent = 'Phát 1 lần';
+                modeBtn.title = "Phát hết bài hiện tại rồi dừng";
+                showToastNotification("🔂 Chế độ phát: Phát 1 lần");
+            } else {
+                currentPodcastMode = 'list';
+                if (modeIcon) modeIcon.textContent = '➡️';
+                if (modeText) modeText.textContent = 'Liên tiếp';
+                modeBtn.title = "Phát liên tiếp đến hết danh sách";
+                showToastNotification("➡️ Chế độ phát: Liên tiếp đến hết");
+            }
+        };
+    }
+    
     if (volumeRange) {
         volumeRange.oninput = () => {
             audio.volume = volumeRange.value / 100;
         };
     }
     
-    if (list.length > 0) {
-        selectPodcast(list[0]);
+    if (podcastList.length > 0) {
+        selectPodcast(podcastList[0], false);
     }
 }
 
-function selectPodcast(podcast) {
+// Navigation Helper Functions
+function playNextPodcast() {
+    if (podcastList.length === 0) return;
+    const currentIndex = podcastList.findIndex(p => p.id === activePodcast.id);
+    if (currentIndex !== -1) {
+        let nextIndex = currentIndex + 1;
+        if (nextIndex < podcastList.length) {
+            selectPodcast(podcastList[nextIndex], true);
+        } else {
+            // End of list reached, loop back to first
+            selectPodcast(podcastList[0], true);
+        }
+    }
+}
+
+function playPrevPodcast() {
+    if (podcastList.length === 0) return;
+    const currentIndex = podcastList.findIndex(p => p.id === activePodcast.id);
+    if (currentIndex !== -1) {
+        let prevIndex = currentIndex - 1;
+        if (prevIndex >= 0) {
+            selectPodcast(podcastList[prevIndex], true);
+        } else {
+            // Beginning of list, wrap to last
+            selectPodcast(podcastList[podcastList.length - 1], true);
+        }
+    }
+}
+
+function handlePodcastEnded() {
+    if (currentPodcastMode === 'single') {
+        // 'single' mode: native onpause has already sync'd play/pause icon, so do nothing.
+        return;
+    }
+    
+    if (podcastList.length === 0) return;
+    const currentIndex = podcastList.findIndex(p => p.id === activePodcast.id);
+    
+    if (currentIndex !== -1) {
+        let nextIndex = currentIndex + 1;
+        if (nextIndex < podcastList.length) {
+            selectPodcast(podcastList[nextIndex], true);
+        } else {
+            // End of list reached
+            if (currentPodcastMode === 'loop') {
+                // Loop back to the first one
+                selectPodcast(podcastList[0], true);
+            } else {
+                // 'list' mode: stop at the end.
+                // Just keep play icon (native onended/onpause handles resetting icon)
+            }
+        }
+    }
+}
+
+function selectPodcast(podcast, shouldPlay = false) {
     activePodcast = podcast;
     lastActiveLineEl = null;
     
@@ -4127,6 +4269,17 @@ function selectPodcast(podcast) {
     
     // Play Button reset
     document.getElementById('btn-player-play').innerHTML = `<svg id="play-icon-svg" viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px; color:#fff; margin-left: 2px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+    
+    if (shouldPlay) {
+        audio.play().catch(err => {
+            console.error("Autoplay/Gesture restriction blocked playback:", err);
+            // In case of error, sync play button to standard state
+            const playBtn = document.getElementById('btn-player-play');
+            if (playBtn) {
+                playBtn.innerHTML = `<svg id="play-icon-svg" viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px; color:#fff; margin-left: 2px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+            }
+        });
+    }
     
     // RENDER TIMED TRANSCRIPT
     const transcriptBox = document.getElementById('transcript-scroll-box');

@@ -1,0 +1,139 @@
+1
+00:00:00,000 --> 00:00:04,000
+Hello, Tourist Information Centre, Mike speaking. How can I help you?
+
+2
+00:00:04,000 --> 00:00:11,000
+Oh, hi. I wanted to find out about cookery classes. I believe there are some one-day classes for tourists?
+
+3
+00:00:11,000 --> 00:00:25,000
+Well, they're open to everyone, but tourists are always welcome. Okay, let me give you some details of what's available. There are several classes. One very popular one is at the Food Studio.
+
+4
+00:00:25,000 --> 00:00:26,000
+Okay.
+
+5
+00:00:26,000 --> 00:00:32,000
+They focus on seasonal products, and as well as teaching you how to cook them, they also show you how to choose them.
+
+6
+00:00:32,000 --> 00:00:36,000
+Right, that sounds good. How big are the classes?
+
+7
+00:00:36,000 --> 00:00:40,000
+I'm not sure exactly, but they'll be quite small.
+
+8
+00:00:40,000 --> 00:00:42,000
+And could I get a private lesson there?
+
+9
+00:00:42,000 --> 00:00:54,000
+I think so. Let me check. Yes, they do offer those. Though, in fact, most of the people who attend the classes find it's a nice way of getting to know one another.
+
+10
+00:00:54,000 --> 00:00:56,000
+I suppose it must be, yes.
+
+11
+00:00:56,000 --> 00:01:05,000
+And this company has a special deal for clients where they offer a discount of 20% if you return for a further class.
+
+12
+00:01:05,000 --> 00:01:08,000
+Okay. But you said there were several classes?
+
+13
+00:01:08,000 --> 00:01:25,000
+That's right. Another one you might be interested in is Bond's Cookery School. They're quite new. They just opened six months ago, but I've heard good things about them. They concentrate on teaching you to prepare healthy food. And they have quite a lot of specialist staff.
+
+14
+00:01:25,000 --> 00:01:31,000
+So, is that food for people on a diet and things like that? I don't know if I'd be interested in that.
+
+15
+00:01:31,000 --> 00:01:46,000
+Well, I don't think they particularly focus on low-calorie diets or weight loss. It's more to do with recipes that look at specific needs, like including ingredients that will help build up your bones and make them stronger, that sort of thing.
+
+16
+00:01:46,000 --> 00:01:52,000
+I see. Well, I might be interested. I'm not sure. Do they have a website I could check?
+
+17
+00:01:52,000 --> 00:02:11,000
+Yes, just key in the name of the school, it'll come up. And if you want to know more about them, every Thursday evening they have a lecture at the school. It's free and you don't need to book or anything, just turn up at 7:30. And that might give you an idea of whether you want to go to an actual class.
+
+18
+00:02:11,000 --> 00:02:27,000
+Okay, there's one more place you might be interested in. That's got a rather strange name. It's called the Arreza Centre. That's spelled A-R-R-E-Z-A.
+
+19
+00:02:27,000 --> 00:02:28,000
+Okay.
+
+20
+00:02:28,000 --> 00:02:37,000
+They've got a very good reputation. They do a bit of meat and fish cookery, but they mostly specialize in vegetarian dishes.
+
+21
+00:02:37,000 --> 00:02:49,000
+Right. That's certainly an area I'd like to learn more about. I've got lots of friends who don't eat meat. In fact, I think I might have seen that school today. Is it just by the market?
+
+22
+00:02:49,000 --> 00:03:09,000
+That's right. So they don't have any problem getting their ingredients. They're right next door. And they also offer a special two-hour course in how to use a knife. They cover all the different skills: buying them, sharpening, chopping techniques. It gets booked up quickly, though, so you'd need to check it was available.
+
+23
+00:03:09,000 --> 00:03:19,000
+Right. Well, thank you very much. I'll go and check that out...
+
+24
+00:03:19,000 --> 00:03:36,000
+Good evening, everyone. My name's Phil Sutton, and I'm chairman of the Highways Committee. We've called this meeting to inform members of the public about the new regulations for traffic and parking we're proposing for Granford.
+
+25
+00:03:36,000 --> 00:04:08,000
+I'll start by summarizing these changes before we open the meeting to questions. So, why do we need to make these changes to traffic systems in Granford? Well, we're very aware that traffic is becoming an increasing problem. It's been especially noticeable with the increase in heavy traffic while they've been building the new hospital. But it's the overall rise in the volume of traffic of all kinds that's concerning us.
+
+26
+00:04:08,000 --> 00:04:51,000
+To date, there's not been any increase in traffic accidents, but that's not something we want to see happen, obviously. We recently carried out a survey of local residents, and their responses were interesting. People were very concerned about the lack of visibility on some roads due to cars parked along the sides of the roads. We'd expected complaints about the congestion near the school when parents are dropping off their children or picking them up, but this wasn't on top of the list. And nor were noise and fumes from trucks and lorries, though they were mentioned by some people.
+
+27
+00:04:51,000 --> 00:05:24,000
+We think these new traffic regulations would make a lot of difference. But we still have a long way to go. We've managed to keep our proposals within budget, just, so they can be covered by the council. But of course, it's no good introducing new regulations if we don't have a way of making sure that everyone obeys them. And that's an area we're still working on with the help of representatives from the police force.
+
+28
+00:05:24,000 --> 00:05:52,000
+Okay, so this slide shows a map of the central area of Granford with the High Street in the middle and School Road on the right. Now, we already have a set of traffic lights in the High Street at the junction with Station Road, but we're planning to have another set at the other end, at the School Road junction, to regulate the flow of traffic along the High Street.
+
+29
+00:05:52,000 --> 00:06:17,000
+We've decided we definitely need a pedestrian crossing. We considered putting this on School Road just outside the school, but in the end, we decided that could lead to a lot of traffic congestion. So we decided to locate it on the High Street, crossing the road in front of the supermarket. That's a very busy area, so it should help things there.
+
+30
+00:06:17,000 --> 00:06:33,000
+We are proposing some changes to parking. At present, parking isn't allowed on the High Street outside the library, but we're going to change that and allow parking there. But not at the other end of the High Street near School Road.
+
+31
+00:06:33,000 --> 00:06:52,000
+There'll be a new "No Parking" sign on School Road, just by the entrance to the school, forbidding parking for 25 meters. This should improve visibility for drivers and pedestrians, especially on the bend just to the north of the school.
+
+32
+00:06:52,000 --> 00:07:13,000
+As far as disabled drivers are concerned, at present, they have parking outside the supermarket, but lorries also use those spaces. So we've got two new disabled parking spaces on the side road up towards the bank. It's not ideal, but probably better than the present arrangement.
+
+33
+00:07:13,000 --> 00:07:27,000
+We also plan to widen the pavement on School Road. We think we can manage to get an extra half meter on the bend just before you get to the school, on the same side of the road.
+
+34
+00:07:27,000 --> 00:07:47,000
+Finally, we've introduced new restrictions on loading and unloading for the supermarket, so lorries will only be allowed to stop there before 8:00 AM. That's the supermarket on School Road. We kept to the existing arrangements with the High Street supermarket.
+
+35
+00:07:47,000 --> 00:07:52,000
+Okay, so that's about it. Now, if.

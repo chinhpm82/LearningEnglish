@@ -1104,11 +1104,16 @@
 
                             <!-- Controls Row -->
                             <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
-                                <!-- Speed Control -->
-                                <button class="btn-secondary" id="btn-player-speed" style="padding: 6px 12px; font-size: 12px; min-width: 60px; border-radius: 10px; cursor: pointer;">1.0x</button>
+                                <!-- Speed & Play Mode Control -->
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <button class="btn-secondary" id="btn-player-speed" style="padding: 6px 12px; font-size: 12px; min-width: 55px; border-radius: 10px; cursor: pointer;">1.0x</button>
+                                    <button class="btn-secondary" id="btn-player-mode" style="padding: 6px 12px; font-size: 12px; min-width: 90px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 4px; justify-content: center;" title="Phát liên tiếp đến hết danh sách">
+                                        <span id="player-mode-icon">➡️</span> <span id="player-mode-text">Liên tiếp</span>
+                                    </button>
+                                </div>
                                 
                                 <!-- Playback Buttons -->
-                                <div style="display: flex; align-items: center; gap: 18px;">
+                                <div style="display: flex; align-items: center; gap: 10px;">
                                     <!-- Skip Backward 10s -->
                                     <button class="btn-secondary" id="btn-player-skip-back" style="padding: 0; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.2s ease;" onmouseover="this.style.background='rgba(255, 255, 255, 0.12)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: #fff;">
@@ -1117,10 +1122,28 @@
                                             <text x="12" y="15" font-size="7" font-weight="900" text-anchor="middle" fill="currentColor" stroke="none" font-family="system-ui, sans-serif">10</text>
                                         </svg>
                                     </button>
+                                    
+                                    <!-- Prev Track -->
+                                    <button class="btn-secondary" id="btn-player-prev" style="padding: 0; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.2s ease;" onmouseover="this.style.background='rgba(255, 255, 255, 0.12)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'" title="Bài trước">
+                                        <svg viewBox="0 0 24 24" fill="currentColor" style="width: 18px; height: 18px; color: #fff;">
+                                            <polygon points="19 20 9 12 19 4 19 20"/>
+                                            <rect x="5" y="4" width="2" height="16"/>
+                                        </svg>
+                                    </button>
+
                                     <!-- Main Play/Pause -->
                                     <button class="btn-primary" id="btn-player-play" style="padding: 0; border-radius: 50%; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); border: none; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
                                         <svg id="play-icon-svg" viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px; color:#fff; margin-left: 2px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                                     </button>
+
+                                    <!-- Next Track -->
+                                    <button class="btn-secondary" id="btn-player-next" style="padding: 0; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.2s ease;" onmouseover="this.style.background='rgba(255, 255, 255, 0.12)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'" title="Bài tiếp theo">
+                                        <svg viewBox="0 0 24 24" fill="currentColor" style="width: 18px; height: 18px; color: #fff;">
+                                            <polygon points="5 4 15 12 5 20 5 4"/>
+                                            <rect x="17" y="4" width="2" height="16"/>
+                                        </svg>
+                                    </button>
+
                                     <!-- Skip Forward 10s -->
                                     <button class="btn-secondary" id="btn-player-skip-forward" style="padding: 0; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.2s ease;" onmouseover="this.style.background='rgba(255, 255, 255, 0.12)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; color: #fff;">
