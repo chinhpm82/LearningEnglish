@@ -27,7 +27,7 @@ const PODCAST_DATA = [
             {
                 "start": 11,
                 "end": 25,
-                "text": "Well, they're open to everyone, but tourists are always welcome. Okay, let me give you some details of what's available. There are several classes. One very popular one is at the Food Studio."
+                "text": "Well, theyre open to everyone, but tourists are always welcome. Okay, let me give you some details of whats available. There are several classes. One very popular one is at the Food Studio."
             },
             {
                 "start": 25,
@@ -47,7 +47,7 @@ const PODCAST_DATA = [
             {
                 "start": 36,
                 "end": 40,
-                "text": "I'm not sure exactly, but they'll be quite small."
+                "text": "Im not sure exactly, but theyll be quite small."
             },
             {
                 "start": 40,
@@ -57,7 +57,7 @@ const PODCAST_DATA = [
             {
                 "start": 42,
                 "end": 54,
-                "text": "I think so. Let me check. Yes, they do offer those. Though, in fact, most of the people who attend the classes find it's a nice way of getting to know one another."
+                "text": "I think so. Let me check. Yes, they do offer those. Though, in fact, most of the people who attend the classes find its a nice way of getting to know one another."
             },
             {
                 "start": 54,
@@ -77,32 +77,32 @@ const PODCAST_DATA = [
             {
                 "start": 68,
                 "end": 85,
-                "text": "That's right. Another one you might be interested in is Bond's Cookery School. They're quite new. They just opened six months ago, but I've heard good things about them. They concentrate on teaching you to prepare healthy food. And they have quite a lot of specialist staff."
+                "text": "Thats right. Another one you might be interested in is Bonds Cookery School. Theyre quite new. They just opened six months ago, but Ive heard good things about them. They concentrate on teaching you to prepare healthy food. And they have quite a lot of specialist staff."
             },
             {
                 "start": 85,
                 "end": 91,
-                "text": "So, is that food for people on a diet and things like that? I don't know if I'd be interested in that."
+                "text": "So, is that food for people on a diet and things like that? I dont know if Id be interested in that."
             },
             {
                 "start": 91,
                 "end": 106,
-                "text": "Well, I don't think they particularly focus on low-calorie diets or weight loss. It's more to do with recipes that look at specific needs, like including ingredients that will help build up your bones and make them stronger, that sort of thing."
+                "text": "Well, I dont think they particularly focus on low-calorie diets or weight loss. Its more to do with recipes that look at specific needs, like including ingredients that will help build up your bones and make them stronger, that sort of thing."
             },
             {
                 "start": 106,
                 "end": 112,
-                "text": "I see. Well, I might be interested. I'm not sure. Do they have a website I could check?"
+                "text": "I see. Well, I might be interested. Im not sure. Do they have a website I could check?"
             },
             {
                 "start": 112,
                 "end": 131,
-                "text": "Yes, just key in the name of the school, it'll come up. And if you want to know more about them, every Thursday evening they have a lecture at the school. It's free and you don't need to book or anything, just turn up at 7:30. And that might give you an idea of whether you want to go to an actual class."
+                "text": "Yes, just key in the name of the school, itll come up. And if you want to know more about them, every Thursday evening they have a lecture at the school. Its free and you dont need to book or anything, just turn up at 7:30. And that might give you an idea of whether you want to go to an actual class."
             },
             {
                 "start": 131,
                 "end": 147,
-                "text": "Okay, there's one more place you might be interested in. That's got a rather strange name. It's called the Arreza Centre. That's spelled A-R-R-E-Z-A."
+                "text": "Okay, theres one more place you might be interested in. Thats got a rather strange name. Its called the Arreza Centre. Thats spelled A-R-R-E-Z-A."
             },
             {
                 "start": 147,
@@ -112,67 +112,67 @@ const PODCAST_DATA = [
             {
                 "start": 148,
                 "end": 157,
-                "text": "They've got a very good reputation. They do a bit of meat and fish cookery, but they mostly specialize in vegetarian dishes."
+                "text": "Theyve got a very good reputation. They do a bit of meat and fish cookery, but they mostly specialize in vegetarian dishes."
             },
             {
                 "start": 157,
                 "end": 169,
-                "text": "Right. That's certainly an area I'd like to learn more about. I've got lots of friends who don't eat meat. In fact, I think I might have seen that school today. Is it just by the market?"
+                "text": "Right. Thats certainly an area Id like to learn more about. Ive got lots of friends who dont eat meat. In fact, I think I might have seen that school today. Is it just by the market?"
             },
             {
                 "start": 169,
                 "end": 189,
-                "text": "That's right. So they don't have any problem getting their ingredients. They're right next door. And they also offer a special two-hour course in how to use a knife. They cover all the different skills: buying them, sharpening, chopping techniques. It gets booked up quickly, though, so you'd need to check it was available."
+                "text": "Thats right. So they dont have any problem getting their ingredients. Theyre right next door. And they also offer a special two-hour course in how to use a knife. They cover all the different skills: buying them, sharpening, chopping techniques. It gets booked up quickly, though, so youd need to check it was available."
             },
             {
                 "start": 189,
                 "end": 199,
-                "text": "Right. Well, thank you very much. I'll go and check that out..."
+                "text": "Right. Well, thank you very much. Ill go and check that out..."
             },
             {
                 "start": 199,
                 "end": 216,
-                "text": "Good evening, everyone. My name's Phil Sutton, and I'm chairman of the Highways Committee. We've called this meeting to inform members of the public about the new regulations for traffic and parking we're proposing for Granford."
+                "text": "Good evening, everyone. My names Phil Sutton, and Im chairman of the Highways Committee. Weve called this meeting to inform members of the public about the new regulations for traffic and parking were proposing for Granford."
             },
             {
                 "start": 216,
                 "end": 248,
-                "text": "I'll start by summarizing these changes before we open the meeting to questions. So, why do we need to make these changes to traffic systems in Granford? Well, we're very aware that traffic is becoming an increasing problem. It's been especially noticeable with the increase in heavy traffic while they've been building the new hospital. But it's the overall rise in the volume of traffic of all kinds that's concerning us."
+                "text": "Ill start by summarizing these changes before we open the meeting to questions. So, why do we need to make these changes to traffic systems in Granford? Well, were very aware that traffic is becoming an increasing problem. Its been especially noticeable with the increase in heavy traffic while theyve been building the new hospital. But its the overall rise in the volume of traffic of all kinds thats concerning us."
             },
             {
                 "start": 248,
                 "end": 291,
-                "text": "To date, there's not been any increase in traffic accidents, but that's not something we want to see happen, obviously. We recently carried out a survey of local residents, and their responses were interesting. People were very concerned about the lack of visibility on some roads due to cars parked along the sides of the roads. We'd expected complaints about the congestion near the school when parents are dropping off their children or picking them up, but this wasn't on top of the list. And nor were noise and fumes from trucks and lorries, though they were mentioned by some people."
+                "text": "To date, theres not been any increase in traffic accidents, but thats not something we want to see happen, obviously. We recently carried out a survey of local residents, and their responses were interesting. People were very concerned about the lack of visibility on some roads due to cars parked along the sides of the roads. Wed expected complaints about the congestion near the school when parents are dropping off their children or picking them up, but this wasnt on top of the list. And nor were noise and fumes from trucks and lorries, though they were mentioned by some people."
             },
             {
                 "start": 291,
                 "end": 324,
-                "text": "We think these new traffic regulations would make a lot of difference. But we still have a long way to go. We've managed to keep our proposals within budget, just, so they can be covered by the council. But of course, it's no good introducing new regulations if we don't have a way of making sure that everyone obeys them. And that's an area we're still working on with the help of representatives from the police force."
+                "text": "We think these new traffic regulations would make a lot of difference. But we still have a long way to go. Weve managed to keep our proposals within budget, just, so they can be covered by the council. But of course, its no good introducing new regulations if we dont have a way of making sure that everyone obeys them. And thats an area were still working on with the help of representatives from the police force."
             },
             {
                 "start": 324,
                 "end": 352,
-                "text": "Okay, so this slide shows a map of the central area of Granford with the High Street in the middle and School Road on the right. Now, we already have a set of traffic lights in the High Street at the junction with Station Road, but we're planning to have another set at the other end, at the School Road junction, to regulate the flow of traffic along the High Street."
+                "text": "Okay, so this slide shows a map of the central area of Granford with the High Street in the middle and School Road on the right. Now, we already have a set of traffic lights in the High Street at the junction with Station Road, but were planning to have another set at the other end, at the School Road junction, to regulate the flow of traffic along the High Street."
             },
             {
                 "start": 352,
                 "end": 377,
-                "text": "We've decided we definitely need a pedestrian crossing. We considered putting this on School Road just outside the school, but in the end, we decided that could lead to a lot of traffic congestion. So we decided to locate it on the High Street, crossing the road in front of the supermarket. That's a very busy area, so it should help things there."
+                "text": "Weve decided we definitely need a pedestrian crossing. We considered putting this on School Road just outside the school, but in the end, we decided that could lead to a lot of traffic congestion. So we decided to locate it on the High Street, crossing the road in front of the supermarket. Thats a very busy area, so it should help things there."
             },
             {
                 "start": 377,
                 "end": 393,
-                "text": "We are proposing some changes to parking. At present, parking isn't allowed on the High Street outside the library, but we're going to change that and allow parking there. But not at the other end of the High Street near School Road."
+                "text": "We are proposing some changes to parking. At present, parking isnt allowed on the High Street outside the library, but were going to change that and allow parking there. But not at the other end of the High Street near School Road."
             },
             {
                 "start": 393,
                 "end": 412,
-                "text": "There'll be a new \"No Parking\" sign on School Road, just by the entrance to the school, forbidding parking for 25 meters. This should improve visibility for drivers and pedestrians, especially on the bend just to the north of the school."
+                "text": "Therell be a new \"No Parking\" sign on School Road, just by the entrance to the school, forbidding parking for 25 meters. This should improve visibility for drivers and pedestrians, especially on the bend just to the north of the school."
             },
             {
                 "start": 412,
                 "end": 433,
-                "text": "As far as disabled drivers are concerned, at present, they have parking outside the supermarket, but lorries also use those spaces. So we've got two new disabled parking spaces on the side road up towards the bank. It's not ideal, but probably better than the present arrangement."
+                "text": "As far as disabled drivers are concerned, at present, they have parking outside the supermarket, but lorries also use those spaces. So weve got two new disabled parking spaces on the side road up towards the bank. Its not ideal, but probably better than the present arrangement."
             },
             {
                 "start": 433,
@@ -182,328 +182,316 @@ const PODCAST_DATA = [
             {
                 "start": 447,
                 "end": 467,
-                "text": "Finally, we've introduced new restrictions on loading and unloading for the supermarket, so lorries will only be allowed to stop there before 8:00 AM. That's the supermarket on School Road. We kept to the existing arrangements with the High Street supermarket."
+                "text": "Finally, weve introduced new restrictions on loading and unloading for the supermarket, so lorries will only be allowed to stop there before 8:00 AM. Thats the supermarket on School Road. We kept to the existing arrangements with the High Street supermarket."
             },
             {
                 "start": 467,
-                "end": 473,
-                "text": "Okay, so that's about it. Now, if."
-            }
-        ]
-    },
-    {
-        "id": "p-2",
-        "title": "EnglishPodcast02",
-        "speaker": "Unknown Speaker",
-        "level": "Podcast Level",
-        "desc": "Luyện nghe bài học tiếng Anh chủ đề: EnglishPodcast02.",
-        "audioUrl": "podcasts/EnglishPodcast02.mp3",
-        "image": "🎙️",
-        "duration": "Auto",
-        "transcript": [
+                "end": 472,
+                "text": "Okay, so thats about it. Now, if."
+            },
             {
-                "start": 0,
-                "end": 4,
+                "start": 472,
+                "end": 476,
                 "text": "Section 3."
             },
             {
-                "start": 4,
-                "end": 11,
+                "start": 476,
+                "end": 483,
                 "text": "We’ve got to choose a topic for our experiment, haven’t we, Jack? Were you thinking of something to do with seeds?"
             },
             {
-                "start": 11,
-                "end": 21,
+                "start": 483,
+                "end": 493,
                 "text": "Hmm, that’s right. I thought we could look at seed germination—how a seed begins to grow."
             },
             {
-                "start": 21,
-                "end": 28,
+                "start": 493,
+                "end": 500,
                 "text": "Okay. Any particular reason? I know you’re hoping to work in plant science eventually."
             },
             {
-                "start": 28,
-                "end": 43,
+                "start": 500,
+                "end": 515,
                 "text": "Yeah, but practically everything we do is going to feed into that. No, there’s an optional module on seed structure and function in the third year that I might do. So, I thought it might be useful for that."
             },
             {
-                "start": 43,
-                "end": 48,
+                "start": 515,
+                "end": 520,
                 "text": "If I choose that option, I don’t have to do a dissertation module."
             },
             {
-                "start": 48,
-                "end": 49,
+                "start": 520,
+                "end": 521,
                 "text": "Good idea."
             },
             {
-                "start": 49,
-                "end": 64,
+                "start": 521,
+                "end": 536,
                 "text": "Hmm, well, I thought for this experiment we could look at the relationship between seed size and the way the seeds are planted. So we could plant different-sized seeds in different ways and see which grow best."
             },
             {
-                "start": 64,
-                "end": 68,
+                "start": 536,
+                "end": 540,
                 "text": "Okay. We’d need to allow time for the seeds to come up."
             },
             {
-                "start": 68,
-                "end": 77,
+                "start": 540,
+                "end": 549,
                 "text": "That should be fine if we start now. A lot of the other possible experiments need quite a bit longer."
             },
             {
-                "start": 77,
-                "end": 90,
+                "start": 549,
+                "end": 562,
                 "text": "So that’d make it a good one to choose. And I don’t suppose it’d need much equipment. We’re not doing chemical analysis or anything. Though that’s not really an issue—we’ve got plenty of equipment in the laboratory."
             },
             {
-                "start": 90,
-                "end": 96,
+                "start": 562,
+                "end": 568,
                 "text": "Yeah. We need to have a word with the tutor if we’re going to go ahead with it, though."
             },
             {
-                "start": 96,
-                "end": 104,
-                "text": "I’m sure our aim's okay. It’s not very ambitious, but the assignment's only ten percent of our final mark, isn’t it?"
-            },
-            {
-                "start": 104,
-                "end": 107,
-                "text": "But we need to be sure we’re the only ones doing it."
-            },
-            {
-                "start": 107,
-                "end": 115,
-                "text": "Yeah, it’s only five percent, actually. But it’d be a bit boring if everyone was doing it."
-            },
-            {
-                "start": 115,
-                "end": 119,
-                "text": "Did you read that book on seed germination on our reading list?"
-            },
-            {
-                "start": 119,
-                "end": 120,
-                "text": "The one by Graves?"
-            },
-            {
-                "start": 120,
-                "end": 133,
-                "text": "Hmm. I looked through it for my last experiment, though it wasn’t all that relevant there. It would be for this experiment, though. I found it quite hard to follow. Lots about the theory, which I hadn’t expected."
-            },
-            {
-                "start": 133,
-                "end": 145,
-                "text": "Yes, I’d been hoping for something more practical. It does include references to the recent findings on genetically modified seeds, though."
-            },
-            {
-                "start": 145,
-                "end": 148,
-                "text": "Yes, that was interesting."
-            },
-            {
-                "start": 148,
-                "end": 152,
-                "text": "I read an article about seed germination by Lee Hall."
-            },
-            {
-                "start": 152,
-                "end": 159,
-                "text": "About seeds that lie in the ground for ages and only germinate after a fire?"
-            },
-            {
-                "start": 159,
-                "end": 171,
-                "text": "Hmm, that’s the one. I knew a bit about it already, but not about this research. His analysis of figures comparing the times of the fires and the proportion of seeds that germinated was done in a lot of detail. Very impressive."
-            },
-            {
-                "start": 171,
-                "end": 179,
-                "text": "Was that the article with the illustrations of early stages of plant development? They were very clear."
-            },
-            {
-                "start": 179,
-                "end": 183,
-                "text": "I think those diagrams were in another article."
-            },
-            {
-                "start": 183,
-                "end": 198,
-                "text": "Anyway, shall we have a look at the procedure for our experiment? We’ll need to get going with it quite soon. Right. So, the first thing we have to do is find our seeds."
-            },
-            {
-                "start": 198,
-                "end": 208,
-                "text": "I think vegetable seeds would be best. And, obviously, they mustn’t all be the same size. So, how many sorts do we need? About four different ones?"
-            },
-            {
-                "start": 208,
-                "end": 214,
-                "text": "I think that would be enough. There’ll be quite a large number of seeds for each one."
-            },
-            {
-                "start": 214,
-                "end": 225,
-                "text": "Then, for each seed, we need to find out how much it weighs, and also measure its dimensions. And we need to keep a careful record of all that."
-            },
-            {
-                "start": 225,
-                "end": 236,
-                "text": "That’ll be quite time-consuming. And we also need to decide how deep we’re going to plant the seeds—right on the surface, a few millimeters down, or several centimeters."
-            },
-            {
-                "start": 236,
-                "end": 246,
-                "text": "Okay. So, then we get planting. Do you think we can plant several seeds together in the same plant pot?"
-            },
-            {
-                "start": 246,
-                "end": 250,
-                "text": "No, I think we need a different one for each seed."
-            },
-            {
-                "start": 250,
-                "end": 261,
-                "text": "Hmm, right. And we’ll need to label them. We can use different-colored labels. Then we wait for the seeds to germinate. I reckon that’ll be about three weeks, depending on what the weather's like."
-            },
-            {
-                "start": 261,
-                "end": 269,
-                "text": "Then we see if our plants have come up and write down how tall they’ve grown."
-            },
-            {
-                "start": 269,
-                "end": 275,
-                "text": "Then all we have to do is look at our numbers and see if there’s any relation between them. That’s right. So then..."
-            },
-            {
-                "start": 275,
-                "end": 279,
-                "text": "Section 4."
-            },
-            {
-                "start": 279,
-                "end": 291,
-                "text": "Hi. Today we’re going to be looking at animals in urban environments. And I’m going to be telling you about some research on how they’re affected by these environments."
-            },
-            {
-                "start": 291,
-                "end": 306,
-                "text": "Now, in evolutionary terms, urban environments represent huge upheavals—the sorts of massive changes that usually happen over millions of years."
-            },
-            {
-                "start": 306,
-                "end": 314,
-                "text": "And we used to think that only a few species could adapt to this new environment."
-            },
-            {
-                "start": 314,
-                "end": 326,
-                "text": "One species which is well known as being highly adaptable is the crow, and there’ve been various studies about how they managed to learn new skills."
-            },
-            {
-                "start": 326,
-                "end": 341,
-                "text": "Another successful species is the pigeon, because they’re able to perch on ledges on the walls of city buildings, just like they once perched on cliffs by the sea."
-            },
-            {
-                "start": 341,
-                "end": 358,
-                "text": "But, in fact, we’re now finding that these urban immigrants were just the start of a more general movement of animals into cities, and of adaptation by these animals to city life."
-            },
-            {
-                "start": 358,
-                "end": 371,
-                "text": "And one thing that researchers are finding especially interesting is the speed with which they’re doing this. We’re not talking about gradual evolution here—these animals are changing fast."
-            },
-            {
-                "start": 371,
-                "end": 375,
-                "text": "Let me tell you about some of the studies that have been carried out in this area."
-            },
-            {
-                "start": 375,
-                "end": 393,
-                "text": "So, in the University of Minnesota, a biologist called Emily Snell-Rood and her colleagues looked at specimens of urbanized small mammals, such as mice and gophers, that had been collected in Minnesota and that are now kept in museums there."
-            },
-            {
-                "start": 393,
-                "end": 413,
-                "text": "And she looked at specimens that had been collected over the last hundred years, which is a very short time in evolutionary terms. And she found that during that time, these small mammals had experienced a jump in brain size when compared to rural mammals."
-            },
-            {
-                "start": 413,
-                "end": 429,
-                "text": "Now, we can’t be sure this means they’re more intelligent, but since the sizes of other parts of the body didn’t change, it does suggest that something cognitive was going down."
-            },
-            {
-                "start": 429,
-                "end": 440,
-                "text": "And Snell-Rood thinks that this change might reflect the cognitive demands of adjusting to city life—having to look in different places to find food, for example, and coping with a whole new set of dangers."
-            },
-            {
-                "start": 440,
-                "end": 458,
-                "text": "Then over in Germany, at the Max Planck Institute, there’s another biologist called Katarina Miranda, who’s done some experiments with blackbirds living in urban and rural areas. And she’s been looking not at their anatomy, but at their behavior."
-            },
-            {
-                "start": 458,
-                "end": 468,
-                "text": "So, as you might expect, she’s found that the urban blackbirds tend to be quite bold. They’re prepared to face up to a lot of threats that would frighten away their country counterparts."
-            },
-            {
-                "start": 468,
-                "end": 482,
-                "text": "But there’s one type of situation that does seem to frighten the urban blackbirds, and that’s anything new—anything they haven’t experienced before."
-            },
-            {
-                "start": 482,
-                "end": 492,
-                "text": "And if you think about it, that’s quite sensible for a bird living in the city."
-            },
-            {
-                "start": 492,
-                "end": 502,
-                "text": "Jonathan Atwell, in Indiana University, is looking at how a range of animals respond to urban environments."
-            },
-            {
-                "start": 502,
-                "end": 516,
-                "text": "He’s found that when they’re under stress, their endocrine systems react by reducing the amount of hormones, such as corticosterone, into their blood. It’s a sensible-seeming adaptation."
-            },
-            {
-                "start": 516,
-                "end": 524,
-                "text": "A rat that gets scared every time a subway train rolls past won’t be very successful."
-            },
-            {
-                "start": 524,
-                "end": 536,
-                "text": "There’s just one more study I’d like to mention, which is by Sarah Parton and her team. And they’ve been looking at how squirrels communicate in an urban environment."
-            },
-            {
-                "start": 536,
-                "end": 548,
-                "text": "And they’ve found that a routine part of their communication is carried out by waving their tails. You do also see this in the country, but it’s much more prevalent in cities, possibly because it’s effective in a noisy environment."
-            },
-            {
-                "start": 548,
-                "end": 556,
-                "text": "So, what are the long-term implications of this?"
-            },
-            {
-                "start": 556,
-                "end": 567,
-                "text": "One possibility is that we may see completely new species developing in cities. But on the other hand, it’s possible that not all of these adaptations will be permanent."
-            },
-            {
-                "start": 567,
+                "start": 568,
                 "end": 576,
-                "text": "Once the animal's got accustomed to its new environment, it may no longer need the features it’s developed."
+                "text": "I’m sure our aims okay. It’s not very ambitious, but the assignments only ten percent of our final mark, isn’t it?"
             },
             {
                 "start": 576,
-                "end": 583,
+                "end": 579,
+                "text": "But we need to be sure we’re the only ones doing it."
+            },
+            {
+                "start": 579,
+                "end": 587,
+                "text": "Yeah, it’s only five percent, actually. But it’d be a bit boring if everyone was doing it."
+            },
+            {
+                "start": 587,
+                "end": 591,
+                "text": "Did you read that book on seed germination on our reading list?"
+            },
+            {
+                "start": 591,
+                "end": 592,
+                "text": "The one by Graves?"
+            },
+            {
+                "start": 592,
+                "end": 605,
+                "text": "Hmm. I looked through it for my last experiment, though it wasn’t all that relevant there. It would be for this experiment, though. I found it quite hard to follow. Lots about the theory, which I hadn’t expected."
+            },
+            {
+                "start": 605,
+                "end": 617,
+                "text": "Yes, I’d been hoping for something more practical. It does include references to the recent findings on genetically modified seeds, though."
+            },
+            {
+                "start": 617,
+                "end": 620,
+                "text": "Yes, that was interesting."
+            },
+            {
+                "start": 620,
+                "end": 624,
+                "text": "I read an article about seed germination by Lee Hall."
+            },
+            {
+                "start": 624,
+                "end": 631,
+                "text": "About seeds that lie in the ground for ages and only germinate after a fire?"
+            },
+            {
+                "start": 631,
+                "end": 643,
+                "text": "Hmm, that’s the one. I knew a bit about it already, but not about this research. His analysis of figures comparing the times of the fires and the proportion of seeds that germinated was done in a lot of detail. Very impressive."
+            },
+            {
+                "start": 643,
+                "end": 651,
+                "text": "Was that the article with the illustrations of early stages of plant development? They were very clear."
+            },
+            {
+                "start": 651,
+                "end": 655,
+                "text": "I think those diagrams were in another article."
+            },
+            {
+                "start": 655,
+                "end": 670,
+                "text": "Anyway, shall we have a look at the procedure for our experiment? We’ll need to get going with it quite soon. Right. So, the first thing we have to do is find our seeds."
+            },
+            {
+                "start": 670,
+                "end": 680,
+                "text": "I think vegetable seeds would be best. And, obviously, they mustn’t all be the same size. So, how many sorts do we need? About four different ones?"
+            },
+            {
+                "start": 680,
+                "end": 686,
+                "text": "I think that would be enough. There’ll be quite a large number of seeds for each one."
+            },
+            {
+                "start": 686,
+                "end": 697,
+                "text": "Then, for each seed, we need to find out how much it weighs, and also measure its dimensions. And we need to keep a careful record of all that."
+            },
+            {
+                "start": 697,
+                "end": 708,
+                "text": "That’ll be quite time-consuming. And we also need to decide how deep we’re going to plant the seeds—right on the surface, a few millimeters down, or several centimeters."
+            },
+            {
+                "start": 708,
+                "end": 718,
+                "text": "Okay. So, then we get planting. Do you think we can plant several seeds together in the same plant pot?"
+            },
+            {
+                "start": 718,
+                "end": 722,
+                "text": "No, I think we need a different one for each seed."
+            },
+            {
+                "start": 722,
+                "end": 733,
+                "text": "Hmm, right. And we’ll need to label them. We can use different-colored labels. Then we wait for the seeds to germinate. I reckon that’ll be about three weeks, depending on what the weathers like."
+            },
+            {
+                "start": 733,
+                "end": 741,
+                "text": "Then we see if our plants have come up and write down how tall they’ve grown."
+            },
+            {
+                "start": 741,
+                "end": 747,
+                "text": "Then all we have to do is look at our numbers and see if there’s any relation between them. That’s right. So then..."
+            },
+            {
+                "start": 747,
+                "end": 751,
+                "text": "Section 4."
+            },
+            {
+                "start": 751,
+                "end": 763,
+                "text": "Hi. Today we’re going to be looking at animals in urban environments. And I’m going to be telling you about some research on how they’re affected by these environments."
+            },
+            {
+                "start": 763,
+                "end": 778,
+                "text": "Now, in evolutionary terms, urban environments represent huge upheavals—the sorts of massive changes that usually happen over millions of years."
+            },
+            {
+                "start": 778,
+                "end": 786,
+                "text": "And we used to think that only a few species could adapt to this new environment."
+            },
+            {
+                "start": 786,
+                "end": 798,
+                "text": "One species which is well known as being highly adaptable is the crow, and there’ve been various studies about how they managed to learn new skills."
+            },
+            {
+                "start": 798,
+                "end": 813,
+                "text": "Another successful species is the pigeon, because they’re able to perch on ledges on the walls of city buildings, just like they once perched on cliffs by the sea."
+            },
+            {
+                "start": 813,
+                "end": 830,
+                "text": "But, in fact, we’re now finding that these urban immigrants were just the start of a more general movement of animals into cities, and of adaptation by these animals to city life."
+            },
+            {
+                "start": 830,
+                "end": 843,
+                "text": "And one thing that researchers are finding especially interesting is the speed with which they’re doing this. We’re not talking about gradual evolution here—these animals are changing fast."
+            },
+            {
+                "start": 843,
+                "end": 847,
+                "text": "Let me tell you about some of the studies that have been carried out in this area."
+            },
+            {
+                "start": 847,
+                "end": 865,
+                "text": "So, in the University of Minnesota, a biologist called Emily Snell-Rood and her colleagues looked at specimens of urbanized small mammals, such as mice and gophers, that had been collected in Minnesota and that are now kept in museums there."
+            },
+            {
+                "start": 865,
+                "end": 885,
+                "text": "And she looked at specimens that had been collected over the last hundred years, which is a very short time in evolutionary terms. And she found that during that time, these small mammals had experienced a jump in brain size when compared to rural mammals."
+            },
+            {
+                "start": 885,
+                "end": 901,
+                "text": "Now, we can’t be sure this means they’re more intelligent, but since the sizes of other parts of the body didn’t change, it does suggest that something cognitive was going down."
+            },
+            {
+                "start": 901,
+                "end": 912,
+                "text": "And Snell-Rood thinks that this change might reflect the cognitive demands of adjusting to city life—having to look in different places to find food, for example, and coping with a whole new set of dangers."
+            },
+            {
+                "start": 912,
+                "end": 930,
+                "text": "Then over in Germany, at the Max Planck Institute, there’s another biologist called Katarina Miranda, who’s done some experiments with blackbirds living in urban and rural areas. And she’s been looking not at their anatomy, but at their behavior."
+            },
+            {
+                "start": 930,
+                "end": 940,
+                "text": "So, as you might expect, she’s found that the urban blackbirds tend to be quite bold. They’re prepared to face up to a lot of threats that would frighten away their country counterparts."
+            },
+            {
+                "start": 940,
+                "end": 954,
+                "text": "But there’s one type of situation that does seem to frighten the urban blackbirds, and that’s anything new—anything they haven’t experienced before."
+            },
+            {
+                "start": 954,
+                "end": 964,
+                "text": "And if you think about it, that’s quite sensible for a bird living in the city."
+            },
+            {
+                "start": 964,
+                "end": 974,
+                "text": "Jonathan Atwell, in Indiana University, is looking at how a range of animals respond to urban environments."
+            },
+            {
+                "start": 974,
+                "end": 988,
+                "text": "He’s found that when they’re under stress, their endocrine systems react by reducing the amount of hormones, such as corticosterone, into their blood. It’s a sensible-seeming adaptation."
+            },
+            {
+                "start": 988,
+                "end": 996,
+                "text": "A rat that gets scared every time a subway train rolls past won’t be very successful."
+            },
+            {
+                "start": 996,
+                "end": 1008,
+                "text": "There’s just one more study I’d like to mention, which is by Sarah Parton and her team. And they’ve been looking at how squirrels communicate in an urban environment."
+            },
+            {
+                "start": 1008,
+                "end": 1020,
+                "text": "And they’ve found that a routine part of their communication is carried out by waving their tails. You do also see this in the country, but it’s much more prevalent in cities, possibly because it’s effective in a noisy environment."
+            },
+            {
+                "start": 1020,
+                "end": 1028,
+                "text": "So, what are the long-term implications of this?"
+            },
+            {
+                "start": 1028,
+                "end": 1039,
+                "text": "One possibility is that we may see completely new species developing in cities. But on the other hand, it’s possible that not all of these adaptations will be permanent."
+            },
+            {
+                "start": 1039,
+                "end": 1048,
+                "text": "Once the animals got accustomed to its new environment, it may no longer need the features it’s developed."
+            },
+            {
+                "start": 1048,
+                "end": 1055,
                 "text": "So now we’ve had a look at adaptation..."
             }
         ]
