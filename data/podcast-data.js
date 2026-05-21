@@ -513,963 +513,318 @@ const PODCAST_DATA = [
             },
             {
                 "start": 3.5,
-                "end": 7.7,
-                "text": "- Hello, South City Cycling Club. - Oh, hi."
-            },
-            {
-                "start": 8.7,
-                "end": 13.606,
-                "text": "Um, I want to find out about joining the club."
-            },
-            {
-                "start": 13.606,
-                "end": 16.056,
-                "text": "Right, I can help you there."
-            },
-            {
-                "start": 16.056,
                 "end": 19.986,
-                "text": "I'm the club secretary, and my name's Jim Hunter."
+                "text": "- Hello, South City Cycling Club. - Oh, hi. Um, I want to find out about joining the club. - Right, I can help you there. I'm the club secretary, and my name's Jim Hunter."
             },
             {
                 "start": 20.056,
-                "end": 24.676,
-                "text": "- Oh, hi Jim. - So, are you interested in membership for yourself?"
-            },
-            {
-                "start": 24.676,
                 "end": 26.676,
-                "text": "- That's right. - Okay."
+                "text": "- Oh, hi Jim. - So, are you interested in membership for yourself? - That's right. - Okay."
             },
             {
                 "start": 27.208,
-                "end": 30.708,
-                "text": "Well, there are basically two types of adult membership."
-            },
-            {
-                "start": 30.708,
-                "end": 35.906,
-                "text": "If you're pretty serious about cycling, there's the full membership."
-            },
-            {
-                "start": 35.906,
-                "end": 40.544,
-                "text": "That costs $260, and that covers you,"
-            },
-            {
-                "start": 40.544,
-                "end": 45.004,
-                "text": "not just for ordinary cycling, but also for races,"
-            },
-            {
-                "start": 45.004,
                 "end": 49.744,
-                "text": "both here in the city and also in other parts of Australia."
+                "text": "Well, there are basically two types of adult membership. If you're pretty serious about cycling, there's the full membership. That costs $260, and that covers you, not just for ordinary cycling, but also for races, both here in the city and also in other parts of Australia."
             },
             {
                 "start": 49.744,
-                "end": 52.467,
-                "text": "- Right. Well, I'm not really up to that standard. - Okay."
-            },
-            {
-                "start": 53.157,
                 "end": 57.554,
-                "text": "I was more interested in just joining a group to do some cycling in my free time."
+                "text": "- Right. Well, I'm not really up to that standard. I was more interested in just joining a group to do some cycling in my free time."
             },
             {
                 "start": 57.554,
-                "end": 61.054,
-                "text": "- Sure, that's why most people join. - Yeah."
-            },
-            {
-                "start": 61.054,
-                "end": 66.19800000000001,
-                "text": "So, in that case, you'd be better with the recreational membership."
-            },
-            {
-                "start": 66.19800000000001,
-                "end": 70.444,
-                "text": "That's $108 if you're over 19,"
-            },
-            {
-                "start": 70.445,
                 "end": 73.388,
-                "text": "and $95 if you're under."
+                "text": "- Sure, that's why most people join. So, in that case, you'd be better with the recreational membership. That's $108 if you're over 19, and $95 if you're under."
             },
             {
                 "start": 73.387,
-                "end": 75.91,
-                "text": "- I'm 25. - Okay."
-            },
-            {
-                "start": 75.91,
-                "end": 78.91,
-                "text": "It's paid quarterly, and you can upgrade it later"
-            },
-            {
-                "start": 78.91,
                 "end": 82.41,
-                "text": "to the full membership if you want to, of course."
+                "text": "- I'm 25. - Okay. It's paid quarterly, and you can upgrade it later to the full membership if you want to, of course."
             },
             {
                 "start": 82.41,
-                "end": 87.41,
-                "text": "Now, both types of membership include the club fee of $20."
-            },
-            {
-                "start": 87.41,
-                "end": 91.91,
-                "text": "They also provide insurance in case you have an accident,"
-            },
-            {
-                "start": 91.91,
                 "end": 95.41,
-                "text": "though we hope you won't need that, of course."
+                "text": "Now, both types of membership include the club fee of $20. They also provide insurance in case you have an accident, though we hope you won't need that, of course."
             },
             {
                 "start": 95.41,
-                "end": 99.91,
-                "text": "- No. Okay. Well, I'll go with the recreational membership, I think. - Right."
+                "end": 105.41,
+                "text": "- No. Okay. Well, I'll go with the recreational membership, I think. And that allows me to join in the club activities and so on? - That's right."
             },
             {
-                "start": 99.91,
-                "end": 104.41,
-                "text": "- And that allows me to join in the club activities and so on? - That's right."
+                "start": 105.41,
+                "end": 113.91,
+                "text": "And once you're a member of the club, you're also permitted to wear our kit when you're out cycling. It's green and white."
             },
             {
-                "start": 104.41,
-                "end": 107.91,
-                "text": "And once you're a member of the club, you're also permitted"
+                "start": 113.91,
+                "end": 132.41,
+                "text": "- Yes, I've seen cyclists wearing it. So can I buy that at the club? - Ah, no. It's made to order by a company in Brisbane. You can find them online. They're called Jerry's. That's J-E-R-R-I-Z."
             },
             {
-                "start": 107.91,
-                "end": 111.91,
-                "text": "to wear our kit when you're out cycling. It's green and white."
+                "start": 132.91,
+                "end": 142.91,
+                "text": "You can use your membership number to put in an order on their website. - Okay. Now can you tell me a bit about the rides I can do? - Sure."
             },
             {
-                "start": 111.91,
-                "end": 116.41,
-                "text": "- Yes, I've seen cyclists wearing it. So can I buy that at the club? - Ah, no."
+                "start": 142.91,
+                "end": 155.41,
+                "text": "So, we have training rides pretty well every morning, and they're a really good way of improving your cycling skills as well as your general level of fitness, but they're different levels."
             },
             {
-                "start": 116.41,
-                "end": 120.91,
-                "text": "It's made to order by a company in Brisbane. You can find them online."
+                "start": 155.41,
+                "end": 175.91,
+                "text": "Level A is pretty fast. You're looking at about 30 or 35 kilometers an hour. If you can do about 25 kilometers an hour, you'd probably be Level B. And then Level C are the novices who stay at about 15 kilometers per hour."
             },
             {
-                "start": 120.91,
-                "end": 126.91,
-                "text": "They're called Jerry's. That's J-E-R-R-I-Z."
+                "start": 175.41,
+                "end": 197.41,
+                "text": "- Right. Well, I reckon I'd be Level B. So when are the sessions for that level? - Uh... There are a couple each week. They're both early morning sessions. There's one on Tuesdays, and for that one, you meet at 5:30 AM, and the meeting point's the stadium. Do you know where that is?"
             },
             {
-                "start": 126.91,
-                "end": 130.91,
-                "text": "You can use your membership number to put in an order on their website."
+                "start": 197.41,
+                "end": 210.91,
+                "text": "- Yes, it's quite near my home, in fact. Okay, and how about the other one? - That's on Thursdays. It starts at the same time, but they meet at the main gate to the park."
             },
             {
-                "start": 130.91,
-                "end": 133.91,
-                "text": "- Okay. Now can you tell me a bit about the rides I can do? - Sure."
+                "start": 210.91,
+                "end": 227.91,
+                "text": "- Is that the one just past the shopping mall? - That's it. - So, how long are the rides? - Ah, they're about an hour and a half. So, if you have a job, it's easy to fit in before you go to work."
             },
             {
-                "start": 133.91,
-                "end": 138.91,
-                "text": "So, we have training rides pretty well every morning, and they're a really good way"
+                "start": 227.91,
+                "end": 230.41,
+                "text": "- And the members often go somewhere for coffee afterwards, so it's quite a social event. - Okay, that sounds good. I've only just moved to the city, so I don't actually know many people yet."
             },
             {
-                "start": 138.91,
-                "end": 143.91,
-                "text": "of improving your cycling skills as well as your general level of fitness,"
+                "start": 230.41,
+                "end": 244.41,
+                "text": "- Well, it's a great way to meet people. - And does each ride have a leader? - Sometimes, but not always, but you don't really need one. The group members on the rides support one another anyway."
             },
             {
-                "start": 143.91,
-                "end": 146.41,
-                "text": "but they're different levels."
+                "start": 244.41,
+                "end": 256.41,
+                "text": "- How would we know where to go? - If you check the club website, you'll see that the route for each ride is clearly marked. So, you can just print that out and take it along with you."
             },
             {
-                "start": 146.41,
-                "end": 150.91,
-                "text": "Level A is pretty fast. You're looking at about 30 or 35 kilometers an hour."
-            },
-            {
-                "start": 150.91,
-                "end": 156.41,
-                "text": "If you can do about 25 kilometers an hour, you'd probably be Level B."
-            },
-            {
-                "start": 156.41,
-                "end": 161.41,
-                "text": "And then Level C are the novices who stay at about 15 kilometers per hour."
-            },
-            {
-                "start": 161.41,
-                "end": 166.41,
-                "text": "- Right. Well, I reckon I'd be Level B. So when are the sessions for that level? - Uh..."
-            },
-            {
-                "start": 166.41,
-                "end": 171.41,
-                "text": "There are a couple each week. They're both early morning sessions."
-            },
-            {
-                "start": 171.41,
-                "end": 174.91,
-                "text": "There's one on Tuesdays, and for that one, you meet at 5:30 AM,"
-            },
-            {
-                "start": 174.91,
-                "end": 178.41,
-                "text": "and the meeting point's the stadium. Do you know where that is?"
-            },
-            {
-                "start": 178.41,
-                "end": 182.91,
-                "text": "- Yes, it's quite near my home, in fact. Okay, and how about the other one? - Right."
-            },
-            {
-                "start": 182.91,
-                "end": 187.91,
-                "text": "That's on Thursdays. It starts at the same time, but they meet at the main gate to the park."
-            },
-            {
-                "start": 187.91,
-                "end": 191.91,
-                "text": "- Is that the one just past the shopping mall? - That's it."
-            },
-            {
-                "start": 194.91,
-                "end": 198.91,
-                "text": "- So, how long are the rides? - Ah, they're about an hour and a half."
-            },
-            {
-                "start": 198.91,
-                "end": 202.91,
-                "text": "So, if you have a job, it's easy to fit in before you go to work."
-            },
-            {
-                "start": 202.91,
-                "end": 207.41,
-                "text": "And the members often go somewhere for coffee afterwards, so it's quite a social event."
-            },
-            {
-                "start": 207.41,
-                "end": 211.41,
-                "text": "- Okay, that sounds good. I've only just moved to the city, so I don't actually know many people yet. - Right."
-            },
-            {
-                "start": 211.41,
-                "end": 215.41,
-                "text": "- Well, it's a great way to meet people. - And does each ride have a leader?"
-            },
-            {
-                "start": 215.41,
-                "end": 219.91,
-                "text": "- Sometimes, but not always, but you don't really need one. - Okay."
-            },
-            {
-                "start": 219.91,
-                "end": 223.91,
-                "text": "The group members on the rides support one another anyway."
-            },
-            {
-                "start": 223.91,
-                "end": 227.41,
-                "text": "- How would we know where to go? - If you check the club website,"
-            },
-            {
-                "start": 227.41,
-                "end": 231.41,
-                "text": "you'll see that the route for each ride is clearly marked."
-            },
-            {
-                "start": 231.41,
-                "end": 234.91,
-                "text": "So, you can just print that out and take it along with you."
-            },
-            {
-                "start": 234.91,
-                "end": 240.41,
-                "text": "It's similar from one week to another, but it's not always exactly the same."
-            },
-            {
-                "start": 240.41,
-                "end": 243.91,
-                "text": "- And what do I need to bring? - Hmm, well, bring a bottle of water"
-            },
-            {
-                "start": 243.91,
-                "end": 247.91,
-                "text": "and your phone. You shouldn't use it while you're cycling, but have it with you."
-            },
-            {
-                "start": 247.91,
-                "end": 250.41,
-                "text": "- Right. - And in winter,"
-            },
-            {
-                "start": 250.41,
-                "end": 254.41,
-                "text": "it's well before sunrise when we set out, so you need to make sure your bike's got lights."
-            },
-            {
-                "start": 254.41,
-                "end": 258.91,
-                "text": "- That's okay. Well, thanks, Jim. I'd definitely like to join. - Great."
-            },
-            {
-                "start": 258.91,
-                "end": 262.91,
-                "text": "- So what's the best way of going about it? - Ah, you can..."
-            },
-            {
-                "start": 262.91,
-                "end": 268.91,
-                "text": "SECTION 2"
-            },
-            {
-                "start": 268.91,
-                "end": 272.90999999999997,
-                "text": "Thanks for coming, everyone. Okay, so this meeting is for new staff"
+                "start": 256.91,
+                "end": 272.40999999999997,
+                "text": "- It's similar from one week to another, but it's not always exactly the same. - And what do I need to bring? - Hmm, well, bring a bottle of water and your phone. You shouldn't use it while you're cycling, but have it with you."
             },
             {
                 "start": 272.90999999999997,
-                "end": 277.40999999999997,
-                "text": "and staff who haven't been involved with our volunteering projects yet."
+                "end": 277.90999999999997,
+                "text": "- Right. - And in winter, it's well before sunrise when we set out, so you need to make sure your bike's got lights."
             },
             {
-                "start": 277.40999999999997,
-                "end": 281.90999999999997,
-                "text": "So, basically, the idea is that we allow staff to give up some of their work time"
+                "start": 278.40999999999997,
+                "end": 287.90999999999997,
+                "text": "- That's okay. Well, thanks, Jim. I'd definitely like to join. So what's the best way of going about it? - Ah, you can..."
             },
             {
-                "start": 281.90999999999997,
-                "end": 286.40999999999997,
-                "text": "to help on various charity projects to benefit the local community."
+                "start": 290.90999999999997,
+                "end": 292.40999999999997,
+                "text": "SECTION 2"
             },
             {
-                "start": 286.40999999999997,
-                "end": 291.40999999999997,
-                "text": "We've been doing this for the last five years, and it's been very successful."
-            },
-            {
-                "start": 291.40999999999997,
-                "end": 296.40999999999997,
-                "text": "Participating doesn't necessarily involve a huge time commitment."
-            },
-            {
-                "start": 296.40999999999997,
-                "end": 300.91,
-                "text": "The company will pay for eight hours of your time."
-            },
-            {
-                "start": 300.91,
-                "end": 305.91,
-                "text": "That can be used over one or two days, all at once,"
-            },
-            {
-                "start": 305.91,
-                "end": 310.41,
-                "text": "or spread over several months throughout the year."
-            },
-            {
-                "start": 310.41,
+                "start": 293.40999999999997,
                 "end": 314.41,
-                "text": "There are some staff who enjoy volunteering so much,"
+                "text": "Thanks for coming, everyone. Okay, so this meeting is for new staff and staff who haven't been involved with our volunteering projects yet. So, basically, the idea is that we allow staff to give up some of their work time to help on various charity projects to benefit the local community."
             },
             {
                 "start": 314.41,
-                "end": 319.41,
-                "text": "they also give up their own free time for a couple of hours every week."
-            },
-            {
-                "start": 319.41,
-                "end": 323.91,
-                "text": "It's completely up to you. Obviously, many people will have family commitments"
-            },
-            {
-                "start": 323.91,
-                "end": 327.91,
-                "text": "and aren't as available as other members of staff."
-            },
-            {
-                "start": 327.91,
                 "end": 332.40999999999997,
-                "text": "Feedback from staff has been overwhelmingly positive,"
+                "text": "We've been doing this for the last five years, and it's been very successful. Participating doesn't necessarily involve a huge time commitment. The company will pay for eight hours of your time. That can be used over one or two days, all at once,"
             },
             {
                 "start": 332.40999999999997,
-                "end": 335.90999999999997,
-                "text": "because they felt they were doing something really useful."
+                "end": 354.40999999999997,
+                "text": "or spread over several months throughout the year. There are some staff who enjoy volunteering so much, they also give up their own free time for a couple of hours every week. It's completely up to you. Obviously, many people will have family commitments and aren't as available as other members of staff."
             },
             {
-                "start": 335.90999999999997,
-                "end": 340.90999999999997,
-                "text": "Nearly everyone agreed that volunteering made them feel more motivated at work."
+                "start": 354.40999999999997,
+                "end": 367.41,
+                "text": "Feedback from staff has been overwhelmingly positive, because they felt they were doing something really useful. Nearly everyone agreed that volunteering made them feel more motivated at work."
             },
             {
-                "start": 340.90999999999997,
-                "end": 345.40999999999997,
-                "text": "They also liked building relationships with the people in the local community"
+                "start": 367.41,
+                "end": 382.41,
+                "text": "They also liked building relationships with the people in the local community and felt valued by them. One or two people also said it was a good thing to have on their CVs."
             },
             {
-                "start": 345.40999999999997,
-                "end": 349.40999999999997,
-                "text": "and felt valued by them. One or two people also said"
+                "start": 382.41,
+                "end": 407.40999999999997,
+                "text": "One particularly successful project last year was the \"Get Working\" project. This was aimed at helping unemployed people in the area get back to work. Our staff were able to help them improve their telephone skills, such as writing down messages and speaking with confidence to potential customers, which they had found quite difficult."
             },
             {
-                "start": 349.40999999999997,
-                "end": 353.40999999999997,
-                "text": "it was a good thing to have on their CVs."
+                "start": 407.40999999999997,
+                "end": 431.41,
+                "text": "This is something many employers look for in job applicants, and something we all do without even thinking about every day at work. We've got an exciting new project starting this year. Up until now, we've mainly focused on projects to do with education and training, and we'll continue with our reading project in schools and our work with local charities."
             },
             {
-                "start": 353.40999999999997,
-                "end": 358.40999999999997,
-                "text": "One particularly successful project last year was the \"Get Working\" project."
+                "start": 431.41,
+                "end": 451.41,
+                "text": "But we've also agreed to help out on a conservation project in Redfern Park. So if any of you fancy being outside and getting your hands dirty, this is the project for you. I also wanted to mention the annual Digital Inclusion Day, which is coming up next month."
             },
             {
-                "start": 358.40999999999997,
-                "end": 362.91,
-                "text": "This was aimed at helping unemployed people in the area get back to work."
+                "start": 451.91,
+                "end": 466.40999999999997,
+                "text": "The aim of this is to help older people keep up with technology. And this year, instead of hosting the event in our own training facility, we're using the ICT suite at Hill College, as it can hold far more people."
             },
             {
-                "start": 362.91,
-                "end": 367.91,
-                "text": "Our staff were able to help them improve their telephone skills,"
+                "start": 466.40999999999997,
+                "end": 487.41,
+                "text": "We've invited over 60 people from the Silver Age Community Center to take part, so we'll need a lot of volunteers to help with this event. If you're interested in taking part, please go to the volunteering section of our website and complete the relevant form. We won't be providing any training for this,"
             },
             {
-                "start": 367.91,
-                "end": 372.41,
-                "text": "such as writing down messages and speaking with confidence to potential customers,"
+                "start": 487.41,
+                "end": 499.41,
+                "text": "but you'll be paired with an experienced volunteer if you've never done it before. By the way, don't forget to tell your manager about any volunteering activities you decide to do."
             },
             {
-                "start": 372.41,
-                "end": 376.41,
-                "text": "which they had found quite difficult."
+                "start": 499.41,
+                "end": 536.91,
+                "text": "The participants on the Digital Inclusion Day really benefited. The majority were in their 70s, though some were younger, and a few were even in their 90s. Quite a few owned both a computer and a mobile phone, but these tended to be outdated models."
             },
             {
-                "start": 376.41,
-                "end": 380.41,
-                "text": "This is something many employers look for in job applicants,"
+                "start": 536.91,
+                "end": 554.41,
+                "text": "They generally knew how to do simple things like send texts, but weren't aware of recent developments in mobile phone technology. A few were keen to learn, but most were quite dismissive at first. They couldn't see the point of updating their skills, but that soon changed."
             },
             {
-                "start": 380.41,
-                "end": 384.91,
-                "text": "and something we all do without even thinking about every day at work."
-            },
-            {
-                "start": 384.91,
-                "end": 389.41,
-                "text": "We've got an exciting new project starting this year."
-            },
-            {
-                "start": 389.41,
-                "end": 393.90999999999997,
-                "text": "Up until now, we've mainly focused on projects to do with education and training,"
-            },
-            {
-                "start": 393.90999999999997,
-                "end": 398.40999999999997,
-                "text": "and we'll continue with our reading project in schools and our work with local charities."
-            },
-            {
-                "start": 398.40999999999997,
-                "end": 403.40999999999997,
-                "text": "But we've also agreed to help out on a conservation project"
-            },
-            {
-                "start": 403.40999999999997,
-                "end": 407.90999999999997,
-                "text": "in Redfern Park. So if any of you fancy being outside"
-            },
-            {
-                "start": 407.90999999999997,
-                "end": 411.90999999999997,
-                "text": "and getting your hands dirty, this is the project for you."
-            },
-            {
-                "start": 411.90999999999997,
-                "end": 416.40999999999997,
-                "text": "I also wanted to mention the annual Digital Inclusion Day,"
-            },
-            {
-                "start": 416.40999999999997,
-                "end": 419.90999999999997,
-                "text": "which is coming up next month."
-            },
-            {
-                "start": 419.90999999999997,
-                "end": 423.91,
-                "text": "The aim of this is to help older people keep up with technology."
-            },
-            {
-                "start": 423.91,
-                "end": 427.91,
-                "text": "And this year, instead of hosting the event in our own training facility,"
-            },
-            {
-                "start": 427.91,
-                "end": 433.41,
-                "text": "we're using the ICT suite at Hill College, as it can hold far more people."
-            },
-            {
-                "start": 433.41,
-                "end": 437.91,
-                "text": "We've invited over 60 people from the Silver Age Community Center to take part,"
-            },
-            {
-                "start": 437.91,
-                "end": 442.41,
-                "text": "so we'll need a lot of volunteers to help with this event."
-            },
-            {
-                "start": 442.41,
-                "end": 446.41,
-                "text": "If you're interested in taking part, please go to the volunteering section of our website"
-            },
-            {
-                "start": 446.41,
-                "end": 450.91,
-                "text": "and complete the relevant form. We won't be providing any training for this,"
-            },
-            {
-                "start": 450.91,
-                "end": 455.40999999999997,
-                "text": "but you'll be paired with an experienced volunteer if you've never done it before."
-            },
-            {
-                "start": 455.40999999999997,
-                "end": 459.90999999999997,
-                "text": "By the way, don't forget to tell your manager about any volunteering activities"
-            },
-            {
-                "start": 459.90999999999997,
-                "end": 463.40999999999997,
-                "text": "you decide to do."
-            },
-            {
-                "start": 463.40999999999997,
-                "end": 467.90999999999997,
-                "text": "The participants on the Digital Inclusion Day really benefited."
-            },
-            {
-                "start": 467.90999999999997,
-                "end": 472.90999999999997,
-                "text": "The majority were in their 70s, though some were younger, and a few were even in their 90s."
-            },
-            {
-                "start": 472.90999999999997,
-                "end": 477.90999999999997,
-                "text": "Quite a few owned both a computer and a mobile phone,"
-            },
-            {
-                "start": 477.90999999999997,
-                "end": 481.91,
-                "text": "but these tended to be outdated models."
-            },
-            {
-                "start": 481.91,
-                "end": 485.91,
-                "text": "They generally knew how to do simple things like send texts,"
-            },
-            {
-                "start": 485.91,
-                "end": 490.91,
-                "text": "but weren't aware of recent developments in mobile phone technology."
-            },
-            {
-                "start": 490.91,
-                "end": 495.41,
-                "text": "A few were keen to learn, but most were quite dismissive at first."
-            },
-            {
-                "start": 495.41,
-                "end": 499.91,
-                "text": "They couldn't see the point of updating their skills, but that soon changed."
-            },
-            {
-                "start": 499.91,
-                "end": 504.41,
-                "text": "The feedback was very positive. The really encouraging thing was"
-            },
-            {
-                "start": 504.41,
-                "end": 509.41,
-                "text": "that participants all said they felt much more confident about using social media"
-            },
-            {
-                "start": 509.41,
-                "end": 513.91,
-                "text": "to keep in touch with their grandchildren, who prefer this form of communication"
-            },
-            {
-                "start": 513.91,
-                "end": 517.91,
-                "text": "to phoning or sending emails."
-            },
-            {
-                "start": 517.91,
-                "end": 522.41,
-                "text": "A lot of them also said playing online games would help them make new friends"
-            },
-            {
-                "start": 522.41,
-                "end": 526.41,
-                "text": "and keep their brains active."
-            },
-            {
-                "start": 526.41,
-                "end": 531.41,
-                "text": "They weren't that impressed with being able to order their groceries online,"
-            },
-            {
-                "start": 531.41,
-                "end": 535.41,
-                "text": "as they liked going out to the shops, but some said"
-            },
-            {
-                "start": 535.41,
-                "end": 539.91,
-                "text": "it would come in handy if they were ill or the weather was really bad."
-            },
-            {
-                "start": 539.91,
-                "end": 543.91,
-                "text": "One thing they asked about was using tablets for things like reading newspapers."
-            },
-            {
-                "start": 543.91,
-                "end": 548.91,
-                "text": "Some people had been given tablets as presents but had never used them."
-            },
-            {
-                "start": 548.91,
-                "end": 553.91,
-                "text": "So that's something we'll make sure we include this time."
-            },
-            {
-                "start": 553.91,
-                "end": 558.91,
-                "text": "SECTION 3"
-            },
-            {
-                "start": 558.91,
-                "end": 562.41,
-                "text": "- Ah, come in, Russ. - Thank you."
-            },
-            {
-                "start": 562.41,
-                "end": 565.41,
-                "text": "- Now, you wanted to consult me about your class presentation on nanotechnology. - Yes."
-            },
-            {
-                "start": 565.41,
-                "end": 568.91,
-                "text": "- You're due to give it next week, aren't you? - That's right, and I'm really struggling."
-            },
-            {
-                "start": 568.91,
-                "end": 572.91,
-                "text": "I chose the topic because I didn't know much about it and wanted to learn more."
+                "start": 554.41,
+                "end": 572.41,
+                "text": "The feedback was very positive. The really encouraging thing was that participants all said they felt much more confident about using social media to keep in touch with their grandchildren, who prefer this form of communication to phoning or sending emails."
             },
             {
                 "start": 572.91,
-                "end": 576.91,
-                "text": "But now I've read so much about it, in a way, there's too much to say."
+                "end": 592.41,
+                "text": "A lot of them also said playing online games would help them make new friends and keep their brains active. They weren't that impressed with being able to order their groceries online, as they liked going out to the shops, but some said it would come in handy if they were ill or the weather was really bad."
             },
             {
-                "start": 576.91,
-                "end": 580.91,
-                "text": "I could talk for much longer than the 20 minutes I've been allocated."
-            },
-            {
-                "start": 580.91,
-                "end": 584.91,
-                "text": "Should I assume the other students don't know much and give them a kind of general introduction?"
-            },
-            {
-                "start": 584.91,
-                "end": 589.91,
-                "text": "Or should I try and make them share my fascination with a particular aspect?"
-            },
-            {
-                "start": 589.91,
-                "end": 593.91,
-                "text": "- You could do either, but you'll need to have it clear in your own mind. - Right."
-            },
-            {
-                "start": 593.91,
-                "end": 596.91,
-                "text": "- Then I think I'll give an overview. - Okay."
-            },
-            {
-                "start": 596.91,
-                "end": 601.41,
-                "text": "Now, one way of approaching this is to work through developments in chronological order."
-            },
-            {
-                "start": 601.41,
-                "end": 603.41,
-                "text": "- Uh-huh. - On the other hand,"
-            },
-            {
-                "start": 603.41,
+                "start": 592.41,
                 "end": 606.91,
-                "text": "you could talk about the numerous ways that nanotechnology is being applied."
+                "text": "One thing they asked about was using tablets for things like reading newspapers. Some people had been given tablets as presents but had never used them. So that's something we'll make sure we include this time."
             },
             {
-                "start": 606.91,
-                "end": 610.91,
-                "text": "- You mean things like thin films on camera displays to make them water-repellent? - Yes."
+                "start": 609.91,
+                "end": 612.91,
+                "text": "SECTION 3"
             },
             {
-                "start": 610.91,
-                "end": 615.41,
-                "text": "- And additives to make motorcycle helmets stronger and lighter? - Exactly."
+                "start": 612.91,
+                "end": 624.41,
+                "text": "- Ah, come in, Russ. - Thank you. - Now, you wanted to consult me about your class presentation on nanotechnology. You're due to give it next week, aren't you?"
             },
             {
-                "start": 615.41,
-                "end": 620.41,
-                "text": "Or another way would be to focus on its impact in one particular area,"
+                "start": 624.41,
+                "end": 641.41,
+                "text": "- That's right, and I'm really struggling. I chose the topic because I didn't know much about it and wanted to learn more. But now I've read so much about it, in a way, there's too much to say. I could talk for much longer than the 20 minutes I've been allocated."
             },
             {
-                "start": 620.41,
-                "end": 623.91,
-                "text": "say medicine or space exploration."
+                "start": 641.41,
+                "end": 656.41,
+                "text": "Should I assume the other students don't know much and give them a kind of general introduction? Or should I try and make them share my fascination with a particular aspect?"
             },
             {
-                "start": 623.91,
-                "end": 627.91,
-                "text": "- That would make it easier to focus. Perhaps I should do that? - Right."
+                "start": 656.41,
+                "end": 665.91,
+                "text": "- You could do either, but you'll need to have it clear in your own mind. Then I think I'll give an overview. - Okay."
             },
             {
-                "start": 627.91,
-                "end": 632.41,
+                "start": 665.91,
+                "end": 677.41,
+                "text": "- Now, one way of approaching this is to work through developments in chronological order. - Uh-huh. - On the other hand, you could talk about the numerous ways that nanotechnology is being applied."
+            },
+            {
+                "start": 677.41,
+                "end": 687.41,
+                "text": "- You mean things like thin films on camera displays to make them water-repellent? - And additives to make motorcycle helmets stronger and lighter? - Exactly."
+            },
+            {
+                "start": 687.41,
+                "end": 699.41,
+                "text": "- Or another way would be to focus on its impact in one particular area, say medicine or space exploration. - That would make it easier to focus. Perhaps I should do that?"
+            },
+            {
+                "start": 699.41,
+                "end": 707.41,
                 "text": "- I think that would be a good idea. - Right. How important is it to include slides in the presentation?"
             },
             {
-                "start": 632.41,
-                "end": 636.41,
-                "text": "They aren't essential by any means. And there's a danger of tailoring"
-            },
-            {
-                "start": 636.41,
-                "end": 639.91,
-                "text": "what you say to fit whatever slides you can find."
-            },
-            {
-                "start": 639.91,
-                "end": 644.41,
-                "text": "While it can be good to include slides, you could end up spending too long looking for suitable ones."
-            },
-            {
-                "start": 644.41,
-                "end": 647.91,
-                "text": "You might find it better to leave them out."
-            },
-            {
-                "start": 647.91,
-                "end": 651.91,
-                "text": "- I see. Another thing I was wondering about was how to start. - Yeah."
-            },
-            {
-                "start": 651.91,
-                "end": 655.91,
-                "text": "I know presentations often begin with \"First I'm going to talk about this,"
-            },
-            {
-                "start": 655.91,
-                "end": 659.41,
-                "text": "and then I'll talk about that.\" But I thought about asking the audience"
-            },
-            {
-                "start": 659.41,
-                "end": 662.91,
-                "text": "what they know about nanotechnology."
-            },
-            {
-                "start": 662.91,
-                "end": 666.91,
-                "text": "That would be fine if you had an hour or two for the presentation."
-            },
-            {
-                "start": 666.91,
-                "end": 671.41,
-                "text": "But you might find that you can't do anything with the answers you get,"
-            },
-            {
-                "start": 671.41,
-                "end": 674.91,
-                "text": "and it simply eats into the short time that's available."
-            },
-            {
-                "start": 674.91,
-                "end": 679.41,
-                "text": "- So maybe I should mention a particular way that nanotechnology is used, to focus people's attention? - Yes."
-            },
-            {
-                "start": 679.41,
-                "end": 682.41,
-                "text": "- That sounds sensible. - What do you think I should do next?"
-            },
-            {
-                "start": 682.41,
-                "end": 685.91,
-                "text": "I really have to plan the presentation today and tomorrow."
-            },
-            {
-                "start": 685.91,
-                "end": 690.41,
-                "text": "Well, initially, I think you should ignore all the notes you've made,"
-            },
-            {
-                "start": 690.41,
-                "end": 694.91,
-                "text": "take a small piece of paper, and write a single short sentence"
-            },
-            {
-                "start": 694.91,
-                "end": 698.41,
-                "text": "that ties together the whole presentation."
-            },
-            {
-                "start": 698.41,
-                "end": 703.41,
-                "text": "It can be something as simple as \"Nanotechnology is already improving our lives.\""
-            },
-            {
-                "start": 703.41,
-                "end": 707.41,
-                "text": "Then start planning the content around that."
-            },
-            {
                 "start": 707.41,
-                "end": 711.41,
-                "text": "You can always modify that sentence later if you need to."
+                "end": 721.41,
+                "text": "They aren't essential by any means. And there's a danger of tailoring what you say to fit whatever slides you can find. While it can be good to include slides, you could end up spending too long looking for suitable ones."
             },
             {
-                "start": 711.41,
-                "end": 713.91,
-                "text": "- Okay. - Right."
+                "start": 721.41,
+                "end": 728.91,
+                "text": "- You might find it better to leave them out. - I see. Another thing I was wondering about was how to start."
             },
             {
-                "start": 713.91,
-                "end": 717.91,
-                "text": "Okay, now let's think about actually giving the presentation."
+                "start": 728.91,
+                "end": 741.91,
+                "text": "I know presentations often begin with \"First I'm going to talk about this, and then I'll talk about that.\" But I thought about asking the audience what they know about nanotechnology."
             },
             {
-                "start": 717.91,
-                "end": 722.41,
-                "text": "You've only given one before, if I remember correctly, about an experiment you'd been involved in."
-            },
-            {
-                "start": 722.41,
-                "end": 725.91,
-                "text": "- That's right. It was pretty rubbish. - Well..."
-            },
-            {
-                "start": 725.91,
-                "end": 729.91,
-                "text": "Let's say it was better in some respects than in others."
-            },
-            {
-                "start": 729.91,
-                "end": 734.41,
-                "text": "With regard to the structure, I felt that you ended rather abruptly,"
-            },
-            {
-                "start": 734.41,
-                "end": 737.41,
-                "text": "without rounding it off."
-            },
-            {
-                "start": 737.41,
-                "end": 741.41,
-                "text": "Be careful not to do that in next week's presentation."
-            },
-            {
-                "start": 741.41,
-                "end": 744.41,
-                "text": "- Okay. - And you made very little eye contact"
-            },
-            {
-                "start": 744.41,
-                "end": 748.41,
-                "text": "with the audience because you were looking down at your notes most of the time."
-            },
-            {
-                "start": 748.41,
+                "start": 741.91,
                 "end": 752.91,
-                "text": "You need to be looking at the audience, and only occasionally glancing at your notes."
+                "text": "That would be fine if you had an hour or two for the presentation. But you might find that you can't do anything with the answers you get, and it simply eats into the short time that's available."
             },
             {
                 "start": 752.91,
-                "end": 756.41,
-                "text": "- Hm. - Your body language was a little odd."
+                "end": 760.41,
+                "text": "- So maybe I should mention a particular way that nanotechnology is used, to focus people's attention? - That sounds sensible."
             },
             {
-                "start": 756.41,
-                "end": 760.91,
-                "text": "Every time you showed a slide, you turned your back on the audience so you could look at it."
-            },
-            {
-                "start": 760.91,
-                "end": 764.91,
-                "text": "You should have been looking at your laptop."
-            },
-            {
-                "start": 764.91,
-                "end": 769.41,
-                "text": "And you kept scratching your head, so I found myself wondering when you were next going to do that,"
-            },
-            {
-                "start": 769.41,
-                "end": 773.41,
-                "text": "instead of listening to what you were saying."
-            },
-            {
-                "start": 773.41,
+                "start": 760.41,
                 "end": 777.41,
-                "text": "- Oh, dear. What did you think of the language? - Right."
+                "text": "- What do you think I should do next? I really have to plan the presentation today and tomorrow. Well, initially, I think you should ignore all the notes you've made, take a small piece of paper, and write a single short sentence that ties together the whole presentation."
             },
             {
                 "start": 777.41,
-                "end": 781.91,
-                "text": "- I knew that not everyone was familiar with the subject, so I tried to make it as simple as I could. - Yes."
+                "end": 786.41,
+                "text": "It can be something as simple as \"Nanotechnology is already improving our lives.\" Then start planning the content around that. You can always modify that sentence later if you need to. - Okay."
             },
             {
-                "start": 781.91,
-                "end": 784.91,
-                "text": "That came across. You used a few words that are specific to the field,"
+                "start": 786.41,
+                "end": 801.91,
+                "text": "Okay, now let's think about actually giving the presentation. You've only given one before, if I remember correctly, about an experiment you'd been involved in. - That's right. It was pretty rubbish."
             },
             {
-                "start": 784.91,
-                "end": 789.91,
-                "text": "but you always explained what they meant, so the audience wouldn't have had any difficulty understanding."
+                "start": 801.91,
+                "end": 815.91,
+                "text": "Let's say it was better in some respects than in others. With regard to the structure, I felt that you ended rather abruptly, without rounding it off. Be careful not to do that in next week's presentation. - Okay."
             },
             {
-                "start": 789.91,
-                "end": 792.41,
-                "text": "- Uh-huh. - I must say,"
+                "start": 815.41,
+                "end": 827.91,
+                "text": "- And you made very little eye contact with the audience because you were looking down at your notes most of the time. You need to be looking at the audience, and only occasionally glancing at your notes. - Hm."
             },
             {
-                "start": 792.41,
-                "end": 796.41,
-                "text": "the handouts you prepared were well thought out. They were a good summary of your presentation,"
+                "start": 827.91,
+                "end": 843.41,
+                "text": "- Your body language was a little odd. Every time you showed a slide, you turned your back on the audience so you could look at it. You should have been looking at your laptop. And you kept scratching your head, so I found myself wondering when you were next going to do that, instead of listening to what you were saying."
             },
             {
-                "start": 796.41,
-                "end": 800.91,
-                "text": "which people would have been able to refer to later on. So, well done on that."
+                "start": 843.41,
+                "end": 854.41,
+                "text": "- Oh, dear. What did you think of the language? - I knew that not everyone was familiar with the subject, so I tried to make it as simple as I could."
             },
             {
-                "start": 800.91,
-                "end": 804.91,
-                "text": "- Thank you. - Well, I hope that helps you with next week's presentation."
+                "start": 854.91,
+                "end": 866.91,
+                "text": "That came across. You used a few words that are specific to the field, but you always explained what they meant, so the audience wouldn't have had any difficulty understanding. - Uh-huh."
             },
             {
-                "start": 804.91,
-                "end": 808.91,
-                "text": "- Yes, it will. Thanks a lot. - I'll look forward to seeing a big improvement then."
+                "start": 866.91,
+                "end": 875.41,
+                "text": "- I must say, the handouts you prepared were well thought out. They were a good summary of your presentation, which people would have been able to refer to later on. So, well done on that."
+            },
+            {
+                "start": 875.41,
+                "end": 884.41,
+                "text": "- Thank you. - Well, I hope that helps you with next week's presentation. - Yes, it will. Thanks a lot. - I'll look forward to seeing a big improvement then."
             }
         ]
     }
