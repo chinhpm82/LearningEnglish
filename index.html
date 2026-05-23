@@ -161,6 +161,8 @@
                     <div>
                         <h2>Chào mừng trở lại, <span id="welcome-username">Học viên</span>! 👋</h2>
                         <p>Hôm nay là một ngày tuyệt vời để học thêm từ mới.</p>
+                        <!-- Nút dành cho Admin (Tạm thời) -->
+                        <button id="btn-admin-import" onclick="window.importDataToFirestore()" style="margin-top: 10px; background: #ff4757; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold;">🚀 Import Dữ liệu lên Firestore</button>
                     </div>
                     <div style="display: flex; gap: 12px; align-items: center;">
                         <!-- Private Assessment Card (Only visible to current user) -->
@@ -1553,6 +1555,9 @@
     <script src="data/podcast-data.js" defer></script>
     <!-- Firebase Synchronization Bridge module -->
     <script type="module" src="firebase-sync.js"></script>
+    
+    <!-- Firestore Import Script (Tạm thời) -->
+    <script type="module" src="scripts/firestore-import.js"></script>
     <!-- Main JavaScript Logic -->
     <script src="app.js" defer></script>
     <!-- Multiplayer Challenge Logic -->
