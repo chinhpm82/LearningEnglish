@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearningEnglish - Admin Control Panel</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="styles.css?v=1.0.2">
+    <style>
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .admin-sidebar {
+            width: 250px;
+            background: var(--surface);
+            border-right: 1px solid var(--border-color);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .admin-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+        .admin-logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .admin-tab-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            padding: 12px 15px;
+            border-radius: 12px;
+            text-align: left;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+        }
+        .admin-tab-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+        }
+        .admin-tab-btn.active {
+            background: rgba(var(--primary-rgb), 0.15);
+            color: var(--primary);
+            border-color: rgba(var(--primary-rgb), 0.3);
+        }
+        
+        /* Analyzer Styles */
+        .analyzer-box {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        textarea.admin-input {
+            width: 100%;
+            height: 200px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            color: var(--text-light);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px;
+            resize: vertical;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        textarea.admin-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
+        }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .stat-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+        .stat-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        
+        /* Level Badge */
+        .level-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .lvl-beginner { background: rgba(74, 222, 128, 0.2); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.4); }
+        .lvl-intermediate { background: rgba(96, 165, 250, 0.2); color: #60a5fa; border: 1px solid rgba(96, 165, 250, 0.4); }
+        .lvl-advanced { background: rgba(248, 113, 113, 0.2); color: #f87171; border: 1px solid rgba(248, 113, 113, 0.4); }
+    </style>
+</head>
+<body class="dark-theme">
+    <!-- Background Elements -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                LE Admin
+            </div>
+            
+            <button class="admin-tab-btn active" onclick="switchTab('analyzer')">
+                <span>📊</span> Phân tích Độ khó (CEFR)
+            </button>
+            <button class="admin-tab-btn" onclick="switchTab('uploader')">
+                <span>☁️</span> Upload Dữ liệu (Firestore)
+            </button>
+            
+            <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                <a href="index.html" style="color: var(--text-muted); text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+                    ⬅️ Về trang học viên
+                </a>
+            </div>
+        </aside>
+
+        <main class="admin-content">
+            <!-- TAB 1: ANALYZER -->
+            <div id="tab-analyzer" class="admin-tab-content">
+                <h1 style="margin-bottom: 10px; font-family: 'Outfit';">Công cụ Phân tích Độ khó Văn bản</h1>
+                <p style="color: var(--text-muted); margin-bottom: 25px;">Sử dụng thuật toán Flesch-Kincaid để đánh giá chuẩn xác Level CEFR của học liệu (Truyện, Bài đọc).</p>
+                
+                <div class="analyzer-box">
+                    <textarea id="analyzer-input" class="admin-input" placeholder="Dán nội dung truyện hoặc đoạn văn tiếng Anh vào đây để phân tích..."></textarea>
+                    
+                    <button class="btn-primary" onclick="analyzeText()" style="width: 100%; padding: 14px; font-size: 16px;">
+                        🔍 Bắt đầu Phân tích
+                    </button>
+                    
+                    <div id="analyzer-result" style="display: none; margin-top: 30px; border-top: 1px dashed var(--border-color); padding-top: 25px;">
+                        <div style="text-align: center;">
+                            <h3 style="color: var(--text-muted); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Mức độ khó (CEFR) Đề xuất</h3>
+                            <div id="result-badge" class="level-badge lvl-intermediate">Intermediate (B1-B2)</div>
+                        </div>
+                        
+                        <div class="stat-grid">
+                            <div class="stat-card">
+                                <div id="stat-words" class="stat-value">0</div>
+                                <div class="stat-label">Tổng số từ</div>
+                            </div>
+                            <div class="stat-card">
+                                <div id="stat-sentences" class="stat-value">0</div>
+                                <div class="stat-label">Tổng số câu</div>
+                            </div>
+                            <div class="stat-card">
+                                <div id="stat-asl" class="stat-value" style="color: #60a5fa;">0</div>
+                                <div class="stat-label">Độ dài câu TB (Từ/Câu)</div>
+                            </div>
+                            <div class="stat-card">
+                                <div id="stat-fk" class="stat-value" style="color: #c084fc;">0</div>
+                                <div class="stat-label">Điểm Flesch-Kincaid</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 20px; padding: 15px; background: rgba(96, 165, 250, 0.1); border-left: 4px solid #60a5fa; border-radius: 8px; font-size: 14px; line-height: 1.6;">
+                            <strong>💡 Mẹo cho Admin:</strong> Nếu truyện bị phân loại sai, bạn chỉ cần lên <a href="https://console.firebase.google.com" target="_blank" style="color: #60a5fa;">Firebase Console</a> -> Vào bảng <code>academic_stories</code> -> Tìm truyện đó và sửa trường <code>level</code> thành cấp độ được gợi ý bên trên. Không cần up lại cả mảng!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: UPLOADER -->
+            <div id="tab-uploader" class="admin-tab-content" style="display: none;">
+                <h1 style="margin-bottom: 10px; font-family: 'Outfit';">Upload Dữ liệu hàng loạt lên Firestore</h1>
+                <p style="color: var(--text-muted); margin-bottom: 25px;">Chỉ dùng khi bạn muốn thêm mới một lượng lớn dữ liệu (JSON) vào database.</p>
+                
+                <div class="analyzer-box">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--primary);">1. Chọn bảng dữ liệu (Collection):</label>
+                    <select id="upload-collection" class="admin-input" style="height: auto; cursor: pointer; border-radius: 8px; padding: 12px; background: rgba(0,0,0,0.4);">
+                        <option value="academic_stories">Truyện đọc (academic_stories)</option>
+                        <option value="academic_vocabulary">Từ vựng (academic_vocabulary)</option>
+                        <option value="academic_grammar">Ngữ pháp (academic_grammar)</option>
+                        <option value="academic_quizzes">Trắc nghiệm (academic_quizzes)</option>
+                        <option value="academic_sentences">Câu giao tiếp (academic_sentences)</option>
+                        <option value="academic_podcasts">Podcasts (academic_podcasts)</option>
+                    </select>
+                    
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--primary); margin-top: 20px;">2. Dán mảng dữ liệu JSON vào đây:</label>
+                    <textarea id="upload-json" class="admin-input" placeholder='[\n  {\n    "id": "s101",\n    "title": "Chuyến đi mới",\n    "level": "Beginner",\n    ...\n  }\n]'></textarea>
+                    
+                    <button id="btn-do-upload" class="btn-primary" style="width: 100%; padding: 14px; font-size: 16px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);" onclick="uploadJsonData()">
+                        🚀 Đẩy dữ liệu lên Firebase
+                    </button>
+                    
+                    <div id="upload-log" style="margin-top: 15px; font-family: monospace; font-size: 13px; color: #4ade80; white-space: pre-line;"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase System -->
+    <script type="module" src="firebase-sync.js"></script>
+    <script type="module" src="scripts/admin.js"></script>
+</body>
+</html>
