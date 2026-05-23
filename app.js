@@ -52,11 +52,31 @@ let isCloudMode = false;
 let authSkip = false;
 
 // --- CORE UTILITY FUNCTIONS ---
-// Load data from IndexedDB
+// Load data from IndexedDB & Firestore
 async function loadStateAsync() {
     try {
-        console.log('Initializing IndexedDB...');
+        console.log('Initializing App Data...');
         await LearningDB.initDB();
+
+        // -------------------------------------------------------------
+        // DYNAMIC ACADEMIC DATA FETCHING (FIREBASE OFFLINE CACHED)
+        // Thay vì đọc từ script cục bộ, ta kéo từ FirebaseSync và gán vào window
+        // -------------------------------------------------------------
+        if (window.FirebaseSync) {
+            console.log("Fetching academic data from Firebase...");
+            window.PLACEMENT_QUESTIONS = await window.FirebaseSync.fetchAcademicQuizzes() || [];
+            window.GRAMMAR_LESSONS = await window.FirebaseSync.fetchAcademicGrammar() || [];
+            window.STORIES_DATA = await window.FirebaseSync.fetchAcademicStories() || [];
+            window.COMMUNICATIVE_SENTENCES = await window.FirebaseSync.fetchAcademicSentences() || [];
+            window.PODCAST_DATA = await window.FirebaseSync.fetchAcademicPodcasts() || [];
+            
+            // Xử lý các collection trống nếu Firebase chưa có
+            if (window.PLACEMENT_QUESTIONS.length === 0 && typeof PLACEMENT_QUESTIONS !== 'undefined') window.PLACEMENT_QUESTIONS = PLACEMENT_QUESTIONS;
+            if (window.GRAMMAR_LESSONS.length === 0 && typeof GRAMMAR_LESSONS !== 'undefined') window.GRAMMAR_LESSONS = GRAMMAR_LESSONS;
+            if (window.STORIES_DATA.length === 0 && typeof STORIES_DATA !== 'undefined') window.STORIES_DATA = STORIES_DATA;
+            if (window.COMMUNICATIVE_SENTENCES.length === 0 && typeof COMMUNICATIVE_SENTENCES !== 'undefined') window.COMMUNICATIVE_SENTENCES = COMMUNICATIVE_SENTENCES;
+            if (window.PODCAST_DATA.length === 0 && typeof PODCAST_DATA !== 'undefined') window.PODCAST_DATA = PODCAST_DATA;
+        }
 
         // 1. Migrate old localStorage data if present
         await LearningDB.migrateFromLocalStorage();

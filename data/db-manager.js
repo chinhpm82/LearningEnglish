@@ -1,16 +1,19 @@
 /**
  * ==========================================================================
- * LearningEnglish - IndexedDB Storage Manager Module
+ * LearningEnglish - Database Manager (Firestore + Local Progress Facade)
  * ==========================================================================
+ * Vai trò mới:
+ * 1. Lấy dữ liệu học thuật gốc (Academic Data) từ FirebaseSync (đã được cache offline bởi Firestore).
+ * 2. Lấy dữ liệu Tiến độ (Progress) từ Cloud (nếu đăng nhập) hoặc Local IndexedDB (nếu là Guest).
+ * 3. Trộn (Merge) 2 nguồn dữ liệu này và trả về cho app.js xử lý như cũ.
  */
 
-const DB_NAME = 'LearningEnglishDB';
-const DB_VERSION = 1;
-
+const DB_NAME = 'LearningEnglish_ProgressDB';
+const DB_VERSION = 2; // Nâng version để reset DB cũ
 let dbInstance = null;
 
 /**
- * Initialize IndexedDB Connection
+ * Initialize IndexedDB Connection (Chỉ dùng cho Guest Mode Progress)
  */
 function initDB() {
     return new Promise((resolve, reject) => {
@@ -34,16 +37,12 @@ function initDB() {
         request.onupgradeneeded = (event) => {
             const db = event.target.result;
             
-            // 1. Store vocabulary
-            if (!db.objectStoreNames.contains('vocabulary')) {
-                const vocabStore = db.createObjectStore('vocabulary', { keyPath: 'id' });
-                vocabStore.createIndex('category', 'category', { unique: false });
-                vocabStore.createIndex('box', 'box', { unique: false });
-                vocabStore.createIndex('nextReview', 'nextReview', { unique: false });
-                vocabStore.createIndex('word', 'word', { unique: false });
+            // Bảng lưu tiến độ từ vựng cục bộ cho Guest (chỉ lưu ID, box, nextReview)
+            if (!db.objectStoreNames.contains('guest_vocab_progress')) {
+                db.createObjectStore('guest_vocab_progress', { keyPath: 'id' });
             }
 
-            // 2. Store user progress/settings (key-value)
+            // Bảng lưu settings cục bộ (key-value)
             if (!db.objectStoreNames.contains('progress')) {
                 db.createObjectStore('progress', { keyPath: 'key' });
             }
@@ -51,301 +50,175 @@ function initDB() {
     });
 }
 
-/**
- * Populate database with seed data if empty
- * Combines INITIAL_VOCABULARY and SPECIALIZED_VOCABULARY, deduplicates by word.toLowerCase()
- */
-/**
- * Populate database with seed data if empty
- * Combines INITIAL_VOCABULARY, deduplicates by word.toLowerCase()
- * If database already exists, performs automated self-healing to clean duplicate words and numbers
- */
+// Giữ nguyên hàm này để tránh lỗi app.js gọi đến
 async function seedDatabase(initialVocab, specVocab = []) {
-    const db = await initDB();
-    
-    // Check if vocabulary store is empty
-    const currentCount = await getVocabCount();
-    if (currentCount > 0) {
-        console.log(`IndexedDB already has ${currentCount} words. Running Self-Healing & Sync...`);
-        await selfHealAndSyncDatabase(initialVocab);
-        return;
-    }
-
-    console.log('Seeding IndexedDB for the first time...');
-    
-    const uniqueMap = new Map();
-
-    initialVocab.forEach(item => {
-        if (!item || !item.word) return;
-        const key = item.word.toLowerCase().trim();
-        if (!uniqueMap.has(key)) {
-            uniqueMap.set(key, item);
-        }
-    });
-
-    const dedupedList = Array.from(uniqueMap.values());
-    console.log(`Deduplication: Reduced seed to ${dedupedList.length} unique words.`);
-
-    // Perform bulk insertion in a single transaction
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction(['vocabulary'], 'readwrite');
-        const store = transaction.objectStore('vocabulary');
-
-        dedupedList.forEach(item => {
-            // Clean up old numbers from words if any slipped in
-            item.word = cleanFieldName(item.word);
-            item.ipa = cleanFieldName(item.ipa);
-            item.example = cleanFieldName(item.example);
-            store.put(item);
-        });
-
-        transaction.oncomplete = () => {
-            console.log('Successfully seeded database with', dedupedList.length, 'unique words!');
-            resolve(dedupedList.length);
-        };
-
-        transaction.onerror = (e) => {
-            console.error('Transaction error during seeding:', e.target.error);
-            reject(e.target.error);
-        };
-    });
+    console.log("seedDatabase bypass: Dữ liệu đã được đưa lên Firestore. Không cần seed Local.");
+    return Promise.resolve(0);
 }
 
-/**
- * Clean field names from any digit suffix (e.g. "Notable90" -> "Notable", "/ˈnoʊtəbəl-90/" -> "/ˈnoʊtəbəl/")
- */
-function cleanFieldName(val) {
-    if (typeof val !== 'string') return val;
-    let cleaned = val.replace(/[- ]?\d+$/, '');
-    cleaned = cleaned.replace(/([a-zA-Z])\d+$/, '$1');
-    return cleaned.strip ? cleaned.strip() : cleaned.trim();
-}
-
-/**
- * Automated Database Self-Healing: Reads the entire IndexedDB vocabulary,
- * cleans any word/ipa/example of numeric suffixes, deduplicates while preserving progress (Leitner Box),
- * and syncs any new words from the seed file.
- */
-async function selfHealAndSyncDatabase(seedVocab) {
-    const db = await initDB();
-    const currentVocab = await getAllVocab();
-    
-    // Map seedVocab by lowercase word for quick lookup
-    const seedMap = new Map();
-    seedVocab.forEach(item => {
-        if (item && item.word) {
-            seedMap.set(cleanFieldName(item.word).toLowerCase().trim(), item);
-        }
-    });
-    
-    const uniqueMap = new Map();
-    const idsToDelete = [];
-    const keysToPut = new Set();
-    let modifiedCount = 0;
-
-    currentVocab.forEach(item => {
-        if (!item || !item.word) return;
-
-        const origWord = item.word;
-        const cleanWord = cleanFieldName(item.word);
-        const key = cleanWord.toLowerCase().trim();
-        let isChanged = false;
-
-        // 1. If word is in seed map, update details from seed file (preserving box and nextReview)
-        if (seedMap.has(key)) {
-            const seedItem = seedMap.get(key);
-            const cleanIpa = cleanFieldName(seedItem.ipa);
-            const cleanExample = cleanFieldName(seedItem.example);
-            
-            if (item.word !== cleanWord || item.ipa !== cleanIpa || item.meaning !== seedItem.meaning || item.example !== cleanExample || item.example_vi !== seedItem.example_vi || item.category !== seedItem.category) {
-                item.word = cleanWord;
-                item.type = seedItem.type || item.type;
-                item.ipa = cleanIpa;
-                item.meaning = seedItem.meaning || item.meaning;
-                item.example = cleanExample;
-                item.example_vi = seedItem.example_vi || item.example_vi;
-                item.category = seedItem.category || item.category;
-                modifiedCount++;
-                isChanged = true;
-            }
-        } else {
-            // Fallback basic cleaning if not in seed
-            const cleanIpa = cleanFieldName(item.ipa);
-            const cleanExample = cleanFieldName(item.example);
-            if (origWord !== cleanWord || item.ipa !== cleanIpa || item.example !== cleanExample) {
-                item.word = cleanWord;
-                item.ipa = cleanIpa;
-                item.example = cleanExample;
-                modifiedCount++;
-                isChanged = true;
-            }
-        }
-
-        if (uniqueMap.has(key)) {
-            // Duplicate found! Merge progress
-            const existing = uniqueMap.get(key);
-            // Preserve the higher Box level or nextReview progress
-            if ((item.box || 1) > (existing.box || 1)) {
-                existing.box = item.box;
-                existing.nextReview = item.nextReview;
-                keysToPut.add(key);
-            }
-            // Mark duplicate item's ID for deletion
-            idsToDelete.push(item.id);
-        } else {
-            uniqueMap.set(key, item);
-            if (isChanged) {
-                keysToPut.add(key);
-            }
-        }
-    });
-
-    // Also check for any brand-new words in the seedVocab not present in uniqueMap
-    let newWordsAdded = 0;
-    seedVocab.forEach(seedItem => {
-        if (!seedItem || !seedItem.word) return;
-        const key = cleanFieldName(seedItem.word).toLowerCase().trim();
-        if (!uniqueMap.has(key)) {
-            seedItem.word = cleanFieldName(seedItem.word);
-            seedItem.ipa = cleanFieldName(seedItem.ipa);
-            seedItem.example = cleanFieldName(seedItem.example);
-            uniqueMap.set(key, seedItem);
-            keysToPut.add(key);
-            newWordsAdded++;
-        }
-    });
-
-    // Write only cleaned/new words and delete duplicates in a transaction
-    return new Promise((resolve, reject) => {
-        if (keysToPut.size === 0 && idsToDelete.length === 0) {
-            console.log('IndexedDB is already clean and healthy. Skipping database rewrite.');
-            resolve();
-            return;
-        }
-
-        const transaction = db.transaction(['vocabulary'], 'readwrite');
-        const store = transaction.objectStore('vocabulary');
-
-        // 1. Put only modified or new unique words
-        keysToPut.forEach(key => {
-            const item = uniqueMap.get(key);
-            if (item) store.put(item);
-        });
-
-        // 2. Delete all duplicates
-        idsToDelete.forEach(id => {
-            store.delete(id);
-        });
-
-        transaction.oncomplete = () => {
-            console.log('IndexedDB Self-Healing Complete:');
-            console.log(`- Cleansed fields in ${modifiedCount} words.`);
-            printDeletedLogs(idsToDelete, newWordsAdded, uniqueMap.size);
-            resolve();
-        };
-
-        transaction.onerror = (e) => {
-            console.error('Self-healing transaction error:', e.target.error);
-            reject(e.target.error);
-        };
-    });
-}
-
-function printDeletedLogs(idsToDelete, newWordsAdded, totalSize) {
-    if (idsToDelete.length > 0) {
-        console.log(`- Deleted ${idsToDelete.length} duplicate/redundant word entries.`);
-    }
-    if (newWordsAdded > 0) {
-        console.log(`- Seeded ${newWordsAdded} new vocabulary words.`);
-    }
-    console.log(`- Database size is now locked at a clean ${totalSize} words.`);
-}
-
-async function syncNewSeedWords(initialVocab, specVocab = []) {
-    // Handled dynamically inside selfHealAndSyncDatabase
-    return;
-}
-
-/**
- * Get count of vocabulary items
- */
 async function getVocabCount() {
-    const db = await initDB();
-    return new Promise((resolve) => {
-        const transaction = db.transaction(['vocabulary'], 'readonly');
-        const store = transaction.objectStore('vocabulary');
-        const request = store.count();
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => resolve(0);
-    });
+    const vocab = await getAllVocab();
+    return vocab.length;
 }
 
 /**
- * Get all vocabulary items
+ * Hàm lõi: Lấy toàn bộ từ vựng và mix với tiến độ học tập.
  */
 async function getAllVocab() {
-    const db = await initDB();
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction(['vocabulary'], 'readonly');
-        const store = transaction.objectStore('vocabulary');
-        const request = store.getAll();
-        request.onsuccess = () => resolve(request.result || []);
-        request.onerror = (e) => reject(e.target.error);
-    });
+    await initDB();
+    
+    // 1. Lấy Academic Data (Dữ liệu học thuật gốc) từ Firestore
+    let baseVocab = [];
+    if (window.FirebaseSync) {
+        baseVocab = await window.FirebaseSync.fetchAllAcademicVocabulary();
+    }
+    
+    // Fallback cực hiếm nếu Firestore lỗi mạng chưa có cache
+    if (baseVocab.length === 0 && typeof INITIAL_VOCABULARY !== 'undefined') {
+        console.warn("Dùng INITIAL_VOCABULARY dự phòng vì chưa kéo được từ Firestore.");
+        baseVocab = INITIAL_VOCABULARY;
+    }
+
+    // Clone dữ liệu để không làm biến đổi bộ gốc
+    const vocabList = JSON.parse(JSON.stringify(baseVocab));
+    const user = window.FirebaseSync ? window.FirebaseSync.getCurrentUser() : null;
+
+    if (user) {
+        // --- CHẾ ĐỘ ĐĂNG NHẬP: Lấy tiến độ từ Firestore ---
+        const cloudData = await window.FirebaseSync.loadUserData();
+        if (cloudData) {
+            // Mix tiến trình học
+            const progressMap = new Map();
+            cloudData.progress.forEach(p => progressMap.set(p.id, p));
+
+            vocabList.forEach(w => {
+                const id = String(w.id || w.word.toLowerCase());
+                if (progressMap.has(id)) {
+                    const p = progressMap.get(id);
+                    w.box = p.box || 1;
+                    w.nextReview = p.nextReview || 0;
+                } else {
+                    w.box = 1;
+                    w.nextReview = 0;
+                }
+            });
+
+            // Mix custom words
+            if (cloudData.customWords && cloudData.customWords.length > 0) {
+                vocabList.push(...cloudData.customWords);
+            }
+        }
+    } else {
+        // --- CHẾ ĐỘ KHÁCH: Lấy tiến độ từ IndexedDB ---
+        const guestProgress = await new Promise((resolve) => {
+            const db = dbInstance;
+            const tx = db.transaction(['guest_vocab_progress'], 'readonly');
+            const store = tx.objectStore('guest_vocab_progress');
+            const req = store.getAll();
+            req.onsuccess = () => resolve(req.result || []);
+            req.onerror = () => resolve([]);
+        });
+
+        const progressMap = new Map();
+        guestProgress.forEach(p => progressMap.set(p.id, p));
+
+        vocabList.forEach(w => {
+            const id = String(w.id || w.word.toLowerCase());
+            if (progressMap.has(id)) {
+                const p = progressMap.get(id);
+                w.box = p.box || 1;
+                w.nextReview = p.nextReview || 0;
+            } else {
+                w.box = 1;
+                w.nextReview = 0;
+            }
+        });
+    }
+
+    return vocabList;
 }
 
 /**
- * Update a single word (e.g., box state or review timestamp)
+ * Cập nhật tiến độ của 1 từ vựng
  */
 async function updateVocabWord(wordObj) {
-    const db = await initDB();
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction(['vocabulary'], 'readwrite');
-        const store = transaction.objectStore('vocabulary');
-        const request = store.put(wordObj);
-        request.onsuccess = () => resolve();
-        request.onerror = (e) => reject(e.target.error);
-    });
+    const id = String(wordObj.id || wordObj.word.toLowerCase());
+    const box = wordObj.box || 1;
+    const nextReview = wordObj.nextReview || 0;
+    
+    const user = window.FirebaseSync ? window.FirebaseSync.getCurrentUser() : null;
+
+    if (user) {
+        // Đẩy lên Firestore
+        // Phân biệt custom word hay academic word
+        if (wordObj.isCustom) {
+            await window.FirebaseSync.saveCustomWord(wordObj);
+        } else {
+            await window.FirebaseSync.saveProgress(id, box, nextReview);
+        }
+    } else {
+        // Lưu vào Local IndexedDB cho Guest
+        await initDB();
+        return new Promise((resolve, reject) => {
+            const tx = dbInstance.transaction(['guest_vocab_progress'], 'readwrite');
+            const store = tx.objectStore('guest_vocab_progress');
+            store.put({ id: id, box: box, nextReview: nextReview });
+            tx.oncomplete = () => resolve();
+            tx.onerror = (e) => reject(e.target.error);
+        });
+    }
 }
 
 /**
- * Bulk update vocabulary (useful for cloud sync or large updates)
+ * Bulk update
  */
 async function bulkUpdateVocab(wordList) {
-    const db = await initDB();
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction(['vocabulary'], 'readwrite');
-        const store = transaction.objectStore('vocabulary');
-        wordList.forEach(item => store.put(item));
-        transaction.oncomplete = () => resolve();
-        transaction.onerror = (e) => reject(e.target.error);
-    });
+    for (const w of wordList) {
+        await updateVocabWord(w);
+    }
 }
 
 /**
- * Progress & State Storage Helpers (Key-Value)
+ * Cập nhật key-value Progress (Streak, Level, v.v.)
  */
 async function getProgress(key, defaultValue = null) {
-    const db = await initDB();
+    const user = window.FirebaseSync ? window.FirebaseSync.getCurrentUser() : null;
+    
+    if (user) {
+        const cloudData = await window.FirebaseSync.loadUserData();
+        if (cloudData && cloudData.profile && cloudData.profile[key] !== undefined) {
+            return cloudData.profile[key];
+        }
+    }
+    
+    // Guest Mode
+    await initDB();
     return new Promise((resolve) => {
-        const transaction = db.transaction(['progress'], 'readonly');
+        const transaction = dbInstance.transaction(['progress'], 'readonly');
         const store = transaction.objectStore('progress');
         const request = store.get(key);
         request.onsuccess = () => {
-            if (request.result) {
-                resolve(request.result.value);
-            } else {
-                resolve(defaultValue);
-            }
+            if (request.result) resolve(request.result.value);
+            else resolve(defaultValue);
         };
         request.onerror = () => resolve(defaultValue);
     });
 }
 
 async function setProgress(key, value) {
-    const db = await initDB();
+    const user = window.FirebaseSync ? window.FirebaseSync.getCurrentUser() : null;
+
+    if (user) {
+        // Sync to cloud
+        // Lưu ý: FirebaseSync.saveStreak() trong code cũ nhận nhiều tham số, ta giả lập gọi vào profile update.
+        // Tạm thời FirebaseSync chưa có hàm update generic profile property, nên ta vẫn lưu local để fallback,
+        // hoặc app.js sẽ gọi thẳng FirebaseSync.saveStreak.
+    }
+
+    // Luôn lưu local cache
+    await initDB();
     return new Promise((resolve, reject) => {
-        const transaction = db.transaction(['progress'], 'readwrite');
+        const transaction = dbInstance.transaction(['progress'], 'readwrite');
         const store = transaction.objectStore('progress');
         const request = store.put({ key, value });
         request.onsuccess = () => resolve();
@@ -353,103 +226,8 @@ async function setProgress(key, value) {
     });
 }
 
-/**
- * Migration Bridge: Moves data from LocalStorage to IndexedDB
- */
 async function migrateFromLocalStorage() {
-    console.log('Checking for old localStorage data to migrate...');
-    const migrationKeys = [
-        { lsKey: 'vocabflow_vocab', dbKey: 'vocabulary_data' },
-        { lsKey: 'vocabflow_custom', dbKey: 'custom_words' },
-        { lsKey: 'vocabflow_streak', dbKey: 'streak' },
-        { lsKey: 'vocabflow_last_date', dbKey: 'last_study_date' },
-        { lsKey: 'vocabflow_quiz_stats', dbKey: 'quiz_stats' },
-        { lsKey: 'vocabflow_user_level', dbKey: 'user_level' },
-        { lsKey: 'vocabflow_last_test_score', dbKey: 'last_test_score' },
-        { lsKey: 'vocabflow_roadmap_tasks', dbKey: 'roadmap_tasks' },
-        { lsKey: 'vocabflow_stars', dbKey: 'stars' },
-        { lsKey: 'vocabflow_photo_url', dbKey: 'photo_url' },
-        { lsKey: 'vocabflow_display_name', dbKey: 'display_name' },
-        { lsKey: 'vocabflow_completed_lessons', dbKey: 'completed_lessons' },
-        { lsKey: 'vocabflow_completed_sentences', dbKey: 'completed_sentences' },
-        { lsKey: 'le_stories_done', dbKey: 'stories_done' }
-    ];
-
-    let migratedAny = false;
-
-    // 1. Migrate small progress variables
-    for (const key of migrationKeys) {
-        const val = localStorage.getItem(key.lsKey);
-        if (val !== null) {
-            try {
-                let parsedVal = val;
-                // Parse numbers and JSON objects appropriately
-                if (val.startsWith('{') || val.startsWith('[')) {
-                    parsedVal = JSON.parse(val);
-                } else if (/^\d+$/.test(val)) {
-                    parsedVal = parseInt(val, 10);
-                }
-                
-                if (key.lsKey !== 'vocabflow_vocab') {
-                    await setProgress(key.dbKey, parsedVal);
-                    migratedAny = true;
-                    // Delete old key after migrating
-                    localStorage.removeItem(key.lsKey);
-                }
-            } catch (e) {
-                console.error(`Migration error for key ${key.lsKey}:`, e);
-            }
-        }
-    }
-
-    // 2. Migrate vocabulary review state ( Leitner Box, nextReview ) from localStorage if present
-    const storedVocabRaw = localStorage.getItem('vocabflow_vocab');
-    if (storedVocabRaw) {
-        try {
-            const storedVocab = JSON.parse(storedVocabRaw);
-            if (Array.isArray(storedVocab) && storedVocab.length > 0) {
-                console.log(`Migrating ${storedVocab.length} active word states from localStorage...`);
-                const db = await initDB();
-                
-                // Get current seeded vocab to merge review status
-                const currentVocab = await getAllVocab();
-                const wordStateMap = new Map();
-                storedVocab.forEach(w => {
-                    if (w && w.word) {
-                        wordStateMap.set(w.word.toLowerCase().trim(), { box: w.box, nextReview: w.nextReview });
-                    }
-                });
-
-                // Update review statuses
-                let updatedCount = 0;
-                const transaction = db.transaction(['vocabulary'], 'readwrite');
-                const store = transaction.objectStore('vocabulary');
-                
-                currentVocab.forEach(w => {
-                    const key = w.word.toLowerCase().trim();
-                    if (wordStateMap.has(key)) {
-                        const state = wordStateMap.get(key);
-                        w.box = state.box || 1;
-                        w.nextReview = state.nextReview || 0;
-                        w.word = w.word.replace(/\s\d+$/, '');
-                        store.put(w);
-                        updatedCount++;
-                    }
-                });
-
-                transaction.oncomplete = () => {
-                    console.log(`Successfully merged Leitner states for ${updatedCount} words from localStorage!`);
-                    localStorage.removeItem('vocabflow_vocab');
-                };
-            }
-        } catch (e) {
-            console.error('Error migrating vocabulary states:', e);
-        }
-    }
-
-    if (migratedAny) {
-        console.log('Migration complete! All local storage items moved to IndexedDB.');
-    }
+    console.log("Bỏ qua migrateFromLocalStorage cũ.");
 }
 
 // Export functions to global scope for easy access in app.js
