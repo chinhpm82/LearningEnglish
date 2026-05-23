@@ -24,7 +24,8 @@ import {
     limit,
     onSnapshot,
     where,
-    deleteField
+    deleteField,
+    enableIndexedDbPersistence
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import {
     getDatabase,
@@ -60,7 +61,17 @@ if (isConfigured) {
         db = getFirestore(app);
         rtdb = getDatabase(app);
         googleProvider = new GoogleAuthProvider();
-        console.log("☁️ Firebase initialized in Cloud Sync mode.");
+        
+        // Bật Offline Persistence cho Firestore
+        enableIndexedDbPersistence(db).catch((err) => {
+            if (err.code == 'failed-precondition') {
+                console.warn('Multiple tabs open, persistence can only be enabled in one tab at a a time.');
+            } else if (err.code == 'unimplemented') {
+                console.warn('The current browser does not support all of the features required to enable persistence');
+            }
+        });
+        
+        console.log("☁️ Firebase initialized in Cloud Sync mode with Offline Persistence.");
     } catch (error) {
         console.error("❌ Firebase failed to initialize:", error);
     }
@@ -71,6 +82,7 @@ if (isConfigured) {
 // --- GLOBAL BRIDGE TO APP.JS ---
 window.FirebaseSync = {
     isConfigured: isConfigured,
+    db: db,
     getCurrentUser: () => currentUser,
     
     // Login with Google Popup
@@ -291,6 +303,85 @@ window.FirebaseSync = {
         } catch (e) {
             console.error("Error loading user profile dataset from Firestore:", e);
             return null;
+        }
+    },
+
+    // --- ACADEMIC DATA FETCHING (PHÂN HỆ A) ---
+    fetchAllAcademicVocabulary: async () => {
+        if (!isConfigured) return [];
+        try {
+            const snap = await getDocs(collection(db, "academic_vocabulary"));
+            const items = [];
+            snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+            return items;
+        } catch (e) {
+            console.error("Error fetching academic vocabulary:", e);
+            return [];
+        }
+    },
+    
+    fetchAcademicGrammar: async () => {
+        if (!isConfigured) return [];
+        try {
+            const snap = await getDocs(collection(db, "academic_grammar"));
+            const items = [];
+            snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+            return items;
+        } catch (e) {
+            console.error("Error fetching grammar lessons:", e);
+            return [];
+        }
+    },
+
+    fetchAcademicStories: async () => {
+        if (!isConfigured) return [];
+        try {
+            const snap = await getDocs(collection(db, "academic_stories"));
+            const items = [];
+            snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+            return items;
+        } catch (e) {
+            console.error("Error fetching stories:", e);
+            return [];
+        }
+    },
+
+    fetchAcademicQuizzes: async () => {
+        if (!isConfigured) return [];
+        try {
+            const snap = await getDocs(collection(db, "academic_quizzes"));
+            const items = [];
+            snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+            return items;
+        } catch (e) {
+            console.error("Error fetching quizzes:", e);
+            return [];
+        }
+    },
+
+    fetchAcademicSentences: async () => {
+        if (!isConfigured) return [];
+        try {
+            const snap = await getDocs(collection(db, "academic_sentences"));
+            const items = [];
+            snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+            return items;
+        } catch (e) {
+            console.error("Error fetching sentences:", e);
+            return [];
+        }
+    },
+    
+    fetchAcademicPodcasts: async () => {
+        if (!isConfigured) return [];
+        try {
+            const snap = await getDocs(collection(db, "academic_podcasts"));
+            const items = [];
+            snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+            return items;
+        } catch (e) {
+            console.error("Error fetching podcasts:", e);
+            return [];
         }
     },
 

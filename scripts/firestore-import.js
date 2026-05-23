@@ -1,5 +1,4 @@
-import { db } from '../firebase-sync.js';
-import { collection, writeBatch, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { collection, writeBatch, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 /**
  * Script để Import dữ liệu học thuật lên Firestore
@@ -9,6 +8,13 @@ window.importDataToFirestore = async function() {
     console.log("🚀 Bắt đầu quá trình Import dữ liệu lên Firestore...");
     const btn = document.getElementById('btn-admin-import');
     if (btn) btn.disabled = true;
+    
+    const db = window.FirebaseSync.db;
+    if (!db) {
+        alert("Firebase chưa được khởi tạo đúng cách. Hãy đợi một chút và thử lại.");
+        if (btn) btn.disabled = false;
+        return;
+    }
 
     try {
         if (typeof INITIAL_VOCABULARY !== 'undefined') {
@@ -73,10 +79,10 @@ async function uploadCollectionBatch(collectionName, dataArray) {
 
     for (let i = 0; i < total; i += CHUNK_SIZE) {
         const chunk = items.slice(i, i + CHUNK_SIZE);
-        const batch = writeBatch(db);
+        const batch = writeBatch(window.FirebaseSync.db);
 
         chunk.forEach(item => {
-            const docRef = doc(collection(db, collectionName), item.id);
+            const docRef = doc(collection(window.FirebaseSync.db, collectionName), String(item.id));
             batch.set(docRef, item);
         });
 
