@@ -1,0 +1,324 @@
+[
+  {
+    "id": "q-b1b2-l1",
+    "section": "listening",
+    "level": "B1/B2",
+    "question": "Conversation: \nManager: 'We need to submit the quarterly report by Friday.' \nEmployee: '__________________'",
+    "options": [
+      "Friday is the best day of the week.",
+      "I have already submitted my leave request.",
+      "Understood. I will have the final draft ready by Thursday morning.",
+      "The report is very long."
+    ],
+    "answer": 2,
+    "explanation": "Câu nói thông báo deadline (submit by Friday) cần lời hồi đáp về tiến độ công việc hoặc xác nhận sẽ hoàn thành trước hạn (ready by Thursday morning)."
+  },
+  {
+    "id": "q-b1b2-l2",
+    "section": "listening",
+    "level": "B1/B2",
+    "question": "Conversation: \nAgent: 'Your flight has been delayed due to severe weather conditions.' \nPassenger: '__________________'",
+    "options": [
+      "Do you know when the next update will be provided?",
+      "I love flying in storms.",
+      "The weather is very sunny.",
+      "My luggage is blue."
+    ],
+    "answer": 0,
+    "explanation": "Chuyến bay bị hoãn (delayed) do thời tiết xấu, hành khách cần hỏi thêm thông tin cập nhật (when the next update will be provided)."
+  },
+  {
+    "id": "q-b1b2-l3",
+    "section": "listening",
+    "level": "B1/B2",
+    "question": "Conversation: \nStudent A: 'Are you going to the seminar on artificial intelligence today?' \nStudent B: '__________________'",
+    "options": [
+      "I think AI is just a robot.",
+      "I wanted to, but I have a clash with my biology lecture.",
+      "The seminar was held last month.",
+      "My biology lecture is very boring."
+    ],
+    "answer": 1,
+    "explanation": "Hỏi về dự định tham gia ('Are you going...'), người B giải thích lý do không đi được vì kẹt lịch học (clash with my biology lecture)."
+  },
+  {
+    "id": "q-b1b2-l4",
+    "section": "listening",
+    "level": "B1/B2",
+    "question": "Conversation: \nDoctor: 'You really need to cut down on your sugar intake to improve your health.' \nPatient: '__________________'",
+    "options": [
+      "I will try to replace sweets with more fresh fruits.",
+      "I bought five kilos of sugar yesterday.",
+      "Sugar is very sweet.",
+      "My health is perfectly fine."
+    ],
+    "answer": 0,
+    "explanation": "Lời khuyên y tế 'cắt giảm đường' (cut down on sugar) cần phản hồi tiếp thu và nêu hành động cụ thể (thay thế đồ ngọt bằng trái cây)."
+  },
+  {
+    "id": "q-b1b2-l5",
+    "section": "listening",
+    "level": "B1/B2",
+    "question": "Conversation: \nInterviewer: 'Can you describe a time when you had to overcome a difficult challenge at work?' \nCandidate: '__________________'",
+    "options": [
+      "I think work is always challenging.",
+      "Certainly. Last year, my team faced a major delay, but we resolved it by reorganizing our tasks.",
+      "I am a very hardworking person.",
+      "I have never faced any challenges."
+    ],
+    "answer": 1,
+    "explanation": "Câu hỏi phỏng vấn mô tả kinh nghiệm vượt qua thử thách cần một ví dụ cụ thể về quá khứ ('Last year... we resolved it by...')."
+  },
+  {
+    "id": "q-b1b2-g1",
+    "section": "grammar",
+    "level": "B1/B2",
+    "question": "By the time we arrived at the cinema, the movie ______.",
+    "options": [
+      "has already started",
+      "already started",
+      "had already started",
+      "was already starting"
+    ],
+    "answer": 2,
+    "explanation": "Cấu trúc 'By the time + Quá khứ đơn', vế chính dùng Quá khứ hoàn thành (had already started) để diễn tả hành động xảy ra trước một thời điểm trong quá khứ."
+  },
+  {
+    "id": "q-b1b2-g2",
+    "section": "grammar",
+    "level": "B1/B2",
+    "question": "Sentence Transformation: 'They are building a new hospital in our town.' -> A new hospital ______ in our town.",
+    "options": [
+      "is building",
+      "is being built",
+      "has been built",
+      "was built"
+    ],
+    "answer": 1,
+    "explanation": "Chuyển từ câu chủ động thì Hiện tại tiếp diễn (are building) sang câu bị động phải dùng 'is being + V(p.p)' (is being built)."
+  },
+  {
+    "id": "q-b1b2-g3",
+    "section": "grammar",
+    "level": "B1/B2",
+    "question": "Identify the error: 'Despite of the heavy rain, the football match was not canceled.'",
+    "options": [
+      "Despite of",
+      "the heavy rain",
+      "was not",
+      "canceled"
+    ],
+    "answer": 0,
+    "explanation": "Giới từ 'Despite' đi trực tiếp với danh từ/V-ing, KHÔNG dùng 'of' (hoặc phải dùng 'In spite of'). Lỗi sai ở 'Despite of'."
+  },
+  {
+    "id": "q-b1b2-g4",
+    "section": "grammar",
+    "level": "B1/B2",
+    "question": "I would rather you ______ so much noise while I am trying to study.",
+    "options": [
+      "not make",
+      "don't make",
+      "didn't make",
+      "haven't made"
+    ],
+    "answer": 2,
+    "explanation": "Cấu trúc 'would rather + S + V(quá khứ)' diễn tả mong muốn ai đó làm/không làm gì ở hiện tại. Dùng 'didn't make'."
+  },
+  {
+    "id": "q-b1b2-g5",
+    "section": "grammar",
+    "level": "B1/B2",
+    "question": "If I ______ you, I would apologize to her immediately.",
+    "options": [
+      "am",
+      "was",
+      "were",
+      "have been"
+    ],
+    "answer": 2,
+    "explanation": "Câu điều kiện loại 2 diễn tả tình huống không có thật ở hiện tại. Động từ to-be luôn dùng 'were' cho mọi ngôi."
+  },
+  {
+    "id": "q-b1b2-r1",
+    "section": "reading",
+    "level": "B1/B2",
+    "question": "Cloze Test: 'The rapid growth of the city has led to an increase in air ______, causing health problems for many residents.'",
+    "options": [
+      "protection",
+      "pollution",
+      "population",
+      "prevention"
+    ],
+    "answer": 1,
+    "explanation": "Sự phát triển nhanh chóng gây ra vấn đề ô nhiễm không khí (air pollution), dẫn đến bệnh tật."
+  },
+  {
+    "id": "q-b1b2-r2",
+    "section": "reading",
+    "level": "B1/B2",
+    "question": "Read the text: 'The company announced a new policy allowing employees to work remotely twice a week, aiming to boost morale and reduce burnout.' \n\nWhat is the purpose of the new policy?",
+    "options": [
+      "To increase working hours",
+      "To force employees to work from home every day",
+      "To improve employees' mood and decrease exhaustion",
+      "To reduce the company's rental costs"
+    ],
+    "answer": 2,
+    "explanation": "Mục đích là 'boost morale' (tăng nhuệ khí/tâm trạng) và 'reduce burnout' (giảm kiệt sức), tương đương với 'improve mood and decrease exhaustion'."
+  },
+  {
+    "id": "q-b1b2-r3",
+    "section": "reading",
+    "level": "B1/B2",
+    "question": "Paragraph Coherence (Sort these sentences):\n1. However, this is just a myth.\n2. Many people believe that eating carrots improves your eyesight in the dark.\n3. The myth started during World War II as a propaganda campaign.\n4. While carrots have Vitamin A which is good for eyes, they don't give you night vision.\n\nWhich order is the most logical?",
+    "options": [
+      "2-1-4-3",
+      "1-2-3-4",
+      "3-2-1-4",
+      "2-4-1-3"
+    ],
+    "answer": 0,
+    "explanation": "Trình tự hợp lý: Đưa ra quan điểm phổ biến (2) -> Bác bỏ nó (1) -> Giải thích sự thật khoa học (4) -> Bổ sung nguồn gốc lời đồn (3)."
+  },
+  {
+    "id": "q-b1b2-r4",
+    "section": "reading",
+    "level": "B1/B2",
+    "question": "Read the text: 'Renewable energy sources like wind and solar are becoming more cost-effective. Consequently, many nations are phasing out fossil fuels to meet their climate targets.' \n\nWhat does 'phasing out' mean in this context?",
+    "options": [
+      "Gradually increasing",
+      "Suddenly stopping",
+      "Gradually stopping or removing",
+      "Investing heavily in"
+    ],
+    "answer": 2,
+    "explanation": "'Phase out' là một phrasal verb có nghĩa là loại bỏ hoặc dừng sử dụng một cách từ từ, theo từng giai đoạn (gradually stopping)."
+  },
+  {
+    "id": "q-b1b2-r5",
+    "section": "reading",
+    "level": "B1/B2",
+    "question": "Read the text: 'Despite the initial skepticism from the board of directors, the new marketing campaign turned out to be a resounding success, driving sales up by 30%.' \n\nHow did the board of directors feel at first?",
+    "options": [
+      "They were very supportive and excited.",
+      "They were doubtful and not entirely convinced.",
+      "They were completely indifferent.",
+      "They were angry and demanded changes."
+    ],
+    "answer": 1,
+    "explanation": "Từ 'skepticism' có nghĩa là sự hoài nghi. Do đó, ban giám đốc ban đầu cảm thấy nghi ngờ (doubtful and not entirely convinced)."
+  },
+  {
+    "id": "pq-g2",
+    "section": "grammar",
+    "level": "A3/B1",
+    "question": "Yesterday, while I ______ my English vocabulary, the electricity suddenly went out.",
+    "options": [
+      "am studying",
+      "studied",
+      "was studying",
+      "had studied"
+    ],
+    "answer": 2,
+    "explanation": "Sử dụng thì Quá khứ tiếp diễn (was studying) để diễn tả hành động đang xảy ra trong quá khứ thì có hành động khác xen vào (went out)."
+  },
+  {
+    "id": "pq-g3",
+    "section": "grammar",
+    "level": "B2/B3",
+    "question": "If we ______ enough stars yesterday, we would have unlocked the C1 advanced vocabulary level today.",
+    "options": [
+      "collected",
+      "had collected",
+      "would collect",
+      "have collected"
+    ],
+    "answer": 1,
+    "explanation": "Câu điều kiện hỗn hợp (Mixed Conditional): diễn tả giả thiết trái ngược quá khứ ('had collected' - điều kiện loại 3) và kết quả trái ngược hiện tại ('would have unlocked' - kết quả loại 2)."
+  },
+  {
+    "id": "pq-v2",
+    "section": "vocabulary",
+    "level": "A3/B1",
+    "question": "She decided to ______ smoking to improve her physical health.",
+    "options": [
+      "give up",
+      "take up",
+      "put off",
+      "look after"
+    ],
+    "answer": 0,
+    "explanation": "Cụm động từ 'give up' nghĩa là từ bỏ (thói quen, sở thích, hành vi)."
+  },
+  {
+    "id": "pq-v3",
+    "section": "vocabulary",
+    "level": "B2/B3",
+    "question": "The teacher gave us a very ______ explanation, so everyone understood the math problem easily.",
+    "options": [
+      "ambiguous",
+      "redundant",
+      "lucid",
+      "superficial"
+    ],
+    "answer": 2,
+    "explanation": "'Lucid' nghĩa là rõ ràng, dễ hiểu, minh bạch. Trái ngược hoàn toàn với ambiguous (mơ hồ) hay superficial (hời hợt)."
+  },
+  {
+    "id": "pq-r2",
+    "section": "reading",
+    "level": "A3/B1",
+    "question": "Read the text: 'Regular exercise offers enormous benefits for mental health. Physical activities stimulate the release of endorphins, commonly known as feel-good hormones, which mitigate stress and elevate overall mood.' \n\nAccording to the text, what are endorphins?",
+    "options": [
+      "A type of physical exercise",
+      "Hormones that relieve stress and boost mood",
+      "Mental illnesses caused by lack of sleep",
+      "Nutrients found in healthy organic food"
+    ],
+    "answer": 1,
+    "explanation": "Endorphins được định nghĩa là 'feel-good hormones, which mitigate stress and elevate overall mood' (hormone giảm stress và tăng tâm trạng)."
+  },
+  {
+    "id": "pq-r3",
+    "section": "reading",
+    "level": "B2/B3",
+    "question": "Read the text: 'The rise of artificial intelligence has revolutionized traditional job markets. While automation threatens repetitive manual jobs, it simultaneously spawns fresh opportunities in technology development, data analytics, and ethical AI auditing.' \n\nWhat is the main idea of this passage?",
+    "options": [
+      "Artificial intelligence will completely destroy all human job opportunities.",
+      "Manual labor will become highly valued due to AI limits.",
+      "AI has a dual impact on employment, replacing repetitive tasks but creating new digital roles.",
+      "Ethical auditing is the only job safe from AI automation."
+    ],
+    "answer": 2,
+    "explanation": "Đoạn văn nêu rõ tác động kép của AI: đe dọa công việc thủ công lặp lại (automates repetitive jobs) nhưng đồng thời mở ra nhiều cơ hội mới (spawns fresh opportunities)."
+  },
+  {
+    "id": "pq-l2",
+    "section": "listening",
+    "level": "A3/B1",
+    "question": "Conversation: \nDoctor: 'How long have you been suffering from these severe headaches?' \nPatient: '__________________'",
+    "options": [
+      "I usually take some medicine from my bag.",
+      "For about four days now. They usually start in the afternoon.",
+      "Headaches are very common for old people.",
+      "My father also had a headache last week."
+    ],
+    "answer": 1,
+    "explanation": "Câu hỏi về thời lượng kéo dài triệu chứng bệnh ('How long have you been suffering...') đòi hỏi câu trả lời về khoảng thời gian ('For about four days now')."
+  },
+  {
+    "id": "pq-l3",
+    "section": "listening",
+    "level": "B2/B3",
+    "question": "Conversation: \nManager: 'We really need to cut down on our operational costs this quarter.' \nAssistant: '__________________'",
+    "options": [
+      "Good idea, let's hire ten more high-salary employees right away.",
+      "I agree. We could transition to paperless invoicing and reduce office electricity usage.",
+      "Operational costs are always calculated annually, not quarterly.",
+      "I don't think paper has anything to do with our business operations."
+    ],
+    "answer": 1,
+    "explanation": "Đề xuất cắt giảm chi phí vận hành ('cut down on operational costs') tương thích với giải pháp cụ thể: chuyển sang hóa đơn điện tử và giảm điện tiêu dùng."
+  }
+]

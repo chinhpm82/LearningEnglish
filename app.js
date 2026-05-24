@@ -341,9 +341,17 @@ function updateCEFRSkillsRadarBars(score, masteredVocab, totalVocab) {
     });
 }
 
+// --- ADAPTIVE PLACEMENT TEST STATE ---
 let isPlacementQuizRunning = false;
+let currentPlacementRound = 1;
+let adaptiveRoundQuestions = [];
 let currentPlacementQuestionIndex = 0;
-let placementUserAnswers = [];
+let adaptiveUserAnswers = [];
+let adaptiveTotalStats = {
+    grammar: 0, reading: 0, vocab: 0, listening: 0,
+    totalCorrectRound1: 0, totalRound1: 0,
+    totalCorrectRound2: 0, totalRound2: 0
+};
 
 function triggerCEFRPlacementTestIfNew() {
     if (state.lastTestScore === 0) {
@@ -358,8 +366,21 @@ function startPlacementTestQuiz() {
     document.getElementById('placement-result-screen').classList.add('hidden');
 
     isPlacementQuizRunning = true;
+    currentPlacementRound = 1;
     currentPlacementQuestionIndex = 0;
-    placementUserAnswers = [];
+    adaptiveUserAnswers = [];
+    adaptiveTotalStats = { grammar: 0, reading: 0, vocab: 0, listening: 0, totalCorrectRound1: 0, totalRound1: 0, totalCorrectRound2: 0, totalRound2: 0 };
+    
+    // Vòng 1: Khởi động (Mức B1 / A3)
+    if (typeof PLACEMENT_QUESTIONS !== 'undefined') {
+        let pool = PLACEMENT_QUESTIONS.filter(q => q.level.includes('B1') || q.level.includes('A3') || q.level.includes('B2'));
+        if (pool.length < 4) {
+            pool = [...PLACEMENT_QUESTIONS]; // Fallback if DB too small
+        }
+        pool.sort(() => 0.5 - Math.random());
+        adaptiveRoundQuestions = pool.slice(0, Math.min(10, pool.length));
+    }
+    
     showPlacementQuestion();
 }
 
@@ -375,8 +396,8 @@ function skipPlacementTestQuiz() {
 }
 
 function showPlacementQuestion() {
-    if (typeof PLACEMENT_QUESTIONS === 'undefined') return;
-    const q = PLACEMENT_QUESTIONS[currentPlacementQuestionIndex];
+    if (adaptiveRoundQuestions.length === 0) return;
+    const q = adaptiveRoundQuestions[currentPlacementQuestionIndex];
     if (!q) return;
 
     // Update section indicator and progress bar
@@ -384,10 +405,10 @@ function showPlacementQuestion() {
     const progText = document.getElementById('placement-progress-text');
     const progBar = document.getElementById('placement-progress-bar');
 
-    const totalQs = PLACEMENT_QUESTIONS.length;
+    const totalQs = adaptiveRoundQuestions.length;
     const progressPct = ((currentPlacementQuestionIndex) / totalQs) * 100;
     if (progBar) progBar.style.width = `${progressPct}%`;
-    if (progText) progText.textContent = `Câu ${currentPlacementQuestionIndex + 1} / ${totalQs}`;
+    if (progText) progText.textContent = `Vòng ${currentPlacementRound} - Câu ${currentPlacementQuestionIndex + 1} / ${totalQs}`;
 
     const sectionNames = {
         'grammar': '📚 NGỮ PHÁP (GRAMMAR)',
@@ -429,12 +450,71 @@ function showPlacementQuestion() {
 }
 
 function submitPlacementAnswer(selectedIdx) {
-    placementUserAnswers.push(selectedIdx);
+    const q = adaptiveRoundQuestions[currentPlacementQuestionIndex];
+    adaptiveUserAnswers.push({
+        q: q,
+        selected: selectedIdx,
+        isCorrect: (selectedIdx === q.answer)
+    });
     
     currentPlacementQuestionIndex++;
-    if (currentPlacementQuestionIndex < PLACEMENT_QUESTIONS.length) {
+    if (currentPlacementQuestionIndex < adaptiveRoundQuestions.length) {
         showPlacementQuestion();
     } else {
+        processRoundEnd();
+    }
+}
+
+function processRoundEnd() {
+    let roundCorrect = 0;
+    adaptiveUserAnswers.forEach(ans => {
+        if (ans.isCorrect) {
+            roundCorrect++;
+            if (ans.q.section === 'grammar') adaptiveTotalStats.grammar++;
+            else if (ans.q.section === 'reading') adaptiveTotalStats.reading++;
+            else if (ans.q.section === 'vocabulary') adaptiveTotalStats.vocab++;
+            else if (ans.q.section === 'listening') adaptiveTotalStats.listening++;
+        }
+    });
+
+    if (currentPlacementRound === 1) {
+        adaptiveTotalStats.totalCorrectRound1 = roundCorrect;
+        adaptiveTotalStats.totalRound1 = adaptiveRoundQuestions.length;
+        let accuracy = roundCorrect / adaptiveRoundQuestions.length;
+        
+        // Vòng 2: Rẽ nhánh thích ứng
+        currentPlacementRound = 2;
+        currentPlacementQuestionIndex = 0;
+        adaptiveUserAnswers = [];
+        
+        let pool = [];
+        if (accuracy > 0.75) {
+            // Nhóm 1: Khá/Giỏi -> B2, C1, C2
+            pool = PLACEMENT_QUESTIONS.filter(q => q.level.includes('C1') || q.level.includes('C2') || q.level.includes('B3') || q.level.includes('B2'));
+        } else if (accuracy >= 0.40) {
+            // Nhóm 2: Trung bình -> A2, B1
+            pool = PLACEMENT_QUESTIONS.filter(q => q.level.includes('B1') || q.level.includes('A3') || q.level.includes('A2'));
+        } else {
+            // Nhóm 3: Yếu -> A1, A2
+            pool = PLACEMENT_QUESTIONS.filter(q => q.level.includes('A1') || q.level.includes('A2'));
+        }
+        
+        if (pool.length < 3) {
+            pool = [...PLACEMENT_QUESTIONS].sort(() => 0.5 - Math.random()).slice(0, 5); // Fallback
+        }
+        
+        pool.sort(() => 0.5 - Math.random());
+        adaptiveRoundQuestions = pool.slice(0, Math.min(10, pool.length));
+        
+        const secIndicator = document.getElementById('placement-section-indicator');
+        if (secIndicator) {
+            secIndicator.innerHTML = '<span style="color:var(--primary)">🤖 AI Đang Phân Tích & Rẽ Nhánh...</span>';
+        }
+        
+        setTimeout(() => { showPlacementQuestion(); }, 1500);
+    } else {
+        adaptiveTotalStats.totalCorrectRound2 = roundCorrect;
+        adaptiveTotalStats.totalRound2 = adaptiveRoundQuestions.length;
         finishPlacementTest();
     }
 }
@@ -442,47 +522,40 @@ function submitPlacementAnswer(selectedIdx) {
 function finishPlacementTest() {
     isPlacementQuizRunning = false;
 
-    // Calculate score
-    let totalCorrect = 0;
-    let grammarCorrect = 0;
-    let readingCorrect = 0;
-    let vocabCorrect = 0;
-    let listeningCorrect = 0;
-
-    PLACEMENT_QUESTIONS.forEach((q, idx) => {
-        const userAns = placementUserAnswers[idx];
-        if (userAns === q.answer) {
-            totalCorrect++;
-            if (q.section === 'grammar') grammarCorrect++;
-            else if (q.section === 'reading') readingCorrect++;
-            else if (q.section === 'vocabulary') vocabCorrect++;
-            else if (q.section === 'listening') listeningCorrect++;
-        }
-    });
-
-    // Save sectional scores
-    state.placementStats = {
-        grammar: grammarCorrect,
-        reading: readingCorrect,
-        vocab: vocabCorrect,
-        listening: listeningCorrect
-    };
-
-    // Classify Level (A1 - C2)
+    let totalCorrect = adaptiveTotalStats.totalCorrectRound1 + adaptiveTotalStats.totalCorrectRound2;
+    let totalQuestions = adaptiveTotalStats.totalRound1 + adaptiveTotalStats.totalRound2;
+    let finalAccuracy = totalCorrect / totalQuestions;
+    
+    // Classify Level (Vòng 3: Chốt trình độ)
     let finalLevel = 'A1';
-    if (totalCorrect <= 2) finalLevel = 'A1';
-    else if (totalCorrect <= 4) finalLevel = 'A2';
-    else if (totalCorrect <= 6) finalLevel = 'A3';
-    else if (totalCorrect <= 8) finalLevel = 'B1';
-    else if (totalCorrect <= 10) finalLevel = 'B2';
-    else if (totalCorrect <= 12) finalLevel = 'B3';
-    else if (totalCorrect <= 14) finalLevel = 'C1';
-    else finalLevel = 'C2';
+    let r1Acc = adaptiveTotalStats.totalCorrectRound1 / adaptiveTotalStats.totalRound1;
+    
+    if (r1Acc > 0.75) {
+        if (finalAccuracy > 0.85) finalLevel = 'C2';
+        else if (finalAccuracy > 0.70) finalLevel = 'C1';
+        else if (finalAccuracy > 0.50) finalLevel = 'B3';
+        else finalLevel = 'B2';
+    } else if (r1Acc >= 0.40) {
+        if (finalAccuracy > 0.80) finalLevel = 'B2';
+        else if (finalAccuracy > 0.60) finalLevel = 'B1';
+        else finalLevel = 'A3';
+    } else {
+        if (finalAccuracy > 0.60) finalLevel = 'A2';
+        else finalLevel = 'A1';
+    }
 
     state.userLevel = finalLevel;
-    state.lastTestScore = totalCorrect;
+    // Map to pseudo score out of 16 for UI compatibility
+    let mappedScore = Math.round((totalCorrect / totalQuestions) * 16);
+    state.lastTestScore = mappedScore;
+    
+    state.placementStats = {
+        grammar: adaptiveTotalStats.grammar,
+        reading: adaptiveTotalStats.reading,
+        vocab: adaptiveTotalStats.vocab,
+        listening: adaptiveTotalStats.listening
+    };
 
-    // Update database & sync
     saveStatsToStorage();
 
     // Show Results Screen
@@ -491,18 +564,20 @@ function finishPlacementTest() {
     document.getElementById('placement-result-screen').classList.remove('hidden');
 
     // Populate score visualizers
-    document.getElementById('placement-score-result').textContent = `${totalCorrect} / 16`;
+    document.getElementById('placement-score-result').textContent = `${totalCorrect} / ${totalQuestions}`;
     document.getElementById('placement-level-result').textContent = finalLevel;
 
     // Section breakdown numbers
-    document.getElementById('breakdown-grammar').textContent = `${grammarCorrect} / 4`;
-    document.getElementById('breakdown-reading').textContent = `${readingCorrect} / 4`;
-    document.getElementById('breakdown-vocab').textContent = `${vocabCorrect + listeningCorrect} / 8`;
+    let safeTotal = totalQuestions || 1;
+    document.getElementById('breakdown-grammar').textContent = `${adaptiveTotalStats.grammar} câu`;
+    document.getElementById('breakdown-reading').textContent = `${adaptiveTotalStats.reading} câu`;
+    document.getElementById('breakdown-vocab').textContent = `${adaptiveTotalStats.vocab + adaptiveTotalStats.listening} câu`;
 
     // Section breakdown bars width
-    document.getElementById('bar-grammar').style.width = `${(grammarCorrect / 4) * 100}%`;
-    document.getElementById('bar-reading').style.width = `${(readingCorrect / 4) * 100}%`;
-    document.getElementById('bar-vocab').style.width = `${((vocabCorrect + listeningCorrect) / 8) * 100}%`;
+    // Normalize bar width relative to total questions
+    document.getElementById('bar-grammar').style.width = `${(adaptiveTotalStats.grammar / safeTotal) * 200}%`;
+    document.getElementById('bar-reading').style.width = `${(adaptiveTotalStats.reading / safeTotal) * 200}%`;
+    document.getElementById('bar-vocab').style.width = `${((adaptiveTotalStats.vocab + adaptiveTotalStats.listening) / safeTotal) * 200}%`;
 }
 
 function closePlacementTestModal() {

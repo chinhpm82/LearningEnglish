@@ -1,0 +1,268 @@
+[
+  {
+    "id": "q-c1c2-l1",
+    "section": "listening",
+    "level": "C1/C2",
+    "question": "Conversation: \nCEO: 'The sudden shift in monetary policy has entirely undermined our fiscal projections for the upcoming quarter.' \nCFO: '__________________'",
+    "options": [
+      "I agree. We must expeditiously recalibrate our budget to account for the new interest rates.",
+      "Yes, the monetary policy is printed on very nice paper.",
+      "I don't think the upcoming quarter has 3 months.",
+      "The projections are visible on the screen."
+    ],
+    "answer": 0,
+    "explanation": "CEO dùng các từ học thuật 'undermined our fiscal projections' (phá hoại dự phóng tài chính). CFO cần hồi đáp bằng giải pháp tương ứng: 'recalibrate our budget' (điều chỉnh lại ngân sách nhanh chóng)."
+  },
+  {
+    "id": "q-c1c2-l2",
+    "section": "listening",
+    "level": "C1/C2",
+    "question": "Conversation: \nReporter: 'Your new book seems to challenge the ubiquitous paradigm of trickle-down economics.' \nAuthor: '__________________'",
+    "options": [
+      "I like reading books about economics.",
+      "Indeed, empirical data suggests that such models often exacerbate wealth inequality rather than alleviate it.",
+      "Trickle-down economics is when water drops from the ceiling.",
+      "I wrote this book in a small cafe in Paris."
+    ],
+    "answer": 1,
+    "explanation": "Câu hỏi phân tích sự thách thức (challenge) mô hình kinh tế nhỏ giọt (trickle-down economics). Phản hồi cần mang tính hàn lâm, sử dụng bằng chứng thực nghiệm (empirical data) để chứng minh nó làm trầm trọng thêm (exacerbate) bất bình đẳng."
+  },
+  {
+    "id": "q-c1c2-l3",
+    "section": "listening",
+    "level": "C1/C2",
+    "question": "Conversation: \nProfessor: 'The essay was structurally sound, yet your central thesis remains somewhat nebulous.' \nStudent: '__________________'",
+    "options": [
+      "I will use a louder voice when I read it next time.",
+      "I understand. I will refine the core argument to ensure it is articulated with greater clarity and precision.",
+      "Thank you, I worked very hard on the structure.",
+      "Nebulous means clouds in the sky."
+    ],
+    "answer": 1,
+    "explanation": "'Nebulous' nghĩa là mơ hồ, không rõ ràng. Lời đáp phù hợp là cam kết làm sắc bén lại lập luận cốt lõi (refine the core argument) để rõ ràng hơn (greater clarity)."
+  },
+  {
+    "id": "q-c1c2-l4",
+    "section": "listening",
+    "level": "C1/C2",
+    "question": "Conversation: \nColleague A: 'I'm afraid the new compliance regulations are going to be a massive bureaucratic bottleneck.' \nColleague B: '__________________'",
+    "options": [
+      "Bottles are usually made of glass or plastic.",
+      "We should ignore the regulations completely.",
+      "Undeniably. However, proactive integration of these protocols might mitigate the operational friction.",
+      "Bureaucracy is a very long word to spell."
+    ],
+    "answer": 2,
+    "explanation": "Sự lo ngại về tắc nghẽn hành chính (bureaucratic bottleneck). Phản hồi C1/C2 sử dụng ngôn ngữ cao cấp: 'proactive integration' (tích hợp chủ động) để 'mitigate operational friction' (giảm thiểu ma sát vận hành)."
+  },
+  {
+    "id": "q-c1c2-l5",
+    "section": "listening",
+    "level": "C1/C2",
+    "question": "Conversation: \nScientist: 'The anomalous results from the spectrometer severely compromise the integrity of our hypothesis.' \nAssistant: '__________________'",
+    "options": [
+      "Should we conduct a meticulous recalibration of the instruments to rule out systemic error?",
+      "I think the results are very beautiful.",
+      "Hypotheses are just guesses anyway.",
+      "I will put the spectrometer in the trash."
+    ],
+    "answer": 0,
+    "explanation": "Khi kết quả bất thường (anomalous results) đe dọa giả thuyết, hành động chuyên môn là đề xuất hiệu chuẩn lại thiết bị tỉ mỉ (meticulous recalibration) để loại trừ sai số hệ thống (systemic error)."
+  },
+  {
+    "id": "q-c1c2-g1",
+    "section": "grammar",
+    "level": "C1/C2",
+    "question": "Rarely ______ such a blatant disregard for ethical standards in corporate governance.",
+    "options": [
+      "I have witnessed",
+      "have I witnessed",
+      "did I witness",
+      "I witnessed"
+    ],
+    "answer": 1,
+    "explanation": "Cấu trúc đảo ngữ với 'Rarely' (Hiếm khi): Trạng từ phủ định + Trợ động từ + S + V. Vì vế sau mang nghĩa hoàn thành trải nghiệm, dùng thì Hiện tại hoàn thành: 'have I witnessed'."
+  },
+  {
+    "id": "q-c1c2-g2",
+    "section": "grammar",
+    "level": "C1/C2",
+    "question": "Had the diplomatic intervention not been executed so swiftly, the border skirmish ______ into a full-scale regional conflict.",
+    "options": [
+      "might escalate",
+      "would have escalated",
+      "must have escalated",
+      "had escalated"
+    ],
+    "answer": 1,
+    "explanation": "Câu điều kiện loại 3 ẩn 'If' bằng cách đảo ngữ 'Had + S + not + V(p.p)'. Mệnh đề chính chia ở dạng 'would have + V(p.p)' (would have escalated) để chỉ kết quả giả định trong quá khứ."
+  },
+  {
+    "id": "q-c1c2-g3",
+    "section": "grammar",
+    "level": "C1/C2",
+    "question": "Identify the error: 'The phenomenon of urban sprawl, characteristic of many post-industrial cities, are causing irreversible ecological damage to surrounding rural areas.'",
+    "options": [
+      "The phenomenon",
+      "characteristic of",
+      "are causing",
+      "irreversible"
+    ],
+    "answer": 2,
+    "explanation": "Chủ ngữ cốt lõi là 'The phenomenon' (số ít), phần ở giữa hai dấu phẩy là cụm bổ ngữ. Do đó, động từ phải chia số ít 'is causing', không phải 'are causing'."
+  },
+  {
+    "id": "q-c1c2-g4",
+    "section": "grammar",
+    "level": "C1/C2",
+    "question": "Sentence Transformation: 'It is highly probable that the committee will reject the controversial proposal.' -> The committee ______ the controversial proposal.",
+    "options": [
+      "is bound to reject",
+      "is on the verge to reject",
+      "is highly to reject",
+      "is in likelihood rejecting"
+    ],
+    "answer": 0,
+    "explanation": "'be bound to do sth' là cấu trúc nâng cao mang nghĩa 'chắc chắn/có khả năng rất cao sẽ xảy ra', tương đương với 'highly probable'."
+  },
+  {
+    "id": "q-c1c2-g5",
+    "section": "grammar",
+    "level": "C1/C2",
+    "question": "He was accused of embezzling company funds, ______ he vehemently denied during the public hearing.",
+    "options": [
+      "a charge which",
+      "which charge",
+      "charge that",
+      "of which charge"
+    ],
+    "answer": 0,
+    "explanation": "Cấu trúc mệnh đề quan hệ nối tiếp nâng cao. 'A charge which' đóng vai trò tóm tắt toàn bộ sự việc phía trước (lời buộc tội thụt két) và làm tân ngữ cho động từ 'denied' phía sau."
+  },
+  {
+    "id": "q-c1c2-r1",
+    "section": "reading",
+    "level": "C1/C2",
+    "question": "Cloze Test: 'The CEO's resignation was ostensibly due to health reasons; however, industry insiders speculate that internal board friction was the true ______ behind his abrupt departure.'",
+    "options": [
+      "catalyst",
+      "consequence",
+      "symptom",
+      "bystander"
+    ],
+    "answer": 0,
+    "explanation": "'Catalyst' (chất xúc tác/nguyên nhân thúc đẩy) là từ vựng C1/C2 hoàn hảo để chỉ lý do thực sự đằng sau sự ra đi đột ngột (abrupt departure)."
+  },
+  {
+    "id": "q-c1c2-r2",
+    "section": "reading",
+    "level": "C1/C2",
+    "question": "Read the text: 'Existentialism posits that human beings create their own meaning in an inherently meaningless universe. This philosophical doctrine emphasizes individual freedom and absolute responsibility, rejecting any deterministic or teleological framework.' \n\nAccording to the passage, how does existentialism view human destiny?",
+    "options": [
+      "It is predetermined by a divine or teleological plan.",
+      "It is chaotic and completely out of human control.",
+      "It is actively constructed by individuals through their own free choices.",
+      "It is defined strictly by societal norms and responsibilities."
+    ],
+    "answer": 2,
+    "explanation": "Đoạn văn nhấn mạnh con người tự tạo ra ý nghĩa (create their own meaning) thông qua tự do cá nhân (individual freedom), bác bỏ thuyết tất định (rejecting deterministic framework). Do đó, số phận được tạo ra bởi lựa chọn cá nhân."
+  },
+  {
+    "id": "q-c1c2-r3",
+    "section": "reading",
+    "level": "C1/C2",
+    "question": "Read the text: 'The deleterious effects of microplastics on marine ecosystems are now irrefutable. These microscopic polymers bioaccumulate in the food web, culminating in unprecedented levels of toxicity in apex predators.' \n\nWhat does the word 'deleterious' mean in this context?",
+    "options": [
+      "Beneficial and nourishing",
+      "Harmful and damaging",
+      "Invisible and microscopic",
+      "Unpredictable and random"
+    ],
+    "answer": 1,
+    "explanation": "'Deleterious' là tính từ mức C2 mang nghĩa gây hại, độc hại (Harmful and damaging), đồng nghĩa với detrimental hoặc destructive."
+  },
+  {
+    "id": "q-c1c2-r4",
+    "section": "reading",
+    "level": "C1/C2",
+    "question": "Paragraph Coherence (Sort these sentences):\n1. Concurrently, it raises profound ethical concerns regarding algorithmic bias and data privacy.\n2. The advent of quantum computing promises to exponentially accelerate cryptographic decoding.\n3. Therefore, regulatory frameworks must evolve synchronously with this technological leap to prevent systemic vulnerabilities.\n4. This paradigm shift will undoubtedly render current encryption standards obsolete overnight.\n\nWhich order is the most logical?",
+    "options": [
+      "2-4-1-3",
+      "2-1-4-3",
+      "4-2-1-3",
+      "1-2-4-3"
+    ],
+    "answer": 0,
+    "explanation": "Trình tự hợp lý: Giới thiệu sự xuất hiện của điện toán lượng tử (2) -> Hậu quả trực tiếp là phá vỡ mã hóa (4) -> Hậu quả song song về đạo đức/dữ liệu (1) -> Kết luận về nhu cầu kiểm soát (3)."
+  },
+  {
+    "id": "q-c1c2-r5",
+    "section": "reading",
+    "level": "C1/C2",
+    "question": "Read the text: 'While the avant-garde movement was initially met with derision by mainstream critics, its subversive aesthetics eventually permeated popular culture, diluting its original revolutionary ethos into mere commodified pastiche.' \n\nWhat is the author's tone regarding the mainstream adaptation of the avant-garde movement?",
+    "options": [
+      "Enthusiastic and highly supportive",
+      "Objective and strictly historical",
+      "Cynical and slightly critical",
+      "Confused and bewildered"
+    ],
+    "answer": 2,
+    "explanation": "Tác giả sử dụng các từ mang tính châm biếm/phê phán (diluting original ethos, mere commodified pastiche - pha loãng tinh thần cách mạng thành thứ chắp vá thương mại rẻ tiền). Điều này thể hiện thái độ hoài nghi và phê phán (Cynical and slightly critical)."
+  },
+  {
+    "id": "pq-g4",
+    "section": "grammar",
+    "level": "C1/C2",
+    "question": "______ did I realize that mastering English pronunciation required daily spoken practice.",
+    "options": [
+      "Little",
+      "Only when",
+      "Seldom",
+      "Not until"
+    ],
+    "answer": 0,
+    "explanation": "Cấu trúc đảo ngữ với trạng từ phủ định 'Little' (Little did I realize...): Tôi gần như không hề nhận ra rằng..."
+  },
+  {
+    "id": "pq-v4",
+    "section": "vocabulary",
+    "level": "C1/C2",
+    "question": "In times of financial crisis, many businesses had no choice but to ______ their non-core employees.",
+    "options": [
+      "liquidate",
+      "retrench",
+      "expel",
+      "recuperate"
+    ],
+    "answer": 1,
+    "explanation": "'Retrench' nghĩa là tinh giảm biên chế, cắt giảm nhân sự hoặc chi phí để tiết kiệm tài chính."
+  },
+  {
+    "id": "pq-r4",
+    "section": "reading",
+    "level": "C1/C2",
+    "question": "Read the text: 'Critics argue that universal basic income (UBI) fosters labor market disincentives. Conversely, proponents contend that by establishing a financial safety net, UBI empowers marginalized individuals to pursue higher education or entrepreneurial ventures without fear of destitution.' \n\nWhich of the following can be inferred from the passage?",
+    "options": [
+      "Proponents believe UBI makes people lazy and unwilling to work.",
+      "Both critics and proponents agree that UBI will increase bankruptcy rates.",
+      "UBI may act as a catalyst for entrepreneurship and self-improvement for lower-income groups.",
+      "Destitution is required to motivate individuals to pursue entrepreneurial ventures."
+    ],
+    "answer": 2,
+    "explanation": "Ta có thể suy luận (infer) từ đoạn văn: bằng việc tạo lưới an sinh (financial safety net), UBI giúp những người yếu thế có cơ hội tự do khởi nghiệp hoặc học lên cao (empowers marginalized individuals to pursue entrepreneurial ventures/higher education)."
+  },
+  {
+    "id": "pq-l4",
+    "section": "listening",
+    "level": "C1/C2",
+    "question": "Conversation: \nCEO: 'I am afraid our competitor's new software launch has completely caught us off guard.' \nDirector: '__________________'",
+    "options": [
+      "Congratulations! That is wonderful news for our software sales.",
+      "Indeed, we must quickly devise a contingency plan to mitigate our loss of market share.",
+      "Competitors are always friendly and keep us informed of their launch dates.",
+      "I prefer launching boats rather than software."
+    ],
+    "answer": 1,
+    "explanation": "Tình huống bị động/bất ngờ trước đối thủ ('caught us off guard') đòi hỏi phản xạ ứng biến: nhanh chóng lên phương án dự phòng (contingency plan) để giảm thiểu mất mát thị phần."
+  }
+]

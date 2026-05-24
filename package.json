@@ -1,0 +1,26 @@
+{
+  "name": "learningenglish",
+  "version": "1.0.0",
+  "description": "**LearningEnglish** là ứng dụng web Single-Page (SPA) tinh tế, gọn nhẹ và tối giản, được thiết kế đặc biệt dành riêng cho việc **tự học từ vựng và câu giao tiếp tiếng Anh** hiệu quả nhất mà **không cần server, cơ sở dữ liệu hay lưu trữ file phương tiện (audio/hình ảnh) đắt đỏ**.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chinhpm82/LearningEnglish.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/chinhpm82/LearningEnglish/issues"
+  },
+  "homepage": "https://github.com/chinhpm82/LearningEnglish#readme",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "axios": "^1.16.1",
+    "dotenv": "^17.4.2"
+  }
+}

@@ -1,0 +1,268 @@
+[
+  {
+    "id": "q-a1a2-l1",
+    "section": "listening",
+    "level": "A1/A2",
+    "question": "Listen to the conversation: \nMan: 'What time does the train leave?' \nWoman: '__________________'",
+    "options": [
+      "It leaves at 9:00 AM from platform 4.",
+      "The train is very fast and comfortable.",
+      "I love traveling by train.",
+      "Yes, the train left yesterday."
+    ],
+    "answer": 0,
+    "explanation": "Câu hỏi 'What time does the train leave?' (Chuyến tàu rời đi lúc mấy giờ) cần câu trả lời về thời gian cụ thể (9:00 AM)."
+  },
+  {
+    "id": "q-a1a2-l2",
+    "section": "listening",
+    "level": "A1/A2",
+    "question": "Conversation: \nCustomer: 'Excuse me, how much is this shirt?' \nShop Assistant: '__________________'",
+    "options": [
+      "The shirt is made of cotton.",
+      "It's twenty-five dollars.",
+      "We sell many shirts here.",
+      "I bought this shirt yesterday."
+    ],
+    "answer": 1,
+    "explanation": "Câu hỏi giá cả 'how much' đòi hỏi câu trả lời về số tiền ('twenty-five dollars')."
+  },
+  {
+    "id": "q-a1a2-l3",
+    "section": "listening",
+    "level": "A1/A2",
+    "question": "Conversation: \nFriend: 'Would you like some coffee or tea?' \nYou: '__________________'",
+    "options": [
+      "I am drinking water.",
+      "Coffee, please. No sugar.",
+      "The coffee shop is closed.",
+      "Tea is very hot."
+    ],
+    "answer": 1,
+    "explanation": "Lời mời chọn đồ uống cần câu trả lời lựa chọn và thái độ lịch sự ('Coffee, please')."
+  },
+  {
+    "id": "q-a1a2-l4",
+    "section": "listening",
+    "level": "A1/A2",
+    "question": "Conversation: \nTeacher: 'Where were you born, Maria?' \nMaria: '__________________'",
+    "options": [
+      "I live in London.",
+      "I was born in 1995.",
+      "I was born in Madrid, Spain.",
+      "I am Spanish."
+    ],
+    "answer": 2,
+    "explanation": "Câu hỏi 'Where were you born' (Sinh ra ở đâu) cần câu trả lời về địa điểm (Madrid, Spain)."
+  },
+  {
+    "id": "q-a1a2-l5",
+    "section": "listening",
+    "level": "A1/A2",
+    "question": "Conversation: \nPerson A: 'I am so hungry.' \nPerson B: '__________________'",
+    "options": [
+      "Let's go get some pizza.",
+      "I am very sleepy too.",
+      "He is cooking dinner.",
+      "The restaurant is big."
+    ],
+    "answer": 0,
+    "explanation": "Lời phàn nàn 'I am so hungry' cần lời đề xuất giải pháp ăn uống ('Let's go get some pizza')."
+  },
+  {
+    "id": "q-a1a2-g1",
+    "section": "grammar",
+    "level": "A1/A2",
+    "question": "My sister ______ to the supermarket every Saturday morning.",
+    "options": [
+      "go",
+      "goes",
+      "going",
+      "is go"
+    ],
+    "answer": 1,
+    "explanation": "Chủ ngữ ngôi thứ 3 số ít (My sister) ở thì Hiện tại đơn đi kèm với trạng từ tần suất (every Saturday morning) thì động từ phải thêm -es (goes)."
+  },
+  {
+    "id": "q-a1a2-g2",
+    "section": "grammar",
+    "level": "A1/A2",
+    "question": "Identify the incorrect part in this sentence: 'She are reading a good book right now.'",
+    "options": [
+      "She",
+      "are reading",
+      "a good book",
+      "right now"
+    ],
+    "answer": 1,
+    "explanation": "Chủ ngữ 'She' đi với to be 'is', không dùng 'are'. Sai ở phần 'are reading'."
+  },
+  {
+    "id": "q-a1a2-g3",
+    "section": "grammar",
+    "level": "A1/A2",
+    "question": "I don't have ______ apples in the fridge.",
+    "options": [
+      "some",
+      "any",
+      "a",
+      "an"
+    ],
+    "answer": 1,
+    "explanation": "Trong câu phủ định, ta dùng 'any' thay vì 'some' trước danh từ đếm được số nhiều (apples)."
+  },
+  {
+    "id": "q-a1a2-g4",
+    "section": "grammar",
+    "level": "A1/A2",
+    "question": "Yesterday, they ______ football in the park.",
+    "options": [
+      "play",
+      "plays",
+      "played",
+      "playing"
+    ],
+    "answer": 2,
+    "explanation": "Trạng từ 'Yesterday' báo hiệu thì Quá khứ đơn, động từ play thêm -ed thành 'played'."
+  },
+  {
+    "id": "q-a1a2-g5",
+    "section": "grammar",
+    "level": "A1/A2",
+    "question": "______ pencil is this? - It's John's.",
+    "options": [
+      "Who",
+      "What",
+      "Whose",
+      "Which"
+    ],
+    "answer": 2,
+    "explanation": "Hỏi về sở hữu, ta dùng từ để hỏi 'Whose' (Của ai)."
+  },
+  {
+    "id": "q-a1a2-r1",
+    "section": "reading",
+    "level": "A1/A2",
+    "question": "Read the text: 'Hi, I am Tom. I have a cat and a dog. My dog is big and brown. My cat is small and white.' \n\nWhat color is Tom's cat?",
+    "options": [
+      "Big",
+      "Brown",
+      "Small",
+      "White"
+    ],
+    "answer": 3,
+    "explanation": "Đoạn văn nêu rõ: 'My cat is small and white'."
+  },
+  {
+    "id": "q-a1a2-r2",
+    "section": "reading",
+    "level": "A1/A2",
+    "question": "Read the text: 'Mary works in a hospital. She wears a white uniform. She helps sick people. She is not a doctor.' \n\nWhat is Mary's job?",
+    "options": [
+      "A teacher",
+      "A doctor",
+      "A nurse",
+      "A police officer"
+    ],
+    "answer": 2,
+    "explanation": "Làm việc ở bệnh viện, mặc đồng phục trắng, giúp người bệnh nhưng không phải bác sĩ thì là y tá (nurse)."
+  },
+  {
+    "id": "q-a1a2-r3",
+    "section": "reading",
+    "level": "A1/A2",
+    "question": "Cloze Test: 'It is very cold outside. You should wear a warm ______.'",
+    "options": [
+      "sunglasses",
+      "jacket",
+      "t-shirt",
+      "sandals"
+    ],
+    "answer": 1,
+    "explanation": "Trời lạnh (cold outside) thì cần mặc áo khoác (jacket)."
+  },
+  {
+    "id": "q-a1a2-r4",
+    "section": "reading",
+    "level": "A1/A2",
+    "question": "Read the email: 'Dear Sam, let's meet at the cinema at 7 PM on Friday. Don't be late! Love, Anna.' \n\nWhere will they meet?",
+    "options": [
+      "At a restaurant",
+      "At Anna's house",
+      "At the cinema",
+      "At the park"
+    ],
+    "answer": 2,
+    "explanation": "Email ghi rõ 'let's meet at the cinema' (gặp ở rạp chiếu phim)."
+  },
+  {
+    "id": "q-a1a2-r5",
+    "section": "reading",
+    "level": "A1/A2",
+    "question": "Read the sign: 'DO NOT FEED THE ANIMALS'. \nWhat does this sign mean?",
+    "options": [
+      "You can eat food with the animals.",
+      "The animals are eating now.",
+      "You must not give food to the animals.",
+      "You should buy food for the animals."
+    ],
+    "answer": 2,
+    "explanation": "Biển báo 'Không cho động vật ăn' tương đương với việc bạn không được phép đưa thức ăn cho chúng (must not give food)."
+  },
+  {
+    "id": "pq-g1",
+    "section": "grammar",
+    "level": "A1/A2",
+    "question": "Choose the correct sentence:",
+    "options": [
+      "She don't like drinking cold milk in the morning.",
+      "She doesn't like drinking cold milk in the morning.",
+      "She doesn't likes drinking cold milk in the morning.",
+      "She not likes drinking cold milk in the morning."
+    ],
+    "answer": 1,
+    "explanation": "Với chủ ngữ ngôi thứ ba số ít (She), ta dùng trợ động từ phủ định 'doesn't' + động từ nguyên thể 'like'."
+  },
+  {
+    "id": "pq-v1",
+    "section": "vocabulary",
+    "level": "A1/A2",
+    "question": "My father is a doctor. He works in a local ______.",
+    "options": [
+      "office",
+      "factory",
+      "hospital",
+      "school"
+    ],
+    "answer": 2,
+    "explanation": "Bác sĩ (doctor) làm việc ở bệnh viện (hospital)."
+  },
+  {
+    "id": "pq-r1",
+    "section": "reading",
+    "level": "A1/A2",
+    "question": "Read the text: 'Mary lives in London. She enjoys walking in Hyde Park every Sunday morning. However, she hates cold rain.' \n\nWhen does Mary walk in Hyde Park?",
+    "options": [
+      "Every Saturday afternoon",
+      "Every Sunday morning",
+      "Only on rainy days",
+      "During the winter nights"
+    ],
+    "answer": 1,
+    "explanation": "Đoạn văn ghi rõ 'every Sunday morning' (mỗi sáng Chủ Nhật)."
+  },
+  {
+    "id": "pq-l1",
+    "section": "listening",
+    "level": "A1/A2",
+    "question": "Conversation: \nJohn: 'Excuse me, could you tell me where the nearest train station is?' \nStranger: '__________________'",
+    "options": [
+      "Yes, I would love to watch a train movie.",
+      "Go straight for two blocks, then turn left. It's next to the post office.",
+      "Trains are much faster than cars.",
+      "I have three train tickets."
+    ],
+    "answer": 1,
+    "explanation": "Câu hỏi đường đi ('where the nearest train station is') cần phản xạ chỉ dẫn đường đi phù hợp."
+  }
+]
