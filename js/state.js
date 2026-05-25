@@ -69,21 +69,10 @@ async function loadStateAsync() {
             window.STORIES_DATA = await window.FirebaseSync.fetchAcademicStories() || [];
             window.COMMUNICATIVE_SENTENCES = await window.FirebaseSync.fetchAcademicSentences() || [];
             window.PODCAST_DATA = await window.FirebaseSync.fetchAcademicPodcasts() || [];
-            
-            // Xử lý các collection trống nếu Firebase chưa có
-            if (window.PLACEMENT_QUESTIONS.length === 0 && typeof PLACEMENT_QUESTIONS !== 'undefined') window.PLACEMENT_QUESTIONS = PLACEMENT_QUESTIONS;
-            if (window.GRAMMAR_LESSONS.length === 0 && typeof GRAMMAR_LESSONS !== 'undefined') window.GRAMMAR_LESSONS = GRAMMAR_LESSONS;
-            if (window.STORIES_DATA.length === 0 && typeof STORIES_DATA !== 'undefined') window.STORIES_DATA = STORIES_DATA;
-            if (window.COMMUNICATIVE_SENTENCES.length === 0 && typeof COMMUNICATIVE_SENTENCES !== 'undefined') window.COMMUNICATIVE_SENTENCES = COMMUNICATIVE_SENTENCES;
-            if (window.PODCAST_DATA.length === 0 && typeof PODCAST_DATA !== 'undefined') window.PODCAST_DATA = PODCAST_DATA;
         }
 
         // 1. Migrate old localStorage data if present
         await LearningDB.migrateFromLocalStorage();
-
-        // 2. Ensure Database is seeded with seed files (Deduplicates automatically inside db-manager)
-        const initialVoc = typeof INITIAL_VOCABULARY !== 'undefined' ? INITIAL_VOCABULARY : [];
-        await LearningDB.seedDatabase(initialVoc, []);
 
         // 3. Load vocabulary into global state
         state.vocabulary = await LearningDB.getAllVocab();
@@ -134,13 +123,13 @@ async function loadStateAsync() {
     } catch (e) {
         console.error('Error reading IndexedDB database, falling back to LocalStorage', e);
         // Fallback in case of absolute failure
-        state.vocabulary = [...(typeof INITIAL_VOCABULARY !== 'undefined' ? INITIAL_VOCABULARY : [])];
+        state.vocabulary = [];
         state.customWords = [];
         state.completedLessons = [];
         state.completedSentences = [];
         state.userLevel = 'Beginner';
         state.lastTestScore = 0;
-        state.roadmapTasks = generateRoadmapTasks('Beginner');
+        state.roadmapTasks = typeof generateRoadmapTasks === 'function' ? generateRoadmapTasks('Beginner') : [];
     }
 }
 
