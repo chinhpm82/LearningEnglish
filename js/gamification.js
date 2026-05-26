@@ -350,6 +350,11 @@ function openStory(story) {
             resultEl.classList.remove('hidden');
             document.getElementById('story-result-text').textContent =
                 `🎉 Bạn đúng ${correct}/${story.questions.length} câu!`;
+            
+            // Streak check on story completion
+            checkAndUpdateStreak();
+            renderDashboard();
+
             if (!storiesState.completedStories.includes(story.id)) {
                 storiesState.completedStories.push(story.id);
                 state.stories_done = storiesState.completedStories;
@@ -407,6 +412,11 @@ function checkTranslation() {
     const item = transState.deck[transState.idx];
     const userInput = document.getElementById('trans-input').value.trim();
     if (!userInput) { showToastNotification('⚠️ Vui lòng nhập bản dịch!'); return; }
+    
+    // Streak check on translation completion
+    checkAndUpdateStreak();
+    renderDashboard();
+
     const feedback = document.getElementById('trans-feedback');
     feedback.classList.remove('hidden');
     // Simple similarity check (normalize and compare)

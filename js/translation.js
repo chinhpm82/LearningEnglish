@@ -87,6 +87,10 @@ function checkLongTranslation() {
     const userInput = document.getElementById('trans-long-input').value.trim();
     if (!userInput) { showToastNotification('⚠️ Vui lòng nhập bản dịch!'); return; }
     
+    // Streak check on long translation completion
+    checkAndUpdateStreak();
+    renderDashboard();
+
     const feedback = document.getElementById('trans-long-feedback');
     feedback.classList.remove('hidden');
     

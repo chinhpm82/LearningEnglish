@@ -249,6 +249,10 @@ function gradeWritingEssay() {
         return;
     }
     
+    // Streak check on grading essay
+    checkAndUpdateStreak();
+    renderDashboard();
+
     const words = essay.split(/\s+/).filter(w => w.length > 0);
     const essayLen = words.length;
     

@@ -146,21 +146,48 @@ function initApp() {
                     if (cloudData) {
                         // Update local state with cloud data
                         if (cloudData.profile) {
-                            state.streak = cloudData.profile.streak || 0;
-                            state.lastStudyDate = cloudData.profile.lastStudyDate || '';
+                            // SELF-HEALING / RACE CONDITION PREVENTION:
+                            // Only pull streak and stars from cloud if the cloud has a strictly superior value.
+                            // If local state is more advanced (e.g. they just studied and incremented streak/stars),
+                            // we keep our local values and sync it back up.
+                            const cloudStreak = cloudData.profile.streak || 0;
+                            const cloudStars = cloudData.profile.stars || 0;
+                            let needPushBack = false;
+
+                            if (cloudStreak > state.streak) {
+                                state.streak = cloudStreak;
+                                state.lastStudyDate = cloudData.profile.lastStudyDate || '';
+                            } else if (state.streak > cloudStreak) {
+                                needPushBack = true;
+                            }
+
+                            if (cloudStars > state.stars) {
+                                state.stars = cloudStars;
+                            } else if (state.stars > cloudStars) {
+                                needPushBack = true;
+                            }
+
+                            if (!state.lastStudyDate) {
+                                state.lastStudyDate = cloudData.profile.lastStudyDate || '';
+                            }
+
                             state.quizStats = cloudData.profile.quizStats || { totalAnswered: 0, correctAnswers: 0 };
                             state.userLevel = cloudData.profile.userLevel || '';
                             state.roadmapTasks = cloudData.profile.roadmapTasks || [];
                             if (!state.roadmapTasks || state.roadmapTasks.length < 3) {
                                 state.roadmapTasks = generateRoadmapTasks(state.userLevel || 'A1');
                             }
-                            state.stars = cloudData.profile.stars || 0;
                             state.photoURL = cloudData.profile.photoURL || '';
                             state.displayName = cloudData.profile.name || state.displayName || user.displayName || '';
                             renderUserAvatar(state.photoURL || user.photoURL);
                             const userNameEl2 = document.getElementById('user-display-name');
                             if (userNameEl2) userNameEl2.textContent = state.displayName || 'Học viên';
                             updateSidebarStreakUI();
+
+                            if (needPushBack) {
+                                console.log("🔄 Race Condition Resolved: Local state is superior. Syncing local progress up to cloud...");
+                                window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars, state.photoURL, state.displayName);
+                            }
                         }
                         if (cloudData.customWords) {
                             state.customWords = cloudData.customWords;
