@@ -646,6 +646,82 @@ h2 {
     align-items: center;
     perspective: 1200px; /* 3D Depth effect */
     margin: 20px 0 35px 0;
+    gap: 24px;
+}
+
+.flashcard-nav-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+}
+
+.flashcard-nav-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary-light);
+    color: #ffffff;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--primary-glow);
+}
+
+.flashcard-nav-btn:active {
+    transform: scale(0.95);
+}
+
+.flashcard-nav-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.flashcard-nav-btn:disabled {
+    opacity: 0.15;
+    pointer-events: none;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Mobile responsive styles for flashcard buttons */
+@media (max-width: 768px) {
+    .flashcard-stage {
+        position: relative;
+        padding: 0;
+        gap: 0;
+    }
+    
+    .flashcard-container {
+        max-width: calc(100% - 72px) !important;
+        margin: 0 auto;
+    }
+    
+    .flashcard-nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px;
+        height: 44px;
+        background: rgba(15, 23, 42, 0.65);
+        border-color: rgba(255, 255, 255, 0.08);
+    }
+    
+    .flashcard-nav-btn.prev-btn {
+        left: -8px;
+    }
+    
+    .flashcard-nav-btn.next-btn {
+        right: -8px;
+    }
 }
 
 .flashcard-container {

@@ -366,6 +366,29 @@ function initApp() {
         handleFlashcardAction(false);
     });
 
+    // Previous and Next Navigation Buttons
+    const cardPrevBtn = document.getElementById('btn-card-prev');
+    if (cardPrevBtn) {
+        cardPrevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (currentCardIndex > 0) {
+                currentCardIndex--;
+                renderFlashcard();
+            }
+        });
+    }
+
+    const cardNextBtn = document.getElementById('btn-card-next');
+    if (cardNextBtn) {
+        cardNextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (currentCardIndex < flashcardDeck.length - 1) {
+                currentCardIndex++;
+                renderFlashcard();
+            }
+        });
+    }
+
     document.getElementById('flashcard-category').addEventListener('change', (e) => {
         initFlashcardSession(e.target.value);
     });

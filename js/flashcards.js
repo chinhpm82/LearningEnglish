@@ -96,6 +96,12 @@ function renderFlashcard() {
     document.getElementById('btn-card-correct').style.opacity = '1';
     document.getElementById('btn-card-incorrect').pointerEvents = 'auto';
     document.getElementById('btn-card-correct').pointerEvents = 'auto';
+
+    // Update nav buttons disabled state
+    const prevBtn = document.getElementById('btn-card-prev');
+    const nextBtn = document.getElementById('btn-card-next');
+    if (prevBtn) prevBtn.disabled = currentCardIndex === 0;
+    if (nextBtn) nextBtn.disabled = currentCardIndex === flashcardDeck.length - 1;
 }
 
 function renderEmptyFlashcardDeck() {
@@ -115,6 +121,12 @@ function renderEmptyFlashcardDeck() {
     document.getElementById('btn-card-correct').style.opacity = '0.4';
     document.getElementById('btn-card-incorrect').pointerEvents = 'none';
     document.getElementById('btn-card-correct').pointerEvents = 'none';
+
+    // Disable navigation buttons since deck is empty
+    const prevBtn = document.getElementById('btn-card-prev');
+    const nextBtn = document.getElementById('btn-card-next');
+    if (prevBtn) prevBtn.disabled = true;
+    if (nextBtn) nextBtn.disabled = true;
 }
 
 function toggleCardFlip() {
