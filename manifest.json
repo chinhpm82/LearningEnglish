@@ -1,7 +1,7 @@
 {
   "name": "LearningEnglish - Tự Học Tiếng Anh",
   "short_name": "LearningEnglish",
-  "description": "Ứng dụng tự học tiếng Anh thông minh, trực quan và tối giản sử dụng Spaced Repetition",
+  "description": "Ứng dụng tự học tiếng Anh, trực quan, tối giản, hiệu quả",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#090d16",

@@ -224,13 +224,25 @@
                         <option value="academic_podcasts">Podcasts (academic_podcasts)</option>
                     </select>
                     
-                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--primary); margin-top: 20px;">2. Dán mảng dữ liệu JSON vào đây:</label>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--primary); margin-top: 20px;">2. Chọn file JSON hoặc Dán mảng dữ liệu JSON vào đây:</label>
+                    <input type="file" id="upload-file" accept=".json" class="admin-input" style="height: auto; cursor: pointer; border-radius: 8px; padding: 12px; background: rgba(0,0,0,0.4); margin-bottom: 10px;">
                     <textarea id="upload-json" class="admin-input" placeholder='[\n  {\n    "id": "s101",\n    "title": "Chuyến đi mới",\n    "level": "Beginner",\n    ...\n  }\n]'></textarea>
                     
                     <button id="btn-do-upload" class="btn-primary" style="width: 100%; padding: 14px; font-size: 16px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);" onclick="uploadJsonData()">
                         🚀 Đẩy dữ liệu lên Firebase
                     </button>
                     
+                    <script>
+                        document.getElementById('upload-file').addEventListener('change', function(e) {
+                            const file = e.target.files[0];
+                            if (!file) return;
+                            const reader = new FileReader();
+                            reader.onload = function(event) {
+                                document.getElementById('upload-json').value = event.target.result;
+                            };
+                            reader.readAsText(file);
+                        });
+                    </script>
                     <div id="upload-log" style="margin-top: 15px; font-family: monospace; font-size: 13px; color: #4ade80; white-space: pre-line;"></div>
                 </div>
             </div>
