@@ -77,21 +77,25 @@
             border: 1px solid var(--border-color);
             margin-bottom: 20px;
         }
-        textarea.admin-input {
+        textarea.admin-input,
+        select.admin-input {
             width: 100%;
-            height: 200px;
             background: rgba(0, 0, 0, 0.2);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 15px;
-            color: var(--text-light);
+            color: #ffffff !important;
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 15px;
-            resize: vertical;
             margin-bottom: 15px;
             box-sizing: border-box;
         }
-        textarea.admin-input:focus {
+        textarea.admin-input {
+            height: 200px;
+            resize: vertical;
+        }
+        textarea.admin-input:focus,
+        select.admin-input:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
@@ -215,7 +219,7 @@
                 
                 <div class="analyzer-box">
                     <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--primary);">1. Chọn bảng dữ liệu (Collection):</label>
-                    <select id="upload-collection" class="admin-input" style="width: 100%; height: auto; cursor: pointer; border-radius: 8px; padding: 12px; background: rgba(0,0,0,0.4); color: white; border: 1px solid var(--border-color); font-size: 15px; font-family: 'Plus Jakarta Sans', sans-serif;">
+                    <select id="upload-collection" class="admin-input">
                         <option value="academic_stories">Truyện đọc (academic_stories)</option>
                         <option value="academic_vocabulary">Từ vựng (academic_vocabulary)</option>
                         <option value="academic_grammar">Ngữ pháp (academic_grammar)</option>
