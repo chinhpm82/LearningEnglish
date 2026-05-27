@@ -165,3 +165,19 @@ window.uploadJsonData = async function() {
         btn.textContent = "🚀 Đẩy dữ liệu lên Firebase";
     }
 };
+
+// Add event listener for file upload
+document.addEventListener('DOMContentLoaded', () => {
+    const fileInput = document.getElementById('upload-file');
+    if (fileInput) {
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('upload-json').value = event.target.result;
+            };
+            reader.readAsText(file);
+        });
+    }
+});
