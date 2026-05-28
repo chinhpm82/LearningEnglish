@@ -1,12 +1,12 @@
 // --- DYNAMIC LEARNING ROADMAP RENDERER & ALGORITHM ---
 function generateRoadmapTasks(level) {
-    if (level === 'A1' || level === 'A2' || level === 'A3' || level === 'Beginner') {
+    if (level === 'A1' || level === 'A2' || level === 'Beginner') {
         return [
             { text: "Luyện 10 thẻ Flashcard bộ Oxford Essential thiết yếu", completed: false },
             { text: "Làm đúng từ 5/10 câu trắc nghiệm Oxford", completed: false },
             { text: "Luyện phát âm 3 câu giao tiếp hàng ngày", completed: false }
         ];
-    } else if (level === 'B1' || level === 'B2' || level === 'B3' || level === 'Intermediate') {
+    } else if (level === 'B1' || level === 'B2' || level === 'Intermediate') {
         return [
             { text: "Ôn tập 15 từ vựng đang học cần xem lại", completed: false },
             { text: "Đạt từ 7/10 điểm trắc nghiệm Thành ngữ & Cụm từ", completed: false },
@@ -59,7 +59,7 @@ function autoCheckRoadmapTasks(progress) {
     
     const lvl = state.userLevel || 'A1';
 
-    if (lvl === 'A1' || lvl === 'A2' || lvl === 'A3' || lvl === 'Beginner') {
+    if (lvl === 'A1' || lvl === 'A2' || lvl === 'Beginner') {
         // Task 0: Luyện 10 thẻ Flashcard...
         if (progress.flashcards >= 10 && !state.roadmapTasks[0].completed) {
             state.roadmapTasks[0].completed = true;
@@ -81,7 +81,7 @@ function autoCheckRoadmapTasks(progress) {
             awardStars(5, "Hoàn thành: Luyện phát âm 3 câu giao tiếp!");
             showToastNotification("🎉 Hoàn thành nhiệm vụ: Luyện phát âm 3 câu giao tiếp! +5 ⭐");
         }
-    } else if (lvl === 'B1' || lvl === 'B2' || lvl === 'B3' || lvl === 'Intermediate') {
+    } else if (lvl === 'B1' || lvl === 'B2' || lvl === 'Intermediate') {
         // Task 0: Ôn tập 15 thẻ Hộp Leitner...
         if (progress.flashcards >= 15 && !state.roadmapTasks[0].completed) {
             state.roadmapTasks[0].completed = true;
@@ -172,7 +172,7 @@ function renderRoadmap() {
 
     const currentLvl = state.userLevel || 'A1';
 
-    if (currentLvl === 'A1' || currentLvl === 'A2' || currentLvl === 'A3') {
+    if (currentLvl === 'A1' || currentLvl === 'A2') {
         badgeClass = 'beginner';
         levelVN = `Sơ cấp (${currentLvl})`;
         analysisVN = `Bạn đang ở trình độ ${getCEFRLevelDisplayName(currentLvl)}. Lộ trình tối ưu: Tập trung 100% học bộ từ vựng giao tiếp thiết yếu <b>Oxford Essential</b> và thực hành thẻ ghi nhớ Leitner mỗi ngày để củng cố nền tảng.`;
@@ -180,7 +180,7 @@ function renderRoadmap() {
             { cat: 'Oxford Essential', action: 'Học ngay', key: 'oxford' },
             { cat: 'Giao tiếp hàng ngày', action: 'Xem mẫu câu', key: 'communicative' }
         ];
-    } else if (currentLvl === 'B1' || currentLvl === 'B2' || currentLvl === 'B3') {
+    } else if (currentLvl === 'B1' || currentLvl === 'B2') {
         badgeClass = 'intermediate';
         levelVN = `Trung cấp (${currentLvl})`;
         analysisVN = `Bạn đã có phản xạ từ vựng khá vững vàng ở trình độ ${getCEFRLevelDisplayName(currentLvl)}. Lộ trình tối ưu: Luyện tập xen kẽ bộ từ <b>Oxford Essential</b> kết hợp với <b>Thành ngữ giao tiếp (Idioms)</b> để tự tin giao tiếp tự nhiên hơn.`;

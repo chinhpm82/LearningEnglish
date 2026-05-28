@@ -3,10 +3,8 @@ function getCEFRLevelDisplayName(level) {
     const map = {
         'A1': 'Sơ cấp (A1)',
         'A2': 'Sơ cấp (A2)',
-        'A3': 'Tiền trung cấp (A3)',
         'B1': 'Trung cấp (B1)',
         'B2': 'Trung cấp (B2)',
-        'B3': 'Tiền cao cấp (B3)',
         'C1': 'Cao cấp (C1)',
         'C2': 'Thành thạo (C2)'
     };
@@ -18,14 +16,10 @@ function filterWordsByLevel(allWords, level) {
         return allWords.filter(w => (w.category === 'oxford' && w.word.length < 6) || w.category === 'custom');
     } else if (level === 'A2') {
         return allWords.filter(w => (w.category === 'oxford' && w.word.length >= 6 && w.word.length <= 8) || w.category === 'custom');
-    } else if (level === 'A3') {
-        return allWords.filter(w => (w.category === 'oxford' && w.word.length > 8) || w.category === 'custom');
     } else if (level === 'B1') {
         return allWords.filter(w => w.category === 'oxford' || w.category === 'idioms' || w.category === 'custom');
     } else if (level === 'B2') {
         return allWords.filter(w => w.category === 'academic' || w.category === 'custom');
-    } else if (level === 'B3') {
-        return allWords.filter(w => w.category === 'academic' || w.category === 'idioms' || w.category === 'custom');
     } else if (level === 'C1') {
         return allWords.filter(w => (w.category && w.category.startsWith('spec-')) || w.category === 'custom');
     } else {
@@ -113,7 +107,7 @@ function startPlacementTestQuiz() {
     
     // Vòng 1: Khởi động (Mức B1 / A3)
     if (typeof PLACEMENT_QUESTIONS !== 'undefined') {
-        let pool = PLACEMENT_QUESTIONS.filter(q => q.level.includes('B1') || q.level.includes('A3') || q.level.includes('B2'));
+        let pool = PLACEMENT_QUESTIONS.filter(q => q.level.includes('B1') || q.level.includes('B2'));
         if (pool.length < 4) {
             pool = [...PLACEMENT_QUESTIONS]; // Fallback if DB too small
         }
@@ -230,10 +224,10 @@ function processRoundEnd() {
         let pool = [];
         if (accuracy > 0.75) {
             // Nhóm 1: Khá/Giỏi -> B2, C1, C2
-            pool = PLACEMENT_QUESTIONS.filter(q => q.level.includes('C1') || q.level.includes('C2') || q.level.includes('B3') || q.level.includes('B2'));
+            pool = PLACEMENT_QUESTIONS.filter(q => q.level.includes('C1') || q.level.includes('C2') || q.level.includes('B2'));
         } else if (accuracy >= 0.40) {
             // Nhóm 2: Trung bình -> A2, B1
-            pool = PLACEMENT_QUESTIONS.filter(q => q.level.includes('B1') || q.level.includes('A3') || q.level.includes('A2'));
+            pool = PLACEMENT_QUESTIONS.filter(q => q.level.includes('B1') || q.level.includes('A2'));
         } else {
             // Nhóm 3: Yếu -> A1, A2
             pool = PLACEMENT_QUESTIONS.filter(q => q.level.includes('A1') || q.level.includes('A2'));
@@ -271,14 +265,12 @@ function finishPlacementTest() {
     let r1Acc = adaptiveTotalStats.totalCorrectRound1 / adaptiveTotalStats.totalRound1;
     
     if (r1Acc > 0.75) {
-        if (finalAccuracy > 0.85) finalLevel = 'C2';
-        else if (finalAccuracy > 0.70) finalLevel = 'C1';
-        else if (finalAccuracy > 0.50) finalLevel = 'B3';
+        if (finalAccuracy > 0.80) finalLevel = 'C2';
+        else if (finalAccuracy > 0.60) finalLevel = 'C1';
         else finalLevel = 'B2';
     } else if (r1Acc >= 0.40) {
-        if (finalAccuracy > 0.80) finalLevel = 'B2';
-        else if (finalAccuracy > 0.60) finalLevel = 'B1';
-        else finalLevel = 'A3';
+        if (finalAccuracy > 0.65) finalLevel = 'B2';
+        else finalLevel = 'B1';
     } else {
         if (finalAccuracy > 0.60) finalLevel = 'A2';
         else finalLevel = 'A1';
@@ -368,16 +360,27 @@ function renderDashboard() {
     // Filter syllabus words based on student's current level
     const levelWords = filterWordsByLevel(allWords, level);
 
+    // Bảng từ vựng hiển thị thống kê: Bao gồm tất cả các từ thuộc level hiện tại VÀ các từ đã học (box > 1) từ mọi trình độ trước đó!
+    // Điều này giúp giữ vững lịch sử học tập (Lịch sử học từ vựng vẫn đếm dựa trên các từ cũ)
+    const activeDashboardPoolMap = new Map();
+    levelWords.forEach(w => activeDashboardPoolMap.set(w.id, w));
+    allWords.forEach(w => {
+        if (w.box > 1) {
+            activeDashboardPoolMap.set(w.id, w);
+        }
+    });
+    const activeDashboardPool = Array.from(activeDashboardPoolMap.values());
+
     // TỐI ƯU HÓA HIỆU NĂNG: Duyệt mảng 1 lần duy nhất để đếm các hộp Leitner và số lượng từ cần ôn tập
     const now = Date.now();
-    const totalWordsCount = levelWords.length;
+    const totalWordsCount = activeDashboardPool.length;
     let masteredCount = 0;
     let learningCount = 0;
     let newCount = 0;
     let reviewCount = 0;
 
     for (let i = 0; i < totalWordsCount; i++) {
-        const w = levelWords[i];
+        const w = activeDashboardPool[i];
         if (w.box === 3) {
             masteredCount++;
         } else {

@@ -195,7 +195,11 @@ function initApp() {
                         if (cloudData.progress && cloudData.progress.length > 0) {
                             // Merge box progress back into default vocabulary list
                             cloudData.progress.forEach(progress => {
-                                const idx = state.vocabulary.findIndex(w => w.id === progress.id);
+                                let idx = state.vocabulary.findIndex(w => w.id === progress.id);
+                                if (idx === -1 && progress.id) {
+                                    // Fallback: Tìm theo từ (case-insensitive) nếu ID lưu trước đây là dạng chữ của từ vựng cũ
+                                    idx = state.vocabulary.findIndex(w => w.word.toLowerCase() === progress.id.toLowerCase());
+                                }
                                 if (idx !== -1) {
                                     state.vocabulary[idx].box = progress.box;
                                     state.vocabulary[idx].nextReview = progress.nextReview;

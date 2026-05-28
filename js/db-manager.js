@@ -93,8 +93,16 @@ async function getAllVocab() {
 
             vocabList.forEach(w => {
                 const id = String(w.id || w.word.toLowerCase());
+                const wordKey = String(w.word || '').toLowerCase();
+                
+                let p = null;
                 if (progressMap.has(id)) {
-                    const p = progressMap.get(id);
+                    p = progressMap.get(id);
+                } else if (wordKey && progressMap.has(wordKey)) {
+                    p = progressMap.get(wordKey);
+                }
+
+                if (p) {
                     w.box = p.box || 1;
                     w.nextReview = p.nextReview || 0;
                 } else {
@@ -124,8 +132,16 @@ async function getAllVocab() {
 
         vocabList.forEach(w => {
             const id = String(w.id || w.word.toLowerCase());
+            const wordKey = String(w.word || '').toLowerCase();
+            
+            let p = null;
             if (progressMap.has(id)) {
-                const p = progressMap.get(id);
+                p = progressMap.get(id);
+            } else if (wordKey && progressMap.has(wordKey)) {
+                p = progressMap.get(wordKey);
+            }
+
+            if (p) {
                 w.box = p.box || 1;
                 w.nextReview = p.nextReview || 0;
             } else {
