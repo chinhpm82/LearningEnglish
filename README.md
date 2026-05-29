@@ -120,10 +120,17 @@ Tối ưu hóa tốc độ lướt thẻ từ vựng khi sử dụng PC/Laptop:
 ## ⚙️ HƯỚNG DẪN TRIỂN KHAI CỤC BỘ & LÊN INTERNET
 
 ### Chạy Cục Bộ (Local Dev Server)
-Ứng dụng chạy hoàn toàn ở phía Client, không cần biên dịch phức tạp:
+
+> [!IMPORTANT]
+> **Yêu cầu bắt buộc để chạy cục bộ:**
+> 1. **Kết nối Internet:** Do toàn bộ kho dữ liệu học tập (6,215 từ vựng, đề thi, ngữ pháp, truyện dịch) hiện đã được lưu trữ và kéo động từ cơ sở dữ liệu Firebase Firestore trực tuyến, ứng dụng **bắt buộc phải có kết nối mạng** khi chạy để tải dữ liệu, nếu không ứng dụng sẽ trống rỗng.
+> 2. **Sử dụng Local Web Server:** Bạn **không thể** mở trực tiếp tệp `index.html` bằng cách nhấp đúp (giao thức `file://`). Trình duyệt sẽ chặn tải các Module ES6 của Firebase do chính sách bảo mật CORS. Hãy chạy ứng dụng qua một máy chủ tĩnh, ví dụ sử dụng tiện ích **Live Server** trên VS Code hoặc Python (`python3 -m http.server 5500`).
+> 3. **Cấu hình tên miền Firebase:** Để tính năng đăng nhập bằng tài khoản Google hoạt động được dưới máy cá nhân, bạn bắt buộc phải truy cập vào **Firebase Console** -> **Authentication** -> **Settings** -> **Authorized domains** và thêm `localhost` hoặc `127.0.0.1` vào danh sách tên miền được phép truy cập.
+
+Các bước thực hiện:
 1.  Tải mã nguồn về máy tính.
-2.  Mở bằng VS Code.
-3.  Click chuột phải vào tệp `index.html` và chọn **Open with Live Server** (hoặc chạy dev server tĩnh bất kỳ trên cổng `http://127.0.0.1:5500`) để trải nghiệm mượt mà tính năng lưu trữ IndexedDB.
+2.  Mở thư mục bằng VS Code.
+3.  Click chuột phải vào tệp `index.html` và chọn **Open with Live Server** (ứng dụng sẽ chạy trên cổng `http://127.0.0.1:5500` và kết nối với cơ sở dữ liệu).
 
 ### Triển Khai Lên Internet Miễn Phí (GitHub Pages)
 Đưa ứng dụng lên môi trường mạng để tự học mọi lúc mọi nơi trên điện thoại:
