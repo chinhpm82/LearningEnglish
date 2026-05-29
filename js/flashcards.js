@@ -234,7 +234,7 @@ function toggleCardFlip() {
 }
 
 // Leitner SRS Scheduling Logic
-async function handleFlashcardAction(isCorrect) {
+async function handleFlashcardAction(isCorrect, isMastered = false) {
     if (flashcardDeck.length === 0) return;
     
     // Register study activity for Streak
@@ -256,7 +256,11 @@ async function handleFlashcardAction(isCorrect) {
     }
 
     if (originalIdx !== -1) {
-        if (isCorrect) {
+        if (isMastered) {
+            // Jump directly to Box 3 (Mastered) and schedule review very far away
+            sourceList[originalIdx].box = 3;
+            sourceList[originalIdx].nextReview = now + (30 * 24 * 60 * 60 * 1000); // 30 days
+        } else if (isCorrect) {
             // Upgrade Box (Max Box is 3)
             if (word.box < 3) {
                 sourceList[originalIdx].box += 1;

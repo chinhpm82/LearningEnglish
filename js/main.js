@@ -392,6 +392,11 @@ function initApp() {
         handleFlashcardAction(true);
     });
 
+    document.getElementById('btn-card-mastered').addEventListener('click', (e) => {
+        e.stopPropagation();
+        handleFlashcardAction(true, true);
+    });
+
     document.getElementById('btn-card-incorrect').addEventListener('click', (e) => {
         e.stopPropagation();
         handleFlashcardAction(false);
@@ -436,6 +441,8 @@ function initApp() {
                 handleFlashcardAction(false);
             } else if (e.key === 'ArrowRight') {
                 handleFlashcardAction(true);
+            } else if (e.key === 'ArrowUp') {
+                handleFlashcardAction(true, true);
             } else if (e.key === 'Enter' || e.key.toLowerCase() === 'v') {
                 if (flashcardDeck.length > 0) {
                     speakEnglish(flashcardDeck[currentCardIndex].word);
