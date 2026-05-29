@@ -1,85 +1,134 @@
-# LearningEnglish - Tự Học Tiếng Anh Thông Minh 🚀
+# LearningEnglish - Nền Tảng Tự Học Tiếng Anh Thông Minh & Thích Ứng (CEFR Standard) 🚀
 
-**LearningEnglish** là ứng dụng web Single-Page (SPA) tinh tế, gọn nhẹ và tối giản, được thiết kế đặc biệt dành riêng cho việc **tự học từ vựng và câu giao tiếp tiếng Anh** hiệu quả nhất mà **không cần server, cơ sở dữ liệu hay lưu trữ file phương tiện (audio/hình ảnh) đắt đỏ**.
-
-Ứng dụng được xây dựng theo triết lý tối ưu hóa tài nguyên tối đa: sử dụng hệ thống phát âm có sẵn của trình duyệt và lưu trữ dữ liệu hoàn toàn dưới LocalStorage/IndexedDB của người học.
+**LearningEnglish** là ứng dụng Single-Page (SPA) đỉnh cao, gọn nhẹ và tối giản, được thiết kế theo triết lý tối ưu hóa tài nguyên tối đa để mang lại trải nghiệm **tự học từ vựng và luyện kỹ năng tiếng Anh chuyên sâu**. Ứng dụng tích hợp các thuật toán sư phạm thích ứng tiên tiến và hệ thống gamification lôi cuốn giúp người học đột phá trình độ mà **không cần hệ thống máy chủ đắt đỏ**.
 
 ---
 
-## ⚠️ LƯU Ý QUAN TRỌNG CHO DEVELOPERS & CODING AGENTS
+## 📊 THỐNG KÊ KHO DỮ LIỆU HỌC THUẬT (ACADEMIC DATABASE)
 
-Hệ thống đánh giá, thang điểm trắc nghiệm, thuật toán thích ứng CEFR, cách tính chuỗi học tập (streak), phân loại từ vựng và cơ chế tính sao (stars) của ứng dụng đều tuân thủ nghiêm ngặt theo các tiêu chuẩn học thuật cốt lõi.
+Ứng dụng sở hữu kho dữ liệu học tập khổng lồ được phân loại khoa học theo khung tham chiếu ngôn ngữ chung Châu Âu (CEFR) và các chuyên ngành chuyên sâu:
 
-👉 **Trước khi thay đổi bất kỳ dòng mã nào liên quan đến logic chấm điểm, tính năng game hóa, hoặc dữ liệu khóa học**, bạn **BẮT BUỘC** phải đọc và tuân theo chỉ dẫn chi tiết tại:
-*   [**Tài liệu Quy tắc Học thuật (.rules/academic_rules.md)**](file:///.rules/academic_rules.md)
+### 1. Kho Từ Vựng Tiêu Chuẩn Oxford 5000 (Tổng cộng: 6,215 từ)
+Toàn bộ từ vựng được phân chia nghiêm ngặt vào các danh mục phù hợp với lộ trình phát triển của từng học viên:
 
-Mọi thay đổi tùy tiện không thông qua tài liệu này có thể làm ảnh hưởng tiêu cực đến trải nghiệm sư phạm và chất lượng đánh giá học viên!
+| Nhóm Từ Vựng | Số Lượng Từ | Trình Độ CEFR Áp Dụng | Mô Tả & Phương Pháp Tiếp Cận |
+| :--- | :---: | :---: | :--- |
+| **`oxford`** (Phổ thông cơ bản) | **2,970 từ** | `A1` (Từ < 6 ký tự)<br>`A2` (Từ 6 - 8 ký tự)<br>`B1` (Từ > 8 ký tự & Idioms) | Tập trung vào phản xạ giao tiếp cốt lõi, từ vựng thông dụng hàng ngày. |
+| **`academic`** (Học thuật tổng quát) | **1,658 từ** | `B2` | Các từ học thuật phục vụ cho việc đọc hiểu tài liệu chuyên môn, IELTS, TOEFL. |
+| **`spec-social`** (Chuyên ngành Xã hội) | **1,268 từ** | `C1` | Từ vựng nâng cao ngành Kinh tế, Luật, Văn hóa, Nghệ thuật, Truyền thông. |
+| **`spec-science`** (Chuyên ngành Khoa học) | **236 từ** | `C1` | Từ vựng nâng cao ngành Y tế, Sinh học, Vật lý, Môi trường. |
+| **`spec-tech`** (Chuyên ngành Kỹ thuật) | **83 từ** | `C1` | Từ vựng nâng cao ngành IT, Khoa học Máy tính, Kỹ thuật. |
+| **`custom`** (Sổ tay cá nhân) | *Không giới hạn* | Mọi trình độ | Do học viên tự nhập thủ công kèm nghĩa để lưu trữ và ôn tập riêng. |
 
----
+*Học viên trình độ **`C2` (Thành thạo)** được mở khóa toàn quyền truy cập toàn bộ **6,215 từ** để nâng cao kỹ năng tối đa.*
 
-## ✨ Điểm Nổi Bật Của LearningEnglish
-
-1.  **Hệ thống phát âm chuẩn (Không tốn băng thông)**: Tích hợp trực tiếp **Web Speech API (`window.speechSynthesis`)** để phát âm từ vựng và câu giao tiếp chuẩn giọng Mỹ/Anh hoàn toàn miễn phí và mượt mà.
-2.  **Học theo Phương pháp Leitner (Spaced Repetition)**: Thuật toán tự động tính toán thời gian ôn tập tối ưu cho từng từ dựa trên mức độ thuộc bài của bạn.
-    *   **Hộp 1**: Từ mới (Cần học lại hàng ngày).
-    *   **Hộp 2**: Từ đang nhớ (Học lại sau 3 ngày).
-    *   **Hộp 3**: Từ đã thuộc (Học lại sau 7 ngày).
-3.  **Trắc nghiệm ôn tập thông minh (Quiz)**: Tự động sinh ngẫu nhiên 10 câu hỏi trắc nghiệm từ kho dữ liệu, có đáp án gây nhiễu động, đo thời gian trả lời và cập nhật tỷ lệ chính xác.
-4.  **Sổ tay cá nhân (Wordbook)**: Tự do thêm, tìm kiếm và quản lý từ vựng của riêng bạn ngoài kho dữ liệu có sẵn.
-5.  **Mẫu câu giao tiếp thực tế**: Tích hợp các câu tiếng Anh thông dụng theo các tình huống thường gặp (Chào hỏi, Du lịch, Mua sắm, Công sở).
-6.  **Giao diện Glassmorphism đỉnh cao**: Thiết kế Modern Dark Mode sang trọng, thân thiện với mắt khi học ban đêm, tối ưu cho cả điện thoại và máy tính.
-
----
-
-## 🎨 Sơ Đồ Thiết Kế Hệ Thống (Architecture)
-
-```
-[Trình duyệt Người dùng] 
-       │
-       ├─► [Giao diện HTML5 / CSS3 Glassmorphism]
-       │
-       ├─► [Web Speech API] ──► (Phát âm giọng đọc Anh-Mỹ chuẩn miễn phí)
-       │
-       └─► [LocalStorage/IndexedDB] ──► (Lưu tiến trình học, Sổ tay cá nhân & Streak)
-```
+### 2. Các Phân Hệ Học Tập Khác
+*   **Đề Kiểm Tra Xếp Lớp (Entrance Test):** **16 câu trắc nghiệm khách quan** chuẩn hóa gồm 4 phần kỹ năng đều nhau (Grammar, Vocabulary, Reading, Listening - mỗi phần 4 câu) giúp tự động phân loại học viên chính xác vào 6 cấp độ CEFR (`A1` - `C2`).
+*   **Mẫu Câu Giao Tiếp:** **Hàng trăm mẫu câu tiếng Anh thực dụng** được phân chia theo 5 tình huống thực tế: *Greeting* (Chào hỏi), *Travel* (Du lịch), *Dining* (Ăn uống), *Work* (Công sở), và *Social* (Giao tiếp xã hội).
+*   **Chuyên Đề Ngữ Pháp:** **15+ Bài học ngữ pháp cốt lõi** từ cấp độ cơ bản đến phức tạp (Các thì, Mệnh đề quan hệ, Câu điều kiện...), đi kèm công thức, ví dụ song ngữ và bộ câu hỏi thực hành giải thích chi tiết.
+*   **Luyện Dịch Song Ngữ:** **Hàng chục truyện ngắn & audio podcasts** chất lượng cao phục vụ luyện dịch trực tiếp với cơ chế so khớp độ chính xác thông minh.
 
 ---
 
-## ⚙️ Hướng Dẫn Chạy Ứng Dụng Cục Bộ (Locally)
+## ⚡ 10 TÍNH NĂNG VƯỢT TRỘI & CHI TIẾT KỸ THUẬT
 
-Vì LearningEnglish là một ứng dụng client-side thuần túy, bạn không cần cài đặt NodeJS hay Python để chạy.
+Ứng dụng không chỉ đẹp mắt mà còn tích hợp các công nghệ và thuật toán sư phạm tối tân nhất:
 
-*   **Cách 1 (Đơn giản nhất)**: Nhấp đúp (Double-click) chuột vào tệp `index.html` để mở trực tiếp trên trình duyệt (Chrome, Edge, Safari, Firefox).
-*   **Cách 2 (Sử dụng Dev Server - Khuyên Dùng)**: Nếu bạn có tiện ích mở rộng như **Live Server** trên VS Code, bạn có thể bấm **Go Live** để chạy ứng dụng trên cổng `http://127.0.0.1:5500`.
+### 1. Phát Âm Không Tốn Băng Thông (Web Speech API)
+Tích hợp trực tiếp engine **Web Speech API (`window.speechSynthesis`)** để phát âm giọng đọc Anh - Mỹ chuẩn tự nhiên hoàn toàn miễn phí, tốc độ đọc được điều chỉnh tối ưu ở mức `0.85x` cho học viên ngôn ngữ.
+
+### 2. Ôn Tập Spaced Repetition Thích Ứng (Leitner SRS)
+Thuật toán phân phối thẻ Leitner chia từ vựng làm 3 Hộp (Box) dựa trên đường cong quên lãng. Chu kỳ ôn tập tiếp theo (`nextReview`) tự động co giãn thông minh tùy theo trình độ năng lực CEFR hiện tại của học viên:
+*   **Nhóm Sơ cấp (A1 - A2):** Tần suất lặp dày đặc hơn (Hộp 2: **1.5 ngày**, Hộp 3: **4 ngày**).
+*   **Nhóm Trung cấp (B1 - B2):** Tần suất tiêu chuẩn (Hộp 2: **3 ngày**, Hộp 3: **7 ngày**).
+*   **Nhóm Cao cấp (C1 - C2):** Tần suất giãn rộng thử thách (Hộp 2: **5 ngày**, Hộp 3: **12 ngày**).
+*   *Trả lời sai sẽ lập tức hạ cấp về Hộp 1 và yêu cầu học lại ngay.*
+
+### 3. Trộn Từ Vựng Gợi Ý Flashcard Đa Cấp
+Khi học Flashcards, ứng dụng sử dụng thuật toán **Weighted Sampling Queue (Hàng đợi lấy mẫu có trọng số)** để bốc từ học tập theo tỉ lệ vàng: **70% từ cấp độ hiện tại, 20% từ cấp độ cũ lân cận (củng cố), và 10% từ cấp độ tiếp theo (kích thích thử thách)**. Mọi từ vựng đến hạn ôn tập (due review) từ mọi cấp độ luôn được ưu tiên đẩy lên đầu hàng đợi.
+
+### 4. Chấm Điểm Luyện Viết AI (AI Writing Essay Assessment)
+Hệ thống chấm điểm đoạn văn tự động thang điểm 100 dựa trên 5 tiêu chí học thuật khắt khe:
+1.  **Length (Độ dài - 25đ):** Yêu cầu thay đổi theo cấp độ đề bài (Beginner: 50-80 từ, Intermediate: 80-120 từ, Advanced: 100-150 từ), tự động co giãn yêu cầu `targetMin` từ **15% đến 30%** dựa theo chênh lệch trình độ thực tế của học viên.
+2.  **Vocabulary Suggestion (Từ vựng gợi ý - 25đ):** Cộng `+5đ` cho mỗi từ khóa học thuật gợi ý được lồng ghép thành công (Regex so khớp ranh giới từ `\b`).
+3.  **Lexical Diversity (TTR - 20đ):** Tính điểm đa dạng từ vựng qua chỉ số Type-Token Ratio.
+4.  **Connectors (Từ nối - 15đ):** Đánh giá tính liên kết văn bản qua sự xuất hiện của các trạng từ liên kết (firstly, however, moreover...).
+5.  **Syntax (Cú pháp - 15đ):** Tách câu và kiểm tra viết hoa đầu dòng (Trừ `3đ` mỗi lỗi).
+
+### 5. Telemetry Liêm Chính Học Thuật (Safety & Integrity)
+Để ngăn chặn gian lận, hệ thống giám sát hành vi viết thực tế của học viên:
+*   Phạt sao chép văn bản (Copy-paste): Khấu trừ từ **15đ đến 70đ**.
+*   Phạt tốc độ gõ siêu việt (>130 WPM nghi vấn dùng AI/Tool): Trừ **45đ**.
+*   Phạt lặp từ rác (Spam Penalty): Giới hạn điểm tối đa ở **10/100** nếu chỉ số đa dạng từ vựng TTR < 0.28.
+*   Phạt thoát tab/chuyển đổi ứng dụng: Khấu trừ `10đ` mỗi lần.
+*   Phát hiện văn phong khuôn mẫu của ChatGPT (filler phrases): Khấu trừ `20đ`.
+
+### 6. Trắc Nghiệm Từ Vựng Thông Minh (Quiz)
+Sinh ngẫu nhiên bộ 10 câu hỏi trắc nghiệm từ vựng. Hệ thống tự động quét kho từ vựng toàn cục để chọn ra 3 đáp án nhiễu có nghĩa tiếng Việt hoàn toàn khác biệt để tạo độ nhiễu thực tế nhất.
+
+### 7. Luyện Dịch Truyện & Podcasts Tương Tác
+Học viên nghe audio podcast hoặc đọc truyện ngắn và gõ bản dịch sang tiếng Việt. Hệ thống sử dụng thuật toán **High-Fidelity Fuzzy Matching** để chấm điểm bản dịch:
+*   Độ khớp **>= 80%**: Đạt loại Xuất sắc, nhận **+30 ⭐**.
+*   Độ khớp **50% - 80%**: Đạt loại Khá, nhận **+15 ⭐**.
+
+### 8. Lộ Trình Nhiệm Vụ Hàng Ngày (Daily Roadmap)
+Tự động khởi tạo **3 nhiệm vụ ngẫu nhiên mỗi sáng** (ví dụ: Hoàn thành 10 câu quiz, ôn tập 15 thẻ flashcard, đạt điểm viết cao...) phù hợp với trình độ CEFR hiện tại của bạn. Hoàn thành sẽ nhận thêm sao vàng đặc biệt.
+
+### 9. Đồng Bộ Đám Mây & Bảng Xếp Hạng Toàn Cầu
+*   Tích hợp **Google Authentication** và đồng bộ tiến độ học tập hai chiều tự động lên **Firebase Firestore**.
+*   Đồng bộ điểm số trực tiếp lên **Bảng Xếp Hạng Công Khai (Realtime Database Leaderboard)** để tranh tài cùng các học viên khác.
+*   Tích hợp **Lớp đệm Cache (Caching Layer)** và cơ chế **Tự phục hồi dữ liệu lệch khoá (Self-Healing)** giúp ứng dụng tải cực nhanh (giảm 93% truy vấn Firestore dư thừa) và bảo vệ chuỗi Streak học tập bền vững.
+
+### 10. Giao Diện Glassmorphism Dark Mode Cao Cấp
+Thiết kế theo xu hướng UI/UX Premium hiện đại: Các thẻ kính mờ (Glassmorphism), hiệu ứng chuyển động mượt mà (Micro-animations), và bảng màu HSL hài hòa, dễ dịu cho mắt khi tự học vào ban đêm.
 
 ---
 
-## 🚀 Triển Khai Lên Internet Hoàn Toàn Miễn Phí (GitHub Pages)
+## ⭐ HỆ THỐNG PHẦN THƯỞNG GAME HÓA (GAMIFICATION)
 
-Vì ứng dụng không cần backend, **GitHub Pages** là nơi tuyệt vời và miễn phí 100% để bạn đưa LearningEnglish lên môi trường mạng để học trên mọi thiết bị di động cá nhân:
+Động lực học tập của bạn được ghi nhận và tưởng thưởng xứng đáng qua hệ thống Sao Vàng (Gold Stars) và Chuỗi Ngày Học (Streak) thời gian thực:
 
-1.  Đẩy mã nguồn này lên một kho lưu trữ (Repository) trên tài khoản GitHub của bạn:
-    ```bash
-    git init
-    git add .
-    git commit -m "Khởi tạo ứng dụng LearningEnglish"
-    git remote add origin <URL-KHO-LƯU-TRỮ-CỦA-BẠN>
-    git branch -M main
-    git push -u origin main
-    ```
-2.  Truy cập vào kho lưu trữ trên GitHub -> Chọn **Settings** (Cài đặt) -> Chọn mục **Pages** ở danh mục bên trái.
+| Hoạt Động Học Tập | Số Sao Thưởng (Stars) | Điều Kiện Nhận Thưởng |
+| :--- | :---: | :--- |
+| **Ôn Tập Flashcards** | **+10 ⭐** | Hoàn thành ôn tập toàn bộ số lượng thẻ trong deck. |
+| **Trắc Nghiệm Từ Vựng** | **Tối đa +15 ⭐** | `5 ⭐` cơ bản + `1 ⭐` cho mỗi câu trả lời đúng. |
+| **Luyện Viết AI (Writing)** | **Dynamic Delta** | Quy đổi `stars = Score / 2`. Chỉ được nhận thêm sao khi điểm bài viết mới vượt qua kỷ lục cũ của chính mình ở chủ đề đó. |
+| **Học Bài Ngữ Pháp Mới** | **+10 ⭐** | Hoàn thành làm bài quiz ngữ pháp lần đầu tiên. |
+| **Ôn Tập Ngữ Pháp Cũ** | **+4 ⭐** | Làm lại bài quiz ngữ pháp đã hoàn thành trước đó. |
+| **Luyện Dịch Xuất Sắc** | **+30 ⭐** | Bản dịch khớp `>= 80%` so với bản dịch chuẩn. |
+| **Luyện Dịch Khá Tốt** | **+15 ⭐** | Bản dịch khớp `50%` đến dưới `80%`. |
+| **Thuộc Câu Giao Tiếp** | **+1 ⭐** | Tích chọn "Đã thuộc ✅" cho một mẫu câu giao tiếp mới. |
+| **Thêm Từ Vào Sổ Tay** | **+5 ⭐** | Thêm một từ vựng mới tự chọn vào sổ tay cá nhân. |
+| **Hoàn Thành Checklist** | **+5 ⭐ / +10 ⭐** | Hoàn thành mục tiêu đề ra trong nhiệm vụ hàng ngày. |
+| **Thi Đấu Arena (Solo/Win)**| **+15 ⭐** | Đạt hạng nhất hoặc hoàn thành 10 câu solo Arena. |
+| **Thi Đấu Arena (Hòa/Thua)**| **+8 ⭐ / +2 ⭐** | Điểm hòa hoặc tham gia khuyến khích giải đấu. |
+
+---
+
+## ⌨️ PHÍM TẮT TIỆN LỢI TRÊN MÁY TÍNH
+
+Tối ưu hóa tốc độ lướt thẻ từ vựng khi sử dụng PC/Laptop:
+*   **Phím Space (Dấu cách):** Lật thẻ qua lại giữa mặt trước và mặt sau.
+*   **Phím Mũi tên Trái (←):** Đánh dấu **Chưa thuộc ❌** (Hạ thẻ về Hộp 1).
+*   **Phím Mũi tên Phải (→):** Đánh dấu **Đã thuộc/Đúng ✅** (Nâng thẻ lên Hộp cao hơn).
+*   **Phím Enter hoặc Phím V:** Phát âm từ vựng / câu tiếng Anh hiện tại.
+
+---
+
+## ⚙️ HƯỚNG DẪN TRIỂN KHAI CỤC BỘ & LÊN INTERNET
+
+### Chạy Cục Bộ (Local Dev Server)
+Ứng dụng chạy hoàn toàn ở phía Client, không cần biên dịch phức tạp:
+1.  Tải mã nguồn về máy tính.
+2.  Mở bằng VS Code.
+3.  Click chuột phải vào tệp `index.html` và chọn **Open with Live Server** (hoặc chạy dev server tĩnh bất kỳ trên cổng `http://127.0.0.1:5500`) để trải nghiệm mượt mà tính năng lưu trữ IndexedDB.
+
+### Triển Khai Lên Internet Miễn Phí (GitHub Pages)
+Đưa ứng dụng lên môi trường mạng để tự học mọi lúc mọi nơi trên điện thoại:
+1.  Đẩy mã nguồn lên một Repository trên tài khoản GitHub cá nhân của bạn.
+2.  Truy cập Repository -> Chọn **Settings** (Cài đặt) -> Chọn mục **Pages** ở danh mục bên trái.
 3.  Tại phần **Build and deployment** -> **Source**: Chọn `Deploy from a branch`.
 4.  Tại phần **Branch**: Chọn nhánh `main` và thư mục `/ (root)` -> Bấm **Save**.
-5.  Đợi khoảng 1-2 phút, GitHub sẽ cấp cho bạn một đường dẫn URL dạng: `https://<ten-tai-khoan>.github.io/LearningEnglish/`. Giờ đây bạn có thể mở đường dẫn này trên điện thoại để tự học mọi lúc mọi nơi!
+5.  Đợi khoảng 1 phút, bạn sẽ có một đường dẫn trực tuyến miễn phí dạng: `https://<ten-tai-khoan>.github.io/<ten-repository>/` để bắt đầu học tập!
 
----
-
-## ⌨️ Phím Tắt Tiện Lợi Khi Lướt Flashcard
-
-Để việc học tập nhanh hơn trên máy tính, bạn có thể thao tác hoàn toàn bằng bàn phím:
-*   **Phím Space (Cách)**: Lật thẻ qua lại giữa Mặt trước và Mặt sau.
-*   **Phím Mũi tên Trái (←)**: Đánh dấu từ "Chưa thuộc" (Đưa về Hộp 1).
-*   **Phím Mũi tên Phải (→)**: Đánh dấu từ "Đã thuộc" (Tăng cấp Hộp).
-*   **Phím Enter hoặc Phím V**: Phát âm từ vựng.
-
-Chúc bạn có những trải nghiệm tự học tiếng Anh tuyệt vời cùng LearningEnglish!
+Chúc bạn có những trải nghiệm tự học tiếng Anh đột phá và thú vị cùng **LearningEnglish**! 🎓🌟

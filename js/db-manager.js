@@ -202,8 +202,27 @@ async function getProgress(key, defaultValue = null) {
     
     if (user) {
         const cloudData = await window.FirebaseSync.loadUserData();
-        if (cloudData && cloudData.profile && cloudData.profile[key] !== undefined) {
-            return cloudData.profile[key];
+        if (cloudData && cloudData.profile) {
+            const keyMap = {
+                'last_study_date': 'lastStudyDate',
+                'quiz_stats': 'quizStats',
+                'user_level': 'userLevel',
+                'last_test_score': 'lastTestScore',
+                'placement_stats': 'placementStats',
+                'roadmap_tasks': 'roadmapTasks',
+                'photo_url': 'photoURL',
+                'display_name': 'name',
+                'completed_lessons': 'completedLessons',
+                'completed_sentences': 'completedSentences',
+                'stories_done': 'storiesDone',
+                'writing_high_scores': 'writingHighScores',
+                'streak': 'streak',
+                'stars': 'stars'
+            };
+            const mappedKey = keyMap[key] || key;
+            if (cloudData.profile[mappedKey] !== undefined) {
+                return cloudData.profile[mappedKey];
+            }
         }
     }
     

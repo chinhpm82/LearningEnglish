@@ -53,6 +53,7 @@ const isConfigured = firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_AP
 
 let app, auth, db, rtdb, googleProvider;
 let currentUser = null;
+let cachedUserData = null;
 
 if (isConfigured) {
     try {
@@ -119,6 +120,7 @@ window.FirebaseSync = {
         }
         onAuthStateChanged(auth, async (user) => {
             currentUser = user;
+            cachedUserData = null; // Invalidate cache on auth state change
             callback(user);
         });
     },
@@ -126,6 +128,7 @@ window.FirebaseSync = {
     // Save/Update progress of a built-in word in Firestore
     saveProgress: async (wordId, box, nextReview) => {
         if (!isConfigured || !currentUser) return;
+        cachedUserData = null; // Invalidate cache on local updates
         try {
             const progressRef = doc(db, "users", currentUser.uid, "progress", wordId);
             await setDoc(progressRef, {
@@ -141,6 +144,7 @@ window.FirebaseSync = {
     // Save custom added word in Firestore
     saveCustomWord: async (wordObj) => {
         if (!isConfigured || !currentUser) return;
+        cachedUserData = null; // Invalidate cache
         try {
             const wordRef = doc(db, "users", currentUser.uid, "customWords", wordObj.id);
             await setDoc(wordRef, {
@@ -155,6 +159,7 @@ window.FirebaseSync = {
     // Delete custom word from Firestore
     deleteCustomWord: async (wordId) => {
         if (!isConfigured || !currentUser) return;
+        cachedUserData = null; // Invalidate cache
         try {
             const wordRef = doc(db, "users", currentUser.uid, "customWords", wordId);
             await deleteDoc(wordRef);
@@ -166,6 +171,7 @@ window.FirebaseSync = {
     // Save user profile stats (Streak, LastStudyDate, QuizStats, UserLevel, RoadmapTasks, Stars, CustomPhotoURL, CustomDisplayName)
     saveStreak: async (streak, lastStudyDate, quizStats, userLevel = '', roadmapTasks = [], stars = 0, customPhotoURL = '', customDisplayName = '') => {
         if (!isConfigured || !currentUser) return;
+        cachedUserData = null; // Invalidate cache
         
         // 1. Save to private Firestore profile document
         try {
@@ -268,6 +274,9 @@ window.FirebaseSync = {
     // Pull entire profile dataset from Firestore for the logged-in user
     loadUserData: async () => {
         if (!isConfigured || !currentUser) return null;
+        if (cachedUserData) {
+            return cachedUserData;
+        }
         try {
             const uid = currentUser.uid;
             
@@ -295,11 +304,12 @@ window.FirebaseSync = {
                 progressList.push({ id: doc.id, ...doc.data() });
             });
 
-            return {
+            cachedUserData = {
                 profile: profileData,
                 customWords: customWords,
                 progress: progressList
             };
+            return cachedUserData;
         } catch (e) {
             console.error("Error loading user profile dataset from Firestore:", e);
             return null;
