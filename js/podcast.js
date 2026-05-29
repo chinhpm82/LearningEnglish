@@ -4,6 +4,7 @@ let lastActiveLineEl = null;
 let customPodcasts = []; // Store custom uploaded podcasts in session memory
 let podcastList = []; // Global catalog list
 let currentPodcastMode = 'list'; // 'list' | 'loop' | 'single'
+let wakeLock = null; // Screen Wake Lock reference
 
 function parseSRT(text) {
     const lines = text.replace(/\r/g, '').split('\n');
@@ -185,17 +186,36 @@ async function initPodcastRoom() {
         audio.ontimeupdate = handlePodcastTimeUpdate;
         
         // Unified native play event binding (ensures 100% sync from any source)
-        audio.onplay = () => {
+        audio.onplay = async () => {
             if (playBtn) {
                 playBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px; color:#fff;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
             }
             checkAndUpdateStreak();
+            
+            // Request Wake Lock to keep screen on while listening
+            if ('wakeLock' in navigator) {
+                try {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                    wakeLock.addEventListener('release', () => {
+                        console.log('Screen Wake Lock was released');
+                    });
+                } catch (err) {
+                    console.warn('Wake Lock error:', err);
+                }
+            }
         };
         
         // Unified native pause event binding
         audio.onpause = () => {
             if (playBtn) {
                 playBtn.innerHTML = `<svg id="play-icon-svg" viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px; color:#fff; margin-left: 2px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+            }
+            
+            // Release Wake Lock when paused
+            if (wakeLock !== null) {
+                wakeLock.release().then(() => {
+                    wakeLock = null;
+                });
             }
         };
         
@@ -321,6 +341,19 @@ async function initPodcastRoom() {
             audio.volume = volumeRange.value / 100;
         };
     }
+    
+    // Re-request wake lock if tab visibility changes while playing
+    document.addEventListener('visibilitychange', async () => {
+        if (wakeLock !== null && document.visibilityState === 'visible' && audio && !audio.paused) {
+            if ('wakeLock' in navigator) {
+                try {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                } catch (err) {
+                    console.warn('Wake Lock error on visibility change:', err);
+                }
+            }
+        }
+    });
     
     if (podcastList.length > 0) {
         selectPodcast(podcastList[0], false);
