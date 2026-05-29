@@ -73,10 +73,12 @@ async function loadStateAsync() {
 
         // 3. Load vocabulary asynchronously in the background so it doesn't block the initial page render
         state.vocabulary = [];
+        state.isVocabLoaded = false;
         (async () => {
             try {
                 console.log("Loading vocabulary database in the background...");
                 state.vocabulary = await LearningDB.getAllVocab();
+                state.isVocabLoaded = true;
                 console.log(`Background loaded ${state.vocabulary.length} unique words successfully.`);
                 
                 // If the user is currently on the dashboard, re-render the dashboard to populate vocabulary numbers

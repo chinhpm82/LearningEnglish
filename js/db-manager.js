@@ -67,13 +67,59 @@ async function getVocabCount() {
 async function getAllVocab() {
     await initDB();
     
-    // 1. Lấy Academic Data (Dữ liệu học thuật gốc) từ Firestore
-    let baseVocab = [];
-    if (window.FirebaseSync) {
-        baseVocab = await window.FirebaseSync.fetchAllAcademicVocabulary();
+    // Helper function to read from IndexedDB strictly offline
+    const getLocalCache = async (key) => {
+        return new Promise((resolve) => {
+            const tx = dbInstance.transaction(['progress'], 'readonly');
+            const req = tx.objectStore('progress').get(key);
+            req.onsuccess = () => resolve(req.result ? req.result.value : []);
+            req.onerror = () => resolve([]);
+        });
+    };
+
+    const setLocalCache = async (key, value) => {
+        return new Promise((resolve) => {
+            const tx = dbInstance.transaction(['progress'], 'readwrite');
+            const req = tx.objectStore('progress').put({ key, value });
+            req.onsuccess = () => resolve();
+            req.onerror = () => resolve();
+        });
+    };
+
+    // 1. Lấy dữ liệu siêu tốc từ bộ nhớ đệm cục bộ (Cache Offline-First)
+    let baseVocab = await getLocalCache('cached_academic_vocab');
+
+    // 2. Nếu Cache rỗng (lần đầu vào web hoặc bị xóa Cache), buộc phải đợi tải từ Cloud (Timeout 5s)
+    if (baseVocab.length === 0 && window.FirebaseSync) {
+        try {
+            const timeout = (ms) => new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), ms));
+            baseVocab = await Promise.race([
+                window.FirebaseSync.fetchAllAcademicVocabulary(),
+                timeout(5000)
+            ]);
+            if (baseVocab && baseVocab.length > 0) {
+                await setLocalCache('cached_academic_vocab', baseVocab);
+            }
+        } catch (e) {
+            console.warn("⚠️ Tải từ vựng lần đầu thất bại (Mạng yếu/Timeout).");
+            baseVocab = [];
+        }
+    } else if (window.FirebaseSync) {
+        // 3. Nếu đã có Cache, tải ngầm từ Cloud để cập nhật cho lần sau (Stale-While-Revalidate)
+        (async () => {
+            try {
+                const freshVocab = await window.FirebaseSync.fetchAllAcademicVocabulary();
+                if (freshVocab && freshVocab.length > 0 && freshVocab.length !== baseVocab.length) {
+                    await setLocalCache('cached_academic_vocab', freshVocab);
+                    console.log("☁️ Đã cập nhật kho từ vựng ngầm thành công.");
+                }
+            } catch (e) {
+                // Lỗi ngầm thì kệ, đã có cache gánh
+            }
+        })();
     }
-    
-    // Fallback cực hiếm nếu Firestore lỗi mạng chưa có cache
+
+    // Fallback cực hiếm nếu vẫn rỗng
     if (baseVocab.length === 0 && typeof INITIAL_VOCABULARY !== 'undefined') {
         console.warn("Dùng INITIAL_VOCABULARY dự phòng vì chưa kéo được từ Firestore.");
         baseVocab = INITIAL_VOCABULARY;

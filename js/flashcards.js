@@ -90,7 +90,7 @@ function getWeightedFlashcardPool(allWords, level) {
 
 function initFlashcardSession(category = 'all') {
     // If background vocabulary loading is still in progress, show spinner and retry in 500ms
-    if (state.vocabulary.length === 0) {
+    if (!state.isVocabLoaded) {
         const container = document.getElementById('flashcard-element');
         if (container) {
             container.innerHTML = `
