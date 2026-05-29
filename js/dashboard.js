@@ -94,10 +94,28 @@ function triggerCEFRPlacementTestIfNew() {
     }
 }
 
-function startPlacementTestQuiz() {
+async function startPlacementTestQuiz() {
     document.getElementById('placement-intro-screen').classList.add('hidden');
     document.getElementById('placement-quiz-screen').classList.remove('hidden');
     document.getElementById('placement-result-screen').classList.add('hidden');
+
+    // Show dynamic loading spinner inside the question container
+    const qTextEl = document.getElementById('placement-question-text');
+    const optionsContainer = document.getElementById('placement-options-container');
+    if (qTextEl && optionsContainer) {
+        qTextEl.textContent = 'Đang tải bộ câu hỏi đánh giá...';
+        optionsContainer.innerHTML = `
+            <div class="loading-spinner-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; width: 100%;">
+                <div class="spinner"></div>
+            </div>`;
+    }
+
+    // Lazy load placement questions on demand
+    if (!window.PLACEMENT_QUESTIONS || window.PLACEMENT_QUESTIONS.length === 0) {
+        if (window.FirebaseSync) {
+            window.PLACEMENT_QUESTIONS = await window.FirebaseSync.fetchAcademicQuizzes() || [];
+        }
+    }
 
     isPlacementQuizRunning = true;
     currentPlacementRound = 1;
@@ -105,8 +123,8 @@ function startPlacementTestQuiz() {
     adaptiveUserAnswers = [];
     adaptiveTotalStats = { grammar: 0, reading: 0, vocab: 0, listening: 0, totalCorrectRound1: 0, totalRound1: 0, totalCorrectRound2: 0, totalRound2: 0 };
     
-    // Vòng 1: Khởi động (Mức B1 / A3)
-    if (typeof PLACEMENT_QUESTIONS !== 'undefined') {
+    // Vòng 1: Khởi động (Mức B1 / B2)
+    if (typeof PLACEMENT_QUESTIONS !== 'undefined' && PLACEMENT_QUESTIONS.length > 0) {
         let pool = PLACEMENT_QUESTIONS.filter(q => q.level.includes('B1') || q.level.includes('B2'));
         if (pool.length < 4) {
             pool = [...PLACEMENT_QUESTIONS]; // Fallback if DB too small

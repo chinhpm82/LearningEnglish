@@ -47,11 +47,29 @@ function parseSRT(text) {
     return transcript;
 }
 
-function initPodcastRoom() {
-    const defaultList = typeof PODCAST_DATA !== 'undefined' ? PODCAST_DATA : [];
-    podcastList = [...defaultList, ...customPodcasts];
+async function initPodcastRoom() {
     const container = document.getElementById('podcast-list-container');
     if (!container) return;
+
+    // Lazy load PODCAST_DATA if empty
+    if (!window.PODCAST_DATA || window.PODCAST_DATA.length === 0) {
+        container.innerHTML = `
+            <div class="loading-spinner-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; color: var(--text-muted); width: 100%;">
+                <div class="spinner"></div>
+                <p style="font-size:13px; margin-top:10px;">Đang tải danh sách bài nghe...</p>
+            </div>`;
+        if (window.FirebaseSync) {
+            window.PODCAST_DATA = await window.FirebaseSync.fetchAcademicPodcasts() || [];
+        }
+        if (!window.PODCAST_DATA || window.PODCAST_DATA.length === 0) {
+            container.innerHTML = '<p style="padding: 20px; color: var(--text-muted); text-align: center;">Không thể tải danh sách nghe. Vui lòng kiểm tra mạng!</p>';
+            return;
+        }
+        container.innerHTML = '';
+    }
+
+    const defaultList = typeof PODCAST_DATA !== 'undefined' ? PODCAST_DATA : [];
+    podcastList = [...defaultList, ...customPodcasts];
     
     container.innerHTML = '';
     podcastList.forEach(pod => {

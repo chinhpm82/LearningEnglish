@@ -89,6 +89,20 @@ function getWeightedFlashcardPool(allWords, level) {
 }
 
 function initFlashcardSession(category = 'all') {
+    // If background vocabulary loading is still in progress, show spinner and retry in 500ms
+    if (state.vocabulary.length === 0) {
+        const container = document.getElementById('flashcard-element');
+        if (container) {
+            container.innerHTML = `
+                <div class="loading-spinner-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; color: var(--text-muted);">
+                    <div class="spinner"></div>
+                    <p style="margin-top: 10px;">Đang tải kho từ vựng từ đám mây...</p>
+                </div>`;
+        }
+        setTimeout(() => initFlashcardSession(category), 500);
+        return;
+    }
+
     const now = Date.now();
     const allWords = [...state.vocabulary, ...state.customWords];
     const level = state.userLevel || 'Beginner';

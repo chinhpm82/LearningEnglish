@@ -59,24 +59,35 @@ async function loadStateAsync() {
         await LearningDB.initDB();
 
         // --- ------------------------------------------------------- ---
-        // DYNAMIC ACADEMIC DATA FETCHING (FIREBASE OFFLINE CACHED)
-        // Thay vì đọc từ script cục bộ, ta kéo từ FirebaseSync và gán vào window
+        // LAZY MIGRATION: Initialize all massive academic lists to [] on start
+        // These will be loaded on demand when the user clicks each section.
         // --- ------------------------------------------------------- ---
-        if (window.FirebaseSync) {
-            console.log("Fetching academic data from Firebase...");
-            window.PLACEMENT_QUESTIONS = await window.FirebaseSync.fetchAcademicQuizzes() || [];
-            window.GRAMMAR_LESSONS = await window.FirebaseSync.fetchAcademicGrammar() || [];
-            window.STORIES_DATA = await window.FirebaseSync.fetchAcademicStories() || [];
-            window.COMMUNICATIVE_SENTENCES = await window.FirebaseSync.fetchAcademicSentences() || [];
-            window.PODCAST_DATA = await window.FirebaseSync.fetchAcademicPodcasts() || [];
-        }
+        window.PLACEMENT_QUESTIONS = [];
+        window.GRAMMAR_LESSONS = [];
+        window.STORIES_DATA = [];
+        window.COMMUNICATIVE_SENTENCES = [];
+        window.PODCAST_DATA = [];
 
         // 1. Migrate old localStorage data if present
         await LearningDB.migrateFromLocalStorage();
 
-        // 3. Load vocabulary into global state
-        state.vocabulary = await LearningDB.getAllVocab();
-        console.log(`Loaded ${state.vocabulary.length} unique words from IndexedDB.`);
+        // 3. Load vocabulary asynchronously in the background so it doesn't block the initial page render
+        state.vocabulary = [];
+        (async () => {
+            try {
+                console.log("Loading vocabulary database in the background...");
+                state.vocabulary = await LearningDB.getAllVocab();
+                console.log(`Background loaded ${state.vocabulary.length} unique words successfully.`);
+                
+                // If the user is currently on the dashboard, re-render the dashboard to populate vocabulary numbers
+                const activeTab = document.querySelector('.tab-content.active');
+                if (activeTab && activeTab.id === 'dashboard-tab') {
+                    renderDashboard();
+                }
+            } catch (e) {
+                console.error("Failed to load vocabulary in the background:", e);
+            }
+        })();
 
         // 4. Load other progress variables from progress store
         state.customWords = await LearningDB.getProgress('custom_words', []);

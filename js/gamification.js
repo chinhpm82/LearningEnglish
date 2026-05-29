@@ -285,9 +285,27 @@ function selectSpecializedCategory(category) {
 // ==========================================================================
 const storiesState = { completedStories: [] };
 
-function renderStoriesGrid(filter = 'all') {
+async function renderStoriesGrid(filter = 'all') {
     const grid = document.getElementById('stories-grid');
     if (!grid) return;
+    
+    // Lazy load STORIES_DATA if empty
+    if (!window.STORIES_DATA || window.STORIES_DATA.length === 0) {
+        grid.innerHTML = `
+            <div class="loading-spinner-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; color: var(--text-muted); width: 100%;">
+                <div class="spinner"></div>
+                <p style="font-size:13px; margin-top:10px;">Đang tải danh sách truyện ngắn...</p>
+            </div>`;
+        if (window.FirebaseSync) {
+            window.STORIES_DATA = await window.FirebaseSync.fetchAcademicStories() || [];
+        }
+        if (!window.STORIES_DATA || window.STORIES_DATA.length === 0) {
+            grid.innerHTML = '<p style="padding: 20px; color: var(--text-muted); text-align: center;">Không thể tải truyện. Vui lòng kiểm tra mạng!</p>';
+            return;
+        }
+        grid.innerHTML = '';
+    }
+
     const stories = typeof STORIES_DATA !== 'undefined' ? STORIES_DATA : [];
     const filtered = filter === 'all' ? stories : stories.filter(s => s.level === filter);
     grid.innerHTML = '';
