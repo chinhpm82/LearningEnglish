@@ -32,7 +32,7 @@ function updateCEFRSkillsRadarBars(score, masteredVocab, totalVocab) {
     
     // 1. Vocabulary Skill formula
     const rawVocabPct = totalVocab > 0 ? Math.round((masteredVocab / totalVocab) * 100) : 0;
-    const baseVocabSeed = Math.round((stats.vocab / 8) * 100);
+    const baseVocabSeed = Math.round((stats.vocab / 4) * 100); // Sửa bug chia cho 8 thành chia cho 4 (vì stats.vocab tối đa là 4)
     const vocabPct = Math.min(100, Math.max(rawVocabPct, baseVocabSeed || 15));
 
     // 2. Grammar Skill formula
@@ -54,8 +54,20 @@ function updateCEFRSkillsRadarBars(score, masteredVocab, totalVocab) {
     const listeningPct = Math.min(100, Math.max(rawListeningPct, baseListeningSeed || 15));
 
     // 5. Spoken & AI Essay formula
-    const quizAccPct = state.quizStats.totalAnswered > 0 ? Math.round((state.quizStats.correctAnswers / state.quizStats.totalAnswered) * 100) : 0;
-    const writingPct = Math.min(100, Math.max(quizAccPct || 10, Math.round((score / 16) * 100) || 15));
+    // Áp dụng bộ lọc volume-weight để tránh việc mới làm 1 câu đúng đã nhảy vọt lên 100%
+    const basePlacementSeed = Math.round((score / 16) * 100) || 15;
+    const quizAccuracy = state.quizStats.totalAnswered > 0 ? (state.quizStats.correctAnswers / state.quizStats.totalAnswered * 100) : 0;
+    // Cần trả lời tối thiểu 30 câu quiz đúng để đạt trọng số tối đa của phần trắc nghiệm
+    const quizWeight = Math.min(1, state.quizStats.totalAnswered / 30);
+    const quizFactor = quizAccuracy * quizWeight;
+    
+    // Kết hợp kết quả viết luận trung bình từ state.writingHighScores
+    const essayScores = Object.values(state.writingHighScores || {});
+    const averageEssayScore = essayScores.length > 0 ? Math.round(essayScores.reduce((a, b) => a + b, 0) / essayScores.length) : 0;
+    
+    // Tính toán điểm hỗn hợp: 60% từ quiz (có trọng số volume) + 40% từ trung bình viết luận
+    const combinedFactor = Math.round(quizFactor * 0.6 + averageEssayScore * 0.4);
+    const writingPct = Math.min(100, Math.max(basePlacementSeed, combinedFactor));
 
     // Render bars in DOM
     const barElements = {
@@ -419,7 +431,7 @@ function renderDashboard() {
     document.getElementById('streak-count-val').textContent = state.streak;
 
     // Calculate Quiz accuracy
-    let accuracyText = '100%';
+    let accuracyText = '0%';
     if (state.quizStats.totalAnswered > 0) {
         const accPct = Math.round((state.quizStats.correctAnswers / state.quizStats.totalAnswered) * 100);
         accuracyText = `${accPct}%`;
