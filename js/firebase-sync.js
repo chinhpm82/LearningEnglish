@@ -316,85 +316,192 @@ window.FirebaseSync = {
         }
     },
 
-    // --- ACADEMIC DATA FETCHING (PHÂN HỆ A) ---
-    fetchAllAcademicVocabulary: async (limitCount = 0) => {
-        if (!isConfigured) return [];
+    fetchAcademicIndex: async () => {
         try {
-            let queryRef = collection(db, "academic_vocabulary");
-            if (limitCount > 0) {
-                queryRef = query(queryRef, limit(limitCount));
-            }
-            const snap = await getDocs(queryRef);
-            const items = [];
-            snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
-            return items;
+            const response = await fetch('json/academic_index.json');
+            if (!response.ok) throw new Error("Failed to load index");
+            return await response.json();
         } catch (e) {
-            console.error("Error fetching academic vocabulary:", e);
-            return [];
-        }
-    },
-    
-    fetchAcademicGrammar: async () => {
-        if (!isConfigured) return [];
-        try {
-            const snap = await getDocs(collection(db, "academic_grammar"));
-            const items = [];
-            snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
-            return items;
-        } catch (e) {
-            console.error("Error fetching grammar lessons:", e);
-            return [];
+            console.error("Error fetching academic index:", e);
+            return null;
         }
     },
 
-    fetchAcademicStories: async () => {
+    fetchDocumentById: async (collectionName, id) => {
+        if (!isConfigured) return null;
+        try {
+            const docRef = doc(db, collectionName, id);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                return { id: docSnap.id, ...docSnap.data() };
+            }
+            return null;
+        } catch (e) {
+            console.error(`Error fetching doc ${id} from ${collectionName}:`, e);
+            return null;
+        }
+    },
+
+    fetchDocumentsByCategory: async (collectionName, category, limitCount = 0) => {
         if (!isConfigured) return [];
         try {
-            const snap = await getDocs(collection(db, "academic_stories"));
+            let queryRef = collection(db, collectionName);
+            const constraints = [];
+            if (category && category !== 'all') {
+                constraints.push(where("category", "==", category));
+            }
+            if (limitCount > 0) {
+                constraints.push(limit(limitCount));
+            }
+            if (constraints.length > 0) {
+                queryRef = query(queryRef, ...constraints);
+            }
+            const snap = await getDocs(queryRef);
             const items = [];
-            snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+            snap.forEach(d => items.push({ id: d.id, ...d.data() }));
             return items;
         } catch (e) {
-            console.error("Error fetching stories:", e);
+            console.error(`Error fetching category ${category} from ${collectionName}:`, e);
             return [];
         }
     },
 
     fetchAcademicQuizzes: async () => {
-        if (!isConfigured) return [];
+        if (isConfigured) {
+            try {
+                const snap = await getDocs(collection(db, "academic_quizzes"));
+                const items = [];
+                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+                if (items.length > 0) return items;
+            } catch (e) {
+                console.warn("Firestore quiz fetch failed, using local fallback", e);
+            }
+        }
         try {
-            const snap = await getDocs(collection(db, "academic_quizzes"));
-            const items = [];
-            snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
-            return items;
+            const response = await fetch('json/placement-questions.json');
+            return await response.json();
         } catch (e) {
-            console.error("Error fetching quizzes:", e);
+            console.error("Local quiz fetch failed:", e);
+            return [];
+        }
+    },
+
+    fetchAcademicGrammar: async () => {
+        if (isConfigured) {
+            try {
+                const snap = await getDocs(collection(db, "academic_grammar"));
+                const items = [];
+                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+                if (items.length > 0) return items;
+            } catch (e) {
+                console.warn("Firestore grammar fetch failed, using local fallback", e);
+            }
+        }
+        try {
+            const response = await fetch('json/grammar-data.json');
+            return await response.json();
+        } catch (e) {
+            console.error("Local grammar fetch failed:", e);
+            return [];
+        }
+    },
+
+    fetchAcademicStories: async () => {
+        if (isConfigured) {
+            try {
+                const snap = await getDocs(collection(db, "academic_stories"));
+                const items = [];
+                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+                if (items.length > 0) return items;
+            } catch (e) {
+                console.warn("Firestore stories fetch failed, using local fallback", e);
+            }
+        }
+        try {
+            const response = await fetch('json/stories-data.json');
+            return await response.json();
+        } catch (e) {
+            console.error("Local stories fetch failed:", e);
             return [];
         }
     },
 
     fetchAcademicSentences: async () => {
-        if (!isConfigured) return [];
+        if (isConfigured) {
+            try {
+                const snap = await getDocs(collection(db, "academic_sentences"));
+                const items = [];
+                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+                if (items.length > 0) return items;
+            } catch (e) {
+                console.warn("Firestore sentences fetch failed, using local fallback", e);
+            }
+        }
         try {
-            const snap = await getDocs(collection(db, "academic_sentences"));
-            const items = [];
-            snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
-            return items;
+            const response = await fetch('json/sentences-data.json');
+            return await response.json();
         } catch (e) {
-            console.error("Error fetching sentences:", e);
+            console.error("Local sentences fetch failed:", e);
             return [];
         }
     },
-    
+
     fetchAcademicPodcasts: async () => {
-        if (!isConfigured) return [];
+        if (isConfigured) {
+            try {
+                const snap = await getDocs(collection(db, "academic_podcasts"));
+                const items = [];
+                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+                if (items.length > 0) return items;
+            } catch (e) {
+                console.warn("Firestore podcasts fetch failed, using local fallback", e);
+            }
+        }
         try {
-            const snap = await getDocs(collection(db, "academic_podcasts"));
-            const items = [];
-            snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
-            return items;
+            const response = await fetch('json/podcast-data.json');
+            return await response.json();
         } catch (e) {
-            console.error("Error fetching podcasts:", e);
+            console.error("Local podcasts fetch failed:", e);
+            return [];
+        }
+    },
+
+    fetchAcademicTranslation: async () => {
+        if (isConfigured) {
+            try {
+                const snap = await getDocs(collection(db, "academic_translation"));
+                const items = [];
+                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+                if (items.length > 0) return items;
+            } catch (e) {
+                console.warn("Firestore short translation fetch failed, using local fallback", e);
+            }
+        }
+        try {
+            const response = await fetch('json/translation-data.json');
+            return await response.json();
+        } catch (e) {
+            console.error("Local translation fetch failed:", e);
+            return [];
+        }
+    },
+
+    fetchAcademicLongTranslation: async () => {
+        if (isConfigured) {
+            try {
+                const snap = await getDocs(collection(db, "academic_long_translation"));
+                const items = [];
+                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+                if (items.length > 0) return items;
+            } catch (e) {
+                console.warn("Firestore long translation fetch failed, using local fallback", e);
+            }
+        }
+        try {
+            const response = await fetch('json/long-translation-data.json');
+            return await response.json();
+        } catch (e) {
+            console.error("Local long translation fetch failed:", e);
             return [];
         }
     },

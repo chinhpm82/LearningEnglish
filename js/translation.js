@@ -45,16 +45,40 @@ document.getElementById('btn-sub-trans-long')?.addEventListener('click', () => {
 // --- Long Translation Mode ---
 const longTransState = { deck: [], idx: 0, hintsShown: 0 };
 
-function initLongTranslation() {
-    const data = typeof LONG_TRANSLATION_DATA !== 'undefined' ? LONG_TRANSLATION_DATA : [];
+async function initLongTranslation() {
+    const card = document.getElementById('trans-long-card');
+    
+    // Tải lười dữ liệu LONG_TRANSLATION_DATA nếu mảng rỗng
+    if (!window.LONG_TRANSLATION_DATA || window.LONG_TRANSLATION_DATA.length === 0) {
+        if (card) {
+            card.innerHTML = `
+                <div class="loading-spinner-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; color: var(--text-muted); width: 100%;">
+                    <div class="spinner"></div>
+                    <p style="font-size:13px; margin-top:10px;">Đang tải dữ liệu dịch đoạn văn...</p>
+                </div>`;
+        }
+        if (window.FirebaseSync) {
+            window.LONG_TRANSLATION_DATA = await window.FirebaseSync.fetchAcademicLongTranslation() || [];
+        }
+        if (!window.LONG_TRANSLATION_DATA || window.LONG_TRANSLATION_DATA.length === 0) {
+            if (card) {
+                card.innerHTML = '<p style="padding: 20px; color: var(--text-muted); text-align: center;">Không thể tải dữ liệu dịch đoạn văn. Vui lòng kiểm tra mạng!</p>';
+            }
+            return;
+        }
+    }
+
+    const data = window.LONG_TRANSLATION_DATA;
     const dirFilter = document.getElementById('trans-long-dir-filter')?.value || 'all';
-    let filtered = data;
+    let filtered = [...data];
     if (dirFilter !== 'all') filtered = filtered.filter(t => t.dir === dirFilter);
-    // Shuffle
+    
+    // Trộn ngẫu nhiên đoạn văn dịch
     for (let i = filtered.length - 1; i > 0; i--) { 
         const j = Math.floor(Math.random() * (i + 1)); 
         [filtered[i], filtered[j]] = [filtered[j], filtered[i]]; 
     }
+    
     longTransState.deck = filtered;
     longTransState.idx = 0;
     longTransState.hintsShown = 0;

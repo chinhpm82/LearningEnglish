@@ -387,21 +387,52 @@ function openStory(story) {
 // ==========================================================================
 const transState = { deck: [], idx: 0, score: 0, hintsShown: 0 };
 
-function initTranslation() {
-    const data = typeof TRANSLATION_DATA !== 'undefined' ? TRANSLATION_DATA : [];
+async function initTranslation() {
+    const card = document.getElementById('translation-card');
+    
+    // Tải lười dữ liệu TRANSLATION_DATA nếu mảng rỗng
+    if (!window.TRANSLATION_DATA || window.TRANSLATION_DATA.length === 0) {
+        if (card) {
+            card.innerHTML = `
+                <div class="loading-spinner-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; color: var(--text-muted); width: 100%;">
+                    <div class="spinner"></div>
+                    <p style="font-size:13px; margin-top:10px;">Đang tải dữ liệu dịch câu ngắn...</p>
+                </div>`;
+        }
+        if (window.FirebaseSync) {
+            window.TRANSLATION_DATA = await window.FirebaseSync.fetchAcademicTranslation() || [];
+        }
+        if (!window.TRANSLATION_DATA || window.TRANSLATION_DATA.length === 0) {
+            if (card) {
+                card.innerHTML = '<p style="padding: 20px; color: var(--text-muted); text-align: center;">Không thể tải dữ liệu dịch câu. Vui lòng kiểm tra mạng!</p>';
+            }
+            return;
+        }
+    }
+
+    const data = window.TRANSLATION_DATA;
     const dirFilter = document.getElementById('trans-dir-filter')?.value || 'all';
     const lvlFilter = document.getElementById('trans-level-filter')?.value || 'all';
-    let filtered = data;
+    let filtered = [...data];
     if (dirFilter !== 'all') filtered = filtered.filter(t => t.dir === dirFilter);
     if (lvlFilter !== 'all') filtered = filtered.filter(t => t.level === lvlFilter);
-    // Shuffle
-    for (let i = filtered.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [filtered[i], filtered[j]] = [filtered[j], filtered[i]]; }
+    
+    // Trộn ngẫu nhiên câu dịch
+    for (let i = filtered.length - 1; i > 0; i--) { 
+        const j = Math.floor(Math.random() * (i + 1)); 
+        [filtered[i], filtered[j]] = [filtered[j], filtered[i]]; 
+    }
+    
     transState.deck = filtered;
     transState.idx = 0;
     transState.score = 0;
     transState.hintsShown = 0;
-    document.getElementById('trans-score').textContent = '0';
-    document.getElementById('trans-total').textContent = filtered.length;
+    
+    const scoreVal = document.getElementById('trans-score');
+    const totalVal = document.getElementById('trans-total');
+    if (scoreVal) scoreVal.textContent = '0';
+    if (totalVal) totalVal.textContent = filtered.length;
+    
     renderTranslationCard();
 }
 

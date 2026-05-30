@@ -439,9 +439,9 @@ function renderDashboard() {
 
     // Compute progress based on weights: Box 3 = 100%, Box 2 = 50%, Box 1 = 0%
     let progressPct = 0;
-    if (totalWordsCount > 0) {
+    if (displayTotalWordsCount > 0) {
         const weightedSum = (masteredCount * 100) + (learningCount * 50);
-        progressPct = Math.round(weightedSum / totalWordsCount);
+        progressPct = Math.round(weightedSum / displayTotalWordsCount);
     }
 
     pctText.textContent = `${progressPct}%`;
@@ -463,7 +463,7 @@ function renderDashboard() {
 }
 
 // Generate random "Word of the Day"
-function renderWordOfTheDay(forceRefresh = false) {
+async function renderWordOfTheDay(forceRefresh = false) {
     const allWords = [...state.vocabulary, ...state.customWords];
     if (allWords.length === 0) return;
 
@@ -492,14 +492,22 @@ function renderWordOfTheDay(forceRefresh = false) {
         state.currentWotd = foundWord || levelWords[Math.floor(Math.random() * levelWords.length)];
     }
 
-    const wotd = state.currentWotd;
+    const wotdIndex = state.currentWotd;
+    if (!wotdIndex) return;
+
+    // Fetch full word details on-demand
+    const wotd = await LearningDB.getFullWordData(wotdIndex.id);
+    if (!wotd) {
+        console.warn("Could not load details for Word of the Day:", wotdIndex);
+        return;
+    }
 
     document.getElementById('wotd-word').textContent = wotd.word;
-    document.getElementById('wotd-type').textContent = wotd.type;
+    document.getElementById('wotd-type').textContent = wotd.type || '';
     document.getElementById('wotd-ipa').textContent = wotd.ipa || '';
-    document.getElementById('wotd-meaning').textContent = wotd.meaning;
-    document.getElementById('wotd-example-en').textContent = `"${wotd.example || ''}"`;
-    document.getElementById('wotd-example-vi').textContent = `"${wotd.example_vi || ''}"`;
+    document.getElementById('wotd-meaning').textContent = wotd.meaning || '';
+    document.getElementById('wotd-example-en').textContent = wotd.example ? `"${wotd.example}"` : '';
+    document.getElementById('wotd-example-vi').textContent = wotd.example_vi ? `"${wotd.example_vi}"` : '';
 
     // Attach click to voice
     const voiceBtn = document.getElementById('wotd-speak-btn');

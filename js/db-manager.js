@@ -9,7 +9,7 @@
  */
 
 const DB_NAME = 'LearningEnglish_ProgressDB';
-const DB_VERSION = 2; // Nâng version để reset DB cũ
+const DB_VERSION = 3; // Nâng version để reset DB cũ và thêm cached_words
 let dbInstance = null;
 
 /**
@@ -45,6 +45,11 @@ function initDB() {
             // Bảng lưu settings cục bộ (key-value)
             if (!db.objectStoreNames.contains('progress')) {
                 db.createObjectStore('progress', { keyPath: 'key' });
+            }
+
+            // Bảng lưu dữ liệu chi tiết của từng từ (On-demand cache)
+            if (!db.objectStoreNames.contains('cached_words')) {
+                db.createObjectStore('cached_words', { keyPath: 'id' });
             }
         };
     });
@@ -86,69 +91,18 @@ async function getAllVocab() {
         });
     };
 
-    // 1. Lấy dữ liệu siêu tốc từ bộ nhớ đệm cục bộ (Cache Offline-First)
-    let baseVocab = await getLocalCache('cached_academic_vocab');
+    // 1. Lấy dữ liệu siêu tốc từ bộ nhớ đệm cục bộ (Cache Offline-First) cho Index
+    let baseVocab = await getLocalCache('cached_academic_vocab_index');
 
-    // 2. Nếu Cache rỗng (lần đầu vào web hoặc bị xóa Cache), buộc phải đợi tải từ Cloud (Timeout 5s)
-    if (baseVocab.length === 0 && window.FirebaseSync) {
-        try {
-            const timeout = (ms) => new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), ms));
-            // TẢI NHANH 50 TỪ ĐẦU TIÊN ĐỂ MỞ KHÓA UI
-            baseVocab = await Promise.race([
-                window.FirebaseSync.fetchAllAcademicVocabulary(50),
-                timeout(5000)
-            ]);
-            
-            // Giả lập tổng số từ vựng để UI hiển thị số lớn (Tránh người dùng nghĩ app chỉ có 50 từ)
-            window.ACADEMIC_TOTAL = 5845;
-
-            // Chạy ngầm tải toàn bộ số còn lại
-            (async () => {
-                try {
-                    console.log("☁️ Bắt đầu tải ngầm toàn bộ từ vựng còn lại...");
-                    const fullVocab = await window.FirebaseSync.fetchAllAcademicVocabulary(0);
-                    if (fullVocab && fullVocab.length > 0) {
-                        await setLocalCache('cached_academic_vocab', fullVocab);
-                        console.log("☁️ Đã tải ngầm xong toàn bộ từ vựng!");
-                        
-                        // Cập nhật state và reload UI 
-                        if (typeof state !== 'undefined' && state) {
-                            state.vocabulary = await getAllVocab();
-                            if (typeof renderDashboard === 'function') renderDashboard();
-                            if (typeof initFlashcardSession === 'function') {
-                                const cat = document.getElementById('flashcard-category');
-                                if (cat) initFlashcardSession(cat.value);
-                            }
-                        }
-                    }
-                } catch (e) {
-                    console.warn("⚠️ Tải ngầm thất bại.", e);
-                }
-            })();
-
-        } catch (e) {
-            console.warn("⚠️ Tải từ vựng lần đầu thất bại (Mạng yếu/Timeout).");
-            baseVocab = [];
+    // 2. Nếu Cache rỗng, nạp từ biến toàn cục window.ACADEMIC_INDEX (đã tải ở state.js)
+    if ((!baseVocab || baseVocab.length === 0) && window.ACADEMIC_INDEX && window.ACADEMIC_INDEX.vocabulary) {
+        baseVocab = window.ACADEMIC_INDEX.vocabulary;
+        if (baseVocab.length > 0) {
+            await setLocalCache('cached_academic_vocab_index', baseVocab);
         }
-    } else if (window.FirebaseSync) {
-        // 3. Nếu đã có Cache, tải ngầm từ Cloud để cập nhật cho lần sau (Stale-While-Revalidate)
-        (async () => {
-            try {
-                const freshVocab = await window.FirebaseSync.fetchAllAcademicVocabulary();
-                if (freshVocab && freshVocab.length > 0 && freshVocab.length !== baseVocab.length) {
-                    await setLocalCache('cached_academic_vocab', freshVocab);
-                    console.log("☁️ Đã cập nhật kho từ vựng ngầm thành công.");
-                }
-            } catch (e) {
-                // Lỗi ngầm thì kệ, đã có cache gánh
-            }
-        })();
     }
 
-    // Nếu đã có Cache nhưng ít quá (đang trong quá trình tải ngầm chưa xong ở lần refresh trước)
-    if (baseVocab.length > 0 && baseVocab.length < 500) {
-        window.ACADEMIC_TOTAL = 5845;
-    }
+
 
     // Clone dữ liệu để không làm biến đổi bộ gốc
     const vocabList = JSON.parse(JSON.stringify(baseVocab));
@@ -336,6 +290,71 @@ async function migrateFromLocalStorage() {
     console.log("Bỏ qua migrateFromLocalStorage cũ.");
 }
 
+/**
+ * Lấy chi tiết đầy đủ của một từ vựng theo ID (On-demand Cache-first)
+ */
+async function getFullWordData(id) {
+    await initDB();
+    
+    // 1. Kiểm tra trong cache IndexedDB cục bộ trước
+    const cached = await new Promise((resolve) => {
+        const tx = dbInstance.transaction(['cached_words'], 'readonly');
+        const store = tx.objectStore('cached_words');
+        const req = store.get(id);
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => resolve(null);
+    });
+    
+    if (cached) {
+        return cached;
+    }
+    
+    // 2. Không có trong cache IndexedDB. Lấy payload.
+    let payload = null;
+    
+    // Gọi Firestore nếu có cấu hình
+    if (window.FirebaseSync && window.FirebaseSync.isConfigured) {
+        try {
+            payload = await window.FirebaseSync.fetchDocumentById("academic_vocabulary", id);
+        } catch (e) {
+            console.error("Lỗi fetch Firestore cho id:", id, e);
+        }
+    }
+    
+    // 3. Fallback: Đọc từ file JSON cục bộ (oxford_5000.json) nếu offline hoặc không có Firestore
+    if (!payload) {
+        try {
+            if (!window.LOCAL_OXFORD_5000) {
+                console.log("Đang nạp file oxford_5000.json dự phòng...");
+                const response = await fetch('json/oxford_5000.json');
+                window.LOCAL_OXFORD_5000 = await response.json();
+            }
+            if (window.LOCAL_OXFORD_5000) {
+                payload = window.LOCAL_OXFORD_5000.find(w => w.id === id);
+            }
+        } catch (e) {
+            console.error("Lỗi fetch JSON dự phòng cho id:", id, e);
+        }
+    }
+    
+    // 4. Lưu lại vào cache IndexedDB để lần sau không cần tải lại nữa
+    if (payload) {
+        try {
+            await new Promise((resolve, reject) => {
+                const tx = dbInstance.transaction(['cached_words'], 'readwrite');
+                const store = tx.objectStore('cached_words');
+                store.put(payload);
+                tx.oncomplete = () => resolve();
+                tx.onerror = (e) => reject(e.target.error);
+            });
+        } catch (e) {
+            console.warn("Không thể lưu cache IndexedDB cho từ:", id, e);
+        }
+    }
+    
+    return payload;
+}
+
 // Export functions to global scope for easy access in app.js
 window.LearningDB = {
     initDB,
@@ -346,5 +365,6 @@ window.LearningDB = {
     getProgress,
     setProgress,
     migrateFromLocalStorage,
-    getVocabCount
+    getVocabCount,
+    getFullWordData
 };

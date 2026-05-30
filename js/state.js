@@ -67,9 +67,16 @@ async function loadStateAsync() {
         window.STORIES_DATA = [];
         window.COMMUNICATIVE_SENTENCES = [];
         window.PODCAST_DATA = [];
+        window.TRANSLATION_DATA = [];
+        window.LONG_TRANSLATION_DATA = [];
 
         // 1. Migrate old localStorage data if present
         await LearningDB.migrateFromLocalStorage();
+
+        // 2. Load global academic index
+        if (window.FirebaseSync) {
+            window.ACADEMIC_INDEX = await window.FirebaseSync.fetchAcademicIndex();
+        }
 
         // 3. Load vocabulary asynchronously in the background so it doesn't block the initial page render
         state.vocabulary = [];

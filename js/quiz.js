@@ -1,5 +1,27 @@
 // --- DYNAMIC QUIZ SYSTEM ---
-function initQuizSession(category = 'all') {
+async function initQuizSession(category = 'all') {
+    // Hiển thị trạng thái chuẩn bị câu hỏi ngay lập tức để tạo trải nghiệm mượt mà
+    const activeState = document.getElementById('quiz-active-state');
+    const introState = document.getElementById('quiz-intro-state');
+    const resultState = document.getElementById('quiz-result-state');
+    
+    if (introState) introState.classList.add('hidden');
+    if (resultState) resultState.classList.add('hidden');
+    if (activeState) activeState.classList.remove('hidden');
+    
+    const quizCounter = document.getElementById('quiz-counter');
+    const quizQuestionWord = document.getElementById('quiz-question-word');
+    const optionsContainer = document.getElementById('quiz-options-container');
+    
+    if (quizCounter) quizCounter.textContent = "Đang chuẩn bị câu hỏi...";
+    if (quizQuestionWord) quizQuestionWord.textContent = "Đang tải dữ liệu...";
+    if (optionsContainer) {
+        optionsContainer.innerHTML = `
+            <div class="loading-spinner-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; width: 100%;">
+                <div class="spinner"></div>
+            </div>`;
+    }
+
     const allWords = [...state.vocabulary, ...state.customWords];
     let sourcePool = [];
 
@@ -24,20 +46,52 @@ function initQuizSession(category = 'all') {
 
     if (sourcePool.length < 4) {
         alert('⚠️ Kho từ vựng chủ đề này cần ít nhất 4 từ để có thể bắt đầu làm Trắc nghiệm.');
+        if (introState) introState.classList.remove('hidden');
+        if (activeState) activeState.classList.add('hidden');
         return;
     }
 
-    // Pick 10 random words (or fewer if total vocabulary is small)
+    // Chọn ngẫu nhiên 10 từ mục tiêu từ danh sách Index
     const quizLength = Math.min(10, sourcePool.length);
     const shuffled = [...sourcePool].sort(() => 0.5 - Math.random());
+    const selectedIndexWords = shuffled.slice(0, quizLength);
+
+    // 1. Tải bất đồng bộ thông tin chi tiết đầy đủ của các từ đúng
+    const correctWords = [];
+    for (const w of selectedIndexWords) {
+        const fullData = await LearningDB.getFullWordData(w.id);
+        if (fullData) {
+            correctWords.push(fullData);
+        } else {
+            correctWords.push({ ...w, meaning: w.word, example: '' });
+        }
+    }
+
+    // 2. Chọn ngẫu nhiên khoảng 25 từ nhiễu (distractor pool) từ Index chung và tải chi tiết để làm phương án sai
+    const distractorIndexWords = allWords
+        .filter(w => !selectedIndexWords.some(sw => sw.id === w.id))
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 25);
     
-    quizQuestions = shuffled.slice(0, quizLength).map(word => {
-        // Find 3 incorrect answers from the global pool
-        const otherWords = allWords.filter(w => w.id !== word.id);
-        const shuffledOthers = otherWords.sort(() => 0.5 - Math.random());
-        const distractors = shuffledOthers.slice(0, 3).map(w => w.meaning);
+    const distractorWords = [];
+    for (const w of distractorIndexWords) {
+        const fullData = await LearningDB.getFullWordData(w.id);
+        if (fullData) {
+            distractorWords.push(fullData);
+        }
+    }
+
+    // 3. Ghép nối tạo câu hỏi trắc nghiệm hoàn chỉnh
+    quizQuestions = correctWords.map(word => {
+        // Lấy nghĩa từ vựng của danh sách từ nhiễu
+        const otherMeanings = distractorWords
+            .filter(w => w.id !== word.id && w.meaning !== word.meaning)
+            .map(w => w.meaning);
         
-        // Combine correct answer & distractors, then shuffle options
+        // Trộn ngẫu nhiên các từ nhiễu và lấy đúng 3 phương án sai
+        const distractors = otherMeanings.sort(() => 0.5 - Math.random()).slice(0, 3);
+        
+        // Trộn đáp án đúng với các phương án sai
         const options = [word.meaning, ...distractors].sort(() => 0.5 - Math.random());
         const correctIndex = options.indexOf(word.meaning);
 
@@ -52,11 +106,6 @@ function initQuizSession(category = 'all') {
     currentQuestionIndex = 0;
     quizScore = 0;
     quizTimer.start = Date.now();
-
-    // Toggle States
-    document.getElementById('quiz-intro-state').classList.add('hidden');
-    document.getElementById('quiz-result-state').classList.add('hidden');
-    document.getElementById('quiz-active-state').classList.remove('hidden');
 
     renderQuizQuestion();
 }

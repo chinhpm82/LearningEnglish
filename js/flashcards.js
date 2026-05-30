@@ -146,7 +146,7 @@ function initFlashcardSession(category = 'all') {
     renderFlashcard();
 }
 
-function renderFlashcard() {
+async function renderFlashcard() {
     const container = document.getElementById('flashcard-element');
     container.classList.remove('flipped');
     isCardFlipped = false;
@@ -156,11 +156,12 @@ function renderFlashcard() {
         return;
     }
 
-    const card = flashcardDeck[currentCardIndex];
+    const cardIndex = currentCardIndex;
+    const card = flashcardDeck[cardIndex];
 
-    // Card Front
+    // Card Front - Hiển thị ngay lập tức từ vựng từ Index để không gây giật lag
     document.getElementById('card-front-word').textContent = card.word;
-    document.getElementById('card-front-type').textContent = card.type;
+    document.getElementById('card-front-type').textContent = card.type || '...';
     document.getElementById('card-front-ipa').textContent = card.ipa || '';
     
     const boxBadge = document.getElementById('card-box-badge');
@@ -175,10 +176,10 @@ function renderFlashcard() {
         boxBadge.style.color = 'var(--success)';
     }
 
-    // Card Back
-    document.getElementById('card-back-meaning').textContent = card.meaning;
-    document.getElementById('card-back-example-en').textContent = `"${card.example || ''}"`;
-    document.getElementById('card-back-example-vi').textContent = `"${card.example_vi || ''}"`;
+    // Card Back - Tạm thời hiển thị trạng thái chờ nếu chưa có chi tiết
+    document.getElementById('card-back-meaning').textContent = card.meaning || 'Đang tải...';
+    document.getElementById('card-back-example-en').textContent = card.example ? `"${card.example}"` : '';
+    document.getElementById('card-back-example-vi').textContent = card.example_vi ? `"${card.example_vi}"` : '';
 
     // Deck Bar
     const progressFill = document.getElementById('flashcard-progress-bar');
@@ -199,6 +200,45 @@ function renderFlashcard() {
     const nextBtn = document.getElementById('btn-card-next');
     if (prevBtn) prevBtn.disabled = currentCardIndex === 0;
     if (nextBtn) nextBtn.disabled = currentCardIndex === flashcardDeck.length - 1;
+
+    // --- Tải thông tin chi tiết đầy đủ một cách bất đồng bộ ---
+    if (!card.meaning) {
+        try {
+            const fullData = await LearningDB.getFullWordData(card.id);
+            // Kiểm tra race-condition nếu người dùng đã bấm chuyển thẻ rất nhanh trước khi mạng tải xong
+            if (currentCardIndex === cardIndex && fullData) {
+                Object.assign(card, fullData); // Trộn chi tiết vào đối tượng thẻ hiện tại
+                
+                // Cập nhật lại UI với dữ liệu chi tiết vừa nạp
+                document.getElementById('card-front-type').textContent = card.type || '';
+                document.getElementById('card-front-ipa').textContent = card.ipa || '';
+                document.getElementById('card-back-meaning').textContent = card.meaning || '';
+                document.getElementById('card-back-example-en').textContent = card.example ? `"${card.example}"` : '';
+                document.getElementById('card-back-example-vi').textContent = card.example_vi ? `"${card.example_vi}"` : '';
+            }
+        } catch (e) {
+            console.error("Lỗi khi tải chi tiết từ vựng:", e);
+        }
+    } else {
+        // Dữ liệu đã có sẵn (hoặc do custom word hoặc đã pre-fetch trước), hiển thị ngay lập tức
+        document.getElementById('card-front-type').textContent = card.type || '';
+        document.getElementById('card-front-ipa').textContent = card.ipa || '';
+        document.getElementById('card-back-meaning').textContent = card.meaning || '';
+        document.getElementById('card-back-example-en').textContent = card.example ? `"${card.example}"` : '';
+        document.getElementById('card-back-example-vi').textContent = card.example_vi ? `"${card.example_vi}"` : '';
+    }
+
+    // --- Tải trước ngầm (Pre-fetch) thẻ tiếp theo trong hàng đợi để loại bỏ hoàn toàn độ trễ ---
+    if (currentCardIndex < flashcardDeck.length - 1) {
+        const nextCard = flashcardDeck[currentCardIndex + 1];
+        if (nextCard && !nextCard.meaning) {
+            LearningDB.getFullWordData(nextCard.id).then(fullData => {
+                if (fullData) {
+                    Object.assign(nextCard, fullData);
+                }
+            }).catch(() => {});
+        }
+    }
 }
 
 function renderEmptyFlashcardDeck() {
