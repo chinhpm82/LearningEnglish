@@ -317,10 +317,14 @@ window.FirebaseSync = {
     },
 
     // --- ACADEMIC DATA FETCHING (PHÂN HỆ A) ---
-    fetchAllAcademicVocabulary: async () => {
+    fetchAllAcademicVocabulary: async (limitCount = 0) => {
         if (!isConfigured) return [];
         try {
-            const snap = await getDocs(collection(db, "academic_vocabulary"));
+            let queryRef = collection(db, "academic_vocabulary");
+            if (limitCount > 0) {
+                queryRef = query(queryRef, limit(limitCount));
+            }
+            const snap = await getDocs(queryRef);
             const items = [];
             snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
             return items;

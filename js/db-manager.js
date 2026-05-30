@@ -93,13 +93,39 @@ async function getAllVocab() {
     if (baseVocab.length === 0 && window.FirebaseSync) {
         try {
             const timeout = (ms) => new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), ms));
+            // TẢI NHANH 50 TỪ ĐẦU TIÊN ĐỂ MỞ KHÓA UI
             baseVocab = await Promise.race([
-                window.FirebaseSync.fetchAllAcademicVocabulary(),
+                window.FirebaseSync.fetchAllAcademicVocabulary(50),
                 timeout(5000)
             ]);
-            if (baseVocab && baseVocab.length > 0) {
-                await setLocalCache('cached_academic_vocab', baseVocab);
-            }
+            
+            // Giả lập tổng số từ vựng để UI hiển thị số lớn (Tránh người dùng nghĩ app chỉ có 50 từ)
+            window.ACADEMIC_TOTAL = 5845;
+
+            // Chạy ngầm tải toàn bộ số còn lại
+            (async () => {
+                try {
+                    console.log("☁️ Bắt đầu tải ngầm toàn bộ từ vựng còn lại...");
+                    const fullVocab = await window.FirebaseSync.fetchAllAcademicVocabulary(0);
+                    if (fullVocab && fullVocab.length > 0) {
+                        await setLocalCache('cached_academic_vocab', fullVocab);
+                        console.log("☁️ Đã tải ngầm xong toàn bộ từ vựng!");
+                        
+                        // Cập nhật state và reload UI 
+                        if (typeof state !== 'undefined' && state) {
+                            state.vocabulary = await getAllVocab();
+                            if (typeof renderDashboard === 'function') renderDashboard();
+                            if (typeof initFlashcardSession === 'function') {
+                                const cat = document.getElementById('flashcard-category');
+                                if (cat) initFlashcardSession(cat.value);
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.warn("⚠️ Tải ngầm thất bại.", e);
+                }
+            })();
+
         } catch (e) {
             console.warn("⚠️ Tải từ vựng lần đầu thất bại (Mạng yếu/Timeout).");
             baseVocab = [];
@@ -119,10 +145,9 @@ async function getAllVocab() {
         })();
     }
 
-    // Fallback cực hiếm nếu vẫn rỗng
-    if (baseVocab.length === 0 && typeof INITIAL_VOCABULARY !== 'undefined') {
-        console.warn("Dùng INITIAL_VOCABULARY dự phòng vì chưa kéo được từ Firestore.");
-        baseVocab = INITIAL_VOCABULARY;
+    // Nếu đã có Cache nhưng ít quá (đang trong quá trình tải ngầm chưa xong ở lần refresh trước)
+    if (baseVocab.length > 0 && baseVocab.length < 500) {
+        window.ACADEMIC_TOTAL = 5845;
     }
 
     // Clone dữ liệu để không làm biến đổi bộ gốc

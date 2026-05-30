@@ -391,13 +391,14 @@ function renderDashboard() {
 
     // TỐI ƯU HÓA HIỆU NĂNG: Duyệt mảng 1 lần duy nhất để đếm các hộp Leitner và số lượng từ cần ôn tập
     const now = Date.now();
-    const totalWordsCount = activeDashboardPool.length;
+    const poolSize = activeDashboardPool.length;
+    const displayTotalWordsCount = (poolSize < 500 && window.ACADEMIC_TOTAL) ? window.ACADEMIC_TOTAL : poolSize;
     let masteredCount = 0;
     let learningCount = 0;
     let newCount = 0;
     let reviewCount = 0;
 
-    for (let i = 0; i < totalWordsCount; i++) {
+    for (let i = 0; i < poolSize; i++) {
         const w = activeDashboardPool[i];
         if (w.box === 3) {
             masteredCount++;
@@ -412,7 +413,7 @@ function renderDashboard() {
     }
 
     // Update Text Elements
-    document.getElementById('stats-total-words').textContent = totalWordsCount;
+    document.getElementById('stats-total-words').textContent = displayTotalWordsCount;
     document.getElementById('stats-learned').textContent = masteredCount;
     document.getElementById('stats-review').textContent = reviewCount;
     document.getElementById('streak-count-val').textContent = state.streak;
@@ -452,7 +453,7 @@ function renderDashboard() {
     circle.style.strokeDashoffset = offset;
 
     // --- UPDATE CEFR SKILL RADAR BARS ---
-    updateCEFRSkillsRadarBars(score, masteredCount, totalWordsCount);
+    updateCEFRSkillsRadarBars(score, masteredCount, displayTotalWordsCount);
 
     // Render "Word of the Day"
     renderWordOfTheDay();
