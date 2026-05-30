@@ -355,6 +355,132 @@ async function getFullWordData(id) {
     return payload;
 }
 
+/**
+ * Lấy chi tiết câu dịch ngắn (On-demand Cache-first)
+ */
+async function getTranslationPayload(id) {
+    await initDB();
+    
+    const cached = await new Promise((resolve) => {
+        const tx = dbInstance.transaction(['cached_words'], 'readonly');
+        const store = tx.objectStore('cached_words');
+        const req = store.get(id);
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => resolve(null);
+    });
+    
+    if (cached) {
+        return cached;
+    }
+    
+    let payload = null;
+    
+    // Gọi Firestore nếu có cấu hình
+    if (window.FirebaseSync && window.FirebaseSync.isConfigured) {
+        try {
+            payload = await window.FirebaseSync.fetchDocumentById("academic_translation", id);
+        } catch (e) {
+            console.error("Firestore translation fetch error for id:", id, e);
+        }
+    }
+    
+    // Fallback cục bộ
+    if (!payload) {
+        try {
+            if (!window.LOCAL_TRANSLATION) {
+                console.log("Đang nạp file translation-data.json dự phòng...");
+                const response = await fetch('json/translation-data.json');
+                window.LOCAL_TRANSLATION = await response.json();
+            }
+            if (window.LOCAL_TRANSLATION) {
+                payload = window.LOCAL_TRANSLATION.find(t => t.id === id);
+            }
+        } catch (e) {
+            console.error("Local fallback translation fetch error for id:", id, e);
+        }
+    }
+    
+    // Cache IndexedDB
+    if (payload) {
+        try {
+            await new Promise((resolve, reject) => {
+                const tx = dbInstance.transaction(['cached_words'], 'readwrite');
+                const store = tx.objectStore('cached_words');
+                store.put(payload);
+                tx.oncomplete = () => resolve();
+                tx.onerror = (e) => reject(e.target.error);
+            });
+        } catch (e) {
+            console.warn("Failed to cache translation in IndexedDB:", e);
+        }
+    }
+    
+    return payload;
+}
+
+/**
+ * Lấy chi tiết đoạn văn dịch dài (On-demand Cache-first)
+ */
+async function getLongTranslationPayload(id) {
+    await initDB();
+    
+    const cached = await new Promise((resolve) => {
+        const tx = dbInstance.transaction(['cached_words'], 'readonly');
+        const store = tx.objectStore('cached_words');
+        const req = store.get(id);
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => resolve(null);
+    });
+    
+    if (cached) {
+        return cached;
+    }
+    
+    let payload = null;
+    
+    // Gọi Firestore nếu có cấu hình
+    if (window.FirebaseSync && window.FirebaseSync.isConfigured) {
+        try {
+            payload = await window.FirebaseSync.fetchDocumentById("academic_long_translation", id);
+        } catch (e) {
+            console.error("Firestore long translation fetch error for id:", id, e);
+        }
+    }
+    
+    // Fallback cục bộ
+    if (!payload) {
+        try {
+            if (!window.LOCAL_LONG_TRANSLATION) {
+                console.log("Đang nạp file long-translation-data.json dự phòng...");
+                const response = await fetch('json/long-translation-data.json');
+                window.LOCAL_LONG_TRANSLATION = await response.json();
+            }
+            if (window.LOCAL_LONG_TRANSLATION) {
+                payload = window.LOCAL_LONG_TRANSLATION.find(lt => lt.id === id);
+            }
+        } catch (e) {
+            console.error("Local fallback long translation fetch error for id:", id, e);
+        }
+    }
+    
+    // Cache IndexedDB
+    if (payload) {
+        try {
+            await new Promise((resolve, reject) => {
+                const tx = dbInstance.transaction(['cached_words'], 'readwrite');
+                const store = tx.objectStore('cached_words');
+                store.put(payload);
+                tx.oncomplete = () => resolve();
+                tx.onerror = (e) => reject(e.target.error);
+            });
+        } catch (e) {
+            console.warn("Failed to cache long translation in IndexedDB:", e);
+        }
+    }
+    
+    return payload;
+}
+
 // Export functions to global scope for easy access in app.js
 window.LearningDB = {
     initDB,
@@ -366,5 +492,7 @@ window.LearningDB = {
     setProgress,
     migrateFromLocalStorage,
     getVocabCount,
-    getFullWordData
+    getFullWordData,
+    getTranslationPayload,
+    getLongTranslationPayload
 };

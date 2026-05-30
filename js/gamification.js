@@ -388,36 +388,21 @@ function openStory(story) {
 const transState = { deck: [], idx: 0, score: 0, hintsShown: 0 };
 
 async function initTranslation() {
-    const card = document.getElementById('translation-card');
-    
-    // Tải lười dữ liệu TRANSLATION_DATA nếu mảng rỗng
-    if (!window.TRANSLATION_DATA || window.TRANSLATION_DATA.length === 0) {
-        if (card) {
-            card.innerHTML = `
-                <div class="loading-spinner-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; color: var(--text-muted); width: 100%;">
-                    <div class="spinner"></div>
-                    <p style="font-size:13px; margin-top:10px;">Đang tải dữ liệu dịch câu ngắn...</p>
-                </div>`;
-        }
+    // Nếu chưa có academic index, tải ngay lập tức
+    if (!window.ACADEMIC_INDEX || !window.ACADEMIC_INDEX.translation) {
         if (window.FirebaseSync) {
-            window.TRANSLATION_DATA = await window.FirebaseSync.fetchAcademicTranslation() || [];
-        }
-        if (!window.TRANSLATION_DATA || window.TRANSLATION_DATA.length === 0) {
-            if (card) {
-                card.innerHTML = '<p style="padding: 20px; color: var(--text-muted); text-align: center;">Không thể tải dữ liệu dịch câu. Vui lòng kiểm tra mạng!</p>';
-            }
-            return;
+            window.ACADEMIC_INDEX = await window.FirebaseSync.fetchAcademicIndex() || {};
         }
     }
 
-    const data = window.TRANSLATION_DATA;
+    const data = (window.ACADEMIC_INDEX && window.ACADEMIC_INDEX.translation) || [];
     const dirFilter = document.getElementById('trans-dir-filter')?.value || 'all';
     const lvlFilter = document.getElementById('trans-level-filter')?.value || 'all';
     let filtered = [...data];
     if (dirFilter !== 'all') filtered = filtered.filter(t => t.dir === dirFilter);
     if (lvlFilter !== 'all') filtered = filtered.filter(t => t.level === lvlFilter);
     
-    // Trộn ngẫu nhiên câu dịch
+    // Trộn ngẫu nhiên các phần tử Index câu dịch để giữ tính tươi mới
     for (let i = filtered.length - 1; i > 0; i--) { 
         const j = Math.floor(Math.random() * (i + 1)); 
         [filtered[i], filtered[j]] = [filtered[j], filtered[i]]; 
@@ -436,25 +421,50 @@ async function initTranslation() {
     renderTranslationCard();
 }
 
-function renderTranslationCard() {
+async function renderTranslationCard() {
     const card = document.getElementById('translation-card');
     if (!card) return;
     if (transState.deck.length === 0) {
         card.innerHTML = '<p style="text-align:center;color:var(--text-secondary);padding:40px;">Không có đoạn dịch nào phù hợp. Hãy chọn bộ lọc khác.</p>';
         return;
     }
-    const item = transState.deck[transState.idx];
-    document.getElementById('trans-dir-badge').textContent = item.dir === 'en-vi' ? 'Anh → Việt' : 'Việt → Anh';
-    document.getElementById('trans-level-badge').textContent = item.level;
-    document.getElementById('trans-source').textContent = item.source;
+    
+    const cardIndex = transState.idx;
+    const indexItem = transState.deck[cardIndex];
+    
+    // Hiển thị trạng thái tải tạm thời trong khung câu hỏi
+    const sourceEl = document.getElementById('trans-source');
+    if (sourceEl) sourceEl.textContent = 'Đang tải câu dịch...';
     document.getElementById('trans-hints').innerHTML = '';
     document.getElementById('trans-input').value = '';
     document.getElementById('trans-feedback').classList.add('hidden');
     document.getElementById('trans-feedback').className = 'trans-feedback hidden';
     document.getElementById('btn-trans-check').classList.remove('hidden');
     document.getElementById('btn-trans-next').classList.add('hidden');
-    const progress = ((transState.idx) / transState.deck.length) * 100;
+    
+    // Đổ các thông số siêu dữ liệu (Metadata) từ Index lên UI
+    document.getElementById('trans-dir-badge').textContent = indexItem.dir === 'en-vi' ? 'Anh → Việt' : 'Việt → Anh';
+    document.getElementById('trans-level-badge').textContent = indexItem.level;
+    
+    const progress = (cardIndex / transState.deck.length) * 100;
     document.getElementById('trans-progress-fill').style.width = progress + '%';
+    
+    // Tải chi tiết câu dịch bất đồng bộ on-demand (Cache-first)
+    if (!indexItem.source) {
+        try {
+            const payload = await LearningDB.getTranslationPayload(indexItem.id);
+            // Kiểm tra race-condition nếu chuyển bài quá nhanh
+            if (transState.idx === cardIndex && payload) {
+                Object.assign(indexItem, payload);
+                if (sourceEl) sourceEl.textContent = payload.source;
+            }
+        } catch (e) {
+            console.error("Lỗi khi tải chi tiết câu dịch:", e);
+            if (sourceEl) sourceEl.textContent = "Không thể tải câu dịch. Vui lòng kiểm tra mạng!";
+        }
+    } else {
+        if (sourceEl) sourceEl.textContent = indexItem.source;
+    }
 }
 
 function checkTranslation() {

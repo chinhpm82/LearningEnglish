@@ -46,34 +46,19 @@ document.getElementById('btn-sub-trans-long')?.addEventListener('click', () => {
 const longTransState = { deck: [], idx: 0, hintsShown: 0 };
 
 async function initLongTranslation() {
-    const card = document.getElementById('trans-long-card');
-    
-    // Tải lười dữ liệu LONG_TRANSLATION_DATA nếu mảng rỗng
-    if (!window.LONG_TRANSLATION_DATA || window.LONG_TRANSLATION_DATA.length === 0) {
-        if (card) {
-            card.innerHTML = `
-                <div class="loading-spinner-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; color: var(--text-muted); width: 100%;">
-                    <div class="spinner"></div>
-                    <p style="font-size:13px; margin-top:10px;">Đang tải dữ liệu dịch đoạn văn...</p>
-                </div>`;
-        }
+    // Nếu chưa có academic index, tải ngay lập tức
+    if (!window.ACADEMIC_INDEX || !window.ACADEMIC_INDEX.long_translation) {
         if (window.FirebaseSync) {
-            window.LONG_TRANSLATION_DATA = await window.FirebaseSync.fetchAcademicLongTranslation() || [];
-        }
-        if (!window.LONG_TRANSLATION_DATA || window.LONG_TRANSLATION_DATA.length === 0) {
-            if (card) {
-                card.innerHTML = '<p style="padding: 20px; color: var(--text-muted); text-align: center;">Không thể tải dữ liệu dịch đoạn văn. Vui lòng kiểm tra mạng!</p>';
-            }
-            return;
+            window.ACADEMIC_INDEX = await window.FirebaseSync.fetchAcademicIndex() || {};
         }
     }
 
-    const data = window.LONG_TRANSLATION_DATA;
+    const data = (window.ACADEMIC_INDEX && window.ACADEMIC_INDEX.long_translation) || [];
     const dirFilter = document.getElementById('trans-long-dir-filter')?.value || 'all';
     let filtered = [...data];
     if (dirFilter !== 'all') filtered = filtered.filter(t => t.dir === dirFilter);
     
-    // Trộn ngẫu nhiên đoạn văn dịch
+    // Trộn ngẫu nhiên các phần tử Index đoạn văn dịch để giữ tính tươi mới
     for (let i = filtered.length - 1; i > 0; i--) { 
         const j = Math.floor(Math.random() * (i + 1)); 
         [filtered[i], filtered[j]] = [filtered[j], filtered[i]]; 
@@ -85,18 +70,22 @@ async function initLongTranslation() {
     renderLongTranslationCard();
 }
 
-function renderLongTranslationCard() {
+async function renderLongTranslationCard() {
     const card = document.getElementById('trans-long-card');
     if (!card) return;
     if (longTransState.deck.length === 0) {
         card.innerHTML = '<p style="text-align:center;color:var(--text-secondary);padding:40px;">Không có đoạn văn nào phù hợp. Hãy chọn bộ lọc khác.</p>';
         return;
     }
-    const item = longTransState.deck[longTransState.idx];
-    document.getElementById('trans-long-dir-badge').textContent = item.dir === 'en-vi' ? 'Anh → Việt' : 'Việt → Anh';
-    document.getElementById('trans-long-level-badge').textContent = item.level;
-    document.getElementById('trans-long-title').textContent = item.title;
-    document.getElementById('trans-long-source').textContent = item.source;
+    
+    const cardIndex = longTransState.idx;
+    const indexItem = longTransState.deck[cardIndex];
+    
+    // Hiển thị trạng thái tải tạm thời trên UI
+    document.getElementById('trans-long-title').textContent = indexItem.title || 'Đang tải...';
+    const sourceEl = document.getElementById('trans-long-source');
+    if (sourceEl) sourceEl.textContent = 'Đang tải nội dung đoạn văn...';
+    
     document.getElementById('trans-long-hints').innerHTML = '';
     document.getElementById('trans-long-input').value = '';
     document.getElementById('trans-long-feedback').classList.add('hidden');
@@ -104,6 +93,29 @@ function renderLongTranslationCard() {
     document.getElementById('btn-trans-long-next').classList.add('hidden');
     document.getElementById('trans-long-word-count').textContent = '0 từ';
     longTransState.hintsShown = 0;
+    
+    // Đổ siêu dữ liệu (Metadata) từ Index lên UI
+    document.getElementById('trans-long-dir-badge').textContent = indexItem.dir === 'en-vi' ? 'Anh → Việt' : 'Việt → Anh';
+    document.getElementById('trans-long-level-badge').textContent = indexItem.level;
+    
+    // Tải chi tiết đoạn văn bất đồng bộ on-demand (Cache-first)
+    if (!indexItem.source) {
+        try {
+            const payload = await LearningDB.getLongTranslationPayload(indexItem.id);
+            // Kiểm tra race-condition nếu người dùng chuyển bài quá nhanh
+            if (longTransState.idx === cardIndex && payload) {
+                Object.assign(indexItem, payload);
+                document.getElementById('trans-long-title').textContent = payload.title;
+                if (sourceEl) sourceEl.textContent = payload.source;
+            }
+        } catch (e) {
+            console.error("Lỗi khi tải chi tiết đoạn văn dịch:", e);
+            if (sourceEl) sourceEl.textContent = "Không thể tải đoạn văn. Vui lòng kiểm tra mạng!";
+        }
+    } else {
+        document.getElementById('trans-long-title').textContent = indexItem.title;
+        if (sourceEl) sourceEl.textContent = indexItem.source;
+    }
 }
 
 function checkLongTranslation() {
