@@ -454,17 +454,7 @@ function initApp() {
     // 7. Quiz Interactions
     document.getElementById('btn-start-quiz').addEventListener('click', () => {
         const cat = document.getElementById('quiz-category-select').value;
-        if (cat === 'assessment') {
-            const modal = document.getElementById('placement-test-modal');
-            if (modal) {
-                modal.classList.remove('hidden');
-                document.getElementById('placement-intro-screen').classList.remove('hidden');
-                document.getElementById('placement-quiz-screen').classList.add('hidden');
-                document.getElementById('placement-result-screen').classList.add('hidden');
-            }
-        } else {
-            initQuizSession(cat);
-        }
+        initQuizSession(cat);
     });
 
     document.getElementById('btn-quiz-next').addEventListener('click', handleQuizNext);
@@ -476,6 +466,15 @@ function initApp() {
 
     document.getElementById('btn-quiz-go-dashboard').addEventListener('click', () => {
         document.getElementById('btn-dashboard').click();
+    });
+
+    document.getElementById('btn-quiz-go-home').addEventListener('click', () => {
+        const resultState = document.getElementById('quiz-result-state');
+        const activeState = document.getElementById('quiz-active-state');
+        const introState = document.getElementById('quiz-intro-state');
+        if (resultState) resultState.classList.add('hidden');
+        if (activeState) activeState.classList.add('hidden');
+        if (introState) introState.classList.remove('hidden');
     });
 
     // 8. Sentence category filtering
