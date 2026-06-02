@@ -12,7 +12,8 @@
       "A report on the fifteen percent engagement drop."
     ],
     "answer": 1,
-    "explanation": "Giám đốc Marketing yêu cầu 'I want a detailed proposal by next Wednesday' (Tôi cần bản đề xuất chi tiết trước thứ Tư tuần sau)."
+    "explanation": "Giám đốc Marketing yêu cầu 'I want a detailed proposal by next Wednesday' (Tôi cần bản đề xuất chi tiết trước thứ Tư tuần sau).",
+    "audioUrl": "audio/listening/pl-l-b2-001.mp3"
   },
   {
     "id": "pl-l-b2-002",
@@ -27,7 +28,8 @@
       "Twelve major Asian cities have completely eliminated air pollution."
     ],
     "answer": 2,
-    "explanation": "Nghiên cứu cho thấy 'cities investing in urban green spaces see a twenty percent reduction in air pollution within five years' (giảm 20% ô nhiễm trong 5 năm)."
+    "explanation": "Nghiên cứu cho thấy 'cities investing in urban green spaces see a twenty percent reduction in air pollution within five years' (giảm 20% ô nhiễm trong 5 năm).",
+    "audioUrl": "audio/listening/pl-l-b2-002.mp3"
   },
   {
     "id": "pl-l-b2-003",
@@ -42,7 +44,8 @@
       "The colors do not match their brand guidelines."
     ],
     "answer": 1,
-    "explanation": "Khách hàng lo ngại về 'the user interface being too cluttered' (giao diện người dùng quá rối rắm)."
+    "explanation": "Khách hàng lo ngại về 'the user interface being too cluttered' (giao diện người dùng quá rối rắm).",
+    "audioUrl": "audio/listening/pl-l-b2-003.mp3"
   },
   {
     "id": "pl-l-b2-004",
@@ -57,7 +60,8 @@
       "Communicating with team members in different time zones."
     ],
     "answer": 2,
-    "explanation": "Chuyên gia nói thách thức lớn nhất là 'maintaining a healthy work-life boundary' (duy trì ranh giới cân bằng công việc-cuộc sống)."
+    "explanation": "Chuyên gia nói thách thức lớn nhất là 'maintaining a healthy work-life boundary' (duy trì ranh giới cân bằng công việc-cuộc sống).",
+    "audioUrl": "audio/listening/pl-l-b2-004.mp3"
   },
   {
     "id": "pl-l-b2-005",
@@ -72,6 +76,7 @@
       "A free meal voucher for the company cafeteria."
     ],
     "answer": 2,
-    "explanation": "Thông báo nói 'Employees who participate will receive a ten percent discount on their monthly health insurance premium' (giảm 10% phí bảo hiểm sức khỏe hàng tháng)."
+    "explanation": "Thông báo nói 'Employees who participate will receive a ten percent discount on their monthly health insurance premium' (giảm 10% phí bảo hiểm sức khỏe hàng tháng).",
+    "audioUrl": "audio/listening/pl-l-b2-005.mp3"
   }
 ]

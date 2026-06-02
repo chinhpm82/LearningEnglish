@@ -12,7 +12,8 @@
       "He is a driver."
     ],
     "answer": 1,
-    "explanation": "Đoạn nghe nói rõ 'I am a student' (Tôi là học sinh)."
+    "explanation": "Đoạn nghe nói rõ 'I am a student' (Tôi là học sinh).",
+    "audioUrl": "audio/listening/pl-l-a1-001.mp3"
   },
   {
     "id": "pl-l-a1-002",
@@ -27,7 +28,8 @@
       "On the table."
     ],
     "answer": 2,
-    "explanation": "Đoạn nghe nói 'She likes to sleep on my bed' (Cô ấy thích ngủ trên giường)."
+    "explanation": "Đoạn nghe nói 'She likes to sleep on my bed' (Cô ấy thích ngủ trên giường).",
+    "audioUrl": "audio/listening/pl-l-a1-002.mp3"
   },
   {
     "id": "pl-l-a1-003",
@@ -42,7 +44,8 @@
       "Friday"
     ],
     "answer": 2,
-    "explanation": "Đoạn nghe bắt đầu bằng 'Today is Monday' (Hôm nay là thứ Hai)."
+    "explanation": "Đoạn nghe bắt đầu bằng 'Today is Monday' (Hôm nay là thứ Hai).",
+    "audioUrl": "audio/listening/pl-l-a1-003.mp3"
   },
   {
     "id": "pl-l-a1-004",
@@ -57,7 +60,8 @@
       "Next to the park."
     ],
     "answer": 1,
-    "explanation": "Đoạn nghe nói 'It is next to the bank' (Nó ở cạnh ngân hàng)."
+    "explanation": "Đoạn nghe nói 'It is next to the bank' (Nó ở cạnh ngân hàng).",
+    "audioUrl": "audio/listening/pl-l-a1-004.mp3"
   },
   {
     "id": "pl-l-a1-005",
@@ -72,6 +76,7 @@
       "Pancakes and juice."
     ],
     "answer": 1,
-    "explanation": "Đoạn nghe nói 'She makes eggs and toast' (Mẹ làm trứng và bánh mì nướng)."
+    "explanation": "Đoạn nghe nói 'She makes eggs and toast' (Mẹ làm trứng và bánh mì nướng).",
+    "audioUrl": "audio/listening/pl-l-a1-005.mp3"
   }
 ]

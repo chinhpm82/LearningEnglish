@@ -12,7 +12,8 @@
       "Ask his friend for a recommendation."
     ],
     "answer": 1,
-    "explanation": "Người đàn ông nói 'I will book it tonight' (Tôi sẽ đặt phòng tối nay), 'it' ở đây chỉ beachfront hotel."
+    "explanation": "Người đàn ông nói 'I will book it tonight' (Tôi sẽ đặt phòng tối nay), 'it' ở đây chỉ beachfront hotel.",
+    "audioUrl": "audio/listening/pl-l-b1-001.mp3"
   },
   {
     "id": "pl-l-b1-002",
@@ -27,7 +28,8 @@
       "The quarterly budget review."
     ],
     "answer": 1,
-    "explanation": "Nhân viên nói 'I have finished the data analysis' (Tôi đã hoàn thành phân tích dữ liệu)."
+    "explanation": "Nhân viên nói 'I have finished the data analysis' (Tôi đã hoàn thành phân tích dữ liệu).",
+    "audioUrl": "audio/listening/pl-l-b1-002.mp3"
   },
   {
     "id": "pl-l-b1-003",
@@ -42,7 +44,8 @@
       "One tablet three times a day with water."
     ],
     "answer": 2,
-    "explanation": "Bác sĩ chỉ dẫn 'Take one tablet twice a day after meals' (Uống 1 viên 2 lần/ngày sau bữa ăn)."
+    "explanation": "Bác sĩ chỉ dẫn 'Take one tablet twice a day after meals' (Uống 1 viên 2 lần/ngày sau bữa ăn).",
+    "audioUrl": "audio/listening/pl-l-b1-003.mp3"
   },
   {
     "id": "pl-l-b1-004",
@@ -57,7 +60,8 @@
       "Five dollars and a reference letter."
     ],
     "answer": 1,
-    "explanation": "Nhân viên nói 'You will need to bring your old card and a photo ID' (Bạn cần mang thẻ cũ và giấy tờ có ảnh)."
+    "explanation": "Nhân viên nói 'You will need to bring your old card and a photo ID' (Bạn cần mang thẻ cũ và giấy tờ có ảnh).",
+    "audioUrl": "audio/listening/pl-l-b1-004.mp3"
   },
   {
     "id": "pl-l-b1-005",
@@ -72,6 +76,7 @@
       "Because the runway is under construction."
     ],
     "answer": 2,
-    "explanation": "Thông báo nói 'Due to severe weather conditions' (Do điều kiện thời tiết khắc nghiệt)."
+    "explanation": "Thông báo nói 'Due to severe weather conditions' (Do điều kiện thời tiết khắc nghiệt).",
+    "audioUrl": "audio/listening/pl-l-b1-005.mp3"
   }
 ]

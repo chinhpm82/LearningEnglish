@@ -311,7 +311,16 @@ function showPlacementQuestion() {
         playBtn.parentNode.replaceChild(newPlayBtn, playBtn);
         newPlayBtn.addEventListener('click', () => {
             if (placementListeningPlayCount < PLACEMENT_MAX_PLAYS) {
-                speakEnglish(q.audioText);
+                if (q.audioUrl) {
+                    if (window.currentPlacementAudio) {
+                        window.currentPlacementAudio.pause();
+                        window.currentPlacementAudio.currentTime = 0;
+                    }
+                    window.currentPlacementAudio = new Audio(q.audioUrl);
+                    window.currentPlacementAudio.play();
+                } else {
+                    speakEnglish(q.audioText);
+                }
                 placementListeningPlayCount++;
                 const remaining = PLACEMENT_MAX_PLAYS - placementListeningPlayCount;
                 const remEl = document.getElementById('placement-play-remaining');
@@ -356,6 +365,10 @@ function showPlacementQuestion() {
 }
 
 function submitPlacementAnswer(selectedIdx) {
+    if (window.currentPlacementAudio) {
+        window.currentPlacementAudio.pause();
+        window.currentPlacementAudio.currentTime = 0;
+    }
     const ts = placementTestState;
     const q = ts.questions[ts.questionIndex];
     const isCorrect = selectedIdx === q.answer;

@@ -12,7 +12,8 @@
       "Walk behind the shopping mall."
     ],
     "answer": 1,
-    "explanation": "Đoạn nghe chỉ đường: 'Go straight ahead for two blocks, then turn right' (Đi thẳng 2 khối nhà rồi rẽ phải)."
+    "explanation": "Đoạn nghe chỉ đường: 'Go straight ahead for two blocks, then turn right' (Đi thẳng 2 khối nhà rồi rẽ phải).",
+    "audioUrl": "audio/listening/pl-l-a2-001.mp3"
   },
   {
     "id": "pl-l-a2-002",
@@ -27,7 +28,8 @@
       "At eight thirty."
     ],
     "answer": 3,
-    "explanation": "Đoạn nghe nói 'I leave for work at eight thirty' (Tôi đi làm lúc 8:30)."
+    "explanation": "Đoạn nghe nói 'I leave for work at eight thirty' (Tôi đi làm lúc 8:30).",
+    "audioUrl": "audio/listening/pl-l-a2-002.mp3"
   },
   {
     "id": "pl-l-a2-003",
@@ -42,7 +44,8 @@
       "Fifteen dollars."
     ],
     "answer": 2,
-    "explanation": "Đoạn nghe nói giá món đặc biệt là 'twelve dollars' (12 đô la)."
+    "explanation": "Đoạn nghe nói giá món đặc biệt là 'twelve dollars' (12 đô la).",
+    "audioUrl": "audio/listening/pl-l-a2-003.mp3"
   },
   {
     "id": "pl-l-a2-004",
@@ -57,7 +60,8 @@
       "They rode bicycles along the road."
     ],
     "answer": 1,
-    "explanation": "Đoạn nghe kể 'We played in the sand and swam in the sea' (Chúng tôi chơi trên cát và bơi ở biển)."
+    "explanation": "Đoạn nghe kể 'We played in the sand and swam in the sea' (Chúng tôi chơi trên cát và bơi ở biển).",
+    "audioUrl": "audio/listening/pl-l-a2-004.mp3"
   },
   {
     "id": "pl-l-a2-005",
@@ -72,6 +76,7 @@
       "Saturday at twelve p.m."
     ],
     "answer": 1,
-    "explanation": "Đoạn nghe nói 'my birthday party on Saturday at three p.m.' (tiệc sinh nhật thứ Bảy lúc 3 giờ chiều)."
+    "explanation": "Đoạn nghe nói 'my birthday party on Saturday at three p.m.' (tiệc sinh nhật thứ Bảy lúc 3 giờ chiều).",
+    "audioUrl": "audio/listening/pl-l-a2-005.mp3"
   }
 ]
