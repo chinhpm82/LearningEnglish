@@ -10,23 +10,13 @@ Tài liệu này tổng hợp toàn bộ các điều kiện then chốt, quy t�
 
 ## 1. QUY ĐỊNH VỀ CÁCH TÍNH ĐIỂM ĐỐI VỚI CÁC BÀI KIỂM TRA ĐÁNH GIÁ, TRẮC NGHIỆM
 
-### A. Bài Kiểm Tra Đánh Giá Đầu Vào (CEFR Entrance Placement Test)
-*   **Cấu trúc đề:** Gồm đúng **16 câu hỏi trắc nghiệm khách quan** được lưu trữ trong `PLACEMENT_QUESTIONS` (`data/placement-questions.js`), chia đều làm 4 phần kỹ năng cốt lõi (mỗi phần 4 câu):
-    1.  `grammar` (Ngữ pháp): Câu hỏi từ `pq-g1` đến `pq-g4`.
-    2.  `vocabulary` (Từ vựng): Câu hỏi từ `pq-v1` đến `pq-v4`.
-    3.  `reading` (Đọc hiểu): Câu hỏi từ `pq-r1` đến `pq-r4`.
-    4.  `listening` (Nghe phản xạ): Câu hỏi từ `pq-l1` đến `pq-l4`.
-*   **Cách chấm điểm:** 
-    *   Mỗi câu trả lời đúng được tính **1 điểm**. Tổng điểm tối đa là **16 điểm**.
-    *   Hệ thống lưu trữ chi tiết điểm số của từng kỹ năng vào `state.placementStats` để vẽ biểu đồ năng lực học viên trên Dashboard:
-        ```javascript
-        state.placementStats = {
-            grammar: grammarCorrect,   // Tối đa 4
-            reading: readingCorrect,   // Tối đa 4
-            vocab: vocabCorrect,       // Tối đa 4 (Vocabulary)
-            listening: listeningCorrect // Tối đa 4 (Listening)
-        };
-        ```
+### A. Bài Kiểm Tra Đánh Giá Đầu Vào (CEFR Entrance Placement Test - Adaptive)
+*   **Cấu trúc đề:** Sử dụng **Thuật toán kiểm tra thích ứng (Multi-stage Adaptive Test)** gồm 3 vòng (Phases) với tổng cộng 8-12 câu hỏi trắc nghiệm khách quan.
+*   **Ngân hàng câu hỏi:** Tải tự động từ dữ liệu JSON theo từng kỹ năng (`Listening`, `Reading`, `Grammar/Vocabulary`, `Writing`) và theo từng cấp độ CEFR (A1-C2) tại thư mục `json/placement/`.
+*   **Cách chấm điểm và phân cấp:** 
+    *   **Điểm tổng hợp (Final Percentage):** Là sự kết hợp trung bình giữa **Điểm trọng số** (Weighted Score: Listening 30%, Reading 30%, Grammar 20%, Writing 20%) và **Điểm tỷ lệ thực tế** (Raw Accuracy = Số câu đúng / Tổng số câu đã làm). Sự kết hợp này giúp ngăn chặn việc đoán lụi 1 câu được 100% kỹ năng.
+    *   **Điều kiện chặn (Capping):** Để đạt các mức độ cao như B2, C1, C2, học viên bắt buộc phải trả lời đúng ít nhất 2 câu ở mức độ đó, nhằm loại bỏ yếu tố may mắn khi đoán mò.
+    *   Hệ thống lưu trữ chi tiết điểm số của từng kỹ năng vào `state.placementStats` để vẽ biểu đồ năng lực học viên trên Dashboard.
 
 ### B. Bài Trắc Nghiệm Từ Vựng Thông Thường (Vocabulary Quiz)
 *   **Cấu trúc:** Mặc định gồm **10 câu hỏi ngẫu nhiên** được lấy từ danh mục từ vựng tương ứng.

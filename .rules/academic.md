@@ -85,7 +85,13 @@ Cách này giúp giảm thời gian làm bài, tiết kiệm thời gian cho h�
     *   **Nhóm 2 (Đúng 40% - 75%):** Tiếp tục lộ trình trung bình (test sâu hơn ở mức A2 và B1) để tìm nút thắt.
     *   **Nhóm 3 (Đúng < 40%):** Đánh giá mất gốc/yếu. Tự động hạ xuống toàn bộ câu hỏi dễ mức A1 và A2.
 3.  **Vòng 3: Chốt trình độ:**
-    Tính toán tỷ lệ chính xác trên tổng số câu khó/dễ đã làm để đưa ra kết luận (VD: Đạt B2 Nghe nhưng chỉ A2 Ngữ pháp).
+    Tính toán tỷ lệ chính xác kết hợp (Final Percentage) giữa điểm trọng số và tỷ lệ đúng thực tế để đưa ra kết luận. Đồng thời áp dụng cơ chế chặn cấp độ (Capping) – học viên phải trả lời đúng ít nhất 2 câu ở mức độ khó (B2/C1/C2) mới được xếp vào các hạng này, ngăn chặn triệt để tình trạng đoán lụi ăn điểm.
+    *   **≥ 80% (Có >= 2 câu C2):** C2
+    *   **≥ 70% (Có >= 2 câu C1/C2):** C1
+    *   **≥ 60% (Có >= 2 câu B2/C1/C2):** B2
+    *   **≥ 45%:** B1
+    *   **≥ 30%:** A2
+    *   **< 30%:** A1
 
 ---
 

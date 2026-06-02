@@ -255,14 +255,14 @@ function calculateCEFR(testState) {
 
 ### 5.3 Ma trận quy đổi CEFR cuối cùng
 
-| Weighted Score | Level câu khó nhất đúng | Trình độ CEFR |
-|:---:|:---:|:---:|
-| ≥ 85% | C1/C2 | **C2 - Thành thạo** |
-| ≥ 75% | C1/C2 | **C1 - Cao cấp** |
-| ≥ 65% | B2/C1 | **B2 - Trung cấp cao** |
-| ≥ 55% | B1/B2 | **B1 - Trung cấp** |
-| ≥ 45% | A2/B1 | **A2 - Sơ cấp cao** |
-| < 45% | A1/A2 | **A1 - Sơ cấp** |
+| Final Percentage (Blended) | Điều kiện chặn cấp độ (Capping) | Trình độ CEFR |
+|:---:|:---|:---:|
+| ≥ 80% | Đã trả lời đúng ít nhất 2 câu C2 | **C2 - Thành thạo** |
+| ≥ 70% | Đã trả lời đúng ít nhất 2 câu C1/C2 | **C1 - Cao cấp** |
+| ≥ 60% | Đã trả lời đúng ít nhất 2 câu B2/C1/C2 | **B2 - Trung cấp cao** |
+| ≥ 45% | Không yêu cầu chặn | **B1 - Trung cấp** |
+| ≥ 30% | Không yêu cầu chặn | **A2 - Sơ cấp cao** |
+| < 30% | Không yêu cầu chặn | **A1 - Sơ cấp** |
 
 ### 5.4 Dữ liệu lưu trữ (Firestore)
 
