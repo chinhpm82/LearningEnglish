@@ -1,0 +1,77 @@
+[
+  {
+    "id": "pl-l-c1-001",
+    "skill": "listening",
+    "level": "C1",
+    "audioText": "In recent years, the concept of circular economy has gained significant traction among policymakers and corporate leaders alike. Unlike the traditional linear model of take, make, and dispose, the circular economy emphasizes designing products for longevity, reuse, and recyclability. A landmark study by the Ellen MacArthur Foundation estimated that transitioning to circular practices could generate four point five trillion dollars in economic benefits by twenty thirty. However, critics argue that the implementation costs and the need for systemic infrastructure changes remain prohibitively high for developing nations.",
+    "question": "What can be inferred about the speaker's attitude toward the circular economy?",
+    "options": [
+      "The speaker is entirely against the circular economy concept.",
+      "The speaker presents it as promising but acknowledges significant implementation barriers.",
+      "The speaker believes developing nations should adopt it immediately without any preparation.",
+      "The speaker thinks the traditional linear model is superior in every way."
+    ],
+    "answer": 1,
+    "explanation": "Người nói trình bày lợi ích (4.5 nghìn tỷ USD) nhưng cũng đề cập rào cản ('prohibitively high for developing nations'), thể hiện thái độ cân bằng: đầy hứa hẹn nhưng có thách thức lớn."
+  },
+  {
+    "id": "pl-l-c1-002",
+    "skill": "listening",
+    "level": "C1",
+    "audioText": "Ladies and gentlemen, today I want to challenge a widely held assumption in educational psychology. For decades, we have operated under the belief that learning styles, whether visual, auditory, or kinesthetic, are fixed traits that determine how individuals best absorb information. However, a comprehensive meta-analysis published in Psychological Science in the Public Interest concluded that there is virtually no empirical evidence supporting the matching hypothesis. In other words, tailoring instruction to a student's supposed learning style does not produce measurably better outcomes than a well-designed, multimodal teaching approach.",
+    "question": "What is the speaker's main argument?",
+    "options": [
+      "Teachers should always use visual aids because most students are visual learners.",
+      "The concept of fixed learning styles lacks strong scientific evidence.",
+      "Auditory learners perform significantly better in language classes.",
+      "Educational psychology has not evolved in the past century."
+    ],
+    "answer": 1,
+    "explanation": "Diễn giả phản bác quan niệm về learning styles cố định, trích dẫn nghiên cứu cho thấy 'virtually no empirical evidence' (hầu như không có bằng chứng thực nghiệm)."
+  },
+  {
+    "id": "pl-l-c1-003",
+    "skill": "listening",
+    "level": "C1",
+    "audioText": "The geopolitical ramifications of the semiconductor shortage have been profound. Taiwan Semiconductor Manufacturing Company, which produces roughly sixty percent of the world's advanced chips, has become a focal point of international strategic competition. The United States has responded with the CHIPS Act, allocating fifty-two billion dollars to boost domestic semiconductor production. Meanwhile, the European Union has unveiled its own European Chips Act with a forty-three billion euro investment target. These moves signal a paradigm shift away from globalized supply chains toward regional self-sufficiency in critical technologies.",
+    "question": "According to the speaker, what do the CHIPS Act and European Chips Act signify?",
+    "options": [
+      "A complete ban on semiconductor imports from Taiwan.",
+      "A shift toward regional self-sufficiency in critical technology supply chains.",
+      "A collaborative global effort to increase Taiwan's chip production capacity.",
+      "A reduction in government spending on technology research."
+    ],
+    "answer": 1,
+    "explanation": "Người nói kết luận rằng các đạo luật này 'signal a paradigm shift away from globalized supply chains toward regional self-sufficiency' (chuyển dịch từ chuỗi cung ứng toàn cầu sang tự chủ khu vực)."
+  },
+  {
+    "id": "pl-l-c1-004",
+    "skill": "listening",
+    "level": "C1",
+    "audioText": "What fascinates me most about neuroplasticity is how it overturns the old dogma that the adult brain is essentially fixed after a certain age. We now know that the brain continues to form new neural connections throughout life. A striking example comes from research on London taxi drivers. Brain scans revealed that their hippocampi, the region associated with spatial memory, were significantly larger than those of bus drivers who follow predetermined routes. This suggests that sustained cognitive engagement and environmental demands can literally reshape brain architecture.",
+    "question": "Why were London taxi drivers specifically mentioned in the talk?",
+    "options": [
+      "To prove that driving a taxi is more stressful than driving a bus.",
+      "To demonstrate that cognitive demands can physically alter brain structure.",
+      "To argue that bus drivers should also study complex routes.",
+      "To show that only young people can develop new neural connections."
+    ],
+    "answer": 1,
+    "explanation": "Ví dụ về taxi drivers London được dùng để minh chứng 'sustained cognitive engagement can literally reshape brain architecture' (hoạt động nhận thức bền vững có thể thay đổi cấu trúc não bộ)."
+  },
+  {
+    "id": "pl-l-c1-005",
+    "skill": "listening",
+    "level": "C1",
+    "audioText": "The paradox of choice, a term coined by psychologist Barry Schwartz, posits that while modern consumers enjoy unprecedented freedom of selection, this abundance often leads to decision paralysis, anxiety, and diminished satisfaction. Consider the average supermarket, which stocks over forty thousand products. Schwartz's research demonstrated that when participants were offered thirty varieties of jam at a tasting booth, they were significantly less likely to make a purchase compared to those offered only six varieties. The implication is counterintuitive: reducing options can actually enhance consumer well-being.",
+    "question": "What is the 'paradox of choice' as described by the speaker?",
+    "options": [
+      "People always prefer the cheapest option regardless of quality.",
+      "Having too many choices can lead to anxiety and lower satisfaction rather than greater happiness.",
+      "Supermarkets should stock more than forty thousand products to increase sales.",
+      "Consumers are happiest when they have no choices at all."
+    ],
+    "answer": 1,
+    "explanation": "Nghịch lý lựa chọn: dù có nhiều sự lựa chọn hơn, điều này lại dẫn đến 'decision paralysis, anxiety, and diminished satisfaction' (tê liệt quyết định, lo lắng, giảm hài lòng)."
+  }
+]

@@ -1,0 +1,77 @@
+[
+  {
+    "id": "pl-l-b2-001",
+    "skill": "listening",
+    "level": "B2",
+    "audioText": "Marketing Director: Our social media engagement has dropped by fifteen percent this quarter. I believe we need to rethink our content strategy entirely. Assistant: What about collaborating with local influencers? Their audiences tend to be more engaged and loyal. Marketing Director: That is an interesting approach. Let us schedule a meeting with the creative team to brainstorm a pilot campaign. I want a detailed proposal by next Wednesday.",
+    "question": "What does the Marketing Director want by next Wednesday?",
+    "options": [
+      "A list of popular social media influencers.",
+      "A detailed proposal for a pilot campaign.",
+      "A complete social media content calendar.",
+      "A report on the fifteen percent engagement drop."
+    ],
+    "answer": 1,
+    "explanation": "Giám đốc Marketing yêu cầu 'I want a detailed proposal by next Wednesday' (Tôi cần bản đề xuất chi tiết trước thứ Tư tuần sau)."
+  },
+  {
+    "id": "pl-l-b2-002",
+    "skill": "listening",
+    "level": "B2",
+    "audioText": "Good evening, and welcome to tonight's panel discussion on sustainable urban development. Our guest speaker, Professor Chen, has spent over two decades researching how cities can balance economic growth with environmental protection. Tonight, she will share findings from her latest study, which examined green infrastructure projects in twelve major Asian cities. Her research suggests that cities investing in urban green spaces see a twenty percent reduction in air pollution within five years.",
+    "question": "What is the main finding of Professor Chen's latest study?",
+    "options": [
+      "Urban green spaces attract more tourists to Asian cities.",
+      "Economic growth always conflicts with environmental protection.",
+      "Cities investing in green spaces reduce air pollution by twenty percent in five years.",
+      "Twelve major Asian cities have completely eliminated air pollution."
+    ],
+    "answer": 2,
+    "explanation": "Nghiên cứu cho thấy 'cities investing in urban green spaces see a twenty percent reduction in air pollution within five years' (giảm 20% ô nhiễm trong 5 năm)."
+  },
+  {
+    "id": "pl-l-b2-003",
+    "skill": "listening",
+    "level": "B2",
+    "audioText": "Team Leader: I have reviewed the client's feedback on our prototype. They are generally satisfied with the functionality, but they have raised concerns about the user interface being too cluttered. Developer: Should we simplify the navigation menu and reduce the number of options on the main screen? Team Leader: Exactly. Also, they specifically requested larger font sizes for accessibility. Let us prioritize these changes before the next demo on Friday.",
+    "question": "What is the client's main concern about the prototype?",
+    "options": [
+      "The functionality does not work properly.",
+      "The user interface is too cluttered.",
+      "The prototype is too slow to load.",
+      "The colors do not match their brand guidelines."
+    ],
+    "answer": 1,
+    "explanation": "Khách hàng lo ngại về 'the user interface being too cluttered' (giao diện người dùng quá rối rắm)."
+  },
+  {
+    "id": "pl-l-b2-004",
+    "skill": "listening",
+    "level": "B2",
+    "audioText": "Interviewer: What would you say is the biggest challenge facing remote workers today? Expert: Surprisingly, it is not the technology. Most people are comfortable with video conferencing and collaboration tools. The real challenge is maintaining a healthy work-life boundary. When your office is your living room, it becomes incredibly difficult to switch off at the end of the day. Many remote workers report working longer hours and experiencing higher levels of burnout compared to their office-based counterparts.",
+    "question": "According to the expert, what is the biggest challenge for remote workers?",
+    "options": [
+      "Using technology effectively for video calls.",
+      "Finding a quiet space to work from home.",
+      "Maintaining a healthy work-life boundary.",
+      "Communicating with team members in different time zones."
+    ],
+    "answer": 2,
+    "explanation": "Chuyên gia nói thách thức lớn nhất là 'maintaining a healthy work-life boundary' (duy trì ranh giới cân bằng công việc-cuộc sống)."
+  },
+  {
+    "id": "pl-l-b2-005",
+    "skill": "listening",
+    "level": "B2",
+    "audioText": "Attention all employees. This is a reminder that the company's annual health screening will take place next Monday and Tuesday in Conference Room A. Appointments are available from eight a.m. to four p.m. on both days. The screening includes a blood test, blood pressure check, and BMI measurement. Employees who participate will receive a ten percent discount on their monthly health insurance premium. Please sign up through the HR portal by this Friday.",
+    "question": "What benefit do participating employees receive?",
+    "options": [
+      "A free gym membership for three months.",
+      "An extra day of paid leave.",
+      "A ten percent discount on health insurance.",
+      "A free meal voucher for the company cafeteria."
+    ],
+    "answer": 2,
+    "explanation": "Thông báo nói 'Employees who participate will receive a ten percent discount on their monthly health insurance premium' (giảm 10% phí bảo hiểm sức khỏe hàng tháng)."
+  }
+]

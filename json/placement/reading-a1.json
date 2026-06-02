@@ -1,0 +1,82 @@
+[
+  {
+    "id": "pl-r-a1-001",
+    "skill": "reading",
+    "level": "A1",
+    "passage": "My name is Linh. I am 10 years old. I live in Ho Chi Minh City with my family. I have one brother and one sister. My brother is 12 and my sister is 8. We go to school every day. I like English class the most.",
+    "questions": [
+      {
+        "id": "pl-r-a1-001-q1",
+        "question": "How old is Linh?",
+        "options": ["8 years old", "10 years old", "12 years old", "15 years old"],
+        "answer": 1,
+        "explanation": "Đoạn văn nói 'I am 10 years old' (Tôi 10 tuổi)."
+      },
+      {
+        "id": "pl-r-a1-001-q2",
+        "question": "How many brothers and sisters does Linh have?",
+        "options": ["One", "Two", "Three", "Four"],
+        "answer": 1,
+        "explanation": "Linh có 1 anh trai (brother) và 1 em gái (sister), tổng cộng 2 anh chị em."
+      },
+      {
+        "id": "pl-r-a1-001-q3",
+        "question": "What class does Linh like the most?",
+        "options": ["Math class", "Science class", "English class", "Art class"],
+        "answer": 2,
+        "explanation": "Đoạn văn nói 'I like English class the most' (Tôi thích lớp tiếng Anh nhất)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-a1-002",
+    "skill": "reading",
+    "level": "A1",
+    "passage": "Today is Saturday. The weather is cloudy. Tom is at home. He is reading a book about animals. His cat is sleeping on the sofa. Tom's mother is cooking lunch in the kitchen.",
+    "questions": [
+      {
+        "id": "pl-r-a1-002-q1",
+        "question": "What day is it?",
+        "options": ["Monday", "Friday", "Saturday", "Sunday"],
+        "answer": 2,
+        "explanation": "Đoạn văn bắt đầu bằng 'Today is Saturday' (Hôm nay là thứ Bảy)."
+      },
+      {
+        "id": "pl-r-a1-002-q2",
+        "question": "What is Tom doing?",
+        "options": ["Watching TV", "Reading a book", "Playing games", "Sleeping"],
+        "answer": 1,
+        "explanation": "Đoạn văn nói 'He is reading a book about animals' (Anh ấy đang đọc sách về động vật)."
+      },
+      {
+        "id": "pl-r-a1-002-q3",
+        "question": "Where is the cat?",
+        "options": ["On the bed", "On the floor", "On the sofa", "In the kitchen"],
+        "answer": 2,
+        "explanation": "Đoạn văn nói 'His cat is sleeping on the sofa' (Con mèo đang ngủ trên sofa)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-a1-003",
+    "skill": "reading",
+    "level": "A1",
+    "passage": "Anna goes to the supermarket every Sunday. She buys milk, bread, eggs, and fruit. She likes apples and bananas. The supermarket is near her house. She walks there.",
+    "questions": [
+      {
+        "id": "pl-r-a1-003-q1",
+        "question": "When does Anna go to the supermarket?",
+        "options": ["Every Monday", "Every Saturday", "Every Sunday", "Every Friday"],
+        "answer": 2,
+        "explanation": "Đoạn văn nói 'Anna goes to the supermarket every Sunday' (Anna đi siêu thị mỗi Chủ Nhật)."
+      },
+      {
+        "id": "pl-r-a1-003-q2",
+        "question": "How does Anna get to the supermarket?",
+        "options": ["By bus", "By car", "By bicycle", "She walks"],
+        "answer": 3,
+        "explanation": "Đoạn văn nói 'She walks there' (Cô ấy đi bộ đến đó)."
+      }
+    ]
+  }
+]

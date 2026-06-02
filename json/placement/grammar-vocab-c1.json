@@ -1,0 +1,52 @@
+[
+  {
+    "id": "pl-gv-c1-001",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "sentence_completion",
+    "question": "______ had the CEO announced the merger than the stock price surged by fifteen percent.",
+    "options": ["Hardly", "Scarcely", "No sooner", "Not only"],
+    "answer": 2,
+    "explanation": "Cấu trúc đảo ngữ: 'No sooner had S + V3 ... than ...' (Vừa mới ... thì ...)."
+  },
+  {
+    "id": "pl-gv-c1-002",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "word_choice",
+    "question": "The committee's decision was met with considerable ______ from both stakeholders and the general public.",
+    "options": ["acquiescence", "dissent", "apathy", "ambivalence"],
+    "answer": 1,
+    "explanation": "'Dissent' nghĩa là sự bất đồng, phản đối. Phù hợp với ngữ cảnh cả hai bên đều phản ứng mạnh."
+  },
+  {
+    "id": "pl-gv-c1-003",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "sentence_completion",
+    "question": "Were it not for the timely intervention of the emergency services, the casualties ______ far greater.",
+    "options": ["would be", "would have been", "will be", "had been"],
+    "answer": 1,
+    "explanation": "Đảo ngữ câu điều kiện loại 3: 'Were it not for...' (= If it had not been for...), kết quả dùng 'would have been'."
+  },
+  {
+    "id": "pl-gv-c1-004",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "word_choice",
+    "question": "Her argument, while superficially compelling, ultimately proved to be ______, lacking any substantive evidence.",
+    "options": ["cogent", "tenuous", "robust", "irrefutable"],
+    "answer": 1,
+    "explanation": "'Tenuous' nghĩa là mỏng manh, yếu ớt, thiếu cơ sở. Phù hợp với 'lacking any substantive evidence' (thiếu bằng chứng thực chất)."
+  },
+  {
+    "id": "pl-gv-c1-005",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "sentence_completion",
+    "question": "Under no circumstances ______ the confidential documents be shared with unauthorized personnel.",
+    "options": ["should", "shall", "would", "could"],
+    "answer": 0,
+    "explanation": "Đảo ngữ với 'Under no circumstances' + trợ động từ + S + V: 'should the documents be shared' (tuyệt đối không được chia sẻ tài liệu)."
+  }
+]

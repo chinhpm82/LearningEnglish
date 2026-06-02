@@ -1,0 +1,82 @@
+[
+  {
+    "id": "pl-r-a2-001",
+    "skill": "reading",
+    "level": "A2",
+    "passage": "Last summer, my family traveled to Da Lat for a week. Da Lat is a beautiful city in the mountains. The weather was cool and pleasant. We visited many flower gardens and drank coffee at a famous café. My favorite place was the night market, where we tried many local foods like grilled corn and strawberry jam. I want to go back next year.",
+    "questions": [
+      {
+        "id": "pl-r-a2-001-q1",
+        "question": "How long did the family stay in Da Lat?",
+        "options": ["Three days", "Five days", "A week", "Two weeks"],
+        "answer": 2,
+        "explanation": "Đoạn văn nói 'traveled to Da Lat for a week' (đi Đà Lạt một tuần)."
+      },
+      {
+        "id": "pl-r-a2-001-q2",
+        "question": "What was the writer's favorite place?",
+        "options": ["The flower garden", "The famous café", "The night market", "The mountain top"],
+        "answer": 2,
+        "explanation": "Tác giả nói 'My favorite place was the night market' (Nơi yêu thích nhất là chợ đêm)."
+      },
+      {
+        "id": "pl-r-a2-001-q3",
+        "question": "What was the weather like in Da Lat?",
+        "options": ["Hot and humid", "Cool and pleasant", "Cold and rainy", "Warm and sunny"],
+        "answer": 1,
+        "explanation": "Đoạn văn mô tả 'The weather was cool and pleasant' (Thời tiết mát mẻ và dễ chịu)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-a2-002",
+    "skill": "reading",
+    "level": "A2",
+    "passage": "Dear Students,\n\nThe English Speaking Club will meet this Friday at 3:30 PM in Room 204. This week, we will practice talking about hobbies and free time activities. Please bring a short list of your favorite hobbies to share with the group. Snacks and drinks will be provided. New members are welcome!\n\nBest regards,\nMs. Nguyen",
+    "questions": [
+      {
+        "id": "pl-r-a2-002-q1",
+        "question": "When will the English Speaking Club meet?",
+        "options": ["Thursday at 2:00 PM", "Friday at 3:30 PM", "Saturday at 4:00 PM", "Monday at 3:30 PM"],
+        "answer": 1,
+        "explanation": "Thông báo ghi 'this Friday at 3:30 PM' (thứ Sáu lúc 3:30 chiều)."
+      },
+      {
+        "id": "pl-r-a2-002-q2",
+        "question": "What should students bring?",
+        "options": ["A dictionary", "A list of their hobbies", "Their English textbook", "A notebook and pen"],
+        "answer": 1,
+        "explanation": "Thông báo yêu cầu 'bring a short list of your favorite hobbies' (mang danh sách sở thích)."
+      },
+      {
+        "id": "pl-r-a2-002-q3",
+        "question": "What topic will they practice this week?",
+        "options": ["Travel plans", "Hobbies and free time", "Food and cooking", "Jobs and careers"],
+        "answer": 1,
+        "explanation": "Chủ đề tuần này là 'hobbies and free time activities' (sở thích và hoạt động giải trí)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-a2-003",
+    "skill": "reading",
+    "level": "A2",
+    "passage": "Mike works as a waiter at an Italian restaurant. He starts work at 5 PM and finishes at 11 PM. He serves food and drinks to customers. On weekdays, the restaurant is not very busy, but on weekends it is always full. Mike likes his job because he meets many interesting people. He also gets good tips on Saturday nights.",
+    "questions": [
+      {
+        "id": "pl-r-a2-003-q1",
+        "question": "What does Mike do for a living?",
+        "options": ["He is a cook.", "He is a waiter.", "He is a manager.", "He is a delivery driver."],
+        "answer": 1,
+        "explanation": "Đoạn văn nói 'Mike works as a waiter' (Mike làm bồi bàn)."
+      },
+      {
+        "id": "pl-r-a2-003-q2",
+        "question": "When is the restaurant busiest?",
+        "options": ["On Monday mornings", "On weekday afternoons", "On weekends", "On Tuesday evenings"],
+        "answer": 2,
+        "explanation": "Đoạn văn nói 'on weekends it is always full' (cuối tuần luôn đầy khách)."
+      }
+    ]
+  }
+]

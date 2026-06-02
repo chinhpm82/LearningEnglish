@@ -1,0 +1,52 @@
+[
+  {
+    "id": "pl-gv-b2-001",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "sentence_completion",
+    "question": "If I ______ more time last year, I would have traveled to Europe.",
+    "options": ["have", "had", "had had", "would have"],
+    "answer": 2,
+    "explanation": "Câu điều kiện loại 3: If + quá khứ hoàn thành (had had), would have + V3 (would have traveled). Diễn tả giả thiết trái với quá khứ."
+  },
+  {
+    "id": "pl-gv-b2-002",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "word_choice",
+    "question": "The government has implemented strict measures to ______ air pollution in major cities.",
+    "options": ["alleviate", "aggravate", "accumulate", "abandon"],
+    "answer": 0,
+    "explanation": "'Alleviate' nghĩa là giảm bớt, làm nhẹ đi (tình trạng ô nhiễm không khí)."
+  },
+  {
+    "id": "pl-gv-b2-003",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "sentence_completion",
+    "question": "The new shopping center, ______ was built last year, attracts thousands of visitors every weekend.",
+    "options": ["that", "which", "where", "who"],
+    "answer": 1,
+    "explanation": "Mệnh đề quan hệ không xác định (non-defining) bắt buộc dùng 'which' (không dùng 'that') với dấu phẩy phía trước."
+  },
+  {
+    "id": "pl-gv-b2-004",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "sentence_completion",
+    "question": "She insisted that the report ______ submitted before the end of the week.",
+    "options": ["is", "was", "be", "will be"],
+    "answer": 2,
+    "explanation": "Cấu trúc giả định (subjunctive) sau 'insisted that': S + V nguyên thể (be), không chia thì."
+  },
+  {
+    "id": "pl-gv-b2-005",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "word_choice",
+    "question": "Despite the challenging economic conditions, the startup managed to ______ in its first year.",
+    "options": ["flourish", "perish", "diminish", "vanish"],
+    "answer": 0,
+    "explanation": "'Flourish' nghĩa là phát triển mạnh, thịnh vượng. Trái với 'perish' (chết), 'diminish' (giảm), 'vanish' (biến mất)."
+  }
+]

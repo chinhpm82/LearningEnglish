@@ -1,0 +1,53 @@
+[
+  {
+    "id": "pl-r-c2-001",
+    "skill": "reading",
+    "level": "C2",
+    "passage": "The Dunning-Kruger effect, a cognitive bias wherein individuals with limited competence in a domain systematically overestimate their own abilities, has become one of the most cited findings in popular psychology. However, a growing body of methodological critique has challenged the robustness of the original 1999 study. Some statisticians argue that the observed pattern is largely an artifact of regression to the mean: when individuals are grouped by performance quartile, bottom-quartile performers will necessarily show inflated self-assessments relative to their actual scores, even if their self-assessment accuracy is no worse than that of top performers. This statistical critique does not negate the broader observation that metacognitive calibration varies across individuals, but it does suggest that the effect may be considerably more nuanced than the oversimplified narrative that 'stupid people don't know they're stupid.'",
+    "questions": [
+      {
+        "id": "pl-r-c2-001-q1",
+        "question": "What is the statistical critique of the Dunning-Kruger effect?",
+        "options": ["The original study used too few participants.", "The observed pattern may be an artifact of regression to the mean rather than a genuine cognitive bias.", "The study was never peer-reviewed or published.", "Top performers were excluded from the analysis."],
+        "answer": 1,
+        "explanation": "Phê bình thống kê cho rằng mô hình quan sát được 'is largely an artifact of regression to the mean' (phần lớn là sản phẩm phụ của hiện tượng hồi quy về trung bình)."
+      },
+      {
+        "id": "pl-r-c2-001-q2",
+        "question": "What does the author suggest about the popular interpretation of the Dunning-Kruger effect?",
+        "options": ["It is perfectly accurate and well-supported.", "It is a completely fabricated phenomenon with no basis in reality.", "It is an oversimplification of a more nuanced phenomenon.", "It only applies to academic settings."],
+        "answer": 2,
+        "explanation": "Tác giả gợi ý rằng hiệu ứng 'may be considerably more nuanced than the oversimplified narrative' (phức tạp hơn nhiều so với câu chuyện đơn giản hóa quá mức)."
+      },
+      {
+        "id": "pl-r-c2-001-q3",
+        "question": "What aspect of cognition does the passage acknowledge still varies across individuals?",
+        "options": ["Intelligence quotient", "Metacognitive calibration", "Emotional intelligence", "Working memory capacity"],
+        "answer": 1,
+        "explanation": "Đoạn văn thừa nhận rằng 'metacognitive calibration varies across individuals' (khả năng hiệu chỉnh siêu nhận thức khác nhau giữa các cá nhân)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-c2-002",
+    "skill": "reading",
+    "level": "C2",
+    "passage": "The epistemological implications of large language models (LLMs) have ignited a vigorous debate within the philosophy of mind. Proponents of the 'stochastic parrot' thesis, as articulated by Bender et al., contend that LLMs are fundamentally incapable of genuine understanding, merely concatenating statistically probable token sequences without access to grounded semantics. Conversely, emergentist perspectives suggest that sufficiently complex statistical processing may give rise to functional analogs of understanding, even if the underlying computational substrate differs categorically from biological cognition. This debate echoes longstanding philosophical disputes about the nature of intentionality: can a system that processes symbols according to syntactic rules ever be said to 'understand' those symbols in the way a conscious agent does? John Searle's Chinese Room argument remains a touchstone in these discussions, though its applicability to modern neural architectures, which learn representations rather than follow explicit rules, is itself contested.",
+    "questions": [
+      {
+        "id": "pl-r-c2-002-q1",
+        "question": "What is the 'stochastic parrot' thesis about LLMs?",
+        "options": ["LLMs achieve genuine understanding through massive data processing.", "LLMs merely concatenate statistically probable sequences without genuine semantic understanding.", "LLMs are biologically equivalent to human brains.", "LLMs will inevitably achieve consciousness within the next decade."],
+        "answer": 1,
+        "explanation": "Luận điểm 'stochastic parrot' cho rằng LLM 'merely concatenating statistically probable token sequences without access to grounded semantics' (chỉ ghép nối chuỗi token có xác suất thống kê cao mà không có ngữ nghĩa nền tảng)."
+      },
+      {
+        "id": "pl-r-c2-002-q2",
+        "question": "Why is John Searle's Chinese Room argument considered contested in the context of modern AI?",
+        "options": ["Because Searle has publicly retracted his argument.", "Because modern neural architectures learn representations rather than follow explicit rules, making the original argument's applicability uncertain.", "Because Chinese Room has been proven mathematically impossible.", "Because modern LLMs use Chinese characters exclusively."],
+        "answer": 1,
+        "explanation": "Tính áp dụng của Chinese Room bị tranh cãi vì kiến trúc mạng nơ-ron hiện đại 'learn representations rather than follow explicit rules' (học biểu diễn thay vì tuân theo quy tắc tường minh), khác với tiền đề gốc của Searle."
+      }
+    ]
+  }
+]

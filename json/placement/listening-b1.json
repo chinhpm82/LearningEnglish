@@ -1,0 +1,77 @@
+[
+  {
+    "id": "pl-l-b1-001",
+    "skill": "listening",
+    "level": "B1",
+    "audioText": "Woman: Have you booked the hotel for our trip to Da Nang yet? Man: Not yet. I was comparing prices online. The beachfront hotel is more expensive, but it includes breakfast. Woman: I think it is worth paying a bit more for the convenience. Man: Alright, I will book it tonight.",
+    "question": "What will the man do tonight?",
+    "options": [
+      "Search for cheaper hotels.",
+      "Book the beachfront hotel.",
+      "Cancel the trip to Da Nang.",
+      "Ask his friend for a recommendation."
+    ],
+    "answer": 1,
+    "explanation": "Người đàn ông nói 'I will book it tonight' (Tôi sẽ đặt phòng tối nay), 'it' ở đây chỉ beachfront hotel."
+  },
+  {
+    "id": "pl-l-b1-002",
+    "skill": "listening",
+    "level": "B1",
+    "audioText": "Manager: How is the quarterly sales report coming along? Employee: I have finished the data analysis, but I still need to create the charts and write the summary. Manager: The deadline is this Friday. Can you have it ready by Thursday? Employee: I will try my best.",
+    "question": "What has the employee already completed?",
+    "options": [
+      "The charts and summary.",
+      "The data analysis.",
+      "The entire report.",
+      "The quarterly budget review."
+    ],
+    "answer": 1,
+    "explanation": "Nhân viên nói 'I have finished the data analysis' (Tôi đã hoàn thành phân tích dữ liệu)."
+  },
+  {
+    "id": "pl-l-b1-003",
+    "skill": "listening",
+    "level": "B1",
+    "audioText": "Doctor: Good morning. What seems to be the problem? Patient: I have had a sore throat and a mild fever since Monday. Doctor: Let me check. It looks like a minor throat infection. I will prescribe some antibiotics. Take one tablet twice a day after meals. Patient: How long should I take them? Doctor: For five days. Come back if it does not improve.",
+    "question": "How should the patient take the medicine?",
+    "options": [
+      "One tablet once a day before meals.",
+      "Two tablets once a day after meals.",
+      "One tablet twice a day after meals.",
+      "One tablet three times a day with water."
+    ],
+    "answer": 2,
+    "explanation": "Bác sĩ chỉ dẫn 'Take one tablet twice a day after meals' (Uống 1 viên 2 lần/ngày sau bữa ăn)."
+  },
+  {
+    "id": "pl-l-b1-004",
+    "skill": "listening",
+    "level": "B1",
+    "audioText": "Receptionist: Good afternoon, City Library. How can I help you? Caller: Hi, I would like to renew my library card. It expired last week. Receptionist: Sure. You will need to bring your old card and a photo ID. There is a renewal fee of five dollars. Caller: Can I come in tomorrow morning? Receptionist: Of course. We open at nine a.m.",
+    "question": "What does the caller need to bring?",
+    "options": [
+      "A new photo and a letter.",
+      "An old card and a photo ID.",
+      "A passport and a utility bill.",
+      "Five dollars and a reference letter."
+    ],
+    "answer": 1,
+    "explanation": "Nhân viên nói 'You will need to bring your old card and a photo ID' (Bạn cần mang thẻ cũ và giấy tờ có ảnh)."
+  },
+  {
+    "id": "pl-l-b1-005",
+    "skill": "listening",
+    "level": "B1",
+    "audioText": "Attention passengers on Flight VN205 to Hanoi. Due to severe weather conditions, your departure has been delayed by approximately two hours. The new boarding time is now four thirty p.m. at Gate B12. We apologize for the inconvenience and will provide complimentary refreshments at the gate area. Thank you for your patience.",
+    "question": "Why has the flight been delayed?",
+    "options": [
+      "Because of a technical problem with the aircraft.",
+      "Because the pilot is not available.",
+      "Because of severe weather conditions.",
+      "Because the runway is under construction."
+    ],
+    "answer": 2,
+    "explanation": "Thông báo nói 'Due to severe weather conditions' (Do điều kiện thời tiết khắc nghiệt)."
+  }
+]

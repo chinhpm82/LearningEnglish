@@ -1,0 +1,52 @@
+[
+  {
+    "id": "pl-gv-a1-001",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "sentence_completion",
+    "question": "She ______ a student. She goes to school every day.",
+    "options": ["am", "is", "are", "be"],
+    "answer": 1,
+    "explanation": "Với chủ ngữ ngôi thứ ba số ít 'She', ta dùng 'is' (She is a student)."
+  },
+  {
+    "id": "pl-gv-a1-002",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "word_choice",
+    "question": "I want to buy some ______ at the market. I need apples, bananas, and oranges.",
+    "options": ["vegetables", "fruit", "meat", "bread"],
+    "answer": 1,
+    "explanation": "Apples, bananas, oranges đều là trái cây (fruit)."
+  },
+  {
+    "id": "pl-gv-a1-003",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "sentence_completion",
+    "question": "There ______ three books on the table.",
+    "options": ["is", "am", "are", "be"],
+    "answer": 2,
+    "explanation": "Với danh từ số nhiều 'three books', ta dùng 'There are' (Có ba quyển sách)."
+  },
+  {
+    "id": "pl-gv-a1-004",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "word_choice",
+    "question": "The opposite of 'hot' is ______.",
+    "options": ["warm", "cool", "cold", "big"],
+    "answer": 2,
+    "explanation": "Từ trái nghĩa của 'hot' (nóng) là 'cold' (lạnh)."
+  },
+  {
+    "id": "pl-gv-a1-005",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "sentence_completion",
+    "question": "______ you like ice cream?",
+    "options": ["Does", "Do", "Is", "Are"],
+    "answer": 1,
+    "explanation": "Câu hỏi Yes/No với chủ ngữ 'you' dùng trợ động từ 'Do' (Do you like...?)."
+  }
+]

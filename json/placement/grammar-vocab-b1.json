@@ -1,0 +1,52 @@
+[
+  {
+    "id": "pl-gv-b1-001",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "sentence_completion",
+    "question": "By the time we arrived at the station, the train ______ already ______.",
+    "options": ["has / left", "had / left", "was / leaving", "did / leave"],
+    "answer": 1,
+    "explanation": "Thì quá khứ hoàn thành: hành động tàu rời đi (had left) xảy ra trước hành động đến ga (arrived)."
+  },
+  {
+    "id": "pl-gv-b1-002",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "word_choice",
+    "question": "I need to ______ an appointment with the dentist. My tooth hurts badly.",
+    "options": ["do", "make", "take", "get"],
+    "answer": 1,
+    "explanation": "Cụm cố định: 'make an appointment' (đặt lịch hẹn)."
+  },
+  {
+    "id": "pl-gv-b1-003",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "sentence_completion",
+    "question": "If it ______ tomorrow, we will stay at home and watch movies.",
+    "options": ["rains", "will rain", "rained", "is raining"],
+    "answer": 0,
+    "explanation": "Câu điều kiện loại 1: If + thì hiện tại đơn (rains), will + V nguyên thể (will stay)."
+  },
+  {
+    "id": "pl-gv-b1-004",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "word_choice",
+    "question": "The company decided to ______ the old building and construct a new modern office.",
+    "options": ["pull down", "put up", "turn off", "break into"],
+    "answer": 0,
+    "explanation": "Cụm động từ 'pull down' nghĩa là phá bỏ, tháo dỡ (một tòa nhà)."
+  },
+  {
+    "id": "pl-gv-b1-005",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "sentence_completion",
+    "question": "The book ______ I bought yesterday is really interesting.",
+    "options": ["who", "which", "where", "when"],
+    "answer": 1,
+    "explanation": "Đại từ quan hệ 'which' dùng để thay thế cho danh từ chỉ vật 'the book'."
+  }
+]

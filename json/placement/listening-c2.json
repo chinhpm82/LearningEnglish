@@ -1,0 +1,77 @@
+[
+  {
+    "id": "pl-l-c2-001",
+    "skill": "listening",
+    "level": "C2",
+    "audioText": "The replication crisis in psychology has fundamentally shaken the discipline's epistemic foundations. When the Open Science Collaboration attempted to replicate one hundred landmark psychological studies, they found that only thirty-nine percent produced statistically significant results consistent with the original findings. This is not merely an academic inconvenience; it calls into question decades of policy recommendations built upon potentially unreliable research. Some scholars have advocated for pre-registration of hypotheses and mandatory data sharing as safeguards against p-hacking and publication bias, while others argue these measures impose bureaucratic constraints that stifle exploratory research.",
+    "question": "What does the speaker imply about the proposed safeguards against the replication crisis?",
+    "options": [
+      "They are universally accepted as the definitive solution.",
+      "They represent a trade-off between research integrity and academic freedom.",
+      "They have already been successfully implemented across all psychology departments.",
+      "They are irrelevant because the replication crisis is exaggerated."
+    ],
+    "answer": 1,
+    "explanation": "Người nói chỉ ra rằng các biện pháp bảo vệ (pre-registration, data sharing) được ủng hộ nhưng cũng bị phản đối vì 'impose bureaucratic constraints that stifle exploratory research' (áp đặt ràng buộc quan liêu, kìm hãm nghiên cứu khám phá), tức là có sự đánh đổi."
+  },
+  {
+    "id": "pl-l-c2-002",
+    "skill": "listening",
+    "level": "C2",
+    "audioText": "One of the most pernicious fallacies in contemporary discourse is the conflation of correlation with causation. Consider the widely cited observation that countries with higher chocolate consumption per capita tend to produce more Nobel laureates. While statistically accurate, this correlation is almost certainly spurious, likely driven by a confounding variable such as national wealth, which independently promotes both luxury food consumption and investment in world-class research institutions. Yet the allure of tidy causal narratives is so powerful that even peer-reviewed journals occasionally fall prey to this elementary logical error.",
+    "question": "What is the speaker's primary purpose in mentioning the chocolate-Nobel correlation?",
+    "options": [
+      "To prove that eating chocolate improves cognitive ability.",
+      "To illustrate how spurious correlations can be mistaken for causal relationships.",
+      "To criticize countries that do not invest in chocolate production.",
+      "To argue that Nobel Prize selection criteria should be reformed."
+    ],
+    "answer": 1,
+    "explanation": "Ví dụ chocolate-Nobel được dùng để minh họa cách 'spurious correlations' (tương quan giả) bị nhầm lẫn thành mối quan hệ nhân quả, đó chính là ngụy biện 'conflation of correlation with causation'."
+  },
+  {
+    "id": "pl-l-c2-003",
+    "skill": "listening",
+    "level": "C2",
+    "audioText": "The trolley problem, perhaps the most famous thought experiment in moral philosophy, has acquired renewed urgency in the context of autonomous vehicle ethics. When a self-driving car's algorithm must choose between two catastrophic outcomes, say, swerving to avoid a group of pedestrians but striking a single cyclist, we are no longer dealing with abstract philosophical speculation. We are confronting concrete engineering decisions with life-and-death consequences. The Massachusetts Institute of Technology's Moral Machine experiment collected over forty million decisions from participants in two hundred thirty-three countries, revealing stark cultural divergences in moral priorities. For instance, collectivist societies tended to prioritize sparing the greater number, while individualist cultures placed higher value on protecting the young.",
+    "question": "What did the MIT Moral Machine experiment reveal?",
+    "options": [
+      "All cultures share identical moral priorities regarding autonomous vehicles.",
+      "Significant cultural differences exist in how people prioritize moral choices in self-driving car scenarios.",
+      "Autonomous vehicles should always protect pedestrians over cyclists.",
+      "The trolley problem is no longer relevant to modern philosophy."
+    ],
+    "answer": 1,
+    "explanation": "Thí nghiệm Moral Machine cho thấy 'stark cultural divergences in moral priorities' (sự khác biệt văn hóa rõ rệt trong ưu tiên đạo đức) giữa các xã hội tập thể và cá nhân."
+  },
+  {
+    "id": "pl-l-c2-004",
+    "skill": "listening",
+    "level": "C2",
+    "audioText": "Quantum entanglement, which Einstein famously dismissed as spooky action at a distance, has paradoxically become one of the most experimentally validated phenomena in modern physics. Recent experiments have demonstrated entanglement over distances exceeding one thousand kilometers using satellite-based quantum communication. The implications for cryptography are staggering: quantum key distribution could render current encryption methods obsolete by enabling theoretically unbreakable communication channels. However, the technology remains in its nascent stages, and substantial engineering challenges, including maintaining coherence at ambient temperatures and scaling quantum networks, must be overcome before widespread deployment becomes feasible.",
+    "question": "What is the speaker's overall assessment of quantum communication technology?",
+    "options": [
+      "It is already widely deployed and has replaced traditional encryption.",
+      "It has enormous potential but faces significant practical obstacles before widespread use.",
+      "It is purely theoretical and has never been experimentally validated.",
+      "Einstein's dismissal of quantum entanglement has been proven entirely correct."
+    ],
+    "answer": 1,
+    "explanation": "Người nói đánh giá: công nghệ có 'staggering implications' (ý nghĩa to lớn) nhưng vẫn ở giai đoạn sơ khai ('nascent stages') với nhiều thách thức kỹ thuật cần vượt qua."
+  },
+  {
+    "id": "pl-l-c2-005",
+    "skill": "listening",
+    "level": "C2",
+    "audioText": "The Sapir-Whorf hypothesis, in its strong formulation, suggests that language fundamentally determines thought, constraining speakers to perceive reality only through the categories their language provides. While this deterministic version has been largely discredited, a weaker version, known as linguistic relativity, has garnered considerable empirical support. Research by Lera Boroditsky demonstrated that speakers of Kuuk Thaayorre, an Aboriginal Australian language that uses cardinal directions instead of egocentric spatial terms, exhibited superior spatial orientation compared to English speakers. Such findings suggest that while language may not imprison thought, it does shape habitual patterns of attention and cognition in measurable ways.",
+    "question": "How does the speaker characterize the current scientific consensus on the Sapir-Whorf hypothesis?",
+    "options": [
+      "The strong version is fully accepted, proving language completely determines thought.",
+      "Both versions have been entirely discredited by modern linguistics.",
+      "The strong deterministic version is rejected, but a weaker version of linguistic relativity is empirically supported.",
+      "The hypothesis is irrelevant because all languages encode reality identically."
+    ],
+    "answer": 2,
+    "explanation": "Người nói phân biệt: phiên bản mạnh 'has been largely discredited' (bị bác bỏ phần lớn) nhưng phiên bản yếu 'has garnered considerable empirical support' (nhận được sự ủng hộ thực nghiệm đáng kể)."
+  }
+]

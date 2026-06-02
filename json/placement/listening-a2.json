@@ -1,0 +1,77 @@
+[
+  {
+    "id": "pl-l-a2-001",
+    "skill": "listening",
+    "level": "A2",
+    "audioText": "Excuse me, can you help me? I am looking for the train station. Go straight ahead for two blocks, then turn right. You will see it on your left.",
+    "question": "How do you get to the train station?",
+    "options": [
+      "Turn left after one block.",
+      "Go straight for two blocks, then turn right.",
+      "Take the bus to the next stop.",
+      "Walk behind the shopping mall."
+    ],
+    "answer": 1,
+    "explanation": "Đoạn nghe chỉ đường: 'Go straight ahead for two blocks, then turn right' (Đi thẳng 2 khối nhà rồi rẽ phải)."
+  },
+  {
+    "id": "pl-l-a2-002",
+    "skill": "listening",
+    "level": "A2",
+    "audioText": "I usually wake up at seven o'clock. Then I take a shower and have breakfast. I leave for work at eight thirty.",
+    "question": "What time does the speaker leave for work?",
+    "options": [
+      "At seven o'clock.",
+      "At seven thirty.",
+      "At eight o'clock.",
+      "At eight thirty."
+    ],
+    "answer": 3,
+    "explanation": "Đoạn nghe nói 'I leave for work at eight thirty' (Tôi đi làm lúc 8:30)."
+  },
+  {
+    "id": "pl-l-a2-003",
+    "skill": "listening",
+    "level": "A2",
+    "audioText": "Welcome to our restaurant. Today's special is grilled chicken with vegetables. It costs twelve dollars. Would you like to try it?",
+    "question": "How much does today's special cost?",
+    "options": [
+      "Ten dollars.",
+      "Eleven dollars.",
+      "Twelve dollars.",
+      "Fifteen dollars."
+    ],
+    "answer": 2,
+    "explanation": "Đoạn nghe nói giá món đặc biệt là 'twelve dollars' (12 đô la)."
+  },
+  {
+    "id": "pl-l-a2-004",
+    "skill": "listening",
+    "level": "A2",
+    "audioText": "Last weekend, my family went to the beach. We played in the sand and swam in the sea. The weather was very hot, so we ate ice cream.",
+    "question": "What did the family do at the beach?",
+    "options": [
+      "They went shopping and ate pizza.",
+      "They played in the sand and swam.",
+      "They stayed at a hotel and watched TV.",
+      "They rode bicycles along the road."
+    ],
+    "answer": 1,
+    "explanation": "Đoạn nghe kể 'We played in the sand and swam in the sea' (Chúng tôi chơi trên cát và bơi ở biển)."
+  },
+  {
+    "id": "pl-l-a2-005",
+    "skill": "listening",
+    "level": "A2",
+    "audioText": "Hi Sarah, this is Mike. I am calling to invite you to my birthday party on Saturday at three p.m. It will be at my house. Please bring some drinks if you can.",
+    "question": "When is Mike's birthday party?",
+    "options": [
+      "Friday at two p.m.",
+      "Saturday at three p.m.",
+      "Sunday at four p.m.",
+      "Saturday at twelve p.m."
+    ],
+    "answer": 1,
+    "explanation": "Đoạn nghe nói 'my birthday party on Saturday at three p.m.' (tiệc sinh nhật thứ Bảy lúc 3 giờ chiều)."
+  }
+]

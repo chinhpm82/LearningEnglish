@@ -1,0 +1,53 @@
+[
+  {
+    "id": "pl-r-c1-001",
+    "skill": "reading",
+    "level": "C1",
+    "passage": "The placebo effect, long dismissed as mere psychological trickery, has increasingly commanded serious scientific attention. Neuroimaging studies have revealed that placebos can trigger genuine neurochemical changes, including the release of endorphins and dopamine, in brain regions associated with pain modulation and reward processing. In some clinical trials, placebo responses have rivaled those of established pharmaceutical interventions, raising provocative questions about the nature of therapeutic efficacy. Perhaps most intriguingly, the placebo effect appears to be strengthening over time, at least in American clinical trials, a trend that some researchers attribute to the growing cultural emphasis on the ritual of medical treatment and patient expectation.",
+    "questions": [
+      {
+        "id": "pl-r-c1-001-q1",
+        "question": "What have neuroimaging studies shown about placebos?",
+        "options": ["They have no measurable effect on the brain.", "They trigger genuine neurochemical changes including endorphin and dopamine release.", "They only work on patients with mild conditions.", "They are effective only when patients do not know they are receiving a placebo."],
+        "answer": 1,
+        "explanation": "Nghiên cứu hình ảnh thần kinh cho thấy placebo 'can trigger genuine neurochemical changes, including the release of endorphins and dopamine' (gây ra thay đổi thần kinh hóa học thực sự)."
+      },
+      {
+        "id": "pl-r-c1-001-q2",
+        "question": "Why is the strengthening of the placebo effect over time considered significant?",
+        "options": ["It proves that all medicines are ineffective.", "It suggests cultural factors and patient expectations may influence treatment outcomes.", "It demonstrates that American patients are more gullible.", "It shows that pharmaceutical companies are producing weaker drugs."],
+        "answer": 1,
+        "explanation": "Xu hướng tăng cường hiệu ứng giả dược được quy cho 'the growing cultural emphasis on the ritual of medical treatment and patient expectation' (nhấn mạnh văn hóa nghi thức điều trị và kỳ vọng bệnh nhân)."
+      },
+      {
+        "id": "pl-r-c1-001-q3",
+        "question": "What is the author's tone in this passage?",
+        "options": ["Dismissive and skeptical", "Neutral and analytically curious", "Strongly supportive of abandoning traditional medicine", "Emotionally biased against placebos"],
+        "answer": 1,
+        "explanation": "Tác giả trình bày bằng chứng khoa học một cách khách quan, sử dụng ngôn ngữ như 'raising provocative questions' và 'intriguingly', thể hiện thái độ trung lập và tò mò phân tích."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-c1-002",
+    "skill": "reading",
+    "level": "C1",
+    "passage": "The phenomenon of 'brain drain,' wherein highly skilled professionals emigrate from developing nations to seek better opportunities in wealthier countries, presents a paradox for global development. On one hand, remittances sent home by diaspora professionals constitute a vital economic lifeline, with the World Bank estimating that low- and middle-income countries received $656 billion in remittances in 2022 alone. On the other hand, the departure of doctors, engineers, and scientists depletes the intellectual capital that these nations desperately need for domestic innovation and institutional development. Some policymakers have advocated for 'circular migration' models, which encourage temporary overseas assignments followed by knowledge transfer back to the home country, as a pragmatic compromise.",
+    "questions": [
+      {
+        "id": "pl-r-c1-002-q1",
+        "question": "Why does the author describe brain drain as a 'paradox'?",
+        "options": ["Because it benefits both sending and receiving countries equally.", "Because while remittances help economically, the loss of skilled workers hinders domestic development.", "Because highly skilled professionals earn less money abroad.", "Because developing nations have too many skilled workers."],
+        "answer": 1,
+        "explanation": "Nghịch lý nằm ở chỗ: kiều hối giúp kinh tế (remittances as economic lifeline) nhưng đồng thời mất đi vốn trí tuệ cần thiết cho phát triển trong nước (depletes intellectual capital)."
+      },
+      {
+        "id": "pl-r-c1-002-q2",
+        "question": "What solution is suggested in the passage?",
+        "options": ["Banning all forms of emigration", "Circular migration models with temporary assignments and knowledge transfer", "Increasing taxes on remittances", "Building more universities in developing countries"],
+        "answer": 1,
+        "explanation": "Giải pháp được đề xuất là 'circular migration models' (mô hình di cư tuần hoàn), khuyến khích đi làm tạm thời ở nước ngoài rồi chuyển giao kiến thức về nước."
+      }
+    ]
+  }
+]

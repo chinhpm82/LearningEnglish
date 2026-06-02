@@ -1,0 +1,77 @@
+[
+  {
+    "id": "pl-l-a1-001",
+    "skill": "listening",
+    "level": "A1",
+    "audioText": "Hello! My name is Tom. I am a student. I go to school every day.",
+    "question": "What does Tom do?",
+    "options": [
+      "He is a teacher.",
+      "He is a student.",
+      "He is a doctor.",
+      "He is a driver."
+    ],
+    "answer": 1,
+    "explanation": "Đoạn nghe nói rõ 'I am a student' (Tôi là học sinh)."
+  },
+  {
+    "id": "pl-l-a1-002",
+    "skill": "listening",
+    "level": "A1",
+    "audioText": "I have a cat. Her name is Luna. She likes to sleep on my bed.",
+    "question": "Where does Luna like to sleep?",
+    "options": [
+      "On the floor.",
+      "On the chair.",
+      "On the bed.",
+      "On the table."
+    ],
+    "answer": 2,
+    "explanation": "Đoạn nghe nói 'She likes to sleep on my bed' (Cô ấy thích ngủ trên giường)."
+  },
+  {
+    "id": "pl-l-a1-003",
+    "skill": "listening",
+    "level": "A1",
+    "audioText": "Today is Monday. The weather is sunny. I want to go to the park.",
+    "question": "What day is it today?",
+    "options": [
+      "Sunday",
+      "Tuesday",
+      "Monday",
+      "Friday"
+    ],
+    "answer": 2,
+    "explanation": "Đoạn nghe bắt đầu bằng 'Today is Monday' (Hôm nay là thứ Hai)."
+  },
+  {
+    "id": "pl-l-a1-004",
+    "skill": "listening",
+    "level": "A1",
+    "audioText": "Excuse me, where is the supermarket? It is next to the bank.",
+    "question": "Where is the supermarket?",
+    "options": [
+      "Next to the school.",
+      "Next to the bank.",
+      "Next to the hospital.",
+      "Next to the park."
+    ],
+    "answer": 1,
+    "explanation": "Đoạn nghe nói 'It is next to the bank' (Nó ở cạnh ngân hàng)."
+  },
+  {
+    "id": "pl-l-a1-005",
+    "skill": "listening",
+    "level": "A1",
+    "audioText": "My mother cooks breakfast every morning. She makes eggs and toast.",
+    "question": "What does the mother make for breakfast?",
+    "options": [
+      "Rice and soup.",
+      "Eggs and toast.",
+      "Bread and butter.",
+      "Pancakes and juice."
+    ],
+    "answer": 1,
+    "explanation": "Đoạn nghe nói 'She makes eggs and toast' (Mẹ làm trứng và bánh mì nướng)."
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "pl-gv-c2-001",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "sentence_completion",
+    "question": "So ______ was the professor's lecture that even the most disengaged students found themselves utterly absorbed.",
+    "options": ["riveting", "mundane", "tedious", "lackluster"],
+    "answer": 0,
+    "explanation": "Cấu trúc đảo ngữ nhấn mạnh 'So + adj + was + S + that...'. 'Riveting' (hấp dẫn, lôi cuốn) phù hợp vì sinh viên 'found themselves utterly absorbed' (hoàn toàn bị cuốn hút)."
+  },
+  {
+    "id": "pl-gv-c2-002",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "word_choice",
+    "question": "The diplomat's ______ remarks during the press conference inadvertently exacerbated the already volatile political situation.",
+    "options": ["innocuous", "incendiary", "conciliatory", "nondescript"],
+    "answer": 1,
+    "explanation": "'Incendiary' (kích động, gây cháy) phù hợp vì phát ngôn đã 'exacerbated the already volatile political situation' (làm trầm trọng thêm tình hình chính trị bất ổn)."
+  },
+  {
+    "id": "pl-gv-c2-003",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "sentence_completion",
+    "question": "Had the researchers ______ the confounding variables more rigorously, their conclusions might not have been so readily challenged by peer reviewers.",
+    "options": ["controlled for", "accounted to", "disposed of", "presided over"],
+    "answer": 0,
+    "explanation": "'Controlled for' (kiểm soát biến nhiễu) là thuật ngữ nghiên cứu chuẩn. Đảo ngữ câu điều kiện loại 3: Had + S + V3."
+  },
+  {
+    "id": "pl-gv-c2-004",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "word_choice",
+    "question": "The author's latest novel has been praised for its ______ prose, which seamlessly weaves together elements of magical realism and social commentary.",
+    "options": ["pedestrian", "limpid", "opaque", "verbose"],
+    "answer": 1,
+    "explanation": "'Limpid' (trong sáng, rõ ràng, thanh thoát) mô tả văn phong đẹp. Trái với 'pedestrian' (tầm thường), 'opaque' (khó hiểu), 'verbose' (dài dòng)."
+  },
+  {
+    "id": "pl-gv-c2-005",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "sentence_completion",
+    "question": "It is imperative that every member of the committee ______ present at tomorrow's extraordinary session, given the gravity of the matters to be discussed.",
+    "options": ["is", "be", "will be", "was"],
+    "answer": 1,
+    "explanation": "Cấu trúc giả định (subjunctive): 'It is imperative that + S + V nguyên thể'. 'Be' là dạng nguyên thể (không chia theo ngôi)."
+  }
+]

@@ -1,0 +1,89 @@
+[
+  {
+    "id": "pl-r-b1-001",
+    "skill": "reading",
+    "level": "B1",
+    "passage": "Sleep is one of the most important factors for maintaining good health, yet millions of people around the world do not get enough of it. According to health experts, adults should aim for seven to nine hours of sleep each night. Lack of sleep can lead to serious problems such as weakened immunity, difficulty concentrating, and increased risk of heart disease. Many people sacrifice sleep to work longer hours, but research shows that well-rested employees are actually more productive than those who are sleep-deprived.",
+    "questions": [
+      {
+        "id": "pl-r-b1-001-q1",
+        "question": "How many hours of sleep should adults aim for?",
+        "options": ["5 to 6 hours", "6 to 7 hours", "7 to 9 hours", "9 to 11 hours"],
+        "answer": 2,
+        "explanation": "Đoạn văn nói 'adults should aim for seven to nine hours of sleep each night' (người lớn nên ngủ 7-9 tiếng mỗi đêm)."
+      },
+      {
+        "id": "pl-r-b1-001-q2",
+        "question": "What does research say about well-rested employees?",
+        "options": ["They earn more money.", "They work fewer hours.", "They are more productive.", "They take more sick days."],
+        "answer": 2,
+        "explanation": "Nghiên cứu cho thấy 'well-rested employees are actually more productive' (nhân viên ngủ đủ giấc thực tế năng suất hơn)."
+      },
+      {
+        "id": "pl-r-b1-001-q3",
+        "question": "Which of the following is NOT mentioned as a consequence of lack of sleep?",
+        "options": ["Weakened immunity", "Difficulty concentrating", "Weight gain", "Increased risk of heart disease"],
+        "answer": 2,
+        "explanation": "Đoạn văn không đề cập đến 'weight gain' (tăng cân) trong danh sách hậu quả của thiếu ngủ."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-b1-002",
+    "skill": "reading",
+    "level": "B1",
+    "passage": "Online learning has become increasingly popular since the COVID-19 pandemic. While it offers many advantages, such as flexibility and access to a wide range of courses, it also has some drawbacks. Students often report feeling isolated because they miss the social interaction of a traditional classroom. Additionally, staying motivated can be challenging when studying from home, as there are many distractions. Despite these issues, many educators believe that a blended approach, combining online and in-person learning, could be the future of education.",
+    "questions": [
+      {
+        "id": "pl-r-b1-002-q1",
+        "question": "What is one advantage of online learning mentioned in the text?",
+        "options": ["Better exam scores", "Flexibility", "Lower tuition fees", "Smaller class sizes"],
+        "answer": 1,
+        "explanation": "Đoạn văn đề cập 'flexibility' (tính linh hoạt) là một lợi thế của học trực tuyến."
+      },
+      {
+        "id": "pl-r-b1-002-q2",
+        "question": "Why do students sometimes feel isolated?",
+        "options": ["Because the courses are too difficult.", "Because they miss social interaction.", "Because teachers do not respond quickly.", "Because the internet connection is slow."],
+        "answer": 1,
+        "explanation": "Sinh viên cảm thấy cô lập vì 'they miss the social interaction of a traditional classroom' (thiếu tương tác xã hội của lớp học truyền thống)."
+      },
+      {
+        "id": "pl-r-b1-002-q3",
+        "question": "What approach do many educators support for the future?",
+        "options": ["Fully online learning only", "A blended approach", "Traditional classroom only", "Self-study without teachers"],
+        "answer": 1,
+        "explanation": "Nhiều nhà giáo dục ủng hộ 'a blended approach, combining online and in-person learning' (phương pháp kết hợp)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-b1-003",
+    "skill": "reading",
+    "level": "B1",
+    "passage": "Vietnam is one of the largest coffee producers in the world, second only to Brazil. Coffee was first introduced to Vietnam by French colonists in the 19th century. Today, the Central Highlands region, particularly provinces like Dak Lak and Gia Lai, is the heart of Vietnamese coffee production. Vietnamese coffee culture is unique; people prefer strong, dark roast coffee often served with condensed milk. In recent years, specialty coffee shops have become increasingly popular in major cities like Hanoi and Ho Chi Minh City.",
+    "questions": [
+      {
+        "id": "pl-r-b1-003-q1",
+        "question": "Which country produces more coffee than Vietnam?",
+        "options": ["Colombia", "Indonesia", "Brazil", "Ethiopia"],
+        "answer": 2,
+        "explanation": "Đoạn văn nói Việt Nam là nước sản xuất cà phê lớn thứ hai, chỉ sau 'Brazil'."
+      },
+      {
+        "id": "pl-r-b1-003-q2",
+        "question": "Who introduced coffee to Vietnam?",
+        "options": ["American traders", "Japanese merchants", "French colonists", "Chinese immigrants"],
+        "answer": 2,
+        "explanation": "Đoạn văn nói 'Coffee was first introduced to Vietnam by French colonists' (Cà phê được người Pháp đưa vào Việt Nam)."
+      },
+      {
+        "id": "pl-r-b1-003-q3",
+        "question": "How do Vietnamese people typically drink their coffee?",
+        "options": ["With fresh milk and sugar", "Black without any additions", "With condensed milk", "Mixed with tea"],
+        "answer": 2,
+        "explanation": "Đoạn văn mô tả 'strong, dark roast coffee often served with condensed milk' (cà phê đậm thường pha với sữa đặc)."
+      }
+    ]
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "pl-gv-a2-001",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "sentence_completion",
+    "question": "I ______ to the cinema last night with my friends.",
+    "options": ["go", "goes", "went", "going"],
+    "answer": 2,
+    "explanation": "Hành động đã xảy ra 'last night' → dùng thì quá khứ đơn: 'went' (dạng quá khứ của 'go')."
+  },
+  {
+    "id": "pl-gv-a2-002",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "word_choice",
+    "question": "Can you speak more ______? I cannot hear you clearly.",
+    "options": ["quietly", "slowly", "loudly", "softly"],
+    "answer": 2,
+    "explanation": "'Loudly' (to hơn) là từ phù hợp khi bạn không nghe rõ (I cannot hear you clearly)."
+  },
+  {
+    "id": "pl-gv-a2-003",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "sentence_completion",
+    "question": "She is ______ than her sister. Her sister is very short.",
+    "options": ["tall", "taller", "tallest", "more tall"],
+    "answer": 1,
+    "explanation": "So sánh hơn với tính từ ngắn: tall → taller (cao hơn)."
+  },
+  {
+    "id": "pl-gv-a2-004",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "error_correction",
+    "question": "Which sentence has a grammar mistake?",
+    "options": ["I have two brothers.", "She don't like chocolate.", "They are playing football.", "We went to school yesterday."],
+    "answer": 1,
+    "explanation": "Câu sai: 'She don't like chocolate.' → Phải dùng 'doesn't' vì She là ngôi thứ ba số ít: 'She doesn't like chocolate.'"
+  },
+  {
+    "id": "pl-gv-a2-005",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "sentence_completion",
+    "question": "We ______ TV when the phone rang.",
+    "options": ["watch", "watched", "were watching", "are watching"],
+    "answer": 2,
+    "explanation": "Hành động đang xảy ra trong quá khứ (were watching) thì bị ngắt bởi hành động khác (the phone rang) → thì quá khứ tiếp diễn."
+  }
+]

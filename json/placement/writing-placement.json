@@ -1,0 +1,102 @@
+[
+  {
+    "id": "pl-w-a1-001",
+    "skill": "writing",
+    "level": "A1",
+    "type": "sentence_transformation",
+    "question": "Choose the sentence that has the same meaning as: 'Tom has a red car.'",
+    "options": ["Tom's car is red.", "Tom's car was red.", "Tom had a red car.", "Red car has Tom."],
+    "answer": 0,
+    "explanation": "Câu có nghĩa tương đương: 'Tom has a red car' = 'Tom's car is red' (Xe của Tom màu đỏ)."
+  },
+  {
+    "id": "pl-w-a2-001",
+    "skill": "writing",
+    "level": "A2",
+    "type": "error_identification",
+    "question": "Find the error in this sentence: 'Yesterday, she go to the market and buyed some vegetables for dinner.'",
+    "options": ["Yesterday → Last day", "go → went", "buyed → bought", "Both B and C are correct"],
+    "answer": 3,
+    "explanation": "Hai lỗi: 'go' phải đổi thành 'went' (quá khứ đơn) và 'buyed' phải đổi thành 'bought' (dạng quá khứ bất quy tắc của 'buy')."
+  },
+  {
+    "id": "pl-w-b1-001",
+    "skill": "writing",
+    "level": "B1",
+    "type": "paragraph_coherence",
+    "question": "Put these sentences in the correct order to form a logical paragraph:\n\n(A) Finally, she passed the exam with excellent results.\n(B) First, she made a detailed study plan for each subject.\n(C) Maria wanted to pass her university entrance exam.\n(D) Then, she studied for four hours every day without missing a single session.",
+    "options": ["C → B → D → A", "B → C → D → A", "C → D → B → A", "A → B → C → D"],
+    "answer": 0,
+    "explanation": "Thứ tự logic: Giới thiệu mục tiêu (C) → Bước 1 lập kế hoạch (B) → Bước 2 thực hiện (D) → Kết quả (A)."
+  },
+  {
+    "id": "pl-w-b1-002",
+    "skill": "writing",
+    "level": "B1",
+    "type": "sentence_transformation",
+    "question": "Rewrite: 'People speak English in many countries.' → Change to passive voice.",
+    "options": ["English is spoken in many countries.", "English was spoken in many countries.", "English has been spoken in many countries.", "English will be spoken in many countries."],
+    "answer": 0,
+    "explanation": "Chuyển câu chủ động sang bị động (thì hiện tại đơn): S + is/are + V3. 'English is spoken in many countries.'"
+  },
+  {
+    "id": "pl-w-b2-001",
+    "skill": "writing",
+    "level": "B2",
+    "type": "error_identification",
+    "question": "Identify the error: 'Despite of the heavy rain, the outdoor concert proceeded as planned because the organizers had prepared waterproof shelters.'",
+    "options": ["Despite of → Despite", "proceeded → preceded", "had prepared → have prepared", "waterproof → waterproofed"],
+    "answer": 0,
+    "explanation": "'Despite' không đi với 'of'. Đúng: 'Despite the heavy rain' hoặc 'In spite of the heavy rain'."
+  },
+  {
+    "id": "pl-w-b2-002",
+    "skill": "writing",
+    "level": "B2",
+    "type": "sentence_transformation",
+    "question": "Rewrite using inversion: 'I have never seen such a breathtaking landscape in my entire life.'",
+    "options": ["Never have I seen such a breathtaking landscape in my entire life.", "Never I have seen such a breathtaking landscape.", "I never have seen such a breathtaking landscape.", "Such a breathtaking landscape I have never seen in my life."],
+    "answer": 0,
+    "explanation": "Đảo ngữ với 'Never': Never + have/has + S + V3. 'Never have I seen such a breathtaking landscape in my entire life.'"
+  },
+  {
+    "id": "pl-w-c1-001",
+    "skill": "writing",
+    "level": "C1",
+    "type": "paragraph_coherence",
+    "question": "Choose the best sentence to fill the gap:\n\n'The study revealed that employees who work remotely report higher levels of job satisfaction. ____________. However, researchers caution that prolonged isolation may negatively impact mental health in the long term.'",
+    "options": ["This is because remote work eliminates commuting stress and offers greater schedule flexibility.", "Remote workers always earn more money than office workers.", "All companies should immediately switch to fully remote operations.", "Working from home is not suitable for any type of job."],
+    "answer": 0,
+    "explanation": "Câu điền vào phải giải thích tại sao remote workers có job satisfaction cao hơn, đồng thời nối mạch với câu 'However' phía sau. Lựa chọn A cung cấp lý do hợp lý."
+  },
+  {
+    "id": "pl-w-c1-002",
+    "skill": "writing",
+    "level": "C1",
+    "type": "open_cloze",
+    "question": "Fill in the blank with ONE appropriate word:\n\n'The committee reached a consensus ______ the need for stricter environmental regulations, though disagreements persisted regarding the timeline for implementation.'",
+    "options": ["on", "for", "with", "about"],
+    "answer": 0,
+    "explanation": "Cụm cố định: 'reach a consensus on' (đạt đồng thuận về). 'On' là giới từ đúng đi sau 'consensus'."
+  },
+  {
+    "id": "pl-w-c2-001",
+    "skill": "writing",
+    "level": "C2",
+    "type": "sentence_transformation",
+    "question": "Which sentence best paraphrases: 'The ubiquity of smartphones has fundamentally altered the dynamics of interpersonal communication, engendering both unprecedented connectivity and a paradoxical sense of social fragmentation.'",
+    "options": ["Smartphones are everywhere but nobody uses them for communication anymore.", "The widespread use of smartphones has both connected people more and created a contradictory feeling of social disconnection.", "Smartphones have made communication impossible and society has completely collapsed.", "Only wealthy people can afford smartphones, which creates social inequality."],
+    "answer": 1,
+    "explanation": "Diễn giải chính xác: 'ubiquity' = widespread use, 'unprecedented connectivity' = connected people more, 'paradoxical sense of social fragmentation' = contradictory feeling of social disconnection."
+  },
+  {
+    "id": "pl-w-c2-002",
+    "skill": "writing",
+    "level": "C2",
+    "type": "error_identification",
+    "question": "Identify the stylistic weakness: 'The ramifications of anthropogenic climate change are, to put it mildly, absolutely catastrophic, and furthermore, it is undeniably clear that immediate, decisive action is unquestionably necessary without any shadow of a doubt.'",
+    "options": ["Incorrect use of 'anthropogenic'", "Excessive redundancy and unnecessary intensifiers weaken the academic register", "The sentence is too short to convey the intended meaning", "The passive voice should be used instead of active voice"],
+    "answer": 1,
+    "explanation": "Câu chứa quá nhiều từ nhấn mạnh thừa (absolutely, undeniably, unquestionably, without any shadow of a doubt) gây redundancy, làm yếu văn phong học thuật. Trong academic writing, nên dùng ngôn ngữ chính xác và tiết chế."
+  }
+]

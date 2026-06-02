@@ -1,0 +1,60 @@
+[
+  {
+    "id": "pl-r-b2-001",
+    "skill": "reading",
+    "level": "B2",
+    "passage": "The concept of 'fast fashion' refers to the rapid production of inexpensive clothing that mimics the latest trends from high-end fashion houses. While it has democratized fashion by making trendy clothing accessible to a broader audience, the environmental and ethical costs are staggering. The fashion industry is responsible for approximately 10% of global carbon emissions, and fast fashion contributes significantly to textile waste, with an estimated 85% of all textiles ending up in landfills each year. Furthermore, many fast fashion garments are produced in developing countries where workers endure poor conditions and receive wages below the living standard.",
+    "questions": [
+      {
+        "id": "pl-r-b2-001-q1",
+        "question": "What percentage of global carbon emissions does the fashion industry account for?",
+        "options": ["About 5%", "About 10%", "About 20%", "About 30%"],
+        "answer": 1,
+        "explanation": "Đoạn văn nói 'The fashion industry is responsible for approximately 10% of global carbon emissions' (khoảng 10% lượng khí thải carbon toàn cầu)."
+      },
+      {
+        "id": "pl-r-b2-001-q2",
+        "question": "According to the passage, what is one positive aspect of fast fashion?",
+        "options": ["It improves garment quality.", "It makes trendy clothing accessible to more people.", "It creates sustainable jobs in developing countries.", "It reduces carbon emissions."],
+        "answer": 1,
+        "explanation": "Khía cạnh tích cực được đề cập là 'democratized fashion by making trendy clothing accessible to a broader audience' (phổ biến thời trang đến nhiều người hơn)."
+      },
+      {
+        "id": "pl-r-b2-001-q3",
+        "question": "What happens to most textiles according to the text?",
+        "options": ["They are recycled into new products.", "They are donated to charity organizations.", "They end up in landfills.", "They are exported to other countries."],
+        "answer": 2,
+        "explanation": "Đoạn văn nói '85% of all textiles ending up in landfills' (85% vải textile kết thúc ở bãi rác)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-b2-002",
+    "skill": "reading",
+    "level": "B2",
+    "passage": "Microplastics, tiny plastic particles measuring less than five millimeters, have emerged as one of the most pervasive environmental pollutants of the 21st century. These particles originate from a variety of sources: the degradation of larger plastic debris, synthetic fibers released during laundry cycles, and microbeads found in personal care products. Recent studies have detected microplastics in drinking water, seafood, table salt, and even human blood samples. While the full health implications remain under investigation, preliminary research suggests potential links to inflammation, cellular damage, and disruption of the endocrine system.",
+    "questions": [
+      {
+        "id": "pl-r-b2-002-q1",
+        "question": "Which of the following is NOT mentioned as a source of microplastics?",
+        "options": ["Degradation of larger plastic debris", "Synthetic fibers from laundry", "Automobile tire wear", "Microbeads in personal care products"],
+        "answer": 2,
+        "explanation": "Đoạn văn không đề cập đến 'automobile tire wear' (mài mòn lốp xe) là nguồn vi nhựa. Ba nguồn được nêu: phân rã nhựa lớn, sợi tổng hợp khi giặt, và hạt vi nhựa trong mỹ phẩm."
+      },
+      {
+        "id": "pl-r-b2-002-q2",
+        "question": "What potential health effects of microplastics does the text mention?",
+        "options": ["Improved immune response", "Inflammation and cellular damage", "Better nutrient absorption", "Faster metabolism"],
+        "answer": 1,
+        "explanation": "Nghiên cứu sơ bộ gợi ý các tác động sức khỏe tiềm năng: 'inflammation, cellular damage, and disruption of the endocrine system' (viêm, tổn thương tế bào, rối loạn nội tiết)."
+      },
+      {
+        "id": "pl-r-b2-002-q3",
+        "question": "What can be inferred about the current state of microplastic research?",
+        "options": ["It has been conclusively proven to cause cancer.", "Research is still in its early stages and more investigation is needed.", "Scientists have found a way to completely remove microplastics from water.", "Microplastics have been shown to have no health effects."],
+        "answer": 1,
+        "explanation": "Câu 'the full health implications remain under investigation' và 'preliminary research suggests' cho thấy nghiên cứu vẫn ở giai đoạn đầu."
+      }
+    ]
+  }
+]
