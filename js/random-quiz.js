@@ -39,9 +39,21 @@ async function initRandomQuizSession(difficulty) {
         rqRewardMultiplier = 4;
     }
 
-    // Hiển thị loading
+    // Hiển thị loading và reset lại các style bị ẩn khi game over
     document.getElementById('random-quiz-intro').classList.add('hidden');
     document.getElementById('random-quiz-active').classList.remove('hidden');
+    
+    document.getElementById('rq-question-direction').style.display = '';
+    document.getElementById('rq-question-text').style.display = '';
+    document.getElementById('rq-options-container').style.display = '';
+    document.getElementById('rq-progress-bar').parentElement.style.display = '';
+    
+    // Xóa end-screen nếu vẫn còn
+    const existingEndScreen = document.getElementById('rq-end-screen');
+    if (existingEndScreen) {
+        existingEndScreen.remove();
+    }
+
     document.getElementById('rq-question-direction').textContent = "Đang kết nối Đấu Trường...";
     document.getElementById('rq-question-text').textContent = "Đang tải dữ liệu...";
     document.getElementById('rq-options-container').innerHTML = '';
@@ -306,7 +318,7 @@ async function endRandomQuiz(reasonText) {
                 <div style="font-size: 24px; font-weight: bold; color: #facc15;">+${finalStars} ⭐</div>
             </div>
             <div style="margin-top: 30px;">
-                <button class="btn-primary" onclick="document.getElementById('btn-dashboard').click();" style="width: 100%;">Nhận phần thưởng & Thoát</button>
+                <button class="btn-primary" onclick="document.getElementById('rq-end-screen').remove(); document.getElementById('btn-quiz-go-home').click();" style="width: 100%;">Nhận phần thưởng & Thoát</button>
             </div>
         </div>
     `;
@@ -320,6 +332,7 @@ async function endRandomQuiz(reasonText) {
     // Render HTML kết thúc vào thẳng khung màn hình
     const container = document.getElementById('random-quiz-active');
     const endDiv = document.createElement('div');
+    endDiv.id = 'rq-end-screen';
     endDiv.innerHTML = html;
     container.appendChild(endDiv);
     
