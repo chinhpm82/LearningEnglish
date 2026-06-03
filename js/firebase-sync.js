@@ -53,24 +53,7 @@ const isConfigured = firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_AP
 
 let app, auth, db, rtdb, googleProvider;
 let currentUser = null;
-let cachedUserData = null;
-
-if (isConfigured) {
-    try {
-        app = initializeApp(firebaseConfig);
-        auth = getAuth(app);
-        db = getFirestore(app);
-        rtdb = getDatabase(app);
-        googleProvider = new GoogleAuthProvider();
-        
-        // Bật Offline Persistence cho Firestore
-        enableIndexedDbPersistence(db).catch((err) => {
-            if (err.code == 'failed-precondition') {
-                console.warn('Multiple tabs open, persistence can only be enabled in one tab at a a time.');
-            } else if (err.code == 'unimplemented') {
-                console.warn('The current browser does not support all of the features required to enable persistence');
-            }
-        });
+let cachedUserData = null;);
         
         console.log("☁️ Firebase initialized in Cloud Sync mode with Offline Persistence.");
     } catch (error) {
@@ -367,16 +350,6 @@ window.FirebaseSync = {
     },
 
     fetchAcademicQuizzes: async () => {
-        if (isConfigured) {
-            try {
-                const snap = await getDocs(collection(db, "academic_quizzes"));
-                const items = [];
-                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
-                if (items.length > 0) return items;
-            } catch (e) {
-                console.warn("Firestore quiz fetch failed, using local fallback", e);
-            }
-        }
         try {
             const response = await fetch('json/quiz_bank.json');
             return await response.json();
@@ -387,37 +360,18 @@ window.FirebaseSync = {
     },
 
     fetchQuizBatch: async (ids) => {
-        if (!isConfigured || ids.length === 0) return [];
+        if (ids.length === 0) return [];
         try {
-            // Firestore 'in' query limits to 30 items
-            const chunks = [];
-            for (let i = 0; i < ids.length; i += 30) {
-                chunks.push(ids.slice(i, i + 30));
-            }
-            const results = [];
-            for (const chunk of chunks) {
-                const q = query(collection(db, "quiz_bank"), where("id", "in", chunk));
-                const snap = await getDocs(q);
-                snap.forEach(d => results.push({ id: d.id, ...d.data() }));
-            }
-            return results;
+            const response = await fetch('json/quiz_bank.json');
+            const allQuizzes = await response.json();
+            return allQuizzes.filter(q => ids.includes(q.id));
         } catch (e) {
-            console.error("Error fetching quiz batch from Firestore:", e);
+            console.error('Local quiz fetch failed:', e);
             return [];
         }
     },
 
     fetchAcademicGrammar: async () => {
-        if (isConfigured) {
-            try {
-                const snap = await getDocs(collection(db, "academic_grammar"));
-                const items = [];
-                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
-                if (items.length > 0) return items;
-            } catch (e) {
-                console.warn("Firestore grammar fetch failed, using local fallback", e);
-            }
-        }
         try {
             const response = await fetch('json/grammar-data.json');
             return await response.json();
@@ -428,16 +382,6 @@ window.FirebaseSync = {
     },
 
     fetchAcademicStories: async () => {
-        if (isConfigured) {
-            try {
-                const snap = await getDocs(collection(db, "academic_stories"));
-                const items = [];
-                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
-                if (items.length > 0) return items;
-            } catch (e) {
-                console.warn("Firestore stories fetch failed, using local fallback", e);
-            }
-        }
         try {
             const response = await fetch('json/stories-data.json');
             return await response.json();
@@ -448,16 +392,6 @@ window.FirebaseSync = {
     },
 
     fetchAcademicSentences: async () => {
-        if (isConfigured) {
-            try {
-                const snap = await getDocs(collection(db, "academic_sentences"));
-                const items = [];
-                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
-                if (items.length > 0) return items;
-            } catch (e) {
-                console.warn("Firestore sentences fetch failed, using local fallback", e);
-            }
-        }
         try {
             const response = await fetch('json/sentences-data.json');
             return await response.json();
@@ -468,16 +402,6 @@ window.FirebaseSync = {
     },
 
     fetchAcademicPodcasts: async () => {
-        if (isConfigured) {
-            try {
-                const snap = await getDocs(collection(db, "academic_podcasts"));
-                const items = [];
-                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
-                if (items.length > 0) return items;
-            } catch (e) {
-                console.warn("Firestore podcasts fetch failed, using local fallback", e);
-            }
-        }
         try {
             const response = await fetch('json/podcast-data.json');
             return await response.json();
@@ -488,16 +412,6 @@ window.FirebaseSync = {
     },
 
     fetchAcademicTranslation: async () => {
-        if (isConfigured) {
-            try {
-                const snap = await getDocs(collection(db, "academic_translation"));
-                const items = [];
-                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
-                if (items.length > 0) return items;
-            } catch (e) {
-                console.warn("Firestore short translation fetch failed, using local fallback", e);
-            }
-        }
         try {
             const response = await fetch('json/translation-data.json');
             return await response.json();
@@ -508,16 +422,6 @@ window.FirebaseSync = {
     },
 
     fetchAcademicLongTranslation: async () => {
-        if (isConfigured) {
-            try {
-                const snap = await getDocs(collection(db, "academic_long_translation"));
-                const items = [];
-                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
-                if (items.length > 0) return items;
-            } catch (e) {
-                console.warn("Firestore long translation fetch failed, using local fallback", e);
-            }
-        }
         try {
             const response = await fetch('json/long-translation-data.json');
             return await response.json();
