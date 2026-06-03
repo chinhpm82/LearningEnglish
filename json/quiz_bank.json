@@ -1,8 +1,8 @@
 [
   {
-    "id": "pq-g1",
+    "id": "qz-0001",
     "section": "grammar",
-    "level": "A1/A2",
+    "level": "A1",
     "question": "Choose the correct sentence:",
     "options": [
       "She don't like drinking cold milk in the morning.",
@@ -14,9 +14,9 @@
     "explanation": "Với chủ ngữ ngôi thứ ba số ít (She), ta dùng trợ động từ phủ định 'doesn't' + động từ nguyên thể 'like'."
   },
   {
-    "id": "pq-g2",
+    "id": "qz-0002",
     "section": "grammar",
-    "level": "A3/B1",
+    "level": "B1",
     "question": "Yesterday, while I ______ my English vocabulary, the electricity suddenly went out.",
     "options": [
       "am studying",
@@ -28,9 +28,9 @@
     "explanation": "Sử dụng thì Quá khứ tiếp diễn (was studying) để diễn tả hành động đang xảy ra trong quá khứ thì có hành động khác xen vào (went out)."
   },
   {
-    "id": "pq-g3",
+    "id": "qz-0003",
     "section": "grammar",
-    "level": "B2/B3",
+    "level": "B2",
     "question": "If we ______ enough stars yesterday, we would have unlocked the C1 advanced vocabulary level today.",
     "options": [
       "collected",
@@ -42,9 +42,9 @@
     "explanation": "Câu điều kiện hỗn hợp (Mixed Conditional): diễn tả giả thiết trái ngược quá khứ ('had collected' - điều kiện loại 3) và kết quả trái ngược hiện tại ('would have unlocked' - kết quả loại 2)."
   },
   {
-    "id": "pq-g4",
+    "id": "qz-0004",
     "section": "grammar",
-    "level": "C1/C2",
+    "level": "C2",
     "question": "______ did I realize that mastering English pronunciation required daily spoken practice.",
     "options": [
       "Little",
@@ -56,9 +56,9 @@
     "explanation": "Cấu trúc đảo ngữ với trạng từ phủ định 'Little' (Little did I realize...): Tôi gần như không hề nhận ra rằng..."
   },
   {
-    "id": "pq-v1",
+    "id": "qz-0005",
     "section": "vocabulary",
-    "level": "A1/A2",
+    "level": "A1",
     "question": "My father is a doctor. He works in a local ______.",
     "options": [
       "office",
@@ -70,9 +70,9 @@
     "explanation": "Bác sĩ (doctor) làm việc ở bệnh viện (hospital)."
   },
   {
-    "id": "pq-v2",
+    "id": "qz-0006",
     "section": "vocabulary",
-    "level": "A3/B1",
+    "level": "B1",
     "question": "She decided to ______ smoking to improve her physical health.",
     "options": [
       "give up",
@@ -84,9 +84,9 @@
     "explanation": "Cụm động từ 'give up' nghĩa là từ bỏ (thói quen, sở thích, hành vi)."
   },
   {
-    "id": "pq-v3",
+    "id": "qz-0007",
     "section": "vocabulary",
-    "level": "B2/B3",
+    "level": "B2",
     "question": "The teacher gave us a very ______ explanation, so everyone understood the math problem easily.",
     "options": [
       "ambiguous",
@@ -98,9 +98,9 @@
     "explanation": "'Lucid' nghĩa là rõ ràng, dễ hiểu, minh bạch. Trái ngược hoàn toàn với ambiguous (mơ hồ) hay superficial (hời hợt)."
   },
   {
-    "id": "pq-v4",
+    "id": "qz-0008",
     "section": "vocabulary",
-    "level": "C1/C2",
+    "level": "C2",
     "question": "In times of financial crisis, many businesses had no choice but to ______ their non-core employees.",
     "options": [
       "liquidate",
@@ -112,9 +112,9 @@
     "explanation": "'Retrench' nghĩa là tinh giảm biên chế, cắt giảm nhân sự hoặc chi phí để tiết kiệm tài chính."
   },
   {
-    "id": "pq-r1",
+    "id": "qz-0009",
     "section": "reading",
-    "level": "A1/A2",
+    "level": "A1",
     "question": "Read the text: 'Mary lives in London. She enjoys walking in Hyde Park every Sunday morning. However, she hates cold rain.' \n\nWhen does Mary walk in Hyde Park?",
     "options": [
       "Every Saturday afternoon",
@@ -126,9 +126,9 @@
     "explanation": "Đoạn văn ghi rõ 'every Sunday morning' (mỗi sáng Chủ Nhật)."
   },
   {
-    "id": "pq-r2",
+    "id": "qz-0010",
     "section": "reading",
-    "level": "A3/B1",
+    "level": "B1",
     "question": "Read the text: 'Regular exercise offers enormous benefits for mental health. Physical activities stimulate the release of endorphins, commonly known as feel-good hormones, which mitigate stress and elevate overall mood.' \n\nAccording to the text, what are endorphins?",
     "options": [
       "A type of physical exercise",
@@ -140,9 +140,9 @@
     "explanation": "Endorphins được định nghĩa là 'feel-good hormones, which mitigate stress and elevate overall mood' (hormone giảm stress và tăng tâm trạng)."
   },
   {
-    "id": "pq-r3",
+    "id": "qz-0011",
     "section": "reading",
-    "level": "B2/B3",
+    "level": "B2",
     "question": "Read the text: 'The rise of artificial intelligence has revolutionized traditional job markets. While automation threatens repetitive manual jobs, it simultaneously spawns fresh opportunities in technology development, data analytics, and ethical AI auditing.' \n\nWhat is the main idea of this passage?",
     "options": [
       "Artificial intelligence will completely destroy all human job opportunities.",
@@ -154,9 +154,9 @@
     "explanation": "Đoạn văn nêu rõ tác động kép của AI: đe dọa công việc thủ công lặp lại (automates repetitive jobs) nhưng đồng thời mở ra nhiều cơ hội mới (spawns fresh opportunities)."
   },
   {
-    "id": "pq-r4",
+    "id": "qz-0012",
     "section": "reading",
-    "level": "C1/C2",
+    "level": "C2",
     "question": "Read the text: 'Critics argue that universal basic income (UBI) fosters labor market disincentives. Conversely, proponents contend that by establishing a financial safety net, UBI empowers marginalized individuals to pursue higher education or entrepreneurial ventures without fear of destitution.' \n\nWhich of the following can be inferred from the passage?",
     "options": [
       "Proponents believe UBI makes people lazy and unwilling to work.",
@@ -168,9 +168,9 @@
     "explanation": "Ta có thể suy luận (infer) từ đoạn văn: bằng việc tạo lưới an sinh (financial safety net), UBI giúp những người yếu thế có cơ hội tự do khởi nghiệp hoặc học lên cao (empowers marginalized individuals to pursue entrepreneurial ventures/higher education)."
   },
   {
-    "id": "pq-l1",
+    "id": "qz-0013",
     "section": "listening",
-    "level": "A1/A2",
+    "level": "A1",
     "question": "Conversation: \nJohn: 'Excuse me, could you tell me where the nearest train station is?' \nStranger: '__________________'",
     "options": [
       "Yes, I would love to watch a train movie.",
@@ -182,9 +182,9 @@
     "explanation": "Câu hỏi đường đi ('where the nearest train station is') cần phản xạ chỉ dẫn đường đi phù hợp."
   },
   {
-    "id": "pq-l2",
+    "id": "qz-0014",
     "section": "listening",
-    "level": "A3/B1",
+    "level": "A2",
     "question": "Conversation: \nDoctor: 'How long have you been suffering from these severe headaches?' \nPatient: '__________________'",
     "options": [
       "I usually take some medicine from my bag.",
@@ -196,9 +196,9 @@
     "explanation": "Câu hỏi về thời lượng kéo dài triệu chứng bệnh ('How long have you been suffering...') đòi hỏi câu trả lời về khoảng thời gian ('For about four days now')."
   },
   {
-    "id": "pq-l3",
+    "id": "qz-0015",
     "section": "listening",
-    "level": "B2/B3",
+    "level": "B2",
     "question": "Conversation: \nManager: 'We really need to cut down on our operational costs this quarter.' \nAssistant: '__________________'",
     "options": [
       "Good idea, let's hire ten more high-salary employees right away.",
@@ -210,9 +210,9 @@
     "explanation": "Đề xuất cắt giảm chi phí vận hành ('cut down on operational costs') tương thích với giải pháp cụ thể: chuyển sang hóa đơn điện tử và giảm điện tiêu dùng."
   },
   {
-    "id": "pq-l4",
+    "id": "qz-0016",
     "section": "listening",
-    "level": "C1/C2",
+    "level": "C1",
     "question": "Conversation: \nCEO: 'I am afraid our competitor's new software launch has completely caught us off guard.' \nDirector: '__________________'",
     "options": [
       "Congratulations! That is wonderful news for our software sales.",

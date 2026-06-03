@@ -451,9 +451,10 @@ function initApp() {
         }
     });
 
-    document.getElementById('btn-start-quiz').addEventListener('click', () => {
-        const cat = document.getElementById('quiz-category-select').value;
-        if (cat === 'assessment') {
+    // Quiz UI Mode Cards
+    const modeAssessmentBtn = document.getElementById('mode-assessment');
+    if (modeAssessmentBtn) {
+        modeAssessmentBtn.addEventListener('click', () => {
             const modal = document.getElementById('placement-test-modal');
             if (modal) {
                 modal.classList.remove('hidden');
@@ -461,29 +462,68 @@ function initApp() {
                 document.getElementById('placement-quiz-screen').classList.add('hidden');
                 document.getElementById('placement-result-screen').classList.add('hidden');
             }
-        } else {
-            initQuizSession(cat);
-        }
-    });
+        });
+    }
 
-    document.getElementById('btn-quiz-next').addEventListener('click', handleQuizNext);
+    const modePracticeBtn = document.getElementById('mode-practice-all');
+    if (modePracticeBtn) {
+        modePracticeBtn.addEventListener('click', () => {
+            initQuizSession('all');
+        });
+    }
+
+    const modeRandomBtn = document.getElementById('mode-random-quiz');
+    if (modeRandomBtn) {
+        modeRandomBtn.addEventListener('click', () => {
+            document.getElementById('quiz-intro-state').classList.add('hidden');
+            document.getElementById('random-quiz-intro').classList.remove('hidden');
+        });
+    }
+
+    // Random Quiz Difficulty Buttons
+    const btnRqEasy = document.getElementById('btn-rq-easy');
+    const btnRqNormal = document.getElementById('btn-rq-normal');
+    const btnRqHardcore = document.getElementById('btn-rq-hardcore');
+    const btnRqBack = document.getElementById('btn-rq-back');
+
+    if (btnRqEasy) btnRqEasy.addEventListener('click', () => initRandomQuizSession('easy'));
+    if (btnRqNormal) btnRqNormal.addEventListener('click', () => initRandomQuizSession('normal'));
+    if (btnRqHardcore) btnRqHardcore.addEventListener('click', () => initRandomQuizSession('hardcore'));
     
-    document.getElementById('btn-quiz-restart').addEventListener('click', () => {
-        const cat = document.getElementById('quiz-category-select').value;
-        initQuizSession(cat);
+    if (btnRqBack) {
+        btnRqBack.addEventListener('click', () => {
+            document.getElementById('random-quiz-intro').classList.add('hidden');
+            document.getElementById('quiz-intro-state').classList.remove('hidden');
+        });
+    }
+
+    document.getElementById('btn-quiz-next')?.addEventListener('click', handleQuizNext);
+    
+    document.getElementById('btn-quiz-restart')?.addEventListener('click', () => {
+        initQuizSession('all');
     });
 
-    document.getElementById('btn-quiz-go-dashboard').addEventListener('click', () => {
+    document.getElementById('btn-quiz-go-dashboard')?.addEventListener('click', () => {
         document.getElementById('btn-dashboard').click();
     });
 
-    document.getElementById('btn-quiz-go-home').addEventListener('click', () => {
+    document.getElementById('btn-quiz-go-home')?.addEventListener('click', () => {
         const resultState = document.getElementById('quiz-result-state');
         const activeState = document.getElementById('quiz-active-state');
         const introState = document.getElementById('quiz-intro-state');
+        const rqIntro = document.getElementById('random-quiz-intro');
+        const rqActive = document.getElementById('random-quiz-active');
+        
         if (resultState) resultState.classList.add('hidden');
         if (activeState) activeState.classList.add('hidden');
+        if (rqIntro) rqIntro.classList.add('hidden');
+        if (rqActive) rqActive.classList.add('hidden');
         if (introState) introState.classList.remove('hidden');
+        
+        // Stop timer if running
+        if (typeof rqTimerInterval !== 'undefined') {
+            clearInterval(rqTimerInterval);
+        }
     });
 
     // 8. Sentence category filtering

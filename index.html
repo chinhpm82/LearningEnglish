@@ -498,23 +498,99 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
                         </div>
                         <h2>Thử Thách Trắc Nghiệm Ôn Tập 🧠</h2>
-                        <p class="subtitle">Kiểm tra khả năng ghi nhớ từ vựng của bạn. Mỗi lượt gồm 10 câu hỏi ngẫu nhiên.</p>
-                        <div class="quiz-settings">
-                            <label for="quiz-category-select">Chọn bộ từ vựng kiểm tra:</label>
-                            <select id="quiz-category-select" class="styled-select">
-                                <option value="assessment">★ BÀI THI ĐÁNH GIÁ NĂNG LỰC ĐẦU VÀO CEFR ★</option>
-                                <option value="all">Tất cả từ vựng (Luyện tập)</option>
-                                <option value="oxford">Từ vựng thiết yếu Oxford (Luyện tập)</option>
-                                <option value="academic">Từ học thuật & IELTS (Luyện tập)</option>
-                                <option value="idioms">Thành ngữ & Cụm từ (Luyện tập)</option>
-                                <option value="spec-tech">💻 Chuyên ngành Công nghệ (Luyện tập)</option>
-                                <option value="spec-science">🧪 Khoa học Tự nhiên (Luyện tập)</option>
-                                <option value="spec-social">🌍 Khoa học Xã hội (Luyện tập)</option>
-                                <option value="custom">Sổ tay cá nhân (Luyện tập)</option>
-                            </select>
+                        <p class="subtitle">Kiểm tra khả năng của bạn thông qua các chế độ luyện tập đa dạng.</p>
+                        
+                        <div class="quiz-modes-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; margin-top: 30px; text-align: left;">
+                            <div class="quiz-mode-card" id="mode-assessment" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.1)'" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; cursor: pointer; transition: all 0.3s ease;">
+                                <div style="font-size: 32px; margin-bottom: 12px;">🎯</div>
+                                <h3 style="font-size: 18px; margin-bottom: 8px; color: var(--text-light);">Đánh giá năng lực</h3>
+                                <p style="color: var(--text-muted); font-size: 13px; line-height: 1.4;">Làm bài kiểm tra thích ứng CEFR để định vị lại trình độ hiện tại của bạn.</p>
+                            </div>
+                            <div class="quiz-mode-card" id="mode-practice-all" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.1)'" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; cursor: pointer; transition: all 0.3s ease;">
+                                <div style="font-size: 32px; margin-bottom: 12px;">📚</div>
+                                <h3 style="font-size: 18px; margin-bottom: 8px; color: var(--text-light);">Ôn tập tổng hợp</h3>
+                                <p style="color: var(--text-muted); font-size: 13px; line-height: 1.4;">Làm 10 câu trắc nghiệm ngẫu nhiên từ kho từ vựng cá nhân của bạn.</p>
+                            </div>
+                            <div class="quiz-mode-card" id="mode-random-quiz" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='#a855f7'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(168,85,247,0.3)'" style="background: linear-gradient(135deg, rgba(99,102,241,0.05) 0%, rgba(168,85,247,0.05) 100%); border: 1px solid rgba(168,85,247,0.3); border-radius: 16px; padding: 24px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+                                <div style="font-size: 32px; margin-bottom: 12px;">🎲</div>
+                                <h3 style="font-size: 18px; margin-bottom: 8px; color: #c084fc;">Đấu Trường Ngẫu Nhiên</h3>
+                                <p style="color: var(--text-muted); font-size: 13px; line-height: 1.4;">Thử thách sinh tồn trả lời câu hỏi liên hoàn trong vòng 5 phút!</p>
+                                <div style="position: absolute; top: 12px; right: 12px; background: #a855f7; color: white; font-size: 10px; font-weight: bold; padding: 4px 8px; border-radius: 20px;">NEW</div>
+                            </div>
                         </div>
-                        <button class="btn-primary btn-large animate-glow" id="btn-start-quiz">Bắt đầu ngay</button>
                     </div>
+
+                    <!-- Random Quiz Difficulty Selection State -->
+                    <div id="random-quiz-intro" class="quiz-panel text-center hidden">
+                        <div style="font-size: 48px; margin-bottom: 20px;">🎲</div>
+                        <h2 style="font-family: 'Outfit'; margin-bottom: 10px;">Đấu Trường Ngẫu Nhiên</h2>
+                        <p class="subtitle" style="margin-bottom: 30px;">Bạn có 5 phút đếm lùi và 3 mạng. Hãy chọn độ khó để bắt đầu!</p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px;">
+                            <button class="btn-secondary rq-diff-btn" id="btn-rq-easy" style="padding: 20px; border-color: rgba(74, 222, 128, 0.4); color: #4ade80; display: flex; flex-direction: column; align-items: center; gap: 8px; background: rgba(74, 222, 128, 0.05);">
+                                <span style="font-size: 28px;">🟢</span>
+                                <strong style="font-size: 16px;">Dễ (Easy)</strong>
+                                <span style="font-size: 12px; opacity: 0.8; font-weight: normal;">Bắt đầu A1/A2 (x1 ⭐)</span>
+                            </button>
+                            <button class="btn-secondary rq-diff-btn" id="btn-rq-normal" style="padding: 20px; border-color: rgba(250, 204, 21, 0.4); color: #facc15; display: flex; flex-direction: column; align-items: center; gap: 8px; background: rgba(250, 204, 21, 0.05);">
+                                <span style="font-size: 28px;">🟡</span>
+                                <strong style="font-size: 16px;">Trung bình (Normal)</strong>
+                                <span style="font-size: 12px; opacity: 0.8; font-weight: normal;">Bắt đầu B1/B2 (x2 ⭐)</span>
+                            </button>
+                            <button class="btn-secondary rq-diff-btn" id="btn-rq-hardcore" style="padding: 20px; border-color: rgba(248, 113, 113, 0.4); color: #f87171; display: flex; flex-direction: column; align-items: center; gap: 8px; background: rgba(248, 113, 113, 0.05);">
+                                <span style="font-size: 28px;">🔴</span>
+                                <strong style="font-size: 16px;">Khó (Hardcore)</strong>
+                                <span style="font-size: 12px; opacity: 0.8; font-weight: normal;">Toàn C1/C2 (x4 ⭐)</span>
+                            </button>
+                        </div>
+                        <button class="btn-secondary" id="btn-rq-back" style="border: none;">⬅️ Quay lại</button>
+                    </div>
+
+                    <!-- Random Quiz Active State -->
+                    <div id="random-quiz-active" class="quiz-panel hidden">
+                        <div class="quiz-header-row" style="margin-bottom: 20px;">
+                            <div style="display: flex; gap: 15px; align-items: center;">
+                                <span style="font-size: 20px; font-weight: bold; color: var(--accent); display: flex; align-items: center; gap: 6px; font-family: monospace; letter-spacing: 1px;">
+                                    ⏱️ <span id="rq-timer">05:00</span>
+                                </span>
+                                <div id="rq-lives" style="font-size: 18px; letter-spacing: 2px;">❤️❤️❤️</div>
+                            </div>
+                            <div class="quiz-score-badge" style="background: rgba(168,85,247,0.15); color: #c084fc; border: 1px solid rgba(168,85,247,0.3); display: flex; align-items: center;">
+                                Điểm: <strong id="rq-score" style="font-size: 18px; margin-left: 4px;">0</strong>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-progress-bar-wrapper" style="margin-bottom: 25px;">
+                            <div class="quiz-progress-bar-fill" id="rq-progress-bar" style="width: 0%; background: linear-gradient(90deg, #c084fc, #a855f7);"></div>
+                        </div>
+
+                        <!-- Question Box -->
+                        <div class="question-box" style="text-align: center;">
+                            <span class="question-label" id="rq-question-direction" style="color: #c084fc; display: block; margin-bottom: 12px; font-weight: 600;">Đang chuẩn bị đấu trường...</span>
+                            <div id="rq-passage" style="display: none; font-size: 15px; color: var(--text-muted); background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left; line-height: 1.6; max-height: 150px; overflow-y: auto;"></div>
+                            <h3 class="question-text" id="rq-question-text" style="font-size: 22px; line-height: 1.5; margin-bottom: 20px;">Đang tải dữ liệu từ server...</h3>
+                            <button class="btn-voice-small hidden" id="rq-speak-btn" title="Nghe đoạn hội thoại" style="margin: 0 auto;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                            </button>
+                        </div>
+
+                        <!-- Answer Options Grid -->
+                        <div class="options-grid" id="rq-options-container">
+                            <button class="option-card" disabled>Đang kết nối...</button>
+                        </div>
+                        
+                        <!-- Question Feedback Panel -->
+                        <div class="quiz-feedback-panel hidden" id="rq-feedback" style="margin-top: 20px; border-radius: 12px; padding: 20px; text-align: left; background: rgba(255,255,255,0.05);">
+                            <div class="feedback-content" style="display: flex; gap: 15px; margin-bottom: 15px; align-items: flex-start;">
+                                <div class="feedback-icon" id="rq-feedback-icon" style="font-size: 24px;"></div>
+                                <div class="feedback-text-group">
+                                    <h4 id="rq-feedback-title" style="margin-bottom: 5px; font-size: 18px;"></h4>
+                                    <p id="rq-feedback-detail" style="font-size: 14px; color: var(--text-muted); line-height: 1.5;"></p>
+                                </div>
+                            </div>
+                            <button class="btn-primary" id="btn-rq-next" style="width: 100%;">Tiếp tục (Enter)</button>
+                        </div>
+
 
                     <!-- Quiz Active State -->
                     <div id="quiz-active-state" class="quiz-panel hidden">
@@ -1617,6 +1693,7 @@
     <script src="js/db-manager.js" defer></script>
     <script src="js/state.js" defer></script>
     <script src="js/placement.js" defer></script>
+    <script src="js/random-quiz.js" defer></script>
     <script src="js/dashboard.js" defer></script>
     <script src="js/flashcards.js" defer></script>
     <script src="js/quiz.js" defer></script>

@@ -378,10 +378,31 @@ window.FirebaseSync = {
             }
         }
         try {
-            const response = await fetch('json/placement-questions.json');
+            const response = await fetch('json/quiz_bank.json');
             return await response.json();
         } catch (e) {
             console.error("Local quiz fetch failed:", e);
+            return [];
+        }
+    },
+
+    fetchQuizBatch: async (ids) => {
+        if (!isConfigured || ids.length === 0) return [];
+        try {
+            // Firestore 'in' query limits to 30 items
+            const chunks = [];
+            for (let i = 0; i < ids.length; i += 30) {
+                chunks.push(ids.slice(i, i + 30));
+            }
+            const results = [];
+            for (const chunk of chunks) {
+                const q = query(collection(db, "quiz_bank"), where("id", "in", chunk));
+                const snap = await getDocs(q);
+                snap.forEach(d => results.push({ id: d.id, ...d.data() }));
+            }
+            return results;
+        } catch (e) {
+            console.error("Error fetching quiz batch from Firestore:", e);
             return [];
         }
     },
