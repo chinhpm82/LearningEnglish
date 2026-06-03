@@ -7,15 +7,13 @@ let rqTimeRemaining = 300; // 5 phút = 300 giây
 let rqLives = 3;
 let rqScore = 0;
 let rqCurrentDifficulty = 'easy'; // 'easy', 'normal', 'hardcore'
-let rqCurrentLevelIndex = 0;
+let rqAllowedLevels = [];
 let rqQuestions = [];
 let rqCurrentQuestionIndex = 0;
 let rqQuizIndex = [];
-let rqCorrectInARow = 0;
 let rqRewardMultiplier = 1;
 let rqIsGameOver = false;
-
-const LEVEL_PROGRESSION = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+let rqHistory = []; // Lưu lại lịch sử trả lời: { q: questionObj, isCorrect: boolean }
 
 async function initRandomQuizSession(difficulty) {
     rqCurrentDifficulty = difficulty;
@@ -24,18 +22,18 @@ async function initRandomQuizSession(difficulty) {
     rqTimeRemaining = 300;
     rqQuestions = [];
     rqCurrentQuestionIndex = 0;
-    rqCorrectInARow = 0;
     rqIsGameOver = false;
+    rqHistory = [];
 
     // Thiết lập độ khó ban đầu và hệ số nhân điểm
     if (difficulty === 'easy') {
-        rqCurrentLevelIndex = 0; // A1
+        rqAllowedLevels = ['A1', 'A2', 'B1'];
         rqRewardMultiplier = 1;
     } else if (difficulty === 'normal') {
-        rqCurrentLevelIndex = 2; // B1
+        rqAllowedLevels = ['B1', 'B2', 'C1'];
         rqRewardMultiplier = 2;
     } else if (difficulty === 'hardcore') {
-        rqCurrentLevelIndex = 4; // C1
+        rqAllowedLevels = ['C1', 'C2'];
         rqRewardMultiplier = 4;
     }
 
@@ -85,27 +83,20 @@ async function initRandomQuizSession(difficulty) {
 }
 
 async function fetchNextBatch() {
-    const currentLevel = LEVEL_PROGRESSION[rqCurrentLevelIndex];
-    document.getElementById('rq-question-direction').textContent = `Đang tải câu hỏi Level ${currentLevel}...`;
+    document.getElementById('rq-question-direction').textContent = `Đang tải câu hỏi...`;
     
-    // Lọc các ID thuộc level hiện tại
-    const availableIds = rqQuizIndex.filter(q => q.level === currentLevel).map(q => q.id);
+    // Lọc các ID thuộc các level được phép
+    const availableIds = rqQuizIndex.filter(q => rqAllowedLevels.includes(q.level)).map(q => q.id);
     
-    // Nếu không có câu nào, tự động tăng level nếu có thể
     if (availableIds.length === 0) {
-        if (rqCurrentLevelIndex < LEVEL_PROGRESSION.length - 1) {
-            rqCurrentLevelIndex++;
-            return await fetchNextBatch();
-        } else {
-            return; // Đã hết câu hỏi
-        }
+        return; // Đã hết câu hỏi
     }
 
-    // Trộn mảng ID và lấy 10 câu (nếu là hardcore lấy nhiều hơn, hoặc lấy hết)
+    // Trộn mảng ID và lấy tối đa 50 câu (đủ cho 5 phút)
     const shuffledIds = availableIds.sort(() => 0.5 - Math.random());
-    const batchIds = shuffledIds.slice(0, 10); // Mỗi đợt tải 10 câu
+    const batchIds = shuffledIds.slice(0, 50);
 
-    // Gọi Firestore qua firebase-sync.js
+    // Gọi Firestore (hoặc local fallback) qua firebase-sync.js
     if (window.FirebaseSync && window.FirebaseSync.fetchQuizBatch) {
         let fetchedData = await window.FirebaseSync.fetchQuizBatch(batchIds);
         
@@ -164,25 +155,14 @@ function updateRQScoreUI() {
 
 function renderRQQuestion() {
     if (rqCurrentQuestionIndex >= rqQuestions.length) {
-        // Hết câu hỏi trong hàng đợi, tải thêm
-        document.getElementById('rq-question-text').textContent = "Đang tải thêm câu hỏi...";
-        document.getElementById('rq-options-container').innerHTML = '';
-        fetchNextBatch().then(() => {
-            if (rqCurrentQuestionIndex < rqQuestions.length) {
-                renderRQQuestion();
-            } else {
-                endRandomQuiz("Chúc mừng! Bạn đã hoàn thành toàn bộ ngân hàng câu hỏi! 🏆");
-            }
-        });
+        endRandomQuiz("Chúc mừng! Bạn đã hoàn thành toàn bộ câu hỏi đợt này! 🏆");
         return;
     }
 
     const q = rqQuestions[rqCurrentQuestionIndex];
     document.getElementById('rq-feedback').classList.add('hidden');
     
-    // Hiển thị Level hiện tại
-    const levelText = LEVEL_PROGRESSION[rqCurrentLevelIndex];
-    document.getElementById('rq-question-direction').textContent = `Câu ${rqScore + 1} - Mức độ: ${levelText}`;
+    document.getElementById('rq-question-direction').textContent = `Câu ${rqCurrentQuestionIndex + 1}`;
     document.getElementById('rq-question-text').textContent = q.question;
 
     // Handle Audio button for listening questions
@@ -214,8 +194,8 @@ function renderRQQuestion() {
         optionsContainer.appendChild(btn);
     });
 
-    // Cập nhật Progress Bar
-    const progress = Math.min(100, (rqCorrectInARow / 10) * 100);
+    // Cập nhật Progress Bar (trên tổng số câu hỏi đang nạp)
+    const progress = Math.min(100, (rqCurrentQuestionIndex / rqQuestions.length) * 100);
     document.getElementById('rq-progress-bar').style.width = `${progress}%`;
 }
 
@@ -231,43 +211,45 @@ function handleRQAnswer(selectedIndex, btnElement) {
     if (isCorrect) {
         btnElement.classList.add('correct');
         rqScore++;
-        rqCorrectInARow++;
-        rqLives = 3; // Sai liên tiếp 3 câu mới thua, nên nếu đúng thì reset lại mạng
-        updateRQLivesUI();
         updateRQScoreUI();
         
-        // Auto-Scale Difficulty
-        if (rqCorrectInARow >= 10) {
-            rqCorrectInARow = 0; // Reset đếm chuỗi
-            if (rqCurrentLevelIndex < LEVEL_PROGRESSION.length - 1) {
-                rqCurrentLevelIndex++; // Nâng cấp level
-                showToastNotification(`🔥 Tăng cấp độ khó lên ${LEVEL_PROGRESSION[rqCurrentLevelIndex]}!`);
-                // Kích hoạt fetch ngầm (background)
-                fetchNextBatch();
-            }
+        // Ghi lại lịch sử
+        rqHistory.push({ q: q, isCorrect: true });
+        
+        // Hiển thị toast cộng sao
+        if (typeof showToastNotification === 'function') {
+            showToastNotification(`+${rqRewardMultiplier} ⭐`);
         }
         
-        showRQFeedback(true, "Chính xác!", q.explanation);
+        // Không hiện feedback, đợi 1s và chuyển câu
+        setTimeout(() => {
+            if (!rqIsGameOver) {
+                rqCurrentQuestionIndex++;
+                renderRQQuestion();
+            }
+        }, 1000);
+        
     } else {
         btnElement.classList.add('wrong');
         options[q.answer].classList.add('correct'); // Hiện đáp án đúng
-        rqLives--;
-        rqCorrectInARow = 0; // Đứt chuỗi
+        rqLives--; // Trừ mạng vĩnh viễn
         updateRQLivesUI();
+        
+        // Ghi lại lịch sử
+        rqHistory.push({ q: q, isCorrect: false });
         
         if (rqLives <= 0) {
             showRQFeedback(false, "Sai rồi!", q.explanation);
             setTimeout(() => {
                 endRandomQuiz("Hết mạng! 💔");
-            }, 1500);
+            }, 2000);
             return;
         } else {
             showRQFeedback(false, "Sai rồi!", q.explanation);
         }
     }
 
-    // Cập nhật Progress Bar cho chặng tăng cấp
-    const progress = Math.min(100, (rqCorrectInARow / 10) * 100);
+    const progress = Math.min(100, (rqCurrentQuestionIndex / rqQuestions.length) * 100);
     document.getElementById('rq-progress-bar').style.width = `${progress}%`;
 }
 
@@ -296,6 +278,7 @@ function showRQFeedback(isCorrect, title, detail) {
 
 document.getElementById('btn-rq-next')?.addEventListener('click', () => {
     if (rqIsGameOver) return;
+    document.getElementById('rq-feedback').classList.add('hidden');
     rqCurrentQuestionIndex++;
     renderRQQuestion();
 });
@@ -306,19 +289,42 @@ async function endRandomQuiz(reasonText) {
     
     const finalStars = rqScore * rqRewardMultiplier;
     
+    // Render History Lists
+    let correctListHTML = rqHistory.filter(h => h.isCorrect).map(h => `<div style="font-size: 14px; margin-bottom: 8px; color: #4ade80;">✔️ ${h.q.question}</div>`).join('');
+    let wrongListHTML = rqHistory.filter(h => !h.isCorrect).map(h => `<div style="font-size: 14px; margin-bottom: 8px; color: #f87171; border-bottom: 1px solid rgba(248, 113, 113, 0.2); padding-bottom: 8px;">❌ ${h.q.question}<div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">💡 <em>${h.q.explanation || 'Không có giải thích'}</em></div></div>`).join('');
+    
+    if (!correctListHTML) correctListHTML = "<div style='color: var(--text-muted); font-size: 14px; text-align: center;'>Chưa có câu trả lời đúng nào.</div>";
+    if (!wrongListHTML) wrongListHTML = "<div style='color: var(--text-muted); font-size: 14px; text-align: center;'>Tuyệt vời! Không có câu sai.</div>";
+
     const html = `
-        <div style="text-align: center;">
-            <div style="font-size: 48px; margin-bottom: 20px;">${rqLives > 0 ? '🏆' : '💀'}</div>
-            <h2 style="color: var(--accent); margin-bottom: 10px;">${reasonText}</h2>
-            <div style="font-size: 20px; margin-bottom: 20px;">
-                Số câu đúng: <strong style="color: #4ade80; font-size: 28px;">${rqScore}</strong>
+        <div style="text-align: left; padding: 10px;">
+            <div style="text-align: center; font-size: 48px; margin-bottom: 10px;">${rqLives > 0 ? '🏆' : '💀'}</div>
+            <h2 style="color: var(--accent); margin-bottom: 10px; text-align: center;">${reasonText}</h2>
+            
+            <div style="background: rgba(250, 204, 21, 0.1); border: 1px solid rgba(250, 204, 21, 0.3); border-radius: 12px; padding: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-size: 14px; color: var(--text-muted);">Tổng phần thưởng</div>
+                    <div style="font-size: 24px; font-weight: bold; color: #facc15;">+${finalStars} ⭐</div>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 14px; color: var(--text-muted);">Số câu đúng</div>
+                    <div style="font-size: 24px; font-weight: bold; color: #4ade80;">${rqScore}</div>
+                </div>
             </div>
-            <div style="background: rgba(250, 204, 21, 0.1); border: 1px solid rgba(250, 204, 21, 0.3); border-radius: 12px; padding: 15px; display: inline-block;">
-                <div style="font-size: 14px; color: var(--text-muted);">Phần thưởng (x${rqRewardMultiplier})</div>
-                <div style="font-size: 24px; font-weight: bold; color: #facc15;">+${finalStars} ⭐</div>
+            
+            <h3 style="color: #4ade80; font-size: 16px; margin-top: 10px; margin-bottom: 10px;">✅ Câu đã trả lời đúng</h3>
+            <div style="max-height: 150px; overflow-y: auto; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; margin-bottom: 20px;">
+                ${correctListHTML}
             </div>
-            <div style="margin-top: 30px;">
-                <button class="btn-primary" onclick="document.getElementById('rq-end-screen').remove(); document.getElementById('btn-quiz-go-home').click();" style="width: 100%;">Nhận phần thưởng & Thoát</button>
+
+            <h3 style="color: #f87171; font-size: 16px; margin-top: 10px; margin-bottom: 10px;">❌ Câu đã làm sai</h3>
+            <div style="max-height: 200px; overflow-y: auto; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; margin-bottom: 20px;">
+                ${wrongListHTML}
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn-primary" onclick="document.getElementById('rq-end-screen').remove(); initRandomQuizSession('${rqCurrentDifficulty}');" style="flex: 1;">🔄 Chơi lại</button>
+                <button class="btn-secondary" onclick="document.getElementById('rq-end-screen').remove(); document.getElementById('btn-quiz-go-home').click();" style="flex: 1;">Quay về</button>
             </div>
         </div>
     `;
@@ -337,6 +343,6 @@ async function endRandomQuiz(reasonText) {
     container.appendChild(endDiv);
     
     if (finalStars > 0 && typeof awardStars === 'function') {
-        await awardStars(finalStars, `Thắng Random Quiz (${rqCurrentDifficulty})`);
+        await awardStars(finalStars, `Random Quiz (${rqCurrentDifficulty})`);
     }
 }

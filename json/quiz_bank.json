@@ -171,7 +171,7 @@
     "id": "qz-0013",
     "section": "listening",
     "level": "A1",
-    "question": "Conversation: \nJohn: 'Excuse me, could you tell me where the nearest train station is?' \nStranger: '__________________'",
+    "question": "\nJohn: 'Excuse me, could you tell me where the nearest train station is?' \nStranger: '__________________'",
     "options": [
       "Yes, I would love to watch a train movie.",
       "Go straight for two blocks, then turn left. It's next to the post office.",
@@ -185,7 +185,7 @@
     "id": "qz-0014",
     "section": "listening",
     "level": "A2",
-    "question": "Conversation: \nDoctor: 'How long have you been suffering from these severe headaches?' \nPatient: '__________________'",
+    "question": "\nDoctor: 'How long have you been suffering from these severe headaches?' \nPatient: '__________________'",
     "options": [
       "I usually take some medicine from my bag.",
       "For about four days now. They usually start in the afternoon.",
@@ -199,7 +199,7 @@
     "id": "qz-0015",
     "section": "listening",
     "level": "B2",
-    "question": "Conversation: \nManager: 'We really need to cut down on our operational costs this quarter.' \nAssistant: '__________________'",
+    "question": "\nManager: 'We really need to cut down on our operational costs this quarter.' \nAssistant: '__________________'",
     "options": [
       "Good idea, let's hire ten more high-salary employees right away.",
       "I agree. We could transition to paperless invoicing and reduce office electricity usage.",
@@ -213,7 +213,7 @@
     "id": "qz-0016",
     "section": "listening",
     "level": "C1",
-    "question": "Conversation: \nCEO: 'I am afraid our competitor's new software launch has completely caught us off guard.' \nDirector: '__________________'",
+    "question": "\nCEO: 'I am afraid our competitor's new software launch has completely caught us off guard.' \nDirector: '__________________'",
     "options": [
       "Congratulations! That is wonderful news for our software sales.",
       "Indeed, we must quickly devise a contingency plan to mitigate our loss of market share.",
