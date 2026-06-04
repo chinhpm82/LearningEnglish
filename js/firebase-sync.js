@@ -53,7 +53,24 @@ const isConfigured = firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_AP
 
 let app, auth, db, rtdb, googleProvider;
 let currentUser = null;
-let cachedUserData = null;);
+let cachedUserData = null;
+
+if (isConfigured) {
+    try {
+        app = initializeApp(firebaseConfig);
+        auth = getAuth(app);
+        db = getFirestore(app);
+        rtdb = getDatabase(app);
+        googleProvider = new GoogleAuthProvider();
+        
+        // Bật Offline Persistence cho Firestore
+        enableIndexedDbPersistence(db).catch((err) => {
+            if (err.code == 'failed-precondition') {
+                console.warn('Multiple tabs open, persistence can only be enabled in one tab at a time.');
+            } else if (err.code == 'unimplemented') {
+                console.warn('The current browser does not support all of the features required to enable persistence');
+            }
+        });
         
         console.log("☁️ Firebase initialized in Cloud Sync mode with Offline Persistence.");
     } catch (error) {
