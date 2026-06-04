@@ -63,7 +63,7 @@ async function initRandomQuizSession(difficulty) {
     // Load Index
     if (rqQuizIndex.length === 0) {
         try {
-            const response = await fetch('json/quiz-index.json');
+            const response = await fetch('json/quiz-index.json?v=' + new Date().getTime());
             rqQuizIndex = await response.json();
         } catch (e) {
             console.error("Failed to load quiz-index.json", e);
