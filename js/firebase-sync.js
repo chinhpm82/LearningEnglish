@@ -380,9 +380,11 @@ window.FirebaseSync = {
     fetchQuizBatch: async (ids) => {
         if (ids.length === 0) return [];
         try {
-            const response = await fetch('json/quiz_bank.json?v=' + new Date().getTime());
-            const allQuizzes = await response.json();
-            return allQuizzes.filter(q => ids.includes(q.id));
+            if (!window.LOCAL_QUIZ_BANK) {
+                const response = await fetch('json/quiz_bank.json');
+                window.LOCAL_QUIZ_BANK = await response.json();
+            }
+            return window.LOCAL_QUIZ_BANK.filter(q => ids.includes(q.id));
         } catch (e) {
             console.error('Local quiz fetch failed:', e);
             return [];
