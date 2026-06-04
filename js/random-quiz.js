@@ -14,6 +14,7 @@ let rqQuizIndex = [];
 let rqRewardMultiplier = 1;
 let rqIsGameOver = false;
 let rqHistory = []; // Lưu lại lịch sử trả lời: { q: questionObj, isCorrect: boolean }
+let rqUsedQuestionIds = new Set(); // Track used IDs to prevent duplicates
 
 async function initRandomQuizSession(difficulty) {
     rqCurrentDifficulty = difficulty;
@@ -24,6 +25,7 @@ async function initRandomQuizSession(difficulty) {
     rqCurrentQuestionIndex = 0;
     rqIsGameOver = false;
     rqHistory = [];
+    rqUsedQuestionIds.clear();
 
     // Thiết lập độ khó ban đầu và hệ số nhân điểm
     if (difficulty === 'easy') {
@@ -85,8 +87,10 @@ async function initRandomQuizSession(difficulty) {
 async function fetchNextBatch() {
     document.getElementById('rq-question-direction').textContent = `Đang tải câu hỏi...`;
     
-    // Lọc các ID thuộc các level được phép
-    const availableIds = rqQuizIndex.filter(q => rqAllowedLevels.includes(q.level)).map(q => q.id);
+    // Lọc các ID thuộc các level được phép và chưa từng được hỏi trong session này
+    const availableIds = rqQuizIndex
+        .filter(q => rqAllowedLevels.includes(q.level) && !rqUsedQuestionIds.has(q.id))
+        .map(q => q.id);
     
     if (availableIds.length === 0) {
         return; // Đã hết câu hỏi
@@ -95,6 +99,9 @@ async function fetchNextBatch() {
     // Trộn mảng ID và lấy tối đa 50 câu (đủ cho 5 phút)
     const shuffledIds = availableIds.sort(() => 0.5 - Math.random());
     const batchIds = shuffledIds.slice(0, 50);
+    
+    // Ghi nhận các ID này đã được lấy
+    batchIds.forEach(id => rqUsedQuestionIds.add(id));
 
     // Gọi Firestore (hoặc local fallback) qua firebase-sync.js
     if (window.FirebaseSync && window.FirebaseSync.fetchQuizBatch) {

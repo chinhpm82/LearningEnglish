@@ -22,7 +22,7 @@ async function initQuizSession(category = 'all') {
             </div>`;
     }
 
-    const allWords = [...state.vocabulary, ...state.customWords];
+    const allWords = [...(state.vocabulary || []), ...(state.customWords || [])];
     let sourcePool = [];
 
     if (category === 'assessment') {
@@ -39,13 +39,14 @@ async function initQuizSession(category = 'all') {
     } else if (category === 'all') {
         sourcePool = [...allWords];
     } else if (category === 'custom') {
-        sourcePool = [...state.customWords];
+        sourcePool = [...(state.customWords || [])];
     } else {
         sourcePool = allWords.filter(w => w.category === category);
     }
 
     if (sourcePool.length < 4) {
-        alert('⚠️ Kho từ vựng chủ đề này cần ít nhất 4 từ để có thể bắt đầu làm Trắc nghiệm.');
+        console.warn("Không đủ từ vựng để tạo bài trắc nghiệm.", sourcePool.length);
+        alert('⚠️ Kho từ vựng hiện tại cần ít nhất 4 từ để có thể bắt đầu làm Trắc nghiệm.');
         if (introState) introState.classList.remove('hidden');
         if (activeState) activeState.classList.add('hidden');
         return;

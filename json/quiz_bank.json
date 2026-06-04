@@ -915,9 +915,9 @@
     "question": "I have a _____ red bag.",
     "options": [
       "small",
-      "big",
-      "beautiful",
-      "nice"
+      "smalls",
+      "smaller",
+      "smallest"
     ],
     "answer": 0,
     "explanation": "Correct answer: small. Meaning: (adj) Of limited size. Example 'I have a small red bag.'"
@@ -1016,15 +1016,15 @@
   {
     "id": "qz-0079",
     "level": "A1",
-    "question": "I have a _____ red bag.",
+    "question": "The sky is very _____ today.",
     "options": [
-      "small",
-      "big",
-      "beautiful",
-      "nice"
+      "blue",
+      "blues",
+      "blueing",
+      "blued"
     ],
     "answer": 0,
-    "explanation": "Correct answer: small. Meaning: (adj) Of limited size. Example 'I have a small red bag.'"
+    "explanation": "Correct answer: blue. Meaning: (adj) The color of the sky on a sunny day. Example 'The sky is very blue today.'"
   },
   {
     "id": "qz-0080",
@@ -1172,15 +1172,15 @@
   {
     "id": "qz-0091",
     "level": "A1",
-    "question": "I have a _____ red bag.",
+    "question": "He _____ an apple every morning.",
     "options": [
-      "small",
-      "big",
-      "beautiful",
-      "nice"
+      "eats",
+      "eat",
+      "eating",
+      "ate"
     ],
     "answer": 0,
-    "explanation": "Correct answer: small. Meaning: (adj) Of limited size. Example 'I have a small red bag.'"
+    "explanation": "Correct answer: eats. Meaning: He eats (verb) an apple every morning. We use 'eats' for the third person singular in the present simple tense."
   },
   {
     "id": "qz-0092",
