@@ -225,7 +225,12 @@ function handleRQAnswer(selectedIndex, btnElement) {
         setTimeout(() => {
             if (!rqIsGameOver) {
                 rqCurrentQuestionIndex++;
-                renderRQQuestion();
+                try {
+                    renderRQQuestion();
+                } catch (err) {
+                    console.error("Error rendering next question:", err);
+                    endRandomQuiz("Có lỗi xảy ra khi tải câu tiếp theo!");
+                }
             }
         }, 1000);
         
@@ -284,65 +289,81 @@ document.getElementById('btn-rq-next')?.addEventListener('click', () => {
 });
 
 async function endRandomQuiz(reasonText) {
-    rqIsGameOver = true;
-    clearInterval(rqTimerInterval);
-    
-    const finalStars = rqScore * rqRewardMultiplier;
-    
-    // Render History Lists
-    let correctListHTML = rqHistory.filter(h => h.isCorrect).map(h => `<div style="font-size: 14px; margin-bottom: 8px; color: #4ade80;">✔️ ${h.q.question}</div>`).join('');
-    let wrongListHTML = rqHistory.filter(h => !h.isCorrect).map(h => `<div style="font-size: 14px; margin-bottom: 8px; color: #f87171; border-bottom: 1px solid rgba(248, 113, 113, 0.2); padding-bottom: 8px;">❌ ${h.q.question}<div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">💡 <em>${h.q.explanation || 'Không có giải thích'}</em></div></div>`).join('');
-    
-    if (!correctListHTML) correctListHTML = "<div style='color: var(--text-muted); font-size: 14px; text-align: center;'>Chưa có câu trả lời đúng nào.</div>";
-    if (!wrongListHTML) wrongListHTML = "<div style='color: var(--text-muted); font-size: 14px; text-align: center;'>Tuyệt vời! Không có câu sai.</div>";
+    try {
+        rqIsGameOver = true;
+        clearInterval(rqTimerInterval);
+        
+        const finalStars = rqScore * rqRewardMultiplier;
+        
+        // Render History Lists
+        let correctListHTML = rqHistory.filter(h => h.isCorrect).map(h => `<div style="font-size: 14px; margin-bottom: 8px; color: #4ade80;">✔️ ${h.q?.question || 'N/A'}</div>`).join('');
+        let wrongListHTML = rqHistory.filter(h => !h.isCorrect).map(h => `<div style="font-size: 14px; margin-bottom: 8px; color: #f87171; border-bottom: 1px solid rgba(248, 113, 113, 0.2); padding-bottom: 8px;">❌ ${h.q?.question || 'N/A'}<div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">💡 <em>${h.q?.explanation || 'Không có giải thích'}</em></div></div>`).join('');
+        
+        if (!correctListHTML) correctListHTML = "<div style='color: var(--text-muted); font-size: 14px; text-align: center;'>Chưa có câu trả lời đúng nào.</div>";
+        if (!wrongListHTML) wrongListHTML = "<div style='color: var(--text-muted); font-size: 14px; text-align: center;'>Tuyệt vời! Không có câu sai.</div>";
 
-    const html = `
-        <div style="text-align: left; padding: 10px;">
-            <div style="text-align: center; font-size: 48px; margin-bottom: 10px;">${rqLives > 0 ? '🏆' : '💀'}</div>
-            <h2 style="color: var(--accent); margin-bottom: 10px; text-align: center;">${reasonText}</h2>
-            
-            <div style="background: rgba(250, 204, 21, 0.1); border: 1px solid rgba(250, 204, 21, 0.3); border-radius: 12px; padding: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <div style="font-size: 14px; color: var(--text-muted);">Tổng phần thưởng</div>
-                    <div style="font-size: 24px; font-weight: bold; color: #facc15;">+${finalStars} ⭐</div>
+        const html = `
+            <div style="text-align: left; padding: 10px;">
+                <div style="text-align: center; font-size: 48px; margin-bottom: 10px;">${rqLives > 0 ? '🏆' : '💀'}</div>
+                <h2 style="color: var(--accent); margin-bottom: 10px; text-align: center;">${reasonText}</h2>
+                
+                <div style="background: rgba(250, 204, 21, 0.1); border: 1px solid rgba(250, 204, 21, 0.3); border-radius: 12px; padding: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font-size: 14px; color: var(--text-muted);">Tổng phần thưởng</div>
+                        <div style="font-size: 24px; font-weight: bold; color: #facc15;">+${finalStars} ⭐</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 14px; color: var(--text-muted);">Số câu đúng</div>
+                        <div style="font-size: 24px; font-weight: bold; color: #4ade80;">${rqScore}</div>
+                    </div>
                 </div>
-                <div style="text-align: right;">
-                    <div style="font-size: 14px; color: var(--text-muted);">Số câu đúng</div>
-                    <div style="font-size: 24px; font-weight: bold; color: #4ade80;">${rqScore}</div>
+                
+                <h3 style="color: #4ade80; font-size: 16px; margin-top: 10px; margin-bottom: 10px;">✅ Câu đã trả lời đúng</h3>
+                <div style="max-height: 150px; overflow-y: auto; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; margin-bottom: 20px;">
+                    ${correctListHTML}
+                </div>
+
+                <h3 style="color: #f87171; font-size: 16px; margin-top: 10px; margin-bottom: 10px;">❌ Câu đã làm sai</h3>
+                <div style="max-height: 200px; overflow-y: auto; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; margin-bottom: 20px;">
+                    ${wrongListHTML}
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button class="btn-primary" onclick="document.getElementById('rq-end-screen')?.remove(); initRandomQuizSession('${rqCurrentDifficulty}');" style="flex: 1;">🔄 Chơi lại</button>
+                    <button class="btn-secondary" onclick="document.getElementById('rq-end-screen')?.remove(); document.getElementById('btn-quiz-go-home').click();" style="flex: 1;">Quay về</button>
                 </div>
             </div>
-            
-            <h3 style="color: #4ade80; font-size: 16px; margin-top: 10px; margin-bottom: 10px;">✅ Câu đã trả lời đúng</h3>
-            <div style="max-height: 150px; overflow-y: auto; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; margin-bottom: 20px;">
-                ${correctListHTML}
-            </div>
-
-            <h3 style="color: #f87171; font-size: 16px; margin-top: 10px; margin-bottom: 10px;">❌ Câu đã làm sai</h3>
-            <div style="max-height: 200px; overflow-y: auto; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; margin-bottom: 20px;">
-                ${wrongListHTML}
-            </div>
-
-            <div style="display: flex; gap: 10px; margin-top: 20px;">
-                <button class="btn-primary" onclick="document.getElementById('rq-end-screen').remove(); initRandomQuizSession('${rqCurrentDifficulty}');" style="flex: 1;">🔄 Chơi lại</button>
-                <button class="btn-secondary" onclick="document.getElementById('rq-end-screen').remove(); document.getElementById('btn-quiz-go-home').click();" style="flex: 1;">Quay về</button>
-            </div>
-        </div>
-    `;
-    
-    document.getElementById('rq-question-direction').style.display = 'none';
-    document.getElementById('rq-question-text').style.display = 'none';
-    document.getElementById('rq-options-container').style.display = 'none';
-    document.getElementById('rq-feedback').style.display = 'none';
-    document.getElementById('rq-progress-bar').parentElement.style.display = 'none';
-    
-    // Render HTML kết thúc vào thẳng khung màn hình
-    const container = document.getElementById('random-quiz-active');
-    const endDiv = document.createElement('div');
-    endDiv.id = 'rq-end-screen';
-    endDiv.innerHTML = html;
-    container.appendChild(endDiv);
-    
-    if (finalStars > 0 && typeof awardStars === 'function') {
-        await awardStars(finalStars, `Random Quiz (${rqCurrentDifficulty})`);
+        `;
+        
+        const qDir = document.getElementById('rq-question-direction');
+        if (qDir) qDir.style.display = 'none';
+        
+        const qText = document.getElementById('rq-question-text');
+        if (qText) qText.style.display = 'none';
+        
+        const qOpts = document.getElementById('rq-options-container');
+        if (qOpts) qOpts.style.display = 'none';
+        
+        const qFb = document.getElementById('rq-feedback');
+        if (qFb) qFb.style.display = 'none';
+        
+        const pb = document.getElementById('rq-progress-bar');
+        if (pb && pb.parentElement) pb.parentElement.style.display = 'none';
+        
+        // Render HTML kết thúc vào thẳng khung màn hình
+        const container = document.getElementById('random-quiz-active');
+        if (container) {
+            const endDiv = document.createElement('div');
+            endDiv.id = 'rq-end-screen';
+            endDiv.innerHTML = html;
+            container.appendChild(endDiv);
+        }
+        
+        if (finalStars > 0 && typeof awardStars === 'function') {
+            await awardStars(finalStars, `Random Quiz (${rqCurrentDifficulty})`);
+        }
+    } catch (err) {
+        console.error("Error in endRandomQuiz:", err);
+        alert("Có lỗi xảy ra khi kết thúc Random Quiz. Vui lòng tải lại trang.");
     }
 }
