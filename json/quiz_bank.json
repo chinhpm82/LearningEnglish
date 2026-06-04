@@ -1,91 +1,84 @@
 [
   {
     "id": "qz-0001",
-    "section": "grammar",
     "level": "A1",
-    "question": "Choose the correct sentence:",
+    "question": "Happy birthday, my ______ child, said Mom.",
     "options": [
-      "She don't like drinking cold milk in the morning.",
-      "She doesn't like drinking cold milk in the morning.",
-      "She doesn't likes drinking cold milk in the morning.",
-      "She not likes drinking cold milk in the morning."
+      "data",
+      "dart",
+      "dash",
+      "darling"
     ],
-    "answer": 1,
-    "explanation": "Với chủ ngữ ngôi thứ ba số ít (She), ta dùng trợ động từ phủ định 'doesn't' + động từ nguyên thể 'like'."
+    "answer": 3,
+    "explanation": "Correct answer: darling. Meaning: (noun) A person who is dear to one. Example 'Mary, the youngest daughter, was always her mother's darling.'"
   },
   {
     "id": "qz-0002",
-    "section": "grammar",
     "level": "B1",
-    "question": "Yesterday, while I ______ my English vocabulary, the electricity suddenly went out.",
+    "question": "A giant _____ swam near our boat.",
     "options": [
-      "am studying",
-      "studied",
-      "was studying",
-      "had studied"
+      "westean",
+      "wet",
+      "wheat",
+      "whale"
     ],
-    "answer": 2,
-    "explanation": "Sử dụng thì Quá khứ tiếp diễn (was studying) để diễn tả hành động đang xảy ra trong quá khứ thì có hành động khác xen vào (went out)."
+    "answer": 3,
+    "explanation": "Correct answer: whale. Meaning: (noun) Any of several species of large sea mammals of the infraorder Cetacea. Example 'No example provided.'"
   },
   {
     "id": "qz-0003",
-    "section": "grammar",
-    "level": "B2",
-    "question": "If we ______ enough stars yesterday, we would have unlocked the C1 advanced vocabulary level today.",
+    "level": "A2",
+    "question": "This is the _____ price for cars.",
     "options": [
-      "collected",
-      "had collected",
-      "would collect",
-      "have collected"
+      "standing",
+      "standby",
+      "staple",
+      "standard"
     ],
-    "answer": 1,
-    "explanation": "Câu điều kiện hỗn hợp (Mixed Conditional): diễn tả giả thiết trái ngược quá khứ ('had collected' - điều kiện loại 3) và kết quả trái ngược hiện tại ('would have unlocked' - kết quả loại 2)."
+    "answer": 3,
+    "explanation": "Correct answer: standard. Meaning: (noun) A principle or example or measure used for comparison. Example 'No example provided.'"
   },
   {
     "id": "qz-0004",
-    "section": "grammar",
-    "level": "C2",
-    "question": "______ did I realize that mastering English pronunciation required daily spoken practice.",
+    "level": "B1",
+    "question": "They follow a strict religious ______",
     "options": [
-      "Little",
-      "Only when",
-      "Seldom",
-      "Not until"
+      "documentary",
+      "doctrine",
+      "documentation",
+      "document"
     ],
-    "answer": 0,
-    "explanation": "Cấu trúc đảo ngữ với trạng từ phủ định 'Little' (Little did I realize...): Tôi gần như không hề nhận ra rằng..."
+    "answer": 1,
+    "explanation": "Correct answer: doctrine. Meaning: (noun) A belief or tenet, especially about philosophical or theological matters. Example 'The four noble truths summarise the main doctrines of Buddhism.'"
   },
   {
     "id": "qz-0005",
-    "section": "vocabulary",
-    "level": "A1",
-    "question": "My father is a doctor. He works in a local ______.",
+    "level": "A2",
+    "question": "The police solved the terrible ______.",
     "options": [
-      "office",
-      "factory",
-      "hospital",
-      "school"
+      "murderer",
+      "murderous",
+      "muscle",
+      "murder"
     ],
-    "answer": 2,
-    "explanation": "Bác sĩ (doctor) làm việc ở bệnh viện (hospital)."
+    "answer": 3,
+    "explanation": "Correct answer: murder. Meaning: (noun) The crime of deliberately killing another person without justification. Example 'The defendant was charged with murder.'"
   },
   {
     "id": "qz-0006",
-    "section": "vocabulary",
-    "level": "B1",
-    "question": "She decided to ______ smoking to improve her physical health.",
+    "level": "A2",
+    "question": "We decided to ______ the old dark cave.",
     "options": [
-      "give up",
-      "take up",
-      "put off",
-      "look after"
+      "explore",
+      "export",
+      "explosion",
+      "expose"
     ],
     "answer": 0,
-    "explanation": "Cụm động từ 'give up' nghĩa là từ bỏ (thói quen, sở thích, hành vi)."
+    "explanation": "Correct answer: explore. Meaning: (noun) An exploration; a tour of a place to see what it is like. Example 'No example provided.'"
   },
   {
     "id": "qz-0007",
-    "section": "vocabulary",
     "level": "B2",
     "question": "The teacher gave us a very ______ explanation, so everyone understood the math problem easily.",
     "options": [
@@ -94,12 +87,11 @@
       "lucid",
       "superficial"
     ],
-    "answer": 2,
-    "explanation": "'Lucid' nghĩa là rõ ràng, dễ hiểu, minh bạch. Trái ngược hoàn toàn với ambiguous (mơ hồ) hay superficial (hời hợt)."
+    "answer": 0,
+    "explanation": "Correct answer: ambiguous. Meaning: (adjective) Open to multiple interpretations. Example 'The politician was criticized for his ambiguous statements and lack of precision.'"
   },
   {
     "id": "qz-0008",
-    "section": "vocabulary",
     "level": "C2",
     "question": "In times of financial crisis, many businesses had no choice but to ______ their non-core employees.",
     "options": [
@@ -109,118 +101,1540 @@
       "recuperate"
     ],
     "answer": 1,
-    "explanation": "'Retrench' nghĩa là tinh giảm biên chế, cắt giảm nhân sự hoặc chi phí để tiết kiệm tài chính."
+    "explanation": "Correct answer: retrench. Meaning: (verb) To dig or redig a trench where one already exists. Example 'No example provided.'"
   },
   {
     "id": "qz-0009",
-    "section": "reading",
-    "level": "A1",
-    "question": "Read the text: 'Mary lives in London. She enjoys walking in Hyde Park every Sunday morning. However, she hates cold rain.' \n\nWhen does Mary walk in Hyde Park?",
+    "level": "B1",
+    "question": "Several ______ arrived for the press meeting.",
     "options": [
-      "Every Saturday afternoon",
-      "Every Sunday morning",
-      "Only on rainy days",
-      "During the winter nights"
+      "spokesmen",
+      "spokeswomen",
+      "spokespersons",
+      "sponge"
     ],
-    "answer": 1,
-    "explanation": "Đoạn văn ghi rõ 'every Sunday morning' (mỗi sáng Chủ Nhật)."
+    "answer": 0,
+    "explanation": "Correct answer: spokesmen. Meaning: (noun) One who speaks as the voice of a group of people. Example 'No example provided.'"
   },
   {
     "id": "qz-0010",
-    "section": "reading",
-    "level": "B1",
-    "question": "Read the text: 'Regular exercise offers enormous benefits for mental health. Physical activities stimulate the release of endorphins, commonly known as feel-good hormones, which mitigate stress and elevate overall mood.' \n\nAccording to the text, what are endorphins?",
+    "level": "A1",
+    "question": "My mother ______ me how to cook",
     "options": [
-      "A type of physical exercise",
-      "Hormones that relieve stress and boost mood",
-      "Mental illnesses caused by lack of sleep",
-      "Nutrients found in healthy organic food"
+      "tax",
+      "tavern",
+      "taxi",
+      "taught"
     ],
-    "answer": 1,
-    "explanation": "Endorphins được định nghĩa là 'feel-good hormones, which mitigate stress and elevate overall mood' (hormone giảm stress và tăng tâm trạng)."
+    "answer": 3,
+    "explanation": "Correct answer: taught. Meaning: (verb) To show (someone) the way; to guide, conduct; to point, indicate. Example '‘The bliss is there’, mumbled the old man and taught to Heaven.'"
   },
   {
     "id": "qz-0011",
-    "section": "reading",
-    "level": "B2",
-    "question": "Read the text: 'The rise of artificial intelligence has revolutionized traditional job markets. While automation threatens repetitive manual jobs, it simultaneously spawns fresh opportunities in technology development, data analytics, and ethical AI auditing.' \n\nWhat is the main idea of this passage?",
+    "level": "A2",
+    "question": "The word 'big'is an ____",
     "options": [
-      "Artificial intelligence will completely destroy all human job opportunities.",
-      "Manual labor will become highly valued due to AI limits.",
-      "AI has a dual impact on employment, replacing repetitive tasks but creating new digital roles.",
-      "Ethical auditing is the only job safe from AI automation."
+      "adjustable",
+      "adjust",
+      "admire",
+      "adjective"
     ],
-    "answer": 2,
-    "explanation": "Đoạn văn nêu rõ tác động kép của AI: đe dọa công việc thủ công lặp lại (automates repetitive jobs) nhưng đồng thời mở ra nhiều cơ hội mới (spawns fresh opportunities)."
+    "answer": 3,
+    "explanation": "Correct answer: adjective. Meaning: (noun) (grammar) A word that modifies a noun or describes a noun’s referent. Example 'The words “big” and “heavy” are English adjectives.'"
   },
   {
     "id": "qz-0012",
-    "section": "reading",
-    "level": "C2",
-    "question": "Read the text: 'Critics argue that universal basic income (UBI) fosters labor market disincentives. Conversely, proponents contend that by establishing a financial safety net, UBI empowers marginalized individuals to pursue higher education or entrepreneurial ventures without fear of destitution.' \n\nWhich of the following can be inferred from the passage?",
+    "level": "B1",
+    "question": "It was only a very ______ accident",
     "options": [
-      "Proponents believe UBI makes people lazy and unwilling to work.",
-      "Both critics and proponents agree that UBI will increase bankruptcy rates.",
-      "UBI may act as a catalyst for entrepreneurship and self-improvement for lower-income groups.",
-      "Destitution is required to motivate individuals to pursue entrepreneurial ventures."
+      "minor",
+      "minus",
+      "mirror",
+      "minute"
     ],
-    "answer": 2,
-    "explanation": "Ta có thể suy luận (infer) từ đoạn văn: bằng việc tạo lưới an sinh (financial safety net), UBI giúp những người yếu thế có cơ hội tự do khởi nghiệp hoặc học lên cao (empowers marginalized individuals to pursue entrepreneurial ventures/higher education)."
+    "answer": 0,
+    "explanation": "Correct answer: minor. Meaning: (adj) Lesser, smaller in the importance, size, degree, seriousness, or significance compared to another option, particularly. Example 'A couple of flights were delayed on the way to New York. It was a minor delay.'"
   },
   {
     "id": "qz-0013",
-    "section": "listening",
-    "level": "A1",
-    "question": "\nJohn: 'Excuse me, could you tell me where the nearest train station is?' \nStranger: '__________________'",
+    "level": "B1",
+    "question": "We looked at the beautiful ______ sky",
     "options": [
-      "Yes, I would love to watch a train movie.",
-      "Go straight for two blocks, then turn left. It's next to the post office.",
-      "Trains are much faster than cars.",
-      "I have three train tickets."
+      "startup",
+      "starter",
+      "starry",
+      "start"
     ],
-    "answer": 1,
-    "explanation": "Câu hỏi đường đi ('where the nearest train station is') cần phản xạ chỉ dẫn đường đi phù hợp."
+    "answer": 2,
+    "explanation": "Correct answer: starry. Meaning: (adj) Full of stars; bright with stars. Example 'We lay on the grass and looked at the starry sky.'"
   },
   {
     "id": "qz-0014",
-    "section": "listening",
     "level": "A2",
-    "question": "\nDoctor: 'How long have you been suffering from these severe headaches?' \nPatient: '__________________'",
+    "question": "I left my phone _____ at home",
     "options": [
-      "I usually take some medicine from my bag.",
-      "For about four days now. They usually start in the afternoon.",
-      "Headaches are very common for old people.",
-      "My father also had a headache last week."
+      "chart",
+      "chase",
+      "charger",
+      "charity"
     ],
-    "answer": 1,
-    "explanation": "Câu hỏi về thời lượng kéo dài triệu chứng bệnh ('How long have you been suffering...') đòi hỏi câu trả lời về khoảng thời gian ('For about four days now')."
+    "answer": 2,
+    "explanation": "Correct answer: charger. Meaning: (n) A device used to charge a battery. Example 'I left my phone charger at home.'"
   },
   {
     "id": "qz-0015",
-    "section": "listening",
-    "level": "B2",
-    "question": "\nManager: 'We really need to cut down on our operational costs this quarter.' \nAssistant: '__________________'",
+    "level": "B1",
+    "question": "He left _____ for the difficult exam.",
     "options": [
-      "Good idea, let's hire ten more high-salary employees right away.",
-      "I agree. We could transition to paperless invoicing and reduce office electricity usage.",
-      "Operational costs are always calculated annually, not quarterly.",
-      "I don't think paper has anything to do with our business operations."
+      "unprepared",
+      "unreal",
+      "unrealistic",
+      "unprotected"
     ],
-    "answer": 1,
-    "explanation": "Đề xuất cắt giảm chi phí vận hành ('cut down on operational costs') tương thích với giải pháp cụ thể: chuyển sang hóa đơn điện tử và giảm điện tiêu dùng."
+    "answer": 0,
+    "explanation": "Correct answer: unprepared. Meaning: (adj) Not ready or prepared for something. Example 'He left unprepared for the difficult exam.'"
   },
   {
     "id": "qz-0016",
-    "section": "listening",
-    "level": "C1",
-    "question": "\nCEO: 'I am afraid our competitor's new software launch has completely caught us off guard.' \nDirector: '__________________'",
+    "level": "B1",
+    "question": "The heavy truck weighs one _____ total",
     "options": [
-      "Congratulations! That is wonderful news for our software sales.",
-      "Indeed, we must quickly devise a contingency plan to mitigate our loss of market share.",
-      "Competitors are always friendly and keep us informed of their launch dates.",
-      "I prefer launching boats rather than software."
+      "tone",
+      "tonight",
+      "tongue",
+      "ton"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: ton. Meaning: (n) A unit of weight, equal to 1000 kilograms or 2000 pounds. Example 'The heavy truck weighs one ton total.'"
+  },
+  {
+    "id": "qz-0017",
+    "level": "B2",
+    "question": "The rapid _____ of the internet has transformed global communication in recent decades.",
+    "options": [
+      "extension",
+      "expansion",
+      "exposure",
+      "execution"
     ],
     "answer": 1,
-    "explanation": "Tình huống bị động/bất ngờ trước đối thủ ('caught us off guard') đòi hỏi phản xạ ứng biến: nhanh chóng lên phương án dự phòng (contingency plan) để giảm thiểu mất mát thị phần."
+    "explanation": "Correct answer: expansion. Meaning: (n) The action of becoming larger or more extensive. Example 'The rapid expansion of the internet has transformed global communication in recent decades.'"
+  },
+  {
+    "id": "qz-0018",
+    "level": "B2",
+    "question": "The company's _____ success in the Asian market has exceeded all expectations.",
+    "options": [
+      "unprecedented",
+      "unforeseen",
+      "unexpected",
+      "untold"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: unprecedented. Meaning: (adj) Never done or known before. Example 'The company's unprecedented success in the Asian market has exceeded all expectations.'"
+  },
+  {
+    "id": "qz-0019",
+    "level": "B1",
+    "question": "I have to ____ all the files before the meeting.",
+    "options": [
+      "review",
+      "revise",
+      "reviser",
+      "revised"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: review. Meaning: (v) To look at or examine something again. Example 'I have to review all the files before the meeting.'"
+  },
+  {
+    "id": "qz-0020",
+    "level": "B2",
+    "question": "The hotel room was beautifully decorated with fresh _____ and flowers.",
+    "options": [
+      "candles",
+      "candy",
+      "canopy",
+      "canyon"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: candles. Meaning: (n) Sticks of wax with a string inside that can be lit to produce light. Example 'The hotel room was beautifully decorated with fresh candles and flowers.'"
+  },
+  {
+    "id": "qz-0021",
+    "level": "B1",
+    "question": "She is looking for a job _____ in the city.",
+    "options": [
+      "suitable",
+      "suit",
+      "unsuitable",
+      "suited"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: suitable. Meaning: (adj) Right or appropriate for a particular person, purpose, or situation. Example 'She is looking for a suitable job in the city.'"
+  },
+  {
+    "id": "qz-0022",
+    "level": "B1",
+    "question": "My older brother is very _____ of heights, so he never goes rock climbing.",
+    "options": [
+      "afraid",
+      "brave",
+      "calm",
+      "relaxed"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: afraid. Meaning: (adj) Feeling fear or anxiety; frightened. Example 'My older brother is very afraid of heights, so he never goes rock climbing.'"
+  },
+  {
+    "id": "qz-0023",
+    "level": "A2",
+    "question": "She has a very _____ smile.",
+    "options": [
+      "beauty",
+      "beautiful",
+      "beautifully",
+      "beautyful"
+    ],
+    "answer": 1,
+    "explanation": "Correct answer: beautiful. Meaning: (adj) Pleasing the senses or mind aesthetically. Example 'She has a very beautiful smile.'"
+  },
+  {
+    "id": "qz-0024",
+    "level": "B1",
+    "question": "The students were asked to write a _____ on the topic.",
+    "options": [
+      "essay",
+      "village",
+      "vessel",
+      "vehicle"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: essay. Meaning: (n) A short piece of writing on a particular subject, especially one done by students as part of a course. Example 'The students were asked to write an essay on the topic.'"
+  },
+  {
+    "id": "qz-0025",
+    "level": "C1",
+    "question": "The government's new policy on carbon emissions aims to ____ industrial pollution by 20% in the next five years.",
+    "options": [
+      "mitigate",
+      "exaggerate",
+      "intensify",
+      "amplify"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: mitigate. Meaning: (v) To make something less severe, serious, or painful. Example 'The government's new policy on carbon emissions aims to mitigate industrial pollution by 20% in the next five years.'"
+  },
+  {
+    "id": "qz-0026",
+    "level": "B2",
+    "question": "After hours of negotiation, the two parties finally reached a _____ agreement.",
+    "options": [
+      "mutual",
+      "primary",
+      "singular",
+      "simple"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: mutual. Meaning: (adj) Shared by two or more people or groups. Example 'After hours of negotiation, the two parties finally reached a mutual agreement.'"
+  },
+  {
+    "id": "qz-0027",
+    "level": "A2",
+    "question": "I need to _____ a photo of my passport.",
+    "options": [
+      "take",
+      "break",
+      "make",
+      "eat"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: take. Meaning: (v) To capture an image of someone or something. Example 'I need to take a photo of my passport.'"
+  },
+  {
+    "id": "qz-0028",
+    "level": "B2",
+    "question": "Her knowledge of ancient history is quite ______.",
+    "options": [
+      "superficial",
+      "vast",
+      "limited",
+      "narrow"
+    ],
+    "answer": 1,
+    "explanation": "Correct answer: vast. Meaning: (adj) Of very great extent or quantity; immense. Example 'Her knowledge of ancient history is quite vast.'"
+  },
+  {
+    "id": "qz-0029",
+    "level": "B2",
+    "question": "The company is looking for someone who is _____ and can work independently.",
+    "options": [
+      "proactive",
+      "passive",
+      "shy",
+      "hesitant"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: proactive. Meaning: (adj) Creating or controlling a situation by causing something to happen rather than responding to events. Example 'The company is looking for someone who is proactive and can work independently.'"
+  },
+  {
+    "id": "qz-0030",
+    "level": "B1",
+    "question": "The smell of freshly baked bread _____ from the bakery.",
+    "options": [
+      "escaped",
+      "escapist",
+      "escapee",
+      "escapede"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: escaped. Meaning: (v) To get out from a place where one is confined or prevented from leaving. Example 'The smell of freshly baked bread escaped from the bakery.'"
+  },
+  {
+    "id": "qz-0031",
+    "level": "A2",
+    "question": "It's very _____ to wait for me",
+    "options": [
+      "kind",
+      "unkind",
+      "kindness",
+      "kindly"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: kind. Meaning: (adj) Having or showing a friendly, generous, and considerate nature. Example 'It's very kind to wait for me.'"
+  },
+  {
+    "id": "qz-0032",
+    "level": "A2",
+    "question": "She is _____ at dancing",
+    "options": [
+      "good",
+      "bad",
+      "well",
+      "greatly"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: good. Meaning: (adj) Having the required qualities or skills for a particular purpose or activity. Example 'She is good at dancing.'"
+  },
+  {
+    "id": "qz-0033",
+    "level": "C1",
+    "question": "The company's _____ failure to update its security systems left it vulnerable to cyberattacks.",
+    "options": [
+      "negligent",
+      "negligence",
+      "negligently",
+      "negligentness"
+    ],
+    "answer": 1,
+    "explanation": "Correct answer: negligence. Meaning: (n) Failure to take proper care in doing something. Example 'The company's negligence in updating its security systems left it vulnerable to cyberattacks.'"
+  },
+  {
+    "id": "qz-0034",
+    "level": "B2",
+    "question": "The internet has provided us with _____ access to information on almost every topic imaginable.",
+    "options": [
+      "unrestricted",
+      "restricted",
+      "limited",
+      "prohibited"
+    ],
+    "answer": 1,
+    "explanation": "Correct answer: restricted. Meaning: (adj) Limited to a particular group, area, or topic. Example 'The internet has provided us with restricted access to information on almost every topic imaginable.'"
+  },
+  {
+    "id": "qz-0035",
+    "level": "B1",
+    "question": "The new museum exhibit features a collection of _____ art from the Renaissance period.",
+    "options": [
+      "priceless",
+      "valuable",
+      "worthy",
+      "costly"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: priceless. Meaning: (adj) So valuable that its worth cannot be calculated. Example 'The new museum exhibit features a collection of priceless art from the Renaissance period.'"
+  },
+  {
+    "id": "qz-0036",
+    "level": "B2",
+    "question": "The novel's _____ ending left readers speculating for weeks.",
+    "options": [
+      "ambiguous",
+      "clear",
+      "obvious",
+      "definite"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: ambiguous. Meaning: (adj) Open to more than one interpretation; not having one obvious meaning. Example 'The novel's ambiguous ending left readers speculating for weeks.'"
+  },
+  {
+    "id": "qz-0037",
+    "level": "B1",
+    "question": "She has a very _____ approach to problem-solving.",
+    "options": [
+      "practical",
+      "impractical",
+      "impracticality",
+      "impractically"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: practical. Meaning: (adj) Concerned with the actual doing or use of something rather than with theory and ideas. Example 'She has a very practical approach to problem-solving.'"
+  },
+  {
+    "id": "qz-0038",
+    "level": "C1",
+    "question": "The politician's speech was filled with _____ promises that he had no intention of keeping.",
+    "options": [
+      "empty",
+      "full",
+      "complete",
+      "total"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: empty. Meaning: (adj) Containing nothing; without substance or meaning. Example 'The politician's speech was filled with empty promises that he had no intention of keeping.'"
+  },
+  {
+    "id": "qz-0039",
+    "level": "B1",
+    "question": "I was _____ surprised to see him at the party.",
+    "options": [
+      "very",
+      "a little",
+      "slightly",
+      "quite"
+    ],
+    "answer": 2,
+    "explanation": "Correct answer: slightly. Meaning: (adv) To a small degree; a little. Example 'I was slightly surprised to see him at the party.'"
+  },
+  {
+    "id": "qz-0040",
+    "level": "B1",
+    "question": "He is a _____ football player.",
+    "options": [
+      "talented",
+      "talentless",
+      "talent",
+      "talently"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: talented. Meaning: (adj) Having a natural ability to be good at something, especially drawing, music, or acting. Example 'He is a talented football player.'"
+  },
+  {
+    "id": "qz-0041",
+    "level": "B2",
+    "question": "The company's _____ growth in the last quarter was remarkable.",
+    "options": [
+      "exponential",
+      "linear",
+      "slow",
+      "stagnant"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: exponential. Meaning: (adj) Increasing rapidly in a way that is harder and harder to control. Example 'The company's exponential growth in the last quarter was remarkable.'"
+  },
+  {
+    "id": "qz-0042",
+    "level": "B1",
+    "question": "She is very _____ of her younger sister.",
+    "options": [
+      "proud",
+      "ashamed",
+      "jealous",
+      "scared"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: proud. Meaning: (adj) Feeling pleased and satisfied because of your own achievements or qualities or those of people you are connected with. Example 'She is very proud of her younger sister.'"
+  },
+  {
+    "id": "qz-0043",
+    "level": "C1",
+    "question": "The legal document was full of _____ clauses that were difficult to understand.",
+    "options": [
+      "obscure",
+      "clear",
+      "simple",
+      "obvious"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: obscure. Meaning: (adj) Not well known or understood; hard to understand. Example 'The legal document was full of obscure clauses that were difficult to understand.'"
+  },
+  {
+    "id": "qz-0044",
+    "level": "B2",
+    "question": "The internet has _____ the way we communicate with each other.",
+    "options": [
+      "revolutionized",
+      "stopped",
+      "prevented",
+      "limited"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: revolutionized. Meaning: (v) To completely change the way something is done. Example 'The internet has revolutionized the way we communicate with each other.'"
+  },
+  {
+    "id": "qz-0045",
+    "level": "B2",
+    "question": "Despite the heavy rain, the _____ of the match continued.",
+    "options": [
+      "performance",
+      "appearance",
+      "presence",
+      "permission"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: performance. Meaning: (n) An act of entertaining people by singing, acting, or playing music. Example 'Despite the heavy rain, the performance of the match continued.'"
+  },
+  {
+    "id": "qz-0046",
+    "level": "B1",
+    "question": "He is a very _____ friend of mine.",
+    "options": [
+      "close",
+      "distant",
+      "strange",
+      "unknown"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: close. Meaning: (adj) Having a strong relationship with someone; very friendly. Example 'He is a very close friend of mine.'"
+  },
+  {
+    "id": "qz-0047",
+    "level": "B2",
+    "question": "The internet has _____ our access to information and entertainment.",
+    "options": [
+      "facilitated",
+      "hindered",
+      "prevented",
+      "limited"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: facilitated. Meaning: (v) To make an action or process easier. Example 'The internet has facilitated our access to information and entertainment.'"
+  },
+  {
+    "id": "qz-0048",
+    "level": "B1",
+    "question": "She is _____ to learn to play the piano.",
+    "options": [
+      "eager",
+      "reluctant",
+      "afraid",
+      "tired"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: eager. Meaning: (adj) Wanting very much to do or have something, especially something interesting or enjoyable. Example 'She is eager to learn to play the piano.'"
+  },
+  {
+    "id": "qz-0049",
+    "level": "C1",
+    "question": "The politician's _____ statements failed to convince the public.",
+    "options": [
+      "vague",
+      "clear",
+      "precise",
+      "specific"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: vague. Meaning: (adj) Not expressed clearly or in detail. Example 'The politician's vague statements failed to convince the public.'"
+  },
+  {
+    "id": "qz-0050",
+    "level": "B2",
+    "question": "The company's _____ success was due to its innovative marketing strategy.",
+    "options": [
+      "remarkable",
+      "ordinary",
+      "average",
+      "common"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: remarkable. Meaning: (adj) Unusual or surprising in a way that is impressive. Example 'The company's remarkable success was due to its innovative marketing strategy.'"
+  },
+  {
+    "id": "qz-0051",
+    "level": "B2",
+    "question": "The novel's _____ plot kept readers on the edge of their seats.",
+    "options": [
+      "gripping",
+      "boring",
+      "slow",
+      "predictable"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: gripping. Meaning: (adj) Extremely interesting and exciting. Example 'The novel's gripping plot kept readers on the edge of their seats.'"
+  },
+  {
+    "id": "qz-0052",
+    "level": "B1",
+    "question": "She is _____ about her upcoming trip to Europe.",
+    "options": [
+      "excited",
+      "nervous",
+      "calm",
+      "bored"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: excited. Meaning: (adj) Very enthusiastic and eager. Example 'She is excited about her upcoming trip to Europe.'"
+  },
+  {
+    "id": "qz-0053",
+    "level": "B1",
+    "question": "The new restaurant serves _____ Italian food.",
+    "options": [
+      "delicious",
+      "terrible",
+      "bland",
+      "awful"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: delicious. Meaning: (adj) Very pleasant to taste. Example 'The new restaurant serves delicious Italian food.'"
+  },
+  {
+    "id": "qz-0054",
+    "level": "B2",
+    "question": "The company's _____ growth in the last quarter was remarkable.",
+    "options": [
+      "impressive",
+      "disappointing",
+      "slow",
+      "unimpressive"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: impressive. Meaning: (adj) Evoking admiration through size, quality, or skill. Example 'The company's impressive growth in the last quarter was remarkable.'"
+  },
+  {
+    "id": "qz-0055",
+    "level": "B1",
+    "question": "The movie was so _____ that I fell asleep halfway through.",
+    "options": [
+      "boring",
+      "exciting",
+      "thrilling",
+      "interesting"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: boring. Meaning: (adj) Not interesting; causing one to lose interest. Example 'The movie was so boring that I fell asleep halfway through.'"
+  },
+  {
+    "id": "qz-0056",
+    "level": "B2",
+    "question": "The internet has _____ our access to information and entertainment.",
+    "options": [
+      "enriched",
+      "limited",
+      "restricted",
+      "hindered"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: enriched. Meaning: (v) To improve the quality or value of something. Example 'The internet has enriched our access to information and entertainment.'"
+  },
+  {
+    "id": "qz-0057",
+    "level": "B1",
+    "question": "She is very _____ about her upcoming trip to Europe.",
+    "options": [
+      "excited",
+      "nervous",
+      "calm",
+      "bored"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: excited. Meaning: (adj) Very enthusiastic and eager. Example 'She is excited about her upcoming trip to Europe.'"
+  },
+  {
+    "id": "qz-0058",
+    "level": "B2",
+    "question": "The novel's _____ ending left readers speculating for weeks.",
+    "options": [
+      "thought-provoking",
+      "uninspiring",
+      "predictable",
+      "dull"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: thought-provoking. Meaning: (adj) Making you think seriously about a particular subject. Example 'The novel's thought-provoking ending left readers speculating for weeks.'"
+  },
+  {
+    "id": "qz-0059",
+    "level": "B1",
+    "question": "He is a very _____ friend of mine.",
+    "options": [
+      "close",
+      "distant",
+      "strange",
+      "unknown"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: close. Meaning: (adj) Having a strong relationship with someone; very friendly. Example 'He is a very close friend of mine.'"
+  },
+  {
+    "id": "qz-0060",
+    "level": "B2",
+    "question": "The company's _____ growth in the last quarter was remarkable.",
+    "options": [
+      "unprecedented",
+      "ordinary",
+      "average",
+      "common"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: unprecedented. Meaning: (adj) Never having happened or existed before. Example 'The company's unprecedented growth in the last quarter was remarkable.'"
+  },
+  {
+    "id": "qz-0061",
+    "level": "B2",
+    "question": "The novel's _____ plot kept readers on the edge of their seats.",
+    "options": [
+      "gripping",
+      "boring",
+      "predictable",
+      "dull"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: gripping. Meaning: (adj) Extremely interesting and exciting. Example 'The novel's gripping plot kept readers on the edge of their seats.'"
+  },
+  {
+    "id": "qz-0062",
+    "level": "B1",
+    "question": "She is very _____ about her upcoming trip to Europe.",
+    "options": [
+      "excited",
+      "nervous",
+      "calm",
+      "bored"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: excited. Meaning: (adj) Very enthusiastic and eager. Example 'She is excited about her upcoming trip to Europe.'"
+  },
+  {
+    "id": "qz-0063",
+    "level": "B1",
+    "question": "The new restaurant serves _____ Italian food.",
+    "options": [
+      "delicious",
+      "terrible",
+      "bland",
+      "awful"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: delicious. Meaning: (adj) Very pleasant to taste. Example 'The new restaurant serves delicious Italian food.'"
+  },
+  {
+    "id": "qz-0064",
+    "level": "B2",
+    "question": "The company's _____ growth in the last quarter was remarkable.",
+    "options": [
+      "impressive",
+      "disappointing",
+      "slow",
+      "unimpressive"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: impressive. Meaning: (adj) Evoking admiration through size, quality, or skill. Example 'The company's impressive growth in the last quarter was remarkable.'"
+  },
+  {
+    "id": "qz-0065",
+    "level": "B1",
+    "question": "The movie was so _____ that I fell asleep halfway through.",
+    "options": [
+      "boring",
+      "exciting",
+      "thrilling",
+      "interesting"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: boring. Meaning: (adj) Not interesting; causing one to lose interest. Example 'The movie was so boring that I fell asleep halfway through.'"
+  },
+  {
+    "id": "qz-0066",
+    "level": "B2",
+    "question": "The internet has _____ our access to information and entertainment.",
+    "options": [
+      "enriched",
+      "limited",
+      "restricted",
+      "hindered"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: enriched. Meaning: (v) To improve the quality or value of something. Example 'The internet has enriched our access to information and entertainment.'"
+  },
+  {
+    "id": "qz-0067",
+    "level": "B1",
+    "question": "She is very _____ about her upcoming trip to Europe.",
+    "options": [
+      "excited",
+      "nervous",
+      "calm",
+      "bored"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: excited. Meaning: (adj) Very enthusiastic and eager. Example 'She is excited about her upcoming trip to Europe.'"
+  },
+  {
+    "id": "qz-0068",
+    "level": "B2",
+    "question": "The novel's _____ ending left readers speculating for weeks.",
+    "options": [
+      "thought-provoking",
+      "uninspiring",
+      "predictable",
+      "dull"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: thought-provoking. Meaning: (adj) Making you think seriously about a particular subject. Example 'The novel's thought-provoking ending left readers speculating for weeks.'"
+  },
+  {
+    "id": "qz-0069",
+    "level": "B1",
+    "question": "He is a very _____ friend of mine.",
+    "options": [
+      "close",
+      "distant",
+      "strange",
+      "unknown"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: close. Meaning: (adj) Having a strong relationship with someone; very friendly. Example 'He is a very close friend of mine.'"
+  },
+  {
+    "id": "qz-0070",
+    "level": "B2",
+    "question": "The company's _____ growth in the last quarter was remarkable.",
+    "options": [
+      "unprecedented",
+      "ordinary",
+      "average",
+      "common"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: unprecedented. Meaning: (adj) Never having happened or existed before. Example 'The company's unprecedented growth in the last quarter was remarkable.'"
+  },
+  {
+    "id": "qz-0071",
+    "level": "A1",
+    "question": "I have a _____ red bag.",
+    "options": [
+      "small",
+      "big",
+      "beautiful",
+      "nice"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: small. Meaning: (adj) Of limited size. Example 'I have a small red bag.'"
+  },
+  {
+    "id": "qz-0072",
+    "level": "A2",
+    "question": "She is a _____ student.",
+    "options": [
+      "hardworking",
+      "lazy",
+      "bad",
+      "not good"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: hardworking. Meaning: (adj) Spending a lot of time and effort doing work or study. Example 'She is a hardworking student.'"
+  },
+  {
+    "id": "qz-0073",
+    "level": "B1",
+    "question": "The movie was so _____ that I fell asleep halfway through.",
+    "options": [
+      "boring",
+      "exciting",
+      "thrilling",
+      "interesting"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: boring. Meaning: (adj) Not interesting; causing one to lose interest. Example 'The movie was so boring that I fell asleep halfway through.'"
+  },
+  {
+    "id": "qz-0074",
+    "level": "B2",
+    "question": "The company's _____ growth in the last quarter was remarkable.",
+    "options": [
+      "impressive",
+      "disappointing",
+      "slow",
+      "unimpressive"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: impressive. Meaning: (adj) Evoking admiration through size, quality, or skill. Example 'The company's impressive growth in the last quarter was remarkable.'"
+  },
+  {
+    "id": "qz-0075",
+    "level": "B1",
+    "question": "He is a very _____ friend of mine.",
+    "options": [
+      "close",
+      "distant",
+      "strange",
+      "unknown"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: close. Meaning: (adj) Having a strong relationship with someone; very friendly. Example 'He is a very close friend of mine.'"
+  },
+  {
+    "id": "qz-0076",
+    "level": "B2",
+    "question": "The novel's _____ ending left readers speculating for weeks.",
+    "options": [
+      "thought-provoking",
+      "uninspiring",
+      "predictable",
+      "dull"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: thought-provoking. Meaning: (adj) Making you think seriously about a particular subject. Example 'The novel's thought-provoking ending left readers speculating for weeks.'"
+  },
+  {
+    "id": "qz-0077",
+    "level": "B1",
+    "question": "She is very _____ about her upcoming trip to Europe.",
+    "options": [
+      "excited",
+      "nervous",
+      "calm",
+      "bored"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: excited. Meaning: (adj) Very enthusiastic and eager. Example 'She is excited about her upcoming trip to Europe.'"
+  },
+  {
+    "id": "qz-0078",
+    "level": "B2",
+    "question": "The company's _____ growth in the last quarter was remarkable.",
+    "options": [
+      "unprecedented",
+      "ordinary",
+      "average",
+      "common"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: unprecedented. Meaning: (adj) Never having happened or existed before. Example 'The company's unprecedented growth in the last quarter was remarkable.'"
+  },
+  {
+    "id": "qz-0079",
+    "level": "A1",
+    "question": "I have a _____ red bag.",
+    "options": [
+      "small",
+      "big",
+      "beautiful",
+      "nice"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: small. Meaning: (adj) Of limited size. Example 'I have a small red bag.'"
+  },
+  {
+    "id": "qz-0080",
+    "level": "A2",
+    "question": "She is a _____ student.",
+    "options": [
+      "hardworking",
+      "lazy",
+      "bad",
+      "not good"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: hardworking. Meaning: (adj) Spending a lot of time and effort doing work or study. Example 'She is a hardworking student.'"
+  },
+  {
+    "id": "qz-0081",
+    "level": "A2",
+    "question": "It's _____ to wait for me.",
+    "options": [
+      "kind",
+      "unkind",
+      "kindness",
+      "kindly"
+    ],
+    "explanation": "Correct answer: kind. Meaning: (adj) Having or showing a friendly, generous, and considerate nature. Example 'It's kind of you to wait for me.'",
+    "answer": 0
+  },
+  {
+    "id": "qz-0082",
+    "level": "B1",
+    "question": "She is looking forward _____ to the weekend.",
+    "options": [
+      "to",
+      "for",
+      "at",
+      "with"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: to. Meaning: (phrasal verb) To anticipate with pleasure. Example 'She is looking forward to the weekend.'"
+  },
+  {
+    "id": "qz-0083",
+    "level": "B2",
+    "question": "The company's growth has been largely _____ to his innovative strategies.",
+    "options": [
+      "attributed",
+      "prevented",
+      "dismissed",
+      "ignored"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: attributed. Meaning: (v) Regard something as being caused by (someone or something). Example 'The company's growth has been largely attributed to his innovative strategies.'"
+  },
+  {
+    "id": "qz-0084",
+    "level": "A1",
+    "question": "I like _____ chocolate ice cream.",
+    "options": [
+      "this",
+      "that",
+      "these",
+      "those"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: this. Meaning: (pron) Used to identify a specific person or thing close at hand. Example 'I like this chocolate ice cream.'"
+  },
+  {
+    "id": "qz-0085",
+    "level": "A2",
+    "question": "He _____ go to the gym three times a week.",
+    "options": [
+      "usually",
+      "rarely",
+      "never",
+      "sometimes"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: usually. Meaning: (adv) In most cases; normally. Example 'He usually goes to the gym three times a week.'"
+  },
+  {
+    "id": "qz-0086",
+    "level": "B1",
+    "question": "The internet has _____ our access to information and entertainment.",
+    "options": [
+      "enriched",
+      "limited",
+      "restricted",
+      "hindered"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: enriched. Meaning: (v) To improve the quality or value of something. Example 'The internet has enriched our access to information and entertainment.'"
+  },
+  {
+    "id": "qz-0087",
+    "level": "B2",
+    "question": "The novel's _____ ending left readers speculating for weeks.",
+    "options": [
+      "thought-provoking",
+      "uninspiring",
+      "predictable",
+      "dull"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: thought-provoking. Meaning: (adj) Making you think seriously about a particular subject. Example 'The novel's thought-provoking ending left readers speculating for weeks.'"
+  },
+  {
+    "id": "qz-0088",
+    "level": "B1",
+    "question": "She is very _____ about her upcoming trip to Europe.",
+    "options": [
+      "excited",
+      "nervous",
+      "calm",
+      "bored"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: excited. Meaning: (adj) Very enthusiastic and eager. Example 'She is excited about her upcoming trip to Europe.'"
+  },
+  {
+    "id": "qz-0089",
+    "level": "B2",
+    "question": "The company's _____ growth in the last quarter was remarkable.",
+    "options": [
+      "unprecedented",
+      "ordinary",
+      "average",
+      "common"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: unprecedented. Meaning: (adj) Never having happened or existed before. Example 'The company's unprecedented growth in the last quarter was remarkable.'"
+  },
+  {
+    "id": "qz-0090",
+    "level": "B1",
+    "question": "He is a very _____ friend of mine.",
+    "options": [
+      "close",
+      "distant",
+      "strange",
+      "unknown"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: close. Meaning: (adj) Having a strong relationship with someone; very friendly. Example 'He is a very close friend of mine.'"
+  },
+  {
+    "id": "qz-0091",
+    "level": "A1",
+    "question": "I have a _____ red bag.",
+    "options": [
+      "small",
+      "big",
+      "beautiful",
+      "nice"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: small. Meaning: (adj) Of limited size. Example 'I have a small red bag.'"
+  },
+  {
+    "id": "qz-0092",
+    "level": "A2",
+    "question": "She is a _____ student.",
+    "options": [
+      "hardworking",
+      "lazy",
+      "bad",
+      "not good"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: hardworking. Meaning: (adj) Spending a lot of time and effort doing work or study. Example 'She is a hardworking student.'"
+  },
+  {
+    "id": "qz-0093",
+    "level": "B1",
+    "question": "It's _____ to wait for me.",
+    "options": [
+      "kind",
+      "unkind",
+      "kindness",
+      "kindly"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: kind. Meaning: (adj) Having or showing a friendly, generous, and considerate nature. Example 'It's kind of you to wait for me.'"
+  },
+  {
+    "id": "qz-0094",
+    "level": "B2",
+    "question": "The company's growth has been largely _____ to his innovative strategies.",
+    "options": [
+      "attributed",
+      "prevented",
+      "dismissed",
+      "ignored"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: attributed. Meaning: (v) Regard something as being caused by (someone or something). Example 'The company's growth has been largely attributed to his innovative strategies.'"
+  },
+  {
+    "id": "qz-0095",
+    "level": "A1",
+    "question": "I like _____ chocolate ice cream.",
+    "options": [
+      "this",
+      "that",
+      "these",
+      "those"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: this. Meaning: (pron) Used to identify a specific person or thing close at hand. Example 'I like this chocolate ice cream.'"
+  },
+  {
+    "id": "qz-0096",
+    "level": "A2",
+    "question": "He _____ go to the gym three times a week.",
+    "options": [
+      "usually",
+      "rarely",
+      "never",
+      "sometimes"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: usually. Meaning: (adv) In most cases; normally. Example 'He usually goes to the gym three times a week.'"
+  },
+  {
+    "id": "qz-0097",
+    "level": "A1",
+    "question": "She ate a red ______.",
+    "options": [
+      "apple",
+      "car",
+      "book",
+      "water"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: apple. Meaning: (noun) A common, round fruit produced by the tree Malus domestica, cultivated in temperate climates. Example 'No example provided.'"
+  },
+  {
+    "id": "qz-0098",
+    "level": "A1",
+    "question": "I am reading a good ______.",
+    "options": [
+      "table",
+      "book",
+      "chair",
+      "shoe"
+    ],
+    "answer": 1,
+    "explanation": "Correct answer: book. Meaning: (noun) A collection of sheets of paper bound together to hinge at one edge, containing printed or written material, pictures, etc. Example 'He was frustrated because he couldn't find anything about dinosaurs in the book.'"
+  },
+  {
+    "id": "qz-0099",
+    "level": "A1",
+    "question": "The ______ is sleeping on the sofa.",
+    "options": [
+      "car",
+      "tree",
+      "cat",
+      "sun"
+    ],
+    "answer": 2,
+    "explanation": "Correct answer: cat. Meaning: (noun) An animal of the family Felidae: Example 'No example provided.'"
+  },
+  {
+    "id": "qz-0100",
+    "level": "A1",
+    "question": "He walks his ______ every morning.",
+    "options": [
+      "fish",
+      "bird",
+      "snake",
+      "dog"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: dog. Meaning: (noun) A mammal, Canis familiaris or Canis lupus familiaris, that has been domesticated for thousands of years, of highly variable appearance due to human breeding. Example 'The dog barked all night long.'"
+  },
+  {
+    "id": "qz-0101",
+    "level": "A1",
+    "question": "They live in a big ______.",
+    "options": [
+      "house",
+      "mouse",
+      "cloud",
+      "star"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: house. Meaning: (noun) A structure built or serving as an abode of human beings. Example 'This is my house and my family's ancestral home.'"
+  },
+  {
+    "id": "qz-0102",
+    "level": "A1",
+    "question": "Please give me a glass of ______.",
+    "options": [
+      "sand",
+      "water",
+      "paper",
+      "wood"
+    ],
+    "answer": 1,
+    "explanation": "Correct answer: water. Meaning: (noun) A substance (of molecular formula H₂O) found at room temperature and pressure as a clear liquid; it is present naturally as rain, and found in rivers, lakes and seas; its solid form is ice and its gaseous form is steam. Example 'By the action of electricity, the water was resolved into its two parts, oxygen and hydrogen.'"
+  },
+  {
+    "id": "qz-0103",
+    "level": "A1",
+    "question": "She is my best ______.",
+    "options": [
+      "enemy",
+      "stranger",
+      "friend",
+      "monster"
+    ],
+    "answer": 2,
+    "explanation": "Correct answer: friend. Meaning: (noun) A person other than a family member, spouse or lover whose company one enjoys and towards whom one feels affection. Example 'John and I have been friends ever since we were roommates at college.   Trust is important between friends.   I used to find it hard to make friends when I was shy.'"
+  },
+  {
+    "id": "qz-0104",
+    "level": "A1",
+    "question": "The children go to ______ at 8 AM.",
+    "options": [
+      "moon",
+      "sky",
+      "forest",
+      "school"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: school. Meaning: (noun) (collective) A group of fish or a group of marine mammals such as porpoises, dolphins, or whales. Example 'The divers encountered a huge school of mackerel.'"
+  },
+  {
+    "id": "qz-0105",
+    "level": "A1",
+    "question": "The ______ wrote on the board.",
+    "options": [
+      "teacher",
+      "doctor",
+      "driver",
+      "farmer"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: teacher. Meaning: (noun) A person who teaches, especially one employed in a school. Example 'No example provided.'"
+  },
+  {
+    "id": "qz-0106",
+    "level": "A1",
+    "question": "He smiled because he was ______.",
+    "options": [
+      "sad",
+      "happy",
+      "angry",
+      "tired"
+    ],
+    "answer": 1,
+    "explanation": "Correct answer: happy. Meaning: (noun) A happy event, thing, person, etc. Example 'No example provided.'"
+  },
+  {
+    "id": "qz-0107",
+    "level": "C1",
+    "question": "She is very ______ about her work, checking every detail.",
+    "options": [
+      "careless",
+      "sloppy",
+      "meticulous",
+      "hasty"
+    ],
+    "answer": 2,
+    "explanation": "Correct answer: meticulous. Meaning: (adjective) Characterized by very precise, conscientious attention to details. Example 'No example provided.'"
+  },
+  {
+    "id": "qz-0108",
+    "level": "C1",
+    "question": "Smartphones have become ______ in modern society.",
+    "options": [
+      "rare",
+      "scarce",
+      "uncommon",
+      "ubiquitous"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: ubiquitous. Meaning: (adjective) Being everywhere at once: omnipresent. Example 'To Hindus, Jews, Christians, and Muslims, God is ubiquitous.'"
+  },
+  {
+    "id": "qz-0109",
+    "level": "C1",
+    "question": "Fame is often ______, lasting only for a short time.",
+    "options": [
+      "ephemeral",
+      "permanent",
+      "endless",
+      "eternal"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: ephemeral. Meaning: (noun) Something which lasts for a short period of time. Example 'No example provided.'"
+  },
+  {
+    "id": "qz-0110",
+    "level": "C1",
+    "question": "His excuse for being late sounded perfectly ______.",
+    "options": [
+      "impossible",
+      "plausible",
+      "unlikely",
+      "absurd"
+    ],
+    "answer": 1,
+    "explanation": "Correct answer: plausible. Meaning: (adjective) Seemingly or apparently valid, likely, or acceptable; conceivably true or likely Example 'a plausible excuse'"
+  },
+  {
+    "id": "qz-0111",
+    "level": "C1",
+    "question": "We need to take a ______ approach to solve this problem.",
+    "options": [
+      "theoretical",
+      "idealistic",
+      "pragmatic",
+      "impractical"
+    ],
+    "answer": 2,
+    "explanation": "Correct answer: pragmatic. Meaning: Dictionary definition not found. Example 'We need to take a ______ approach to solve this problem.'"
+  },
+  {
+    "id": "qz-0112",
+    "level": "C1",
+    "question": "The discovery caused a ______ shift in scientific thinking.",
+    "options": [
+      "paradox",
+      "paragon",
+      "parasite",
+      "paradigm"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: paradigm. Meaning: Dictionary definition not found. Example 'The discovery caused a ______ shift in scientific thinking.'"
+  },
+  {
+    "id": "qz-0113",
+    "level": "C1",
+    "question": "Playing chess can improve your ______ skills.",
+    "options": [
+      "cognitive",
+      "physical",
+      "muscular",
+      "athletic"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: cognitive. Meaning: Dictionary definition not found. Example 'Playing chess can improve your ______ skills.'"
+  },
+  {
+    "id": "qz-0114",
+    "level": "C1",
+    "question": "The stock market is highly ______ right now.",
+    "options": [
+      "stable",
+      "volatile",
+      "predictable",
+      "constant"
+    ],
+    "answer": 1,
+    "explanation": "Correct answer: volatile. Meaning: Dictionary definition not found. Example 'The stock market is highly ______ right now.'"
+  },
+  {
+    "id": "qz-0115",
+    "level": "C1",
+    "question": "The book had a ______ impact on my life.",
+    "options": [
+      "superficial",
+      "shallow",
+      "profound",
+      "trivial"
+    ],
+    "answer": 2,
+    "explanation": "Correct answer: profound. Meaning: Dictionary definition not found. Example 'The book had a ______ impact on my life.'"
+  },
+  {
+    "id": "qz-0116",
+    "level": "C1",
+    "question": "He left his job to start a highly ______ business.",
+    "options": [
+      "unprofitable",
+      "ruinous",
+      "failing",
+      "lucrative"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: lucrative. Meaning: Dictionary definition not found. Example 'He left his job to start a highly ______ business.'"
+  },
+  {
+    "id": "qz-0117",
+    "level": "C2",
+    "question": "He is the ______ English gentleman.",
+    "options": [
+      "quintessential",
+      "atypical",
+      "abnormal",
+      "irregular"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: quintessential. Meaning: Dictionary definition not found. Example 'He is the ______ English gentleman.'"
+  },
+  {
+    "id": "qz-0118",
+    "level": "C2",
+    "question": "Politicians often try to ______ the truth with complicated words.",
+    "options": [
+      "clarify",
+      "obfuscate",
+      "illuminate",
+      "explain"
+    ],
+    "answer": 1,
+    "explanation": "Correct answer: obfuscate. Meaning: Dictionary definition not found. Example 'Politicians often try to ______ the truth with complicated words.'"
+  },
+  {
+    "id": "qz-0119",
+    "level": "C2",
+    "question": "Finding the lost ring was a stroke of pure ______.",
+    "options": [
+      "misfortune",
+      "disaster",
+      "serendipity",
+      "tragedy"
+    ],
+    "answer": 2,
+    "explanation": "Correct answer: serendipity. Meaning: Dictionary definition not found. Example 'Finding the lost ring was a stroke of pure ______.'"
+  },
+  {
+    "id": "qz-0120",
+    "level": "C2",
+    "question": "The construction site produced a deafening ______ of sounds.",
+    "options": [
+      "melody",
+      "harmony",
+      "symphony",
+      "cacophony"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: cacophony. Meaning: Dictionary definition not found. Example 'The construction site produced a deafening ______ of sounds.'"
+  },
+  {
+    "id": "qz-0121",
+    "level": "C2",
+    "question": "She has an ______ way of tying her shoelaces.",
+    "options": [
+      "idiosyncratic",
+      "common",
+      "standard",
+      "normal"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: idiosyncratic. Meaning: Dictionary definition not found. Example 'She has an ______ way of tying her shoelaces.'"
+  },
+  {
+    "id": "qz-0122",
+    "level": "C2",
+    "question": "The singer's ______ voice captivated the audience.",
+    "options": [
+      "harsh",
+      "mellifluous",
+      "grating",
+      "strident"
+    ],
+    "answer": 1,
+    "explanation": "Correct answer: mellifluous. Meaning: Dictionary definition not found. Example 'The singer's ______ voice captivated the audience.'"
+  },
+  {
+    "id": "qz-0123",
+    "level": "C2",
+    "question": "He is a ______ who will agree with anything the boss says.",
+    "options": [
+      "rebel",
+      "leader",
+      "sycophant",
+      "maverick"
+    ],
+    "answer": 2,
+    "explanation": "Correct answer: sycophant. Meaning: Dictionary definition not found. Example 'He is a ______ who will agree with anything the boss says.'"
+  },
+  {
+    "id": "qz-0124",
+    "level": "C2",
+    "question": "She is so ______ that her room is always spotless.",
+    "options": [
+      "messy",
+      "sloppy",
+      "careless",
+      "fastidious"
+    ],
+    "answer": 3,
+    "explanation": "Correct answer: fastidious. Meaning: Dictionary definition not found. Example 'She is so ______ that her room is always spotless.'"
+  },
+  {
+    "id": "qz-0125",
+    "level": "C2",
+    "question": "The ______ effects of the propaganda were felt for years.",
+    "options": [
+      "pernicious",
+      "beneficial",
+      "harmless",
+      "positive"
+    ],
+    "answer": 0,
+    "explanation": "Correct answer: pernicious. Meaning: Dictionary definition not found. Example 'The ______ effects of the propaganda were felt for years.'"
+  },
+  {
+    "id": "qz-0126",
+    "level": "C2",
+    "question": "As an ______, he constantly challenged traditional beliefs.",
+    "options": [
+      "conformist",
+      "iconoclast",
+      "follower",
+      "traditionalist"
+    ],
+    "answer": 1,
+    "explanation": "Correct answer: iconoclast. Meaning: Dictionary definition not found. Example 'As an ______, he constantly challenged traditional beliefs.'"
   }
 ]
