@@ -498,6 +498,13 @@ function finishPlacementTest() {
     else if (finalPct >= 30) finalLevel = 'A2';
     else finalLevel = 'A1';
 
+    // Log level milestone if level changed
+    if (state.userLevel !== finalLevel) {
+        if (typeof logActivity === 'function') {
+            logActivity('milestone', `Đạt trình độ ${finalLevel} 🎓`, `Đã hoàn thành bài kiểm tra năng lực tiếng Anh và đạt chuẩn ${finalLevel}.`, 0);
+        }
+    }
+
     // Save to state (backward compatible)
     state.userLevel = finalLevel;
     state.lastTestScore = Math.round((totalCorrect / totalQuestions) * 16); // Map to /16 for UI compat

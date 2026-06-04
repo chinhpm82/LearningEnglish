@@ -174,6 +174,7 @@ function initApp() {
                             state.quizStats = cloudData.profile.quizStats || { totalAnswered: 0, correctAnswers: 0 };
                             state.userLevel = cloudData.profile.userLevel || '';
                             state.roadmapTasks = cloudData.profile.roadmapTasks || [];
+                            state.activityLogs = cloudData.profile.activityLogs || [];
                             if (!state.roadmapTasks || state.roadmapTasks.length < 3) {
                                 state.roadmapTasks = generateRoadmapTasks(state.userLevel || 'A1');
                             }
@@ -186,7 +187,7 @@ function initApp() {
 
                             if (needPushBack) {
                                 console.log("🔄 Race Condition Resolved: Local state is superior. Syncing local progress up to cloud...");
-                                window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars, state.photoURL, state.displayName);
+                                window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars, state.photoURL, state.displayName, state.activityLogs);
                             }
                         }
                         if (cloudData.customWords) {
@@ -587,7 +588,7 @@ async function syncCurrentStateToCloud() {
     if (!window.FirebaseSync || !isCloudMode) return;
     
     // Save streak stats
-    await window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars, state.photoURL, state.displayName);
+    await window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars, state.photoURL, state.displayName, state.activityLogs);
     
     // Save custom words
     for (const word of state.customWords) {

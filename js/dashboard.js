@@ -92,6 +92,11 @@ function renderDashboard() {
     // Proactively check if placement test needs to be triggered
     triggerCEFRPlacementTestIfNew();
 
+    // Render Activity Timeline
+    if (typeof renderActivityTimeline === 'function') {
+        renderActivityTimeline();
+    }
+
     // Update Gold Stars counter
     const starsCountEl = document.getElementById('dashboard-stars-count');
     if (starsCountEl) {
@@ -269,5 +274,65 @@ async function renderWordOfTheDay(forceRefresh = false) {
         voiceBtn.parentNode.replaceChild(newBtn, voiceBtn);
         newBtn.addEventListener('click', () => speakEnglish(wotd.word));
     }
+}
+
+function renderActivityTimeline() {
+    const container = document.getElementById('activity-timeline-container');
+    if (!container) return;
+
+    if (!state.activityLogs || state.activityLogs.length === 0) {
+        container.innerHTML = `
+            <div style="text-align: center; padding: 20px; color: var(--text-muted);">
+                <span style="font-size: 24px; display: block; margin-bottom: 10px;">🍃</span>
+                Chưa có hoạt động nào. Hãy làm bài tập để ghi danh nhé!
+            </div>
+        `;
+        return;
+    }
+
+    // Group logs by date
+    const groupedLogs = {};
+    for (const log of state.activityLogs) {
+        if (!groupedLogs[log.date]) {
+            groupedLogs[log.date] = { date: log.date, items: [], totalStars: 0 };
+        }
+        groupedLogs[log.date].items.push(log);
+        if (log.stars) groupedLogs[log.date].totalStars += parseInt(log.stars);
+    }
+
+    let html = '';
+    for (const [date, group] of Object.entries(groupedLogs)) {
+        // Daily Header
+        const displayDate = date === new Date().toLocaleDateString('en-US') ? 'Hôm nay' : date;
+        html += `
+            <div style="margin-top: 10px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px;">
+                <h4 style="margin: 0; font-size: 14px; color: var(--primary);">${displayDate}</h4>
+                ${group.totalStars > 0 ? `<span style="font-size: 12px; color: #fbbf24;">+${group.totalStars} ⭐</span>` : ''}
+            </div>
+        `;
+
+        // Activities
+        for (const log of group.items) {
+            const isMilestone = log.type === 'milestone';
+            const icon = isMilestone ? '🏆' : '🎯';
+            const bgColor = isMilestone ? 'rgba(139, 92, 246, 0.1)' : 'rgba(255,255,255,0.03)';
+            const borderLeft = isMilestone ? '3px solid var(--accent)' : '3px solid var(--primary)';
+
+            html += `
+                <div style="display: flex; gap: 12px; background: ${bgColor}; padding: 12px; border-radius: 8px; border-left: ${borderLeft};">
+                    <div style="font-size: 20px; margin-top: 2px;">${icon}</div>
+                    <div style="flex: 1;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <strong style="color: ${isMilestone ? 'var(--accent)' : 'var(--text-main)'}; font-size: 14px;">${log.title}</strong>
+                            <span style="font-size: 12px; color: var(--text-muted);">${log.time}</span>
+                        </div>
+                        <p style="margin: 0; font-size: 13px; color: var(--text-muted);">${log.description}</p>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    container.innerHTML = html;
 }
 

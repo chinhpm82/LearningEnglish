@@ -330,7 +330,7 @@ async function endRandomQuiz(reasonText) {
 
                 <div style="display: flex; gap: 10px; margin-top: 20px;">
                     <button class="btn-primary" onclick="document.getElementById('rq-end-screen')?.remove(); initRandomQuizSession('${rqCurrentDifficulty}');" style="flex: 1;">🔄 Chơi lại</button>
-                    <button class="btn-secondary" onclick="document.getElementById('rq-end-screen')?.remove(); document.getElementById('btn-quiz-go-home').click();" style="flex: 1;">Quay về</button>
+                    <button class="btn-secondary" onclick="document.getElementById('rq-end-screen')?.remove(); document.getElementById('btn-quiz').click();" style="flex: 1;">Quay về</button>
                 </div>
             </div>
         `;

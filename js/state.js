@@ -27,7 +27,8 @@ let state = {
     completedSentences: [], // Completed communicative sentence english string IDs
     stories_done: [],      // Completed reading stories
     writingHighScores: {}, // Store highest score reached on each writing topic permanently!
-    currentWotd: null      // Selected Word of the Day
+    currentWotd: null,     // Selected Word of the Day
+    activityLogs: []       // Timeline history of activities and milestones
 };
 
 // Flashcard Deck study state
@@ -120,6 +121,7 @@ async function loadStateAsync() {
         state.completedSentences = await LearningDB.getProgress('completed_sentences', []);
         state.stories_done = await LearningDB.getProgress('stories_done', []);
         state.writingHighScores = await LearningDB.getProgress('writing_high_scores', {});
+        state.activityLogs = await LearningDB.getProgress('activity_logs', []);
         storiesState.completedStories = state.stories_done;
         
         const storedRoadmap = await LearningDB.getProgress('roadmap_tasks', null);
@@ -189,6 +191,7 @@ async function saveStatsToStorage() {
     await LearningDB.setProgress('completed_sentences', state.completedSentences);
     await LearningDB.setProgress('stories_done', state.stories_done);
     await LearningDB.setProgress('writing_high_scores', state.writingHighScores);
+    await LearningDB.setProgress('activity_logs', state.activityLogs);
 
     // Keep localStorage in sync for basic visual items
     localStorage.setItem('vocabflow_user_level', state.userLevel);
@@ -198,7 +201,7 @@ async function saveStatsToStorage() {
     
     // Sync to Firebase if in Cloud Mode
     if (isCloudMode && window.FirebaseSync) {
-        await window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars, state.photoURL, state.displayName);
+        await window.FirebaseSync.saveStreak(state.streak, state.lastStudyDate, state.quizStats, state.userLevel, state.roadmapTasks, state.stars, state.photoURL, state.displayName, state.activityLogs);
     }
 }
 
@@ -251,16 +254,22 @@ function checkAndUpdateStreak() {
         // Studied yesterday, consecutive day study!
         state.streak += 1;
         state.lastStudyDate = today;
+        
+        if (typeof logActivity === 'function') {
+            logActivity('milestone', `Đạt chuỗi ${state.streak} ngày liên tiếp! 🔥`, `Sự chăm chỉ của bạn đang mang lại kết quả tuyệt vời!`, 0);
+        }
+        
         saveStatsToStorage();
         updateSidebarStreakUI();
     } else {
         // Broke the streak (gap > 1 day) or brand new user
-        if (state.lastStudyDate === '') {
-            state.streak = 1; // Brand new study starting today
-        } else {
-            state.streak = 1; // Reset streak
-        }
+        state.streak = 1; // Always reset to 1, never 0 for an active study day
         state.lastStudyDate = today;
+        
+        if (typeof logActivity === 'function') {
+            logActivity('milestone', `Bắt đầu chuỗi học tập mới! 🔥`, `Ngày 1. Hãy duy trì mỗi ngày nhé!`, 0);
+        }
+        
         saveStatsToStorage();
         updateSidebarStreakUI();
     }

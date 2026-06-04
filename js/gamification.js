@@ -1,6 +1,34 @@
 // --- GLOBAL GAMIFICATION & STARS CORE FUNCTIONS ---
+function logActivity(type, title, description, stars = 0) {
+    if (!state.activityLogs) state.activityLogs = [];
+    
+    const now = new Date();
+    const dateString = now.toLocaleDateString('en-US'); // MM/DD/YYYY
+    const timeString = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+
+    state.activityLogs.unshift({
+        id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+        type: type, // 'activity' or 'milestone'
+        title: title,
+        description: description,
+        stars: stars,
+        date: dateString,
+        time: timeString,
+        timestamp: Date.now()
+    });
+
+    // Keep only the last 100 entries to save space
+    if (state.activityLogs.length > 100) {
+        state.activityLogs = state.activityLogs.slice(0, 100);
+    }
+}
+
 async function awardStars(amount, reason) {
     state.stars += amount;
+    
+    // Log the activity to timeline
+    logActivity('activity', reason, `Hoàn thành xuất sắc và nhận phần thưởng ${amount} sao.`, amount);
+    
     await saveStatsToStorage();
     renderDashboard();
     

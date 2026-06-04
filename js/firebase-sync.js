@@ -168,8 +168,8 @@ window.FirebaseSync = {
         }
     },
 
-    // Save user profile stats (Streak, LastStudyDate, QuizStats, UserLevel, RoadmapTasks, Stars, CustomPhotoURL, CustomDisplayName)
-    saveStreak: async (streak, lastStudyDate, quizStats, userLevel = '', roadmapTasks = [], stars = 0, customPhotoURL = '', customDisplayName = '') => {
+    // Save user profile stats (Streak, LastStudyDate, QuizStats, UserLevel, RoadmapTasks, Stars, CustomPhotoURL, CustomDisplayName, ActivityLogs)
+    saveStreak: async (streak, lastStudyDate, quizStats, userLevel = '', roadmapTasks = [], stars = 0, customPhotoURL = '', customDisplayName = '', activityLogs = []) => {
         if (!isConfigured || !currentUser) return;
         cachedUserData = null; // Invalidate cache
         
@@ -186,6 +186,7 @@ window.FirebaseSync = {
                 userLevel: userLevel,
                 roadmapTasks: roadmapTasks,
                 stars: stars,
+                activityLogs: activityLogs,
                 updatedAt: Date.now()
             }, { merge: true });
         } catch (e) {
