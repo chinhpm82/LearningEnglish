@@ -94,11 +94,19 @@ async function getAllVocab() {
     // 1. Lấy dữ liệu siêu tốc từ bộ nhớ đệm cục bộ (Cache Offline-First) cho Index
     let baseVocab = await getLocalCache('cached_academic_vocab_index');
 
-    // 2. Nếu Cache rỗng, nạp từ biến toàn cục window.ACADEMIC_INDEX (đã tải ở state.js)
-    if ((!baseVocab || baseVocab.length === 0) && window.ACADEMIC_INDEX && window.ACADEMIC_INDEX.vocabulary) {
-        baseVocab = window.ACADEMIC_INDEX.vocabulary;
-        if (baseVocab.length > 0) {
-            await setLocalCache('cached_academic_vocab_index', baseVocab);
+    // 2. Nếu Cache rỗng, nạp từ file json/vocabulary-index.json
+    if (!baseVocab || baseVocab.length === 0) {
+        try {
+            const response = await fetch('json/vocabulary-index.json');
+            if (response.ok) {
+                baseVocab = await response.json();
+                if (baseVocab && baseVocab.length > 0) {
+                    await setLocalCache('cached_academic_vocab_index', baseVocab);
+                }
+            }
+        } catch (error) {
+            console.error("Failed to load vocabulary index:", error);
+            baseVocab = [];
         }
     }
 

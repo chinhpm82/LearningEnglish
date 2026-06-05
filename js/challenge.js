@@ -382,6 +382,18 @@
                     window.GRAMMAR_PRACTICE_DATA = await window.FirebaseSync.fetchAcademicGrammarPractice() || {};
                 }
             }
+        } else if (topic === "vocabulary") {
+            if (!window.INITIAL_VOCABULARY || window.INITIAL_VOCABULARY.length === 0) {
+                if (window.FirebaseSync) {
+                    window.INITIAL_VOCABULARY = await window.FirebaseSync.fetchCategoryIndex('vocabulary') || [];
+                }
+            }
+        } else if (topic === "sentences") {
+            if (!window.COMMUNICATIVE_SENTENCES || window.COMMUNICATIVE_SENTENCES.length === 0) {
+                if (window.FirebaseSync) {
+                    window.COMMUNICATIVE_SENTENCES = await window.FirebaseSync.fetchCategoryIndex('sentences') || [];
+                }
+            }
         }
 
         const generatedQuestions = generateChallengeQuestions(topic);
