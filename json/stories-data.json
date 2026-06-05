@@ -3,7 +3,7 @@
     "id": "s1",
     "title": "The Lost Dog",
     "emoji": "🐕",
-    "level": "Beginner",
+    "level": "A2",
     "paragraphs": [
       "Tom was walking in the park. He saw a small dog sitting alone under a tree.",
       "The dog looked sad and hungry. Tom gave it some bread from his bag.",
@@ -55,7 +55,7 @@
     "id": "s2",
     "title": "A Cup of Coffee",
     "emoji": "☕",
-    "level": "Beginner",
+    "level": "A2",
     "paragraphs": [
       "Lan goes to the same coffee shop every morning before work.",
       "One day, the barista said: 'Your coffee is free today. The person before you paid for it.'",
@@ -106,7 +106,7 @@
     "id": "s3",
     "title": "The Job Interview",
     "emoji": "💼",
-    "level": "Beginner",
+    "level": "A2",
     "paragraphs": [
       "Minh had a job interview at 9 AM. He woke up late and panicked.",
       "He quickly got dressed and ran to the bus stop. The bus was already leaving!",
@@ -158,7 +158,7 @@
     "id": "s4",
     "title": "The New Neighbor",
     "emoji": "🏠",
-    "level": "Beginner",
+    "level": "A2",
     "paragraphs": [
       "A new family moved in next door. They were from another country.",
       "At first, nobody talked to them. They looked lonely.",
@@ -210,7 +210,7 @@
     "id": "s5",
     "title": "Learning to Swim",
     "emoji": "🏊",
-    "level": "Beginner",
+    "level": "A2",
     "paragraphs": [
       "Hoa was afraid of water. All her friends could swim, but she couldn't.",
       "Her father said: 'I will teach you. Don't worry, I'll be right beside you.'",
@@ -262,7 +262,7 @@
     "id": "s6",
     "title": "The Surprise Birthday Party",
     "emoji": "🎂",
-    "level": "Beginner",
+    "level": "A2",
     "paragraphs": [
       "It was Linh's birthday, but nobody mentioned it at school. She felt sad.",
       "After school, her best friend asked her to come to her house for 'homework help.'",
@@ -314,7 +314,7 @@
     "id": "s7",
     "title": "A Rainy Day Adventure",
     "emoji": "🌧️",
-    "level": "Intermediate",
+    "level": "B1",
     "paragraphs": [
       "It rained heavily all morning. The children couldn't go outside to play.",
       "'I'm bored!' said Tuan. His mother smiled and brought out a big cardboard box.",
@@ -366,7 +366,7 @@
     "id": "s8",
     "title": "The Magic Library",
     "emoji": "📚",
-    "level": "Intermediate",
+    "level": "B1",
     "paragraphs": [
       "There was a small library at the end of the street that nobody visited.",
       "One day, curious Huong walked in. The old librarian gave her a book and said: 'This book will change your life.'",
@@ -418,7 +418,7 @@
     "id": "s9",
     "title": "First Day at Work",
     "emoji": "🏢",
-    "level": "Intermediate",
+    "level": "B1",
     "paragraphs": [
       "It was Duc's first day at his new job. He was nervous and arrived thirty minutes early.",
       "His manager showed him around the office and introduced him to the team.",
@@ -470,7 +470,7 @@
     "id": "s10",
     "title": "The Street Food Chef",
     "emoji": "🍜",
-    "level": "Intermediate",
+    "level": "B1",
     "paragraphs": [
       "Grandma Thu had a small pho stall on the corner. She woke up at 4 AM every day to prepare the broth.",
       "Her secret was slow-cooking the beef bones for eight hours with special herbs.",
@@ -522,7 +522,7 @@
     "id": "s11",
     "title": "The Exam",
     "emoji": "📝",
-    "level": "Intermediate",
+    "level": "B1",
     "paragraphs": [
       "The final exam was tomorrow. Khanh had not studied much during the semester.",
       "He stayed up all night trying to memorize everything. By morning, he was exhausted.",
@@ -574,7 +574,7 @@
     "id": "s12",
     "title": "The Lost Phone",
     "emoji": "📱",
-    "level": "Intermediate",
+    "level": "B1",
     "paragraphs": [
       "Nga left her phone on the bus by accident. She didn't notice until she got home.",
       "She was worried because all her photos and contacts were on it.",
@@ -626,7 +626,7 @@
     "id": "s13",
     "title": "The Garden Project",
     "emoji": "🌱",
-    "level": "Intermediate",
+    "level": "B1",
     "paragraphs": [
       "The school had an empty piece of land behind the building. It was full of weeds and trash.",
       "The science teacher suggested turning it into a garden. The students were excited.",
@@ -678,7 +678,7 @@
     "id": "s14",
     "title": "The Online Meeting",
     "emoji": "💻",
-    "level": "Intermediate",
+    "level": "B1",
     "paragraphs": [
       "Due to the pandemic, Trang had to work from home and attend meetings online.",
       "At first, she found it difficult. The internet was slow, and she couldn't hear people clearly.",
@@ -730,7 +730,7 @@
     "id": "s15",
     "title": "The Marathon",
     "emoji": "🏃",
-    "level": "Advanced",
+    "level": "B2",
     "paragraphs": [
       "Hung had never been athletic. At 35, he decided to run a marathon to challenge himself.",
       "He started with just one kilometer a day. His legs hurt and he wanted to quit many times.",
@@ -782,7 +782,7 @@
     "id": "s16",
     "title": "The Old Photograph",
     "emoji": "📸",
-    "level": "Advanced",
+    "level": "B2",
     "paragraphs": [
       "While cleaning the attic, Thi found a black-and-white photograph of a young couple.",
       "She showed it to her grandmother. 'That's me and your grandfather,' grandma said softly.",
@@ -834,7 +834,7 @@
     "id": "s17",
     "title": "The Wrong Train",
     "emoji": "🚂",
-    "level": "Advanced",
+    "level": "B2",
     "paragraphs": [
       "Phong was traveling to Da Nang for a business meeting. He was reading a report on his laptop.",
       "He was so focused that he didn't hear the announcement. He got on the wrong train!",
@@ -886,7 +886,7 @@
     "id": "s18",
     "title": "The Cooking Disaster",
     "emoji": "🍳",
-    "level": "Beginner",
+    "level": "A2",
     "paragraphs": [
       "Nam wanted to cook dinner for his girlfriend. He found a recipe online for pasta.",
       "He followed the instructions carefully, but he used salt instead of sugar for the sauce.",
@@ -938,7 +938,7 @@
     "id": "s19",
     "title": "The Scholarship",
     "emoji": "🎓",
-    "level": "Advanced",
+    "level": "B2",
     "paragraphs": [
       "Thanh grew up in a small village. Her family was poor, but she studied very hard.",
       "She dreamed of going to university, but her parents couldn't afford the tuition.",
@@ -990,7 +990,7 @@
     "id": "s20",
     "title": "The Volunteer Trip",
     "emoji": "🤝",
-    "level": "Advanced",
+    "level": "B2",
     "paragraphs": [
       "During summer vacation, a group of university students traveled to a remote mountain village.",
       "The village school had broken windows and no electricity. Children studied by candlelight.",
@@ -1033,6 +1033,614 @@
           "Two weeks",
           "One month",
           "Three days"
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "id": "s21",
+    "title": "The Paradox of Choice",
+    "emoji": "🧠",
+    "level": "C1",
+    "paragraphs": [
+      "In contemporary consumer societies, individuals are often confronted with a dizzying array of options, a phenomenon psychologists refer to as 'choice overload'. While freedom of choice is ostensibly a hallmark of autonomy, an excessive number of alternatives can precipitate decision paralysis.",
+      "Renowned behavioral economists argue that when faced with ubiquitous variations of trivial commodities, the cognitive burden exponentially increases. Consequently, consumers experience pervasive anxiety and perpetual dissatisfaction, perpetually wondering if an alternative would have yielded a superior outcome.",
+      "To mitigate this psychological distress, individuals must cultivate a 'satisficing' mindset rather than a 'maximizing' one. By establishing baseline criteria and settling for the first option that fulfills these prerequisites, one can circumvent the exhaustive, paralyzing quest for the elusive perfect choice."
+    ],
+    "vocab": [
+      "phenomenon",
+      "paralysis",
+      "ostensibly",
+      "mitigate",
+      "prerequisites"
+    ],
+    "questions": [
+      {
+        "q": "What does the term 'choice overload' primarily refer to?",
+        "opts": [
+          "The lack of high-quality products in the market.",
+          "The overwhelming anxiety caused by having too many options.",
+          "The financial burden of purchasing unnecessary commodities.",
+          "The government's restriction on consumer autonomy."
+        ],
+        "ans": 1
+      },
+      {
+        "q": "According to behavioral economists, what happens when individuals face ubiquitous variations?",
+        "opts": [
+          "They make decisions significantly faster.",
+          "They feel an increased sense of genuine satisfaction.",
+          "The cognitive burden escalates exponentially.",
+          "They completely stop purchasing any trivial commodities."
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What is the recommended strategy to overcome decision paralysis?",
+        "opts": [
+          "Becoming a strict 'maximizer'.",
+          "Purchasing the most expensive option available.",
+          "Consulting with behavioral economists.",
+          "Adopting a 'satisficing' mindset to meet baseline criteria."
+        ],
+        "ans": 3
+      }
+    ]
+  },
+  {
+    "id": "s22",
+    "title": "The Epistemology of Artificial Intelligence",
+    "emoji": "🤖",
+    "level": "C2",
+    "paragraphs": [
+      "The relentless proliferation of artificial neural networks necessitates a profound philosophical inquiry into the epistemology of machine learning. Unlike classical deterministic algorithms, modern deep learning architectures function as impenetrable 'black boxes', rendering the trajectory of their inductive reasoning opaque even to their progenitors.",
+      "This opacity engenders a formidable conundrum: if an algorithm conceptualizes a paradigm-shifting medical diagnosis, can we empirically validate its veracity without comprehending the underlying heuristic mechanisms? The epistemic opacity challenges our traditional reliance on deductive logic and scientific falsifiability.",
+      "Furthermore, anthropomorphizing these computational matrices often obfuscates the stark ontological divide between syntactic processing and semantic understanding. A machine may exhibit an uncanny simulacrum of sentience, yet it remains fundamentally devoid of conscious intentionality, relying merely on probabilistic correlations rather than intrinsic comprehension."
+    ],
+    "vocab": [
+      "epistemology",
+      "progenitors",
+      "conundrum",
+      "falsifiability",
+      "ontological"
+    ],
+    "questions": [
+      {
+        "q": "What is the primary philosophical issue raised regarding modern deep learning architectures?",
+        "opts": [
+          "They are too expensive to develop.",
+          "They rely exclusively on classical deterministic logic.",
+          "Their inductive reasoning processes are fundamentally opaque.",
+          "They cannot be used for medical diagnoses."
+        ],
+        "ans": 2
+      },
+      {
+        "q": "How does the 'epistemic opacity' challenge traditional science?",
+        "opts": [
+          "It questions our reliance on deductive logic and empirical validation.",
+          "It makes mathematical equations completely obsolete.",
+          "It requires all scientists to learn advanced programming.",
+          "It proves that machines are entirely infallible."
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the author's stance on the sentience of artificial intelligence?",
+        "opts": [
+          "AI currently possesses genuine conscious intentionality.",
+          "AI semantic understanding surpasses human capabilities.",
+          "AI relies on probabilistic correlations without true comprehension.",
+          "AI should be granted ontological equality with human beings."
+        ],
+        "ans": 2
+      }
+    ]
+  },
+  {
+    "id": "s23",
+    "title": "My Family",
+    "emoji": "👨‍👩‍👧‍👦",
+    "level": "A1",
+    "paragraphs": [
+      "I have a small family. There are four people in my family.",
+      "My father is a teacher. He teaches math at a high school.",
+      "My mother is a nurse. She works in a hospital.",
+      "I have one younger sister. She is a student.",
+      "We live in a small house. I love my family very much."
+    ],
+    "vocab": [
+      "family",
+      "teacher",
+      "hospital",
+      "student",
+      "house"
+    ],
+    "questions": [
+      {
+        "q": "How many people are in the family?",
+        "opts": [
+          "Three",
+          "Four",
+          "Five",
+          "Six"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What does the father do?",
+        "opts": [
+          "He is a nurse.",
+          "He is a student.",
+          "He is a teacher.",
+          "He is a doctor."
+        ],
+        "ans": 2
+      },
+      {
+        "q": "Where does the mother work?",
+        "opts": [
+          "In a school",
+          "In a hospital",
+          "In an office",
+          "At home"
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "id": "s24",
+    "title": "A Day at the Park",
+    "emoji": "🌳",
+    "level": "A1",
+    "paragraphs": [
+      "It is Sunday morning. The sun is shining.",
+      "Tom and his dog go to the park.",
+      "Tom throws a red ball. The dog runs fast to catch it.",
+      "They play for one hour. Then they sit under a big tree.",
+      "Tom drinks some water. The dog drinks water too. They are very happy."
+    ],
+    "vocab": [
+      "Sunday",
+      "shining",
+      "park",
+      "catch",
+      "happy"
+    ],
+    "questions": [
+      {
+        "q": "What day is it?",
+        "opts": [
+          "Monday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "What color is the ball?",
+        "opts": [
+          "Blue",
+          "Red",
+          "Green",
+          "Yellow"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What do Tom and the dog do after playing?",
+        "opts": [
+          "They go home",
+          "They eat food",
+          "They sit under a tree",
+          "They run fast"
+        ],
+        "ans": 2
+      }
+    ]
+  },
+  {
+    "id": "s25",
+    "title": "Shopping for Food",
+    "emoji": "🛒",
+    "level": "A1",
+    "paragraphs": [
+      "Anna goes to the supermarket. She needs food for dinner.",
+      "She buys apples, bananas, and oranges. She likes fruit.",
+      "Then she buys milk and bread. She pays the cashier.",
+      "The food is in a big bag. The bag is heavy.",
+      "She walks home slowly. She is tired but she has good food."
+    ],
+    "vocab": [
+      "supermarket",
+      "dinner",
+      "fruit",
+      "cashier",
+      "heavy"
+    ],
+    "questions": [
+      {
+        "q": "Where does Anna go?",
+        "opts": [
+          "To the park",
+          "To the school",
+          "To the supermarket",
+          "To the hospital"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What fruits does she buy?",
+        "opts": [
+          "Apples, bananas, and oranges",
+          "Grapes and pears",
+          "Watermelon and apples",
+          "Bananas and grapes"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "How is the bag?",
+        "opts": [
+          "Light",
+          "Small",
+          "Heavy",
+          "Empty"
+        ],
+        "ans": 2
+      }
+    ]
+  },
+  {
+    "id": "s26",
+    "title": "My Morning Routine",
+    "emoji": "⏰",
+    "level": "A1",
+    "paragraphs": [
+      "I wake up at 7 o'clock every morning.",
+      "I wash my face and brush my teeth.",
+      "Then I eat breakfast. I usually have bread and a cup of milk.",
+      "At 8 o'clock, I take the bus to go to work.",
+      "I like the morning because it is quiet and fresh."
+    ],
+    "vocab": [
+      "wake up",
+      "brush",
+      "breakfast",
+      "bus",
+      "quiet"
+    ],
+    "questions": [
+      {
+        "q": "What time does the person wake up?",
+        "opts": [
+          "6 o'clock",
+          "7 o'clock",
+          "8 o'clock",
+          "9 o'clock"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What does the person have for breakfast?",
+        "opts": [
+          "Eggs and coffee",
+          "Bread and milk",
+          "Rice and tea",
+          "Apples and water"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "How does the person go to work?",
+        "opts": [
+          "By car",
+          "By train",
+          "By bus",
+          "By bike"
+        ],
+        "ans": 2
+      }
+    ]
+  },
+  {
+    "id": "s27",
+    "title": "The Gig Economy: A Double-Edged Sword",
+    "emoji": "💼",
+    "level": "C1",
+    "paragraphs": [
+      "The proliferation of the gig economy has fundamentally transformed the modern workforce, blurring the lines between entrepreneurship and precarious labor.",
+      "Proponents argue that it offers unprecedented flexibility and autonomy, allowing individuals to monetize their disparate skills on a fluid schedule without the constraints of a traditional corporate hierarchy.",
+      "Conversely, critics highlight a glaring lack of robust regulatory frameworks, leaving independent contractors devoid of rudimentary benefits such as health insurance, paid leave, and job security, thereby exacerbating income inequality."
+    ],
+    "vocab": [
+      "proliferation",
+      "precarious",
+      "unprecedented",
+      "rudimentary",
+      "exacerbating"
+    ],
+    "questions": [
+      {
+        "q": "What is one major advantage of the gig economy mentioned by its proponents?",
+        "opts": [
+          "Guaranteed health insurance",
+          "Unprecedented flexibility and autonomy",
+          "A strict corporate hierarchy",
+          "Long-term job security"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Why are critics concerned about the gig economy?",
+        "opts": [
+          "It limits entrepreneurial opportunities.",
+          "Workers receive too many unnecessary benefits.",
+          "There is a glaring lack of regulatory frameworks.",
+          "It requires a very rigid daily schedule."
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What does the passage imply is a negative consequence of the gig economy?",
+        "opts": [
+          "It decreases overall technological innovation.",
+          "It exacerbates income inequality.",
+          "It forces individuals to work exclusively in offices.",
+          "It eliminates all forms of freelance work."
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "id": "s28",
+    "title": "Cognitive Dissonance in Modern Politics",
+    "emoji": "⚖️",
+    "level": "C1",
+    "paragraphs": [
+      "Cognitive dissonance, the psychological discomfort experienced when holding contradictory beliefs, has become increasingly palpable in the contemporary political discourse.",
+      "In an era dominated by hyper-partisan media ecosystems, individuals frequently encounter irrefutable empirical evidence that directly contradicts their entrenched ideological paradigms.",
+      "Rather than recalibrating their worldviews, many succumb to confirmation bias, actively dismissing verifiable facts as fabricated propaganda in order to preserve their psychological equilibrium and tribal allegiance."
+    ],
+    "vocab": [
+      "dissonance",
+      "palpable",
+      "empirical",
+      "entrenched",
+      "equilibrium"
+    ],
+    "questions": [
+      {
+        "q": "What causes cognitive dissonance according to the text?",
+        "opts": [
+          "Holding contradictory beliefs",
+          "Watching too much television",
+          "Agreeing with empirical evidence",
+          "Changing political parties"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "How do individuals often react when evidence contradicts their ideological paradigms?",
+        "opts": [
+          "They immediately recalibrate their worldviews.",
+          "They seek out neutral, unbiased media.",
+          "They dismiss verifiable facts as fabricated propaganda.",
+          "They completely abandon their tribal allegiance."
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What is the primary motivation for dismissing verifiable facts?",
+        "opts": [
+          "To become better informed.",
+          "To preserve psychological equilibrium and tribal allegiance.",
+          "To challenge hyper-partisan media ecosystems.",
+          "To create new empirical evidence."
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "id": "s29",
+    "title": "The Economics of Behavioral Nudges",
+    "emoji": "📈",
+    "level": "C1",
+    "paragraphs": [
+      "Behavioral economics has popularized the concept of 'nudging', a subtle intervention designed to predictably alter people's behavior without explicitly forbidding any options or significantly changing their economic incentives.",
+      "By leveraging heuristic biases—such as the status quo bias or loss aversion—policymakers can architect choice environments that effortlessly steer citizens toward more socially optimal decisions, such as organ donation or retirement savings.",
+      "However, this paternalistic approach has ignited intense ethical debates, with detractors contending that it subversively undermines individual agency and edges dangerously close to psychological manipulation."
+    ],
+    "vocab": [
+      "intervention",
+      "incentives",
+      "leveraging",
+      "paternalistic",
+      "subversively"
+    ],
+    "questions": [
+      {
+        "q": "Which of the following best defines a 'nudge'?",
+        "opts": [
+          "A strict law forbidding specific behaviors.",
+          "A significant financial penalty.",
+          "A subtle intervention altering behavior predictably.",
+          "A massive economic incentive program."
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What psychological concept do policymakers leverage when nudging?",
+        "opts": [
+          "Rational choice theory",
+          "Heuristic biases",
+          "Absolute determinism",
+          "Cognitive behavioral therapy"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What is the main ethical concern raised by detractors of nudging?",
+        "opts": [
+          "It costs the government too much money.",
+          "It fails to alter behavior in any predictable way.",
+          "It subversively undermines individual agency.",
+          "It forces people to donate organs illegally."
+        ],
+        "ans": 2
+      }
+    ]
+  },
+  {
+    "id": "s30",
+    "title": "The Sapir-Whorf Hypothesis Revisited",
+    "emoji": "🗣️",
+    "level": "C2",
+    "paragraphs": [
+      "The theory of linguistic relativity, colloquially known as the Sapir-Whorf hypothesis, posits an inextricable entanglement between the syntactic and lexical constraints of a language and the cognitive weltanschauung of its speakers.",
+      "While the deterministic 'strong version'—asserting that language unequivocally dictates thought—has been largely discredited by contemporary psycholinguists, a more nuanced 'weak version' maintains considerable empirical traction.",
+      "Subtle morphological distinctions, such as grammatical gender or obligatory evidentiality, have been demonstrated to exert insidious yet profound influences on spatial cognition, memory encoding, and the categorization of perceptual stimuli."
+    ],
+    "vocab": [
+      "colloquially",
+      "weltanschauung",
+      "unequivocally",
+      "morphological",
+      "evidentiality"
+    ],
+    "questions": [
+      {
+        "q": "What does the strong version of the Sapir-Whorf hypothesis assert?",
+        "opts": [
+          "Language has no effect on human thought.",
+          "Language unequivocally dictates thought.",
+          "Only grammatical gender influences memory.",
+          "All languages share a universal syntactic structure."
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What is the current academic consensus regarding the 'strong version'?",
+        "opts": [
+          "It has been largely discredited by contemporary psycholinguists.",
+          "It has gained considerable empirical traction.",
+          "It is considered the absolute truth in linguistics.",
+          "It only applies to spatial cognition."
+        ],
+        "ans": 0
+      },
+      {
+        "q": "According to the 'weak version', what effect do subtle morphological distinctions have?",
+        "opts": [
+          "They prevent individuals from learning secondary languages.",
+          "They determine a person's socioeconomic status.",
+          "They exert insidious influences on spatial cognition and memory.",
+          "They completely rewrite a person's genetic code."
+        ],
+        "ans": 2
+      }
+    ]
+  },
+  {
+    "id": "s31",
+    "title": "Quantum Entanglement and Locality",
+    "emoji": "🌌",
+    "level": "C2",
+    "paragraphs": [
+      "Quantum entanglement presents a confounding ontological conundrum that strikes at the very heart of classical physics, overtly defying the sacrosanct principle of local realism articulated by Einstein, Podolsky, and Rosen.",
+      "When two subatomic particles become entangled, their quantum states are mathematically inseparable; measuring the spin of one instantaneously determines the corresponding state of its counterpart, irrespective of the cosmic expanse separating them.",
+      "This 'spooky action at a distance' necessitates a radical paradigm shift, compelling physicists to begrudgingly entertain the notion of a fundamentally non-local universe where deterministic causality is supplanted by probabilistically intertwined superpositions."
+    ],
+    "vocab": [
+      "confounding",
+      "ontological",
+      "sacrosanct",
+      "instantaneously",
+      "supplanted"
+    ],
+    "questions": [
+      {
+        "q": "What principle of classical physics does quantum entanglement seemingly defy?",
+        "opts": [
+          "The law of conservation of mass.",
+          "The principle of local realism.",
+          "Newton's third law of motion.",
+          "The theory of general relativity."
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What happens when the spin of one entangled particle is measured?",
+        "opts": [
+          "The other particle immediately disintegrates.",
+          "The measurement determines the state of its counterpart instantaneously.",
+          "The distance between the particles starts to decrease rapidly.",
+          "The particle slowly loses its quantum superposition."
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What paradigm shift does this phenomenon necessitate?",
+        "opts": [
+          "Returning to a purely deterministic view of the universe.",
+          "Abandoning mathematics in favor of philosophy.",
+          "Entertaining the notion of a fundamentally non-local universe.",
+          "Discrediting the entirety of quantum mechanics."
+        ],
+        "ans": 2
+      }
+    ]
+  },
+  {
+    "id": "s32",
+    "title": "Nietzsche and the Transvaluation of Values",
+    "emoji": "📜",
+    "level": "C2",
+    "paragraphs": [
+      "Friedrich Nietzsche's philosophical oeuvre culminates in his provocative clarion call for the 'transvaluation of all values', a devastating critique of the ostensibly ascetic ideals underpinning traditional Judeo-Christian morality.",
+      "He vehemently contended that this pervasive moral paradigm is intrinsically a 'slave morality', an ingenious yet pernicious psychological mechanism weaponized by the marginalized to vilify the strength, vitality, and unapologetic self-assertion of the 'master' archetype.",
+      "To transcend this nihilistic decadence, Nietzsche prophesied the advent of the Übermensch—an autonomous sovereign entity who gleefully embraces the eternal recurrence of existence and legislates their own idiosyncratic ethical framework from the crucible of an unrestrained will to power."
+    ],
+    "vocab": [
+      "oeuvre",
+      "provocative",
+      "ascetic",
+      "pernicious",
+      "idiosyncratic"
+    ],
+    "questions": [
+      {
+        "q": "What is the primary target of Nietzsche's 'transvaluation of all values'?",
+        "opts": [
+          "Ancient Greek mythology and philosophy.",
+          "The ostensibly ascetic ideals of traditional Judeo-Christian morality.",
+          "The concept of the Übermensch.",
+          "The principles of modern democratic societies."
+        ],
+        "ans": 1
+      },
+      {
+        "q": "How does Nietzsche characterize the 'slave morality'?",
+        "opts": [
+          "As a celebration of strength and vitality.",
+          "As the ultimate expression of the 'master' archetype.",
+          "As an ingenious yet pernicious mechanism used by the marginalized.",
+          "As a universal truth that all individuals should strive for."
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What distinguishes the Übermensch in Nietzsche's philosophy?",
+        "opts": [
+          "Strict adherence to traditional ascetic ideals.",
+          "The ability to legislate their own idiosyncratic ethical framework.",
+          "A profound sense of nihilistic decadence.",
+          "Complete submission to the will of the majority."
         ],
         "ans": 1
       }
