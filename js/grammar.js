@@ -1,5 +1,6 @@
 // --- INTERACTIVE GRAMMAR LEARNING CONTROLLER ---
 let activeGrammarCategory = 'all';
+let currentPracticeSession = [];
 
 async function renderGrammarLessons(category = 'all') {
     activeGrammarCategory = category;
@@ -17,6 +18,7 @@ async function renderGrammarLessons(category = 'all') {
             </div>`;
         if (window.FirebaseSync) {
             window.GRAMMAR_LESSONS = await window.FirebaseSync.fetchAcademicGrammar() || [];
+            window.GRAMMAR_PRACTICE_DATA = await window.FirebaseSync.fetchAcademicGrammarPractice() || {};
         }
         if (!window.GRAMMAR_LESSONS || window.GRAMMAR_LESSONS.length === 0) {
             listContainer.innerHTML = '<p style="padding: 20px; color: var(--text-muted); text-align: center;">Không thể tải bài học ngữ pháp. Vui lòng kiểm tra mạng!</p>';
@@ -156,6 +158,22 @@ function loadGrammarLesson(lessonId) {
 function initGrammarPractice() {
     if (!currentGrammarLesson) return;
 
+    let practicePool = [];
+    if (window.GRAMMAR_PRACTICE_DATA && window.GRAMMAR_PRACTICE_DATA[currentGrammarLesson.id]) {
+        practicePool = window.GRAMMAR_PRACTICE_DATA[currentGrammarLesson.id];
+    } else if (currentGrammarLesson.practice) {
+        practicePool = currentGrammarLesson.practice;
+    }
+
+    if (!practicePool || practicePool.length === 0) {
+        alert("Chưa có bài tập cho phần ngữ pháp này!");
+        return;
+    }
+
+    // Shuffle and pick 3
+    const shuffledPool = [...practicePool].sort(() => 0.5 - Math.random());
+    currentPracticeSession = shuffledPool.slice(0, 3);
+
     grammarPracticeIndex = 0;
     grammarPracticeScore = 0;
 
@@ -169,11 +187,11 @@ function initGrammarPractice() {
 
 function loadGrammarPracticeQuestion() {
     const lesson = currentGrammarLesson;
-    const question = lesson.practice[grammarPracticeIndex];
+    const question = currentPracticeSession[grammarPracticeIndex];
 
     // Update progress numbers
-    document.getElementById('grammar-practice-step').textContent = `Câu ${grammarPracticeIndex + 1} / ${lesson.practice.length}`;
-    const pct = ((grammarPracticeIndex) / lesson.practice.length) * 100;
+    document.getElementById('grammar-practice-step').textContent = `Câu ${grammarPracticeIndex + 1} / ${currentPracticeSession.length}`;
+    const pct = ((grammarPracticeIndex) / currentPracticeSession.length) * 100;
     document.getElementById('grammar-practice-progress').style.width = `${pct}%`;
 
     // Clear explanation
@@ -201,7 +219,7 @@ function loadGrammarPracticeQuestion() {
 
 function answerGrammarPracticeQuestion(selectedIndex) {
     const lesson = currentGrammarLesson;
-    const question = lesson.practice[grammarPracticeIndex];
+    const question = currentPracticeSession[grammarPracticeIndex];
     const optionBtns = document.querySelectorAll('.practice-opt-btn');
 
     // Disable all options
@@ -241,7 +259,7 @@ function nextGrammarPracticeQuestion() {
     const lesson = currentGrammarLesson;
     grammarPracticeIndex++;
 
-    if (grammarPracticeIndex < lesson.practice.length) {
+    if (grammarPracticeIndex < currentPracticeSession.length) {
         loadGrammarPracticeQuestion();
     } else {
         // End of practice! Show Success Panel

@@ -401,6 +401,16 @@ window.FirebaseSync = {
         }
     },
 
+    fetchAcademicGrammarPractice: async () => {
+        try {
+            const response = await fetch('json/grammar-practice-data.json');
+            return await response.json();
+        } catch (e) {
+            console.error("Local grammar practice fetch failed:", e);
+            return {};
+        }
+    },
+
     fetchAcademicStories: async () => {
         try {
             const response = await fetch('json/stories-data.json');
