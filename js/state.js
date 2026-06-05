@@ -74,10 +74,7 @@ async function loadStateAsync() {
         // 1. Migrate old localStorage data if present
         await LearningDB.migrateFromLocalStorage();
 
-        // 2. Load global academic index
-        if (window.FirebaseSync) {
-            window.ACADEMIC_INDEX = await window.FirebaseSync.fetchAcademicIndex();
-        }
+        // 2. Deprecated: Global academic index loading removed. Indexes are now loaded lazily.
 
         // 3. Load vocabulary asynchronously in the background so it doesn't block the initial page render
         state.vocabulary = [];

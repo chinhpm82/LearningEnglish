@@ -1,0 +1,38 @@
+[
+  {
+    "id": "lt1",
+    "dir": "en-vi",
+    "level": "Intermediate",
+    "title": "The Rise of Remote Work"
+  },
+  {
+    "id": "lt2",
+    "dir": "vi-en",
+    "level": "Advanced",
+    "title": "Bảo tồn văn hóa trong kỷ nguyên số"
+  },
+  {
+    "id": "lt3",
+    "dir": "en-vi",
+    "level": "Advanced",
+    "title": "The Impact of Social Media on Mental Health"
+  },
+  {
+    "id": "lt4",
+    "dir": "vi-en",
+    "level": "Intermediate",
+    "title": "Tầm quan trọng của Lối sống Lành mạnh"
+  },
+  {
+    "id": "lt5",
+    "dir": "en-vi",
+    "level": "Advanced",
+    "title": "Renewable Energy and the Climate Crisis"
+  },
+  {
+    "id": "lt6",
+    "dir": "vi-en",
+    "level": "Advanced",
+    "title": "Tết Nguyên Đán - Bản Sắc Gia Đình Việt Nam"
+  }
+]

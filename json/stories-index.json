@@ -1,0 +1,102 @@
+[
+  {
+    "id": "s1",
+    "title": "The Lost Dog",
+    "level": "Beginner"
+  },
+  {
+    "id": "s2",
+    "title": "A Cup of Coffee",
+    "level": "Beginner"
+  },
+  {
+    "id": "s3",
+    "title": "The Job Interview",
+    "level": "Beginner"
+  },
+  {
+    "id": "s4",
+    "title": "The New Neighbor",
+    "level": "Beginner"
+  },
+  {
+    "id": "s5",
+    "title": "Learning to Swim",
+    "level": "Beginner"
+  },
+  {
+    "id": "s6",
+    "title": "The Surprise Birthday Party",
+    "level": "Beginner"
+  },
+  {
+    "id": "s7",
+    "title": "A Rainy Day Adventure",
+    "level": "Intermediate"
+  },
+  {
+    "id": "s8",
+    "title": "The Magic Library",
+    "level": "Intermediate"
+  },
+  {
+    "id": "s9",
+    "title": "First Day at Work",
+    "level": "Intermediate"
+  },
+  {
+    "id": "s10",
+    "title": "The Street Food Chef",
+    "level": "Intermediate"
+  },
+  {
+    "id": "s11",
+    "title": "The Exam",
+    "level": "Intermediate"
+  },
+  {
+    "id": "s12",
+    "title": "The Lost Phone",
+    "level": "Intermediate"
+  },
+  {
+    "id": "s13",
+    "title": "The Garden Project",
+    "level": "Intermediate"
+  },
+  {
+    "id": "s14",
+    "title": "The Online Meeting",
+    "level": "Intermediate"
+  },
+  {
+    "id": "s15",
+    "title": "The Marathon",
+    "level": "Advanced"
+  },
+  {
+    "id": "s16",
+    "title": "The Old Photograph",
+    "level": "Advanced"
+  },
+  {
+    "id": "s17",
+    "title": "The Wrong Train",
+    "level": "Advanced"
+  },
+  {
+    "id": "s18",
+    "title": "The Cooking Disaster",
+    "level": "Beginner"
+  },
+  {
+    "id": "s19",
+    "title": "The Scholarship",
+    "level": "Advanced"
+  },
+  {
+    "id": "s20",
+    "title": "The Volunteer Trip",
+    "level": "Advanced"
+  }
+]

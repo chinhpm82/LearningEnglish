@@ -215,28 +215,24 @@
                     q: `Chọn nghĩa đúng của từ "${word.word}" (${word.type}):`,
                     options: options,
                     answer: correctIndex,
-                    explanation: `Từ "${word.word}" (${word.type}) có phiên âm ${word.ipa || ""}. Nghĩa là: ${word.meaning}.\n\nVí dụ: ${word.example || ""}\nDịch ví dụ: ${word.example_vi || ""}`,
-                    en: word.word,
-                    vi: word.meaning
+                    en: word.word
                 });
             });
         } else if (topic === "grammar") {
-            if (typeof GRAMMAR_LESSONS === "undefined" || !GRAMMAR_LESSONS.length) {
-                console.error("GRAMMAR_LESSONS is empty or not loaded");
+            if (typeof GRAMMAR_PRACTICE_DATA === "undefined") {
+                console.error("GRAMMAR_PRACTICE_DATA is empty or not loaded");
                 return [];
             }
             // Gather all practice items
             let allPractice = [];
-            GRAMMAR_LESSONS.forEach(lesson => {
-                if (lesson.practice && lesson.practice.length) {
-                    lesson.practice.forEach(p => {
+            Object.values(GRAMMAR_PRACTICE_DATA).forEach(practiceArray => {
+                if (practiceArray && practiceArray.length) {
+                    practiceArray.forEach(p => {
                         allPractice.push({
                             q: p.q,
                             options: p.options,
                             answer: p.answer,
-                            explanation: p.explanation || "Không có giải thích thêm.",
-                            en: p.q,
-                            vi: ""
+                            en: p.q
                         });
                     });
                 }
@@ -274,9 +270,7 @@
                     q: `Dịch câu giao tiếp sau sang tiếng Việt: "${item.english}"`,
                     options: options,
                     answer: correctIndex,
-                    explanation: `Câu "${item.english}" dịch nghĩa tương đương là: "${item.vietnamese}".\n\nChủ đề: ${item.category || "Giao tiếp thông thường"}.`,
-                    en: item.english,
-                    vi: item.vietnamese
+                    en: item.english
                 });
             });
         }
@@ -381,6 +375,14 @@
             name: state.displayName || user.displayName || "Chủ phòng",
             photoURL: state.photoURL || user.photoURL || "🐶"
         };
+
+        if (topic === "grammar") {
+            if (!window.GRAMMAR_PRACTICE_DATA) {
+                if (window.FirebaseSync) {
+                    window.GRAMMAR_PRACTICE_DATA = await window.FirebaseSync.fetchAcademicGrammarPractice() || {};
+                }
+            }
+        }
 
         const generatedQuestions = generateChallengeQuestions(topic);
         if (!generatedQuestions || generatedQuestions.length === 0) {
@@ -1146,7 +1148,25 @@
                             </button>
                         ` : ""}
                         <div style="font-size: 13px; color: var(--text-muted); line-height: 1.5; white-space: pre-wrap; flex: 1;">
-                            <strong>💡 Giải nghĩa & Bài học:</strong> ${q.explanation}
+                            <strong>💡 Giải nghĩa & Bài học:</strong> ${(() => {
+                                let expl = "Không có giải thích thêm.";
+                                if (roomData.topic === "vocabulary" && window.INITIAL_VOCABULARY) {
+                                    const w = window.INITIAL_VOCABULARY.find(x => x.word === q.en);
+                                    if (w) expl = `Từ "${w.word}" (${w.type}) có phiên âm ${w.ipa || ""}. Nghĩa là: ${w.meaning}.\n\nVí dụ: ${w.example || ""}\nDịch ví dụ: ${w.example_vi || ""}`;
+                                } else if (roomData.topic === "sentences" && window.COMMUNICATIVE_SENTENCES) {
+                                    const s = window.COMMUNICATIVE_SENTENCES.find(x => x.english === q.en);
+                                    if (s) expl = `Câu "${s.english}" dịch nghĩa tương đương là: "${s.vietnamese}".\n\nChủ đề: ${s.category || "Giao tiếp thông thường"}.`;
+                                } else if (roomData.topic === "grammar" && window.GRAMMAR_PRACTICE_DATA) {
+                                    for (let key in window.GRAMMAR_PRACTICE_DATA) {
+                                        const p = window.GRAMMAR_PRACTICE_DATA[key].find(x => x.q === q.en);
+                                        if (p && p.explanation) {
+                                            expl = p.explanation;
+                                            break;
+                                        }
+                                    }
+                                }
+                                return expl;
+                            })()}
                         </div>
                     </div>
                 </div>

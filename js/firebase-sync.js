@@ -317,13 +317,13 @@ window.FirebaseSync = {
         }
     },
 
-    fetchAcademicIndex: async () => {
+    fetchCategoryIndex: async (category) => {
         try {
-            const response = await fetch('json/academic_index.json');
-            if (!response.ok) throw new Error("Failed to load index");
+            const response = await fetch(`json/${category}-index.json`);
+            if (!response.ok) throw new Error(`Failed to load ${category} index`);
             return await response.json();
         } catch (e) {
-            console.error("Error fetching academic index:", e);
+            console.error(`Error fetching index for ${category}:`, e);
             return null;
         }
     },

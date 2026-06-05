@@ -47,13 +47,13 @@ const longTransState = { deck: [], idx: 0, hintsShown: 0 };
 
 async function initLongTranslation() {
     // Nếu chưa có academic index, tải ngay lập tức
-    if (!window.ACADEMIC_INDEX || !window.ACADEMIC_INDEX.long_translation) {
+    if (!window.LONG_TRANSLATION_INDEX) {
         if (window.FirebaseSync) {
-            window.ACADEMIC_INDEX = await window.FirebaseSync.fetchAcademicIndex() || {};
+            window.LONG_TRANSLATION_INDEX = await window.FirebaseSync.fetchCategoryIndex('long_translation') || [];
         }
     }
 
-    const data = (window.ACADEMIC_INDEX && window.ACADEMIC_INDEX.long_translation) || [];
+    const data = window.LONG_TRANSLATION_INDEX || [];
     const dirFilter = document.getElementById('trans-long-dir-filter')?.value || 'all';
     let filtered = [...data];
     if (dirFilter !== 'all') filtered = filtered.filter(t => t.dir === dirFilter);

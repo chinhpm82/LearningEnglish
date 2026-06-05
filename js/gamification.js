@@ -417,13 +417,13 @@ const transState = { deck: [], idx: 0, score: 0, hintsShown: 0 };
 
 async function initTranslation() {
     // Nếu chưa có academic index, tải ngay lập tức
-    if (!window.ACADEMIC_INDEX || !window.ACADEMIC_INDEX.translation) {
+    if (!window.TRANSLATION_INDEX) {
         if (window.FirebaseSync) {
-            window.ACADEMIC_INDEX = await window.FirebaseSync.fetchAcademicIndex() || {};
+            window.TRANSLATION_INDEX = await window.FirebaseSync.fetchCategoryIndex('translation') || [];
         }
     }
 
-    const data = (window.ACADEMIC_INDEX && window.ACADEMIC_INDEX.translation) || [];
+    const data = window.TRANSLATION_INDEX || [];
     const dirFilter = document.getElementById('trans-dir-filter')?.value || 'all';
     const lvlFilter = document.getElementById('trans-level-filter')?.value || 'all';
     let filtered = [...data];
