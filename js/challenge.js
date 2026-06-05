@@ -384,15 +384,17 @@
             }
         } else if (topic === "vocabulary") {
             if (!window.INITIAL_VOCABULARY || window.INITIAL_VOCABULARY.length === 0) {
-                if (window.FirebaseSync) {
-                    window.INITIAL_VOCABULARY = await window.FirebaseSync.fetchCategoryIndex('vocabulary') || [];
-                }
+                try {
+                    const response = await fetch('json/vocabulary-data.json');
+                    if (response.ok) window.INITIAL_VOCABULARY = await response.json();
+                } catch(e) { console.error(e); }
             }
         } else if (topic === "sentences") {
             if (!window.COMMUNICATIVE_SENTENCES || window.COMMUNICATIVE_SENTENCES.length === 0) {
-                if (window.FirebaseSync) {
-                    window.COMMUNICATIVE_SENTENCES = await window.FirebaseSync.fetchCategoryIndex('sentences') || [];
-                }
+                try {
+                    const response = await fetch('json/sentences-data.json');
+                    if (response.ok) window.COMMUNICATIVE_SENTENCES = await response.json();
+                } catch(e) { console.error(e); }
             }
         }
 

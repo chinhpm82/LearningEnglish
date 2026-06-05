@@ -94,10 +94,10 @@ async function getAllVocab() {
     // 1. Lấy dữ liệu siêu tốc từ bộ nhớ đệm cục bộ (Cache Offline-First) cho Index
     let baseVocab = await getLocalCache('cached_academic_vocab_index');
 
-    // 2. Nếu Cache rỗng, nạp từ file json/vocabulary-index.json
-    if (!baseVocab || baseVocab.length === 0) {
+    // 2. Nếu Cache rỗng hoặc chứa dữ liệu Index cũ không có 'meaning', nạp lại từ file json/vocabulary-data.json
+    if (!baseVocab || baseVocab.length === 0 || (baseVocab[0] && !baseVocab[0].meaning)) {
         try {
-            const response = await fetch('json/vocabulary-index.json');
+            const response = await fetch('json/vocabulary-data.json');
             if (response.ok) {
                 baseVocab = await response.json();
                 if (baseVocab && baseVocab.length > 0) {
