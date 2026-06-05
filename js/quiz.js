@@ -1,5 +1,7 @@
 // --- DYNAMIC QUIZ SYSTEM ---
 async function initQuizSession(category = 'all') {
+    quizSelectedCategory = category;
+    
     // Hiển thị trạng thái chuẩn bị câu hỏi ngay lập tức để tạo trải nghiệm mượt mà
     const activeState = document.getElementById('quiz-active-state');
     const introState = document.getElementById('quiz-intro-state');
@@ -230,7 +232,7 @@ function showQuizResults() {
     document.getElementById('result-time').textContent = `${durationSec} giây`;
     document.getElementById('result-accuracy').textContent = `${pct}%`;
 
-    const activeCategory = document.getElementById('quiz-category-select').value;
+    const activeCategory = quizSelectedCategory;
     trackDailyActivity('quiz', { correct: quizScore, total: quizQuestions.length, category: activeCategory });
 
     // Dynamic result message

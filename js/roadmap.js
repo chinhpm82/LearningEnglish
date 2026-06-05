@@ -149,10 +149,9 @@ function renderRoadmap() {
         document.getElementById('btn-roadmap-start-quiz').addEventListener('click', () => {
             // Switch to Quiz tab
             document.getElementById('btn-quiz').click();
-            // Select assessment category
-            document.getElementById('quiz-category-select').value = 'assessment';
-            // Trigger start quiz
-            document.getElementById('btn-start-quiz').click();
+            // Trigger start quiz assessment directly
+            const assessmentBtn = document.getElementById('mode-assessment');
+            if (assessmentBtn) assessmentBtn.click();
         });
         return;
     }
