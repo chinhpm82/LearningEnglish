@@ -59,16 +59,12 @@ async function initQuizSession(category = 'all') {
     const shuffled = [...sourcePool].sort(() => 0.5 - Math.random());
     const selectedIndexWords = shuffled.slice(0, quizLength);
 
-    // 1. Tải bất đồng bộ thông tin chi tiết đầy đủ của các từ đúng
-    const correctWords = [];
-    for (const w of selectedIndexWords) {
+    // 1. Tải bất đồng bộ thông tin chi tiết đầy đủ của các từ đúng (tải song song)
+    const correctWordsPromises = selectedIndexWords.map(async (w) => {
         const fullData = await LearningDB.getFullWordData(w.id);
-        if (fullData) {
-            correctWords.push(fullData);
-        } else {
-            correctWords.push({ ...w, meaning: w.word, example: '' });
-        }
-    }
+        return fullData ? fullData : { ...w, meaning: w.word, example: '' };
+    });
+    const correctWords = await Promise.all(correctWordsPromises);
 
     // 2. Chọn ngẫu nhiên khoảng 25 từ nhiễu (distractor pool) từ Index chung và tải chi tiết để làm phương án sai
     const distractorIndexWords = allWords
@@ -76,13 +72,11 @@ async function initQuizSession(category = 'all') {
         .sort(() => 0.5 - Math.random())
         .slice(0, 25);
     
-    const distractorWords = [];
-    for (const w of distractorIndexWords) {
-        const fullData = await LearningDB.getFullWordData(w.id);
-        if (fullData) {
-            distractorWords.push(fullData);
-        }
-    }
+    const distractorWordsPromises = distractorIndexWords.map(async (w) => {
+        return await LearningDB.getFullWordData(w.id);
+    });
+    const distractorWordsRaw = await Promise.all(distractorWordsPromises);
+    const distractorWords = distractorWordsRaw.filter(Boolean);
 
     // 3. Ghép nối tạo câu hỏi trắc nghiệm hoàn chỉnh
     quizQuestions = correctWords.map(word => {
