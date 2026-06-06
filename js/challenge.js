@@ -366,7 +366,6 @@
             alert("Bạn đang ở trong phòng #" + activeRoomId + ". Vui lòng thoát phòng hiện tại trước khi tạo phòng mới!");
             return;
         }
-
         const topic = document.getElementById("create-room-topic").value;
         const roomId = Math.floor(100000 + Math.random() * 900000).toString();
 
@@ -408,6 +407,8 @@
 
         try {
             await window.FirebaseSync.createRoom(roomId, topic, generatedQuestions, playerInfo);
+            // Ensure host appears in player list immediately (ready = false)
+            await window.FirebaseSync.updatePlayerReady(roomId, user.uid, false);
             console.log("[Challenge] Room created successfully, switching to room view");
             activeRoomId = roomId;
 
@@ -494,11 +495,8 @@
             if (!user) return;
 
             if (!roomData) {
-                // Room dissolved
-                cleanupActiveRoomState();
-                alert("Phòng thi đấu đã bị giải tán.");
-                switchChallengeSubView("challenge-lobby-view");
-                startRoomsListListener();
+                // Room may not be fully synced yet – retry after short delay
+                setTimeout(() => listenActiveRoom(roomId), 300);
                 return;
             }
 
@@ -530,6 +528,11 @@
                 if (isMeHost) {
                     btnRoomLeave.textContent = "🗑️ Hủy phòng";
                     btnRoomLeave.className = "btn-action btn-incorrect animate-glow";
+                    // Host can start the game immediately
+                    if (btnRoomReady) {
+                        btnRoomReady.textContent = "Bắt Đầu Trận Đấu ⚔️";
+                        btnRoomReady.className = "btn-action btn-correct animate-glow";
+                    }
                 } else {
                     btnRoomLeave.textContent = "🚪 Rời phòng";
                     btnRoomLeave.className = "btn-action btn-incorrect";
