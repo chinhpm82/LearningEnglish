@@ -96,7 +96,12 @@ async function renderLongTranslationCard() {
     
     // Đổ siêu dữ liệu (Metadata) từ Index lên UI
     document.getElementById('trans-long-dir-badge').textContent = indexItem.dir === 'en-vi' ? 'Anh → Việt' : 'Việt → Anh';
-    document.getElementById('trans-long-level-badge').textContent = indexItem.level;
+    const levelMap = {
+        'Beginner': 'Sơ cấp (A1 - A2)',
+        'Intermediate': 'Trung cấp (B1 - B2)',
+        'Advanced': 'Cao cấp (C1 - C2)'
+    };
+    document.getElementById('trans-long-level-badge').textContent = levelMap[indexItem.level] || indexItem.level;
     
     // Tải chi tiết đoạn văn bất đồng bộ on-demand (Cache-first)
     if (!indexItem.source) {
@@ -129,41 +134,89 @@ function checkLongTranslation() {
 
     const feedback = document.getElementById('trans-long-feedback');
     feedback.classList.remove('hidden');
-    
-    // Smart Jaccard Similarity Checker for long paragraphs
-    const normalize = s => s.toLowerCase().replace(/[.,!?;:'"()\-–]/g, '').replace(/\s+/g, ' ').trim();
-    const userNorm = normalize(userInput);
-    const ansNorm = normalize(item.answer);
-    
-    const userWords = userNorm.split(' ').filter(w => w.length > 1);
-    const ansWords = ansNorm.split(' ').filter(w => w.length > 1);
-    
-    const userSet = new Set(userWords);
-    const ansSet = new Set(ansWords);
-    
-    let intersection = 0;
-    ansSet.forEach(w => { if (userSet.has(w)) intersection++; });
-    
-    let scorePct = Math.round((intersection / Math.max(ansSet.size, 1)) * 100);
-    if (scorePct > 100) scorePct = 100;
-    
-    const scorePctEl = document.getElementById('trans-long-score-pct');
-    scorePctEl.textContent = scorePct + '%';
-    
-    const feedbackTextEl = document.getElementById('trans-long-feedback-text');
-    if (scorePct >= 80) {
-        scorePctEl.style.color = '#4ade80';
-        feedbackTextEl.textContent = '🌟 Xuất sắc! Bản dịch của bạn cực kỳ chính xác và lưu loát so với bản dịch chuẩn. Cấu trúc câu và từ vựng đều được sử dụng rất tự nhiên.';
-        awardStars(30, "Hoàn thành dịch đoạn văn xuất sắc!");
-    } else if (scorePct >= 50) {
-        scorePctEl.style.color = '#60a5fa';
-        feedbackTextEl.textContent = '👍 Tốt! Bạn đã truyền đạt chính xác các ý chính của đoạn văn. Hãy xem thêm bản dịch mẫu để cải thiện cách diễn đạt tự nhiên hơn.';
-        awardStars(15, "Hoàn thành dịch đoạn văn khá tốt!");
+
+    const direction = item.dir || 'vi-en';
+
+    // Use Smart Translation Checker for paragraph
+    const result = window.TranslationChecker
+        ? window.TranslationChecker.checkParagraph(userInput, item.answer, direction)
+        : null;
+
+    if (result) {
+        const scorePct = result.score;
+        const scorePctEl = document.getElementById('trans-long-score-pct');
+        scorePctEl.textContent = scorePct + '%';
+
+        const feedbackTextEl = document.getElementById('trans-long-feedback-text');
+
+        if (scorePct >= 80) {
+            scorePctEl.style.color = '#4ade80';
+            feedbackTextEl.innerHTML = `🌟 ${result.feedback}`;
+            awardStars(30, "Hoàn thành dịch đoạn văn xuất sắc!");
+        } else if (scorePct >= 50) {
+            scorePctEl.style.color = '#60a5fa';
+            feedbackTextEl.innerHTML = `👍 ${result.feedback}`;
+            awardStars(15, "Hoàn thành dịch đoạn văn khá tốt!");
+        } else {
+            scorePctEl.style.color = '#f87171';
+            feedbackTextEl.innerHTML = `✍️ ${result.feedback}`;
+        }
+
+        // Add highlighted analysis below feedback
+        let detailHTML = '';
+
+        // Highlighted user input
+        detailHTML += `<div style="padding: 8px 10px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-top: 10px; line-height: 1.8; font-size: 14px;">`;
+        detailHTML += window.TranslationChecker.renderHighlightedHTML(userInput, result.highlights);
+        detailHTML += `</div>`;
+
+        // Legend
+        detailHTML += `<div style="font-size: 11px; color: var(--text-muted); margin-top: 6px; display: flex; flex-wrap: wrap; gap: 8px;">
+            <span><span style="color:#4ade80;">■</span> Đúng</span>
+            <span><span style="color:#60a5fa;">■</span> Đồng nghĩa</span>
+            <span><span style="color:#fbbf24;">■</span> Lỗi chính tả</span>
+            <span><span style="color:#f87171;">■</span> Sai ngữ pháp</span>
+            <span><span style="color:#a78bfa;">■</span> Thừa</span>
+        </div>`;
+
+        // Error details
+        if (result.errors.length > 0) {
+            detailHTML += window.TranslationChecker.renderErrorsHTML(result.errors);
+        }
+
+        feedbackTextEl.innerHTML += detailHTML;
     } else {
-        scorePctEl.style.color = '#f87171';
-        feedbackTextEl.textContent = '✍️ Hãy cố gắng lên! Bản dịch của bạn chưa sát với ý nghĩa của đoạn văn. Vui lòng đối chiếu với bản dịch mẫu bên dưới để học hỏi thêm các cấu trúc câu.';
+        // Fallback: Jaccard similarity
+        const normalize = s => s.toLowerCase().replace(/[.,!?;:'"()\-–]/g, '').replace(/\s+/g, ' ').trim();
+        const userNorm = normalize(userInput);
+        const ansNorm = normalize(item.answer);
+        const userWords = userNorm.split(' ').filter(w => w.length > 1);
+        const ansWords = ansNorm.split(' ').filter(w => w.length > 1);
+        const userSet = new Set(userWords);
+        const ansSet = new Set(ansWords);
+        let intersection = 0;
+        ansSet.forEach(w => { if (userSet.has(w)) intersection++; });
+        let scorePct = Math.round((intersection / Math.max(ansSet.size, 1)) * 100);
+        if (scorePct > 100) scorePct = 100;
+
+        const scorePctEl = document.getElementById('trans-long-score-pct');
+        scorePctEl.textContent = scorePct + '%';
+        const feedbackTextEl = document.getElementById('trans-long-feedback-text');
+
+        if (scorePct >= 80) {
+            scorePctEl.style.color = '#4ade80';
+            feedbackTextEl.textContent = '🌟 Xuất sắc! Bản dịch chính xác và lưu loát.';
+            awardStars(30, "Hoàn thành dịch đoạn văn xuất sắc!");
+        } else if (scorePct >= 50) {
+            scorePctEl.style.color = '#60a5fa';
+            feedbackTextEl.textContent = '👍 Tốt! Nắm được ý chính, cần cải thiện thêm.';
+            awardStars(15, "Hoàn thành dịch đoạn văn khá tốt!");
+        } else {
+            scorePctEl.style.color = '#f87171';
+            feedbackTextEl.textContent = '✍️ Chưa chính xác lắm. Hãy xem đáp án mẫu bên dưới.';
+        }
     }
-    
+
     document.getElementById('trans-long-answer').textContent = item.answer;
     document.getElementById('btn-trans-long-check').classList.add('hidden');
     document.getElementById('btn-trans-long-next').classList.remove('hidden');

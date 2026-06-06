@@ -580,6 +580,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (transLvlFilter) transLvlFilter.addEventListener('change', initTranslation);
     const btnTranslation = document.getElementById('btn-translation');
     if (btnTranslation) btnTranslation.addEventListener('click', initTranslation);
+    const btnTransRefresh = document.getElementById('btn-trans-refresh');
+    if (btnTransRefresh) btnTransRefresh.addEventListener('click', initTranslation);
 
     // Long translation tab
     const btnTransLongCheck = document.getElementById('btn-trans-long-check');
@@ -590,6 +592,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (btnTransLongHint) btnTransLongHint.addEventListener('click', showLongTransHint);
     const transLongDirFilter = document.getElementById('trans-long-dir-filter');
     if (transLongDirFilter) transLongDirFilter.addEventListener('change', initLongTranslation);
+    const btnTransLongRefresh = document.getElementById('btn-trans-long-refresh');
+    if (btnTransLongRefresh) btnTransLongRefresh.addEventListener('click', initLongTranslation);
 
     // Live counter for long translation
     const transLongInput = document.getElementById('trans-long-input');

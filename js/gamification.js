@@ -472,7 +472,12 @@ async function renderTranslationCard() {
     
     // Đổ các thông số siêu dữ liệu (Metadata) từ Index lên UI
     document.getElementById('trans-dir-badge').textContent = indexItem.dir === 'en-vi' ? 'Anh → Việt' : 'Việt → Anh';
-    document.getElementById('trans-level-badge').textContent = indexItem.level;
+    const levelMap = {
+        'Beginner': 'Sơ cấp (A1 - A2)',
+        'Intermediate': 'Trung cấp (B1 - B2)',
+        'Advanced': 'Cao cấp (C1 - C2)'
+    };
+    document.getElementById('trans-level-badge').textContent = levelMap[indexItem.level] || indexItem.level;
     
     const progress = (cardIndex / transState.deck.length) * 100;
     document.getElementById('trans-progress-fill').style.width = progress + '%';
@@ -506,24 +511,66 @@ function checkTranslation() {
 
     const feedback = document.getElementById('trans-feedback');
     feedback.classList.remove('hidden');
-    // Simple similarity check (normalize and compare)
-    const normalize = s => s.toLowerCase().replace(/[.,!?;:'"()]/g, '').replace(/\s+/g, ' ').trim();
-    const userNorm = normalize(userInput);
-    const ansNorm = normalize(item.answer);
-    // Calculate word overlap
-    const userWords = new Set(userNorm.split(' '));
-    const ansWords = new Set(ansNorm.split(' '));
-    let overlap = 0;
-    ansWords.forEach(w => { if (userWords.has(w)) overlap++; });
-    const similarity = overlap / Math.max(ansWords.size, 1);
-    if (similarity >= 0.6 || userNorm === ansNorm) {
-        feedback.className = 'trans-feedback correct';
-        document.getElementById('trans-feedback-text').textContent = '✅ Tuyệt vời! Bản dịch của bạn rất tốt!';
-        transState.score++;
+
+    // Use Smart Translation Checker engine
+    const direction = item.dir || 'vi-en';
+    const result = window.TranslationChecker
+        ? window.TranslationChecker.check(userInput, item.answer, direction)
+        : null;
+
+    if (result) {
+        // Score-based grading
+        if (result.grade === 'excellent' || result.grade === 'good') {
+            feedback.className = 'trans-feedback correct';
+            transState.score++;
+        } else {
+            feedback.className = 'trans-feedback wrong';
+        }
+
+        // Build rich feedback HTML
+        const feedbackTextEl = document.getElementById('trans-feedback-text');
+        let feedbackHTML = `<div style="margin-bottom: 6px;">${result.feedback} <strong style="color: ${result.score >= 70 ? '#4ade80' : result.score >= 45 ? '#fbbf24' : '#f87171'};">(${result.score}/100)</strong></div>`;
+
+        // Highlighted user input
+        feedbackHTML += `<div style="padding: 8px 10px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 6px; line-height: 1.8; font-size: 14px;">`;
+        feedbackHTML += window.TranslationChecker.renderHighlightedHTML(userInput, result.highlights);
+        feedbackHTML += `</div>`;
+
+        // Legend
+        feedbackHTML += `<div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px; display: flex; flex-wrap: wrap; gap: 8px;">
+            <span><span style="color:#4ade80;">■</span> Đúng</span>
+            <span><span style="color:#60a5fa;">■</span> Đồng nghĩa</span>
+            <span><span style="color:#fbbf24;">■</span> Lỗi chính tả</span>
+            <span><span style="color:#f87171;">■</span> Sai ngữ pháp</span>
+            <span><span style="color:#a78bfa;">■</span> Thừa</span>
+        </div>`;
+
+        // Error details
+        if (result.errors.length > 0) {
+            feedbackHTML += window.TranslationChecker.renderErrorsHTML(result.errors);
+        }
+
+        feedbackTextEl.innerHTML = feedbackHTML;
     } else {
-        feedback.className = 'trans-feedback wrong';
-        document.getElementById('trans-feedback-text').textContent = '❌ Chưa chính xác lắm. Hãy xem đáp án gợi ý:';
+        // Fallback if TranslationChecker not loaded
+        const normalize = s => s.toLowerCase().replace(/[.,!?;:'"()]/g, '').replace(/\s+/g, ' ').trim();
+        const userNorm = normalize(userInput);
+        const ansNorm = normalize(item.answer);
+        const userWords = new Set(userNorm.split(' '));
+        const ansWords = new Set(ansNorm.split(' '));
+        let overlap = 0;
+        ansWords.forEach(w => { if (userWords.has(w)) overlap++; });
+        const similarity = overlap / Math.max(ansWords.size, 1);
+        if (similarity >= 0.6 || userNorm === ansNorm) {
+            feedback.className = 'trans-feedback correct';
+            document.getElementById('trans-feedback-text').textContent = '✅ Tuyệt vời! Bản dịch của bạn rất tốt!';
+            transState.score++;
+        } else {
+            feedback.className = 'trans-feedback wrong';
+            document.getElementById('trans-feedback-text').textContent = '❌ Chưa chính xác lắm. Hãy xem đáp án gợi ý:';
+        }
     }
+
     document.getElementById('trans-answer').textContent = '💡 Đáp án: ' + item.answer;
     document.getElementById('trans-score').textContent = transState.score;
     document.getElementById('btn-trans-check').classList.add('hidden');
