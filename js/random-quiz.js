@@ -88,8 +88,9 @@ async function fetchNextBatch() {
     document.getElementById('rq-question-direction').textContent = `Đang tải câu hỏi...`;
     
     // Lọc các ID thuộc các level được phép và chưa từng được hỏi trong session này
+    // quiz-index.json uses compound levels like 'A1/A2', so check if any allowed level is contained
     const availableIds = rqQuizIndex
-        .filter(q => rqAllowedLevels.includes(q.level) && !rqUsedQuestionIds.has(q.id))
+        .filter(q => rqAllowedLevels.some(lv => q.level && q.level.includes(lv)) && !rqUsedQuestionIds.has(q.id))
         .map(q => q.id);
     
     if (availableIds.length === 0) {
