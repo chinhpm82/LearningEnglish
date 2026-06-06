@@ -324,7 +324,7 @@ function renderActivityTimeline() {
                     <div style="flex: 1;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
                             <strong style="color: ${isMilestone ? 'var(--accent)' : 'var(--text-main)'}; font-size: 14px;">${log.title}</strong>
-                            <span style="font-size: 12px; color: var(--text-muted);">${log.time}</span>
+                            <span style="font-size: 12px; color: var(--text-muted);">${log.date ? log.date + ' · ' : ''}${log.time}</span>
                         </div>
                         <p style="margin: 0; font-size: 13px; color: var(--text-muted);">${log.description}</p>
                     </div>
