@@ -39,6 +39,8 @@ function setUpTabNavigation() {
                 initWritingRoom();
             } else if (targetId === 'podcast-tab') {
                 initPodcastRoom();
+            } else if (targetId === 'quiz-tab') {
+                document.getElementById('btn-quiz-go-home')?.click();
             }
         });
     });

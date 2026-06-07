@@ -515,6 +515,7 @@ function initApp() {
         const rqIntro = document.getElementById('random-quiz-intro');
         const rqActive = document.getElementById('random-quiz-active');
         
+        document.getElementById('rq-end-screen')?.remove();
         if (resultState) resultState.classList.add('hidden');
         if (activeState) activeState.classList.add('hidden');
         if (rqIntro) rqIntro.classList.add('hidden');
@@ -524,6 +525,12 @@ function initApp() {
         // Stop timer if running
         if (typeof rqTimerInterval !== 'undefined') {
             clearInterval(rqTimerInterval);
+        }
+    });
+
+    document.getElementById('btn-rq-active-exit')?.addEventListener('click', () => {
+        if (confirm("Bạn có chắc chắn muốn thoát trận đấu hiện tại?")) {
+            document.getElementById('btn-quiz-go-home')?.click();
         }
     });
 
