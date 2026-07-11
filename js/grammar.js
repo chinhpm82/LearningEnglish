@@ -55,10 +55,28 @@ async function renderGrammarLessons(category = 'all') {
         ? [...GRAMMAR_LESSONS]
         : GRAMMAR_LESSONS.filter(l => l.category === category);
 
-    // Deterministic daily grammar recommendation based on current date
-    const dateNum = new Date().getDate();
-    const recommendedIndex = dateNum % GRAMMAR_LESSONS.length;
-    const recommendedId = GRAMMAR_LESSONS[recommendedIndex].id;
+    // Adaptive grammar recommendation based on user's CEFR level
+    const CEFR_ORDER = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+    const userLevel = (state.userLevel || 'A1').toUpperCase();
+    const levelIdx = CEFR_ORDER.indexOf(userLevel);
+    const targetLevels = [userLevel];
+    if (levelIdx < CEFR_ORDER.length - 1) targetLevels.push(CEFR_ORDER[levelIdx + 1]);
+
+    // Prefer uncompleted lessons at target levels, fallback to completed
+    let recommendedId = null;
+    const uncompletedTarget = filtered.find(l => {
+        const lv = (GRAMMAR_LEVEL_MAP[l.id] || 'A1').toUpperCase();
+        return targetLevels.includes(lv) && !state.completedLessons.includes(l.id);
+    });
+    if (uncompletedTarget) {
+        recommendedId = uncompletedTarget.id;
+    } else {
+        const completedTarget = filtered.find(l => {
+            const lv = (GRAMMAR_LEVEL_MAP[l.id] || 'A1').toUpperCase();
+            return targetLevels.includes(lv);
+        });
+        recommendedId = completedTarget ? completedTarget.id : filtered[0]?.id;
+    }
 
     // Place today's recommended lesson at the very top of the list
     filtered.sort((a, b) => {

@@ -62,6 +62,7 @@ async function renderSentences(category = 'all') {
             <div class="sentence-card-content">
                 <div class="sentence-header-row">
                     <span class="sentence-tag">${item.category}</span>
+                    ${item.level ? getGrammarLevelBadge(item.level) : ''}
                     ${isLearned ? '<span class="sentence-learned-badge">Đã thuộc ✅</span>' : ''}
                 </div>
                 <p class="sentence-en">${item.english}</p>
