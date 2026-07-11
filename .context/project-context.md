@@ -36,6 +36,8 @@ English learning SPA deployed on GitHub Pages. No build system — serve directl
 6. **Sentences expanded to 250** — From 50 (5 categories × 10) to 250 (10 categories × 25). New categories: healthcare, shopping, entertainment, education, workplace. (`json/sentences-data.json`)
 7. **reading.js → sentences.js** — Renamed file and updated HTML reference. (`js/sentences.js`, `index.html`)
 8. **Placement test question banks expanded** — Grammar/Vocab: 5→20 per level (120 total). Reading: 2-3→10 passages per level (60 total). Writing: 10→42 questions. All questions CEFR-appropriate with Vietnamese explanations. (`json/placement/`)
+9. **Sentences category filter fixed** — HTML filter had wrong values (`greeting`, `work`). Now matches data: `daily`, `business`, `travel`, `dining`, `shopping`, `healthcare`, `education`, `entertainment`, `workplace`, `debate`.
+10. **Sentences preloaded on app start** — `COMMUNICATIVE_SENTENCES` loaded in background at init. Tab opens instantly without spinner.
 
 ---
 

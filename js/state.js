@@ -104,6 +104,18 @@ async function loadStateAsync() {
             }
         })();
 
+        // 3b. Preload sentences in background (for instant tab switch)
+        (async () => {
+            try {
+                if (window.FirebaseSync && window.FirebaseSync.fetchAcademicSentences) {
+                    window.COMMUNICATIVE_SENTENCES = await window.FirebaseSync.fetchAcademicSentences() || [];
+                    console.log(`Preloaded ${window.COMMUNICATIVE_SENTENCES.length} sentences.`);
+                }
+            } catch (e) {
+                console.error("Failed to preload sentences:", e);
+            }
+        })();
+
         // 4. Load other progress variables from progress store
         state.customWords = await LearningDB.getProgress('custom_words', []);
         state.streak = await LearningDB.getProgress('streak', 0);
