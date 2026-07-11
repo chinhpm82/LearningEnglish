@@ -98,7 +98,7 @@ async function fetchNextBatch() {
     }
 
     // Trộn mảng ID và lấy tối đa 50 câu (đủ cho 5 phút)
-    const shuffledIds = availableIds.sort(() => 0.5 - Math.random());
+    const shuffledIds = shuffleArray(availableIds);
     const batchIds = shuffledIds.slice(0, 50);
     
     // Ghi nhận các ID này đã được lấy
@@ -109,7 +109,7 @@ async function fetchNextBatch() {
         let fetchedData = await window.FirebaseSync.fetchQuizBatch(batchIds);
         
         // Trộn ngẫu nhiên câu hỏi trả về
-        fetchedData = fetchedData.sort(() => 0.5 - Math.random());
+        fetchedData = shuffleArray(fetchedData);
         
         // Thêm vào hàng đợi câu hỏi
         rqQuestions = rqQuestions.concat(fetchedData);

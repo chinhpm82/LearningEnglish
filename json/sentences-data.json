@@ -1,252 +1,252 @@
 [
-  {
-    "english": "Could you please clarify the main objective of this project?",
-    "vietnamese": "Bạn có thể làm rõ mục tiêu chính của dự án này được không?",
-    "category": "business"
-  },
-  {
-    "english": "We need to brainstorm some innovative solutions to tackle this bottleneck.",
-    "vietnamese": "Chúng ta cần động não một số giải pháp sáng tạo để giải quyết nút thắt này.",
-    "category": "business"
-  },
-  {
-    "english": "Let's touch base on Friday to review our progress.",
-    "vietnamese": "Hãy liên lạc lại vào thứ Sáu để xem xét tiến độ của chúng ta nhé.",
-    "category": "business"
-  },
-  {
-    "english": "I will forward you the minutes of the meeting shortly.",
-    "vietnamese": "Tôi sẽ gửi cho bạn biên bản cuộc họp sớm thôi.",
-    "category": "business"
-  },
-  {
-    "english": "I'm afraid we're running out of time, so let's wrap this up.",
-    "vietnamese": "Tôi e là chúng ta sắp hết thời gian rồi, hãy tóm tắt lại thôi.",
-    "category": "business"
-  },
-  {
-    "english": "Could you run that past me one more time?",
-    "vietnamese": "Bạn có thể nói lại điều đó một lần nữa được không?",
-    "category": "business"
-  },
-  {
-    "english": "We need to ensure that everyone is on the same page.",
-    "vietnamese": "Chúng ta cần đảm bảo rằng mọi người đều hiểu chung một vấn đề.",
-    "category": "business"
-  },
-  {
-    "english": "Please submit your expense reports by the end of the day.",
-    "vietnamese": "Vui lòng nộp báo cáo chi phí của bạn trước cuối ngày.",
-    "category": "business"
-  },
-  {
-    "english": "The marketing campaign generated a significant return on investment.",
-    "vietnamese": "Chiến dịch tiếp thị đã tạo ra lợi tức đầu tư đáng kể.",
-    "category": "business"
-  },
-  {
-    "english": "We are currently operating on a very tight schedule.",
-    "vietnamese": "Chúng tôi hiện đang hoạt động với lịch trình rất eo hẹp.",
-    "category": "business"
-  },
-  {
-    "english": "Excuse me, where is the baggage claim area?",
-    "vietnamese": "Xin lỗi, khu vực nhận hành lý ở đâu vậy?",
-    "category": "travel"
-  },
-  {
-    "english": "Is there a shuttle bus that goes directly to the city center?",
-    "vietnamese": "Có xe buýt trung chuyển nào đi thẳng đến trung tâm thành phố không?",
-    "category": "travel"
-  },
-  {
-    "english": "I would like to declare these items for customs.",
-    "vietnamese": "Tôi muốn khai báo hải quan cho những mặt hàng này.",
-    "category": "travel"
-  },
-  {
-    "english": "Do you have any recommendations for local sightseeing?",
-    "vietnamese": "Bạn có gợi ý nào cho việc tham quan địa phương không?",
-    "category": "travel"
-  },
-  {
-    "english": "Could I have a window seat, please?",
-    "vietnamese": "Cho tôi một chỗ ngồi gần cửa sổ được không?",
-    "category": "travel"
-  },
-  {
-    "english": "My flight has been delayed. What are my options?",
-    "vietnamese": "Chuyến bay của tôi bị hoãn. Tôi có những lựa chọn nào?",
-    "category": "travel"
-  },
-  {
-    "english": "Where is the nearest currency exchange counter?",
-    "vietnamese": "Quầy thu đổi ngoại tệ gần nhất ở đâu?",
-    "category": "travel"
-  },
-  {
-    "english": "Is breakfast included in the room rate?",
-    "vietnamese": "Giá phòng đã bao gồm bữa sáng chưa?",
-    "category": "travel"
-  },
-  {
-    "english": "Could you keep my luggage until I check in?",
-    "vietnamese": "Bạn có thể giữ hành lý của tôi cho đến khi tôi nhận phòng được không?",
-    "category": "travel"
-  },
-  {
-    "english": "Please make sure your seatbelt is securely fastened.",
-    "vietnamese": "Vui lòng đảm bảo dây an toàn của bạn đã được thắt chặt.",
-    "category": "travel"
-  },
-  {
-    "english": "We have a reservation under the name of Smith for four people.",
-    "vietnamese": "Chúng tôi đã đặt bàn cho 4 người dưới tên Smith.",
-    "category": "dining"
-  },
-  {
-    "english": "Could we have a few more minutes to decide, please?",
-    "vietnamese": "Chúng tôi có thể xin thêm vài phút để chọn món không?",
-    "category": "dining"
-  },
-  {
-    "english": "I am highly allergic to peanuts. Does this dish contain any?",
-    "vietnamese": "Tôi bị dị ứng nặng với đậu phộng. Món này có chứa đậu phộng không?",
-    "category": "dining"
-  },
-  {
-    "english": "This steak is a little overcooked. Could I send it back?",
-    "vietnamese": "Miếng bít tết này hơi quá chín. Tôi có thể đổi lại được không?",
-    "category": "dining"
-  },
-  {
-    "english": "Could we split the bill evenly, please?",
-    "vietnamese": "Chúng ta có thể chia đều hóa đơn được không?",
-    "category": "dining"
-  },
-  {
-    "english": "The soup of the day sounds absolutely delicious.",
-    "vietnamese": "Món súp đặc biệt của ngày hôm nay nghe có vẻ rất ngon.",
-    "category": "dining"
-  },
-  {
-    "english": "Would you mind bringing us some more napkins?",
-    "vietnamese": "Bạn có phiền mang cho chúng tôi thêm vài chiếc khăn giấy không?",
-    "category": "dining"
-  },
-  {
-    "english": "What is the chef's specialty here?",
-    "vietnamese": "Món đặc sản của đầu bếp ở đây là gì?",
-    "category": "dining"
-  },
-  {
-    "english": "Could I get a doggy bag for the leftovers?",
-    "vietnamese": "Cho tôi xin hộp để gói phần thức ăn thừa mang về được không?",
-    "category": "dining"
-  },
-  {
-    "english": "Compliments to the chef! The meal was outstanding.",
-    "vietnamese": "Gửi lời khen tới đầu bếp nhé! Bữa ăn thật tuyệt vời.",
-    "category": "dining"
-  },
-  {
-    "english": "I completely agree with your perspective on this matter.",
-    "vietnamese": "Tôi hoàn toàn đồng ý với quan điểm của bạn về vấn đề này.",
-    "category": "debate"
-  },
-  {
-    "english": "With all due respect, I have to disagree with that statement.",
-    "vietnamese": "Với tất cả sự tôn trọng, tôi buộc phải không đồng ý với nhận định đó.",
-    "category": "debate"
-  },
-  {
-    "english": "Let's look at the bigger picture before jumping to conclusions.",
-    "vietnamese": "Hãy nhìn vào bức tranh toàn cảnh trước khi vội đưa ra kết luận.",
-    "category": "debate"
-  },
-  {
-    "english": "From my standpoint, the disadvantages outweigh the benefits.",
-    "vietnamese": "Theo quan điểm của tôi, những bất lợi lớn hơn những lợi ích mang lại.",
-    "category": "debate"
-  },
-  {
-    "english": "That's a valid point, but have you considered the alternative?",
-    "vietnamese": "Đó là một ý kiến hợp lý, nhưng bạn đã cân nhắc đến phương án thay thế chưa?",
-    "category": "debate"
-  },
-  {
-    "english": "I see where you're coming from, but I still have some reservations.",
-    "vietnamese": "Tôi hiểu ý bạn, nhưng tôi vẫn còn vài điều e ngại.",
-    "category": "debate"
-  },
-  {
-    "english": "Let's agree to disagree and move on to the next topic.",
-    "vietnamese": "Hãy chấp nhận việc bất đồng quan điểm và chuyển sang chủ đề tiếp theo nhé.",
-    "category": "debate"
-  },
-  {
-    "english": "The evidence clearly contradicts your initial hypothesis.",
-    "vietnamese": "Bằng chứng rõ ràng là mâu thuẫn với giả thuyết ban đầu của bạn.",
-    "category": "debate"
-  },
-  {
-    "english": "Can you back up that claim with solid statistics?",
-    "vietnamese": "Bạn có thể chứng minh cho tuyên bố đó bằng các số liệu thống kê cụ thể không?",
-    "category": "debate"
-  },
-  {
-    "english": "We need to find a middle ground that satisfies both parties.",
-    "vietnamese": "Chúng ta cần tìm một giải pháp dung hòa làm hài lòng cả hai bên.",
-    "category": "debate"
-  },
-  {
-    "english": "I'm exhausted. I think I'm going to call it a day.",
-    "vietnamese": "Tôi kiệt sức rồi. Tôi nghĩ tôi sẽ kết thúc công việc hôm nay ở đây thôi.",
-    "category": "daily"
-  },
-  {
-    "english": "Could you do me a huge favor and pick up some groceries?",
-    "vietnamese": "Bạn có thể giúp tôi một việc lớn là đi mua chút đồ tạp hóa được không?",
-    "category": "daily"
-  },
-  {
-    "english": "Don't beat yourself up over such a trivial mistake.",
-    "vietnamese": "Đừng tự dằn vặt bản thân vì một sai lầm nhỏ nhặt như vậy.",
-    "category": "daily"
-  },
-  {
-    "english": "I'll catch up with you later. Take care!",
-    "vietnamese": "Tôi sẽ nói chuyện với bạn sau nhé. Bảo trọng!",
-    "category": "daily"
-  },
-  {
-    "english": "It totally slipped my mind. I'm so sorry!",
-    "vietnamese": "Tôi hoàn toàn quên béng mất. Tôi thực sự xin lỗi!",
-    "category": "daily"
-  },
-  {
-    "english": "I'm looking forward to unwinding this weekend.",
-    "vietnamese": "Tôi đang rất mong chờ được thư giãn vào cuối tuần này.",
-    "category": "daily"
-  },
-  {
-    "english": "Can you give me a hand with this heavy box?",
-    "vietnamese": "Bạn có thể giúp tôi một tay khiêng cái hộp nặng này không?",
-    "category": "daily"
-  },
-  {
-    "english": "You look a bit under the weather. Are you feeling okay?",
-    "vietnamese": "Trông bạn có vẻ không được khỏe. Bạn ổn chứ?",
-    "category": "daily"
-  },
-  {
-    "english": "Let's grab a coffee and catch up on things.",
-    "vietnamese": "Đi uống cà phê và hàn huyên tâm sự nhé.",
-    "category": "daily"
-  },
-  {
-    "english": "I'm keeping my fingers crossed for good weather tomorrow.",
-    "vietnamese": "Tôi đang cầu mong cho ngày mai thời tiết sẽ đẹp.",
-    "category": "daily"
-  }
+  {"english": "Could you please clarify the main objective of this project?", "vietnamese": "Bạn có thể làm rõ mục tiêu chính của dự án này được không?", "category": "business"},
+  {"english": "We need to schedule a meeting to discuss the quarterly results.", "vietnamese": "Chúng ta cần lên lịch họp để thảo luận kết quả quý.", "category": "business"},
+  {"english": "I'd like to propose a new strategy for expanding into Asian markets.", "vietnamese": "Tôi muốn đề xuất chiến lược mới để mở rộng sang các thị trường châu Á.", "category": "business"},
+  {"english": "The contract has been reviewed by our legal team and is ready for signing.", "vietnamese": "Hợp đồng đã được nhóm pháp lý của chúng tôi xem xét và sẵn sàng để ký.", "category": "business"},
+  {"english": "Let me send you the revised proposal by the end of today.", "vietnamese": "Để tôi gửi bạn bản đề xuất đã chỉnh sửa trước cuối ngày hôm nay.", "category": "business"},
+  {"english": "We're looking for someone with strong leadership skills to manage the team.", "vietnamese": "Chúng tôi đang tìm người có kỹ năng lãnh đạo tốt để quản lý nhóm.", "category": "business"},
+  {"english": "The client expressed concerns about the delivery timeline.", "vietnamese": "Khách hàng bày tỏ lo ngại về lịch trình giao hàng.", "category": "business"},
+  {"english": "Our profit margin has increased by twelve percent compared to last year.", "vietnamese": "Lợi nhuận biên của chúng ta đã tăng mười hai phần trăm so với năm ngoái.", "category": "business"},
+  {"english": "I recommend we invest more in digital marketing this quarter.", "vietnamese": "Tôi khuyên chúng ta nên đầu tư nhiều hơn vào tiếp thị kỹ thuật số quý này.", "category": "business"},
+  {"english": "Could you give me an update on the product development status?", "vietnamese": "Bạn có thể cập nhật cho tôi về tình trạng phát triển sản phẩm không?", "category": "business"},
+  {"english": "We should consider outsourcing the IT support to reduce costs.", "vietnamese": "Chúng ta nên cân nhắc thuê ngoài hỗ trợ IT để giảm chi phí.", "category": "business"},
+  {"english": "The merger is expected to be completed by the third quarter.", "vietnamese": "Việc sáp nhập dự kiến sẽ hoàn thành vào quý thứ ba.", "category": "business"},
+  {"english": "I appreciate your feedback on the draft report.", "vietnamese": "Tôi đánh giá cao phản hồi của bạn về bản dự thảo báo cáo.", "category": "business"},
+  {"english": "Our company is restructuring to improve operational efficiency.", "vietnamese": "Công ty chúng tôi đang tái cơ cấu để cải thiện hiệu quả hoạt động.", "category": "business"},
+  {"english": "Please forward the invoice to the accounting department for processing.", "vietnamese": "Vui lòng chuyển hóa đơn sang bộ phận kế toán để xử lý.", "category": "business"},
+  {"english": "The deadline for the project proposal has been extended to next Friday.", "vietnamese": "Hạn chót cho đề xuất dự án đã được gia hạn đến thứ Sáu tuần sau.", "category": "business"},
+  {"english": "We need to analyze the market trends before making a decision.", "vietnamese": "Chúng ta cần phân tích xu hướng thị trường trước khi đưa ra quyết định.", "category": "business"},
+  {"english": "The new policy will take effect starting from January first.", "vietnamese": "Chính sách mới sẽ có hiệu lực kể từ ngày một tháng Giêng.", "category": "business"},
+  {"english": "I believe this partnership will benefit both companies significantly.", "vietnamese": "Tôi tin rằng quan hệ đối tác này sẽ mang lại lợi ích lớn cho cả hai công ty.", "category": "business"},
+  {"english": "Could you prepare a cost-benefit analysis for this initiative?", "vietnamese": "Bạn có thể chuẩn bị phân tích chi phí-lợi ích cho sáng kiến này không?", "category": "business"},
+  {"english": "The budget has been approved and we can proceed with the plan.", "vietnamese": "Ngân sách đã được phê duyệt và chúng ta có thể tiến hành kế hoạch.", "category": "business"},
+  {"english": "We're experiencing some delays in the supply chain right now.", "vietnamese": "Chúng tôi đang gặp một số chậm trễ trong chuỗi cung ứng.", "category": "business"},
+  {"english": "Please ensure all reports are submitted before the monthly review.", "vietnamese": "Vui lòng đảm bảo tất cả báo cáo được nộp trước cuộc đánh giá hàng tháng.", "category": "business"},
+  {"english": "The investor meeting has been rescheduled to Wednesday afternoon.", "vietnamese": "Cuộc gặp với nhà đầu tư đã được đổi lịch sang chiều thứ Tư.", "category": "business"},
+  {"english": "I'd like to negotiate the terms of this agreement further.", "vietnamese": "Tôi muốn đàm phán thêm về các điều khoản của thỏa thuận này.", "category": "business"},
+  {"english": "Do you have a reservation under the name of Nguyen?", "vietnamese": "Bạn có đặt chỗ dưới tên Nguyễn không?", "category": "travel"},
+  {"english": "Could you recommend some must-visit attractions in this area?", "vietnamese": "Bạn có thể giới thiệu một số điểm tham quan không thể bỏ qua ở khu vực này không?", "category": "travel"},
+  {"english": "I need to exchange some dollars for local currency.", "vietnamese": "Tôi cần đổi một ít đô la lấy tiền tệ địa phương.", "category": "travel"},
+  {"english": "How long does it take to get to the airport from here?", "vietnamese": "Mất bao lâu để đến sân bay từ đây?", "category": "travel"},
+  {"english": "Is there a shuttle bus service from the hotel to the city center?", "vietnamese": "Có dịch vụ xe buýt đưa đón từ khách sạn đến trung tâm thành phố không?", "category": "travel"},
+  {"english": "I'd like to book a round-trip ticket to Ho Chi Minh City.", "vietnamese": "Tôi muốn đặt vé khứ hồi đến Thành phố Hồ Chí Minh.", "category": "travel"},
+  {"english": "Could you call me a taxi to the train station, please?", "vietnamese": "Bạn có thể gọi cho tôi một chiếc xe taxi đến ga tàu được không?", "category": "travel"},
+  {"english": "The weather forecast says it will rain tomorrow, so bring an umbrella.", "vietnamese": "Dự báo thời tiết nói trời sẽ mưa ngày mai, nên mang theo ô.", "category": "travel"},
+  {"english": "Where is the nearest subway station?", "vietnamese": "Ga tàu điện ngầm gần nhất ở đâu?", "category": "travel"},
+  {"english": "I'd like to check in for my flight to London.", "vietnamese": "Tôi muốn làm thủ tục cho chuyến bay đến Luân Đôn.", "category": "travel"},
+  {"english": "What time does the last bus depart from this terminal?", "vietnamese": "Xe buýt cuối cùng khởi hành từ nhà ga này lúc mấy giờ?", "category": "travel"},
+  {"english": "Can you help me carry these bags to my room?", "vietnamese": "Bạn có thể giúp tôi mang mấy cái vali lên phòng không?", "category": "travel"},
+  {"english": "I'm looking for a restaurant that serves traditional Vietnamese food.", "vietnamese": "Tôi đang tìm nhà hàng phục vụ đồ ăn Việt Nam truyền thống.", "category": "travel"},
+  {"english": "We should leave early to avoid traffic during rush hour.", "vietnamese": "Chúng ta nên đi sớm để tránh kẹt xe vào giờ cao điểm.", "category": "travel"},
+  {"english": "Could you provide directions to the nearest hospital?", "vietnamese": "Bạn có thể chỉ đường đến bệnh viện gần nhất không?", "category": "travel"},
+  {"english": "My luggage didn't arrive with my flight. Can you help me locate it?", "vietnamese": "Hành lý của tôi không đến cùng chuyến bay. Bạn có thể giúp tôi tìm nó không?", "category": "travel"},
+  {"english": "The hotel room has a beautiful view of the mountains.", "vietnamese": "Phòng khách sạn có tầm nhìn tuyệt đẹp ra dãy núi.", "category": "travel"},
+  {"english": "I need to extend my stay for two more nights.", "vietnamese": "Tôi cần kéo dài chuyến ở lại thêm hai đêm nữa.", "category": "travel"},
+  {"english": "Is it safe to walk around this neighborhood at night?", "vietnamese": "Có an toàn khi đi dạo quanh khu phố này vào ban đêm không?", "category": "travel"},
+  {"english": "We plan to visit three countries during our two-week vacation.", "vietnamese": "Chúng tôi计划thăm ba quốc gia trong kỳ nghỉ hai tuần.", "category": "travel"},
+  {"english": "The museum offers free admission on the first Sunday of each month.", "vietnamese": "Bảo tàng miễn phí vào cửa vào Chủ nhật đầu tiên mỗi tháng.", "category": "travel"},
+  {"english": "Could you recommend a good travel guidebook for this region?", "vietnamese": "Bạn có thể giới thiệu một cuốn cẩm nang du lịch tốt cho khu vực này không?", "category": "travel"},
+  {"english": "I accidentally left my passport in the hotel safe.", "vietnamese": "Tôi tình cờ để quên hộ chiếu trong két sắt của khách sạn.", "category": "travel"},
+  {"english": "The flight has been delayed due to bad weather conditions.", "vietnamese": "Chuyến bay bị hoãn do điều kiện thời tiết xấu.", "category": "travel"},
+  {"english": "Can I get a refund for the cancellation of my trip?", "vietnamese": "Tôi có thể được hoàn tiền vì hủy chuyến đi không?", "category": "travel"},
+  {"english": "I'd like to order the grilled salmon with a side of vegetables.", "vietnamese": "Tôi muốn gọi món cá hồi nướng với rau ăn kèm.", "category": "dining"},
+  {"english": "Could you bring me the menu, please?", "vietnamese": "Bạn có thể mang cho tôi thực đơn được không?", "category": "dining"},
+  {"english": "Is this dish available without gluten?", "vietnamese": "Món này có thể không chứa gluten không?", "category": "dining"},
+  {"english": "I'm allergic to peanuts. Does this meal contain any?", "vietnamese": "Tôi bị dị ứng đậu phộng. Món ăn này có chứa không?", "category": "dining"},
+  {"english": "The food here is absolutely delicious. I highly recommend it.", "vietnamese": "Đồ ăn ở đây thực sự ngon. Tôi rất khuyên bạn nên thử.", "category": "dining"},
+  {"english": "Could we have the check, please?", "vietnamese": "Cho chúng tôi hóa đơn thanh toán được không?", "category": "dining"},
+  {"english": "Would you like something to drink before ordering your meal?", "vietnamese": "Bạn muốn uống gì trước khi gọi đồ ăn không?", "category": "dining"},
+  {"english": "The soup is a bit too salty for my taste.", "vietnamese": "Súp hơi mặn quá so với khẩu vị của tôi.", "category": "dining"},
+  {"english": "Do you have any vegetarian options on the menu?", "vietnamese": "Nhà hàng có món chay nào trong thực đơn không?", "category": "dining"},
+  {"english": "I'd like a table for four near the window, please.", "vietnamese": "Tôi muốn một bàn cho bốn người gần cửa sổ.", "category": "dining"},
+  {"english": "Could you make sure the steak is cooked medium rare?", "vietnamese": "Bạn có thể đảm bảo bít tết được nấu chín vừa phải không?", "category": "dining"},
+  {"english": "What do you recommend from the menu?", "vietnamese": "Bạn giới thiệu món gì từ thực đơn?", "category": "dining"},
+  {"english": "May I have some extra napkins, please?", "vietnamese": "Cho tôi thêm giấy ăn được không?", "category": "dining"},
+  {"english": "The dessert was the best part of the meal.", "vietnamese": "Món tráng miệng là phần ngon nhất của bữa ăn.", "category": "dining"},
+  {"english": "Could we split the bill between two cards?", "vietnamese": "Chúng tôi có thể thanh toán bằng hai thẻ được không?", "category": "dining"},
+  {"english": "Is there a dress code for dining at this restaurant?", "vietnamese": "Nhà hàng này có quy định về trang phục không?", "category": "dining"},
+  {"english": "I'll have the same thing as my friend, please.", "vietnamese": "Tôi muốn món giống bạn tôi.", "category": "dining"},
+  {"english": "The portion sizes here are very generous.", "vietnamese": "Phần ăn ở đây rất lớn.", "category": "dining"},
+  {"english": "Could you warm up this dish for me? It's a bit cold.", "vietnamese": "Bạn có thể hâm nóng món này giúp tôi được không? Nó hơi lạnh.", "category": "dining"},
+  {"english": "We'd like to make a reservation for tonight at seven o'clock.", "vietnamese": "Chúng tôi muốn đặt bàn cho tối nay lúc bảy giờ.", "category": "dining"},
+  {"english": "This is one of the best restaurants I've ever been to.", "vietnamese": "Đây là một trong những nhà hàng tốt nhất mà tôi từng đến.", "category": "dining"},
+  {"english": "Could you tell me what's in this sauce?", "vietnamese": "Bạn có thể cho tôi biết nước sốt này có gì không?", "category": "dining"},
+  {"english": "I think I'll skip the appetizer and go straight to the main course.", "vietnamese": "Tôi nghĩ tôi sẽ bỏ qua món khai vị và gọi thẳng món chính.", "category": "dining"},
+  {"english": "The coffee here is freshly brewed and tastes wonderful.", "vietnamese": "Cà phê ở đây được pha tươi và có vị tuyệt vời.", "category": "dining"},
+  {"english": "Thank you for the excellent service. Here's a tip for you.", "vietnamese": "Cảm ơn vì dịch vụ tuyệt vời. Đây là tiền boa cho bạn.", "category": "dining"},
+  {"english": "I strongly believe that education is the key to a better future.", "vietnamese": "Tôi tin mạnh mẽ rằng giáo dục là chìa khóa cho tương lai tốt đẹp hơn.", "category": "debate"},
+  {"english": "While I understand your point, I have a different perspective on this issue.", "vietnamese": "Mặc dù tôi hiểu quan điểm của bạn, tôi có cái nhìn khác về vấn đề này.", "category": "debate"},
+  {"english": "The evidence clearly supports the argument that climate change is accelerating.", "vietnamese": "Bằng chứng rõ ràng ủng hộ lập luận rằng biến đổi khí hậu đang tăng tốc.", "category": "debate"},
+  {"english": "We need to consider both sides of the argument before reaching a conclusion.", "vietnamese": "Chúng ta cần xem xét cả hai phía của lập luận trước khi đi đến kết luận.", "category": "debate"},
+  {"english": "That's a valid point, but it doesn't take into account the long-term consequences.", "vietnamese": "Đó là điểm hợp lý, nhưng nó không tính đến hậu quả dài hạn.", "category": "debate"},
+  {"english": "Could you provide some data to support your claim?", "vietnamese": "Bạn có thể cung cấp một số dữ liệu để ủng hộ tuyên bố của bạn không?", "category": "debate"},
+  {"english": "I'd like to challenge the assumption that economic growth always benefits everyone.", "vietnamese": "Tôi muốn phản bác giả định rằng tăng trưởng kinh tế luôn có lợi cho mọi người.", "category": "debate"},
+  {"english": "The counterargument to this position is quite compelling.", "vietnamese": "Lập luận phản biện lại quan điểm này khá thuyết phục.", "category": "debate"},
+  {"english": "Let me clarify my position. I'm not opposed to the idea entirely.", "vietnamese": "Để tôi làm rõ lập trường. Tôi không hoàn toàn phản đối ý tưởng này.", "category": "debate"},
+  {"english": "According to recent studies, the data suggests otherwise.", "vietnamese": "Theo nghiên cứu gần đây, dữ liệu cho thấy điều ngược lại.", "category": "debate"},
+  {"english": "I respectfully disagree with the conclusion you've drawn.", "vietnamese": "Tôi tôn trọng không đồng tình với kết luận mà bạn đã rút ra.", "category": "debate"},
+  {"english": "We must separate facts from opinions in this discussion.", "vietnamese": "Chúng ta phải phân biệt giữa sự thật và ý kiến trong cuộc thảo luận này.", "category": "debate"},
+  {"english": "The issue is more complex than it appears on the surface.", "vietnamese": "Vấn đề phức tạp hơn vẻ bề ngoài.", "category": "debate"},
+  {"english": "Can you elaborate on why you think this policy would fail?", "vietnamese": "Bạn có thể giải thích thêm tại sao bạn nghĩ chính sách này sẽ thất bại không?", "category": "debate"},
+  {"english": "There are compelling arguments on both sides of this debate.", "vietnamese": "Có những lập luận thuyết phục ở cả hai bên của cuộc tranh luận này.", "category": "debate"},
+  {"english": "I think we're missing the fundamental issue here.", "vietnamese": "Tôi nghĩ chúng ta đang bỏ qua vấn đề cơ bản ở đây.", "category": "debate"},
+  {"english": "The historical context is crucial to understanding this controversy.", "vietnamese": "Bối cảnh lịch sử rất quan trọng để hiểu tranh cãi này.", "category": "debate"},
+  {"english": "We shouldn't generalize based on a few isolated cases.", "vietnamese": "Chúng ta không nên khái quát hóa dựa trên vài trường hợp riêng lẻ.", "category": "debate"},
+  {"english": "Your argument would be stronger if you included more evidence.", "vietnamese": "Lập luận của bạn sẽ mạnh mẽ hơn nếu bạn đưa ra nhiều bằng chứng hơn.", "category": "debate"},
+  {"english": "Let's focus on the facts rather than personal opinions.", "vietnamese": "Hãy tập trung vào sự thật thay vì ý kiến cá nhân.", "category": "debate"},
+  {"english": "That statement is misleading and doesn't reflect the full picture.", "vietnamese": "Tuyên bố đó gây hiểu lầm và không phản ánh bức tranh toàn cảnh.", "category": "debate"},
+  {"english": "I'd like to raise a concern about the feasibility of this plan.", "vietnamese": "Tôi muốn nêu mối lo ngại về tính khả thi của kế hoạch này.", "category": "debate"},
+  {"english": "The pros and cons of this decision need to be carefully weighed.", "vietnamese": "Ưu và nhược điểm của quyết định này cần được cân nhắc kỹ lưỡng.", "category": "debate"},
+  {"english": "I concede that your argument has merit in certain circumstances.", "vietnamese": "Tôi thừa nhận rằng lập luận của bạn có giá trị trong một số trường hợp nhất định.", "category": "debate"},
+  {"english": "This is not a black-and-white issue. There are many shades of gray.", "vietnamese": "Đây không phải vấn đề trắng đen. Có nhiều sắc thái ở giữa.", "category": "debate"},
+  {"english": "I usually wake up around seven in the morning.", "vietnamese": "Tôi thường thức dậy vào khoảng bảy giờ sáng.", "category": "daily"},
+  {"english": "Could you pass me the salt, please?", "vietnamese": "Bạn có thể chuyền cho tôi muối được không?", "category": "daily"},
+  {"english": "I need to do some grocery shopping this weekend.", "vietnamese": "Tôi cần đi mua thực phẩm vào cuối tuần này.", "category": "daily"},
+  {"english": "It's been raining all day. I hope it clears up tomorrow.", "vietnamese": "Trời mưa cả ngày. Tôi hy vọng trời sẽ tạnh vào ngày mai.", "category": "daily"},
+  {"english": "Don't forget to lock the door when you leave.", "vietnamese": "Đừng quên khóa cửa khi bạn đi ra ngoài.", "category": "daily"},
+  {"english": "I've been feeling a bit under the weather lately.", "vietnamese": "Dạo này tôi cảm thấy hơi không khỏe.", "category": "daily"},
+  {"english": "Would you mind closing the window? It's getting cold.", "vietnamese": "Bạn có phiền đóng cửa sổ không? Trời đang lạnh dần.", "category": "daily"},
+  {"english": "I have to take my car to the mechanic for an oil change.", "vietnamese": "Tôi phải đưa xe đến thợ sửa để thay dầu.", "category": "daily"},
+  {"english": "Let's meet up for coffee sometime this week.", "vietnamese": "Hãy gặp nhau uống cà phê một ngày nào đó trong tuần này.", "category": "daily"},
+  {"english": "I need to charge my phone. The battery is almost dead.", "vietnamese": "Tôi cần sạc điện thoại. Pin gần hết rồi.", "category": "daily"},
+  {"english": "What are your plans for the weekend?", "vietnamese": "Bạn có kế hoạch gì cho cuối tuần?", "category": "daily"},
+  {"english": "I can't find my keys anywhere. Have you seen them?", "vietnamese": "Tôi tìm chìa khóa không thấy đâu. Bạn có nhìn thấy không?", "category": "daily"},
+  {"english": "The traffic was terrible this morning. I was almost late for work.", "vietnamese": "Giao thông hôm nay thật tệ. Tôi gần như đi làm muộn.", "category": "daily"},
+  {"english": "I should go to bed early tonight. I'm exhausted.", "vietnamese": "Tối nay tôi nên đi ngủ sớm. Tôi kiệt sức rồi.", "category": "daily"},
+  {"english": "Could you water the plants while I'm away?", "vietnamese": "Bạn có thể tưới cây giúp tôi khi tôi đi vắng không?", "category": "daily"},
+  {"english": "I'll pick up some milk on my way home.", "vietnamese": "Tôi sẽ mua sữa trên đường về nhà.", "category": "daily"},
+  {"english": "My neighbor's dog barks all night. It's really annoying.", "vietnamese": "Chó hàng xóm sủa cả đêm. Thật sự rất khó chịu.", "category": "daily"},
+  {"english": "Let me know if you need a ride to the airport.", "vietnamese": "Hãy cho tôi biết nếu bạn cần đi nhờ xe đến sân bay.", "category": "daily"},
+  {"english": "I'm thinking about redecorating my living room.", "vietnamese": "Tôi đang cân nhắc trang trí lại phòng khách.", "category": "daily"},
+  {"english": "The supermarket closes at ten o'clock tonight.", "vietnamese": "Siêu thị đóng cửa lúc mười giờ tối nay.", "category": "daily"},
+  {"english": "I need to make an appointment with the dentist.", "vietnamese": "Tôi cần đặt lịch hẹn với nha sĩ.", "category": "daily"},
+  {"english": "The Wi-Fi connection at home has been really slow lately.", "vietnamese": "Kết nối Wi-Fi ở nhà dạo này rất chậm.", "category": "daily"},
+  {"english": "I've started a new hobby. I'm learning to play the guitar.", "vietnamese": "Tôi đã bắt đầu sở thích mới. Tôi đang học chơi ghi-ta.", "category": "daily"},
+  {"english": "Could you remind me to buy flowers tomorrow morning?", "vietnamese": "Bạn có thể nhắc tôi mua hoa sáng mai không?", "category": "daily"},
+  {"english": "I think I need to clean out my closet. It's a mess.", "vietnamese": "Tôi nghĩ tôi cần dọn tủ quần áo. Nó bừa bộn quá.", "category": "daily"},
+  {"english": "The doctor said I need to get more exercise.", "vietnamese": "Bác sĩ nói tôi cần vận động nhiều hơn.", "category": "healthcare"},
+  {"english": "I'd like to make an appointment for a general checkup.", "vietnamese": "Tôi muốn đặt lịch hẹn để khám sức khỏe tổng quát.", "category": "healthcare"},
+  {"english": "What symptoms have you been experiencing recently?", "vietnamese": "Bạn đã trải qua những triệu chứng nào gần đây?", "category": "healthcare"},
+  {"english": "I need to refill my prescription for blood pressure medication.", "vietnamese": "Tôi cần kê lại đơn thuốc điều trị huyết áp.", "category": "healthcare"},
+  {"english": "The nurse will call you back when the doctor is available.", "vietnamese": "Y tá sẽ gọi lại cho bạn khi bác sĩ sẵn sàng.", "category": "healthcare"},
+  {"english": "How often should I take this medication?", "vietnamese": "Tôi nên dùng thuốc này bao lâu một lần?", "category": "healthcare"},
+  {"english": "I've been having trouble sleeping lately.", "vietnamese": "Dạo này tôi bị khó ngủ.", "category": "healthcare"},
+  {"english": "Is this condition something to be concerned about?", "vietnamese": "Tình trạng này có đáng lo ngại không?", "category": "healthcare"},
+  {"english": "The pharmacy is located on the ground floor of the hospital.", "vietnamese": "Nhà thuốc nằm ở tầng trệt của bệnh viện.", "category": "healthcare"},
+  {"english": "I'd like to schedule a follow-up appointment.", "vietnamese": "Tôi muốn đặt lịch hẹn tái khám.", "category": "healthcare"},
+  {"english": "Are there any side effects I should watch out for?", "vietnamese": "Có tác dụng phụ nào tôi cần lưu ý không?", "category": "healthcare"},
+  {"english": "My grandmother has been diagnosed with diabetes.", "vietnamese": "Bà tôi được chẩn đoán mắc bệnh tiểu đường.", "category": "healthcare"},
+  {"english": "I need to update my health insurance information.", "vietnamese": "Tôi cần cập nhật thông tin bảo hiểm sức khỏe.", "category": "healthcare"},
+  {"english": "Could you describe the pain? Is it sharp or dull?", "vietnamese": "Bạn có thể mô tả cơn đau không? Nó nhọn hay âm ỉ?", "category": "healthcare"},
+  {"english": "I recommend you get a second opinion from a specialist.", "vietnamese": "Tôi khuyên bạn nên lấy ý kiến thứ hai từ bác sĩ chuyên khoa.", "category": "healthcare"},
+  {"english": "The test results will be ready in about three days.", "vietnamese": "Kết quả xét nghiệm sẽ sẵn sàng trong khoảng ba ngày.", "category": "healthcare"},
+  {"english": "We need to monitor your blood pressure over the next few weeks.", "vietnamese": "Chúng ta cần theo dõi huyết áp của bạn trong vài tuần tới.", "category": "healthcare"},
+  {"english": "Eating a balanced diet is essential for maintaining good health.", "vietnamese": "Ăn chế độ ăn uống cân bằng là điều cần thiết để duy trì sức khỏe tốt.", "category": "healthcare"},
+  {"english": "The emergency room is open twenty-four hours a day.", "vietnamese": "Phòng cấp cứu mở cửa hai mươi bốn giờ một ngày.", "category": "healthcare"},
+  {"english": "I'd like to request a copy of my medical records.", "vietnamese": "Tôi muốn yêu cầu bản sao hồ sơ bệnh án.", "category": "healthcare"},
+  {"english": "Have you had any allergic reactions to medications before?", "vietnamese": "Bạn cóเคย bị dị ứng với thuốc nào trước đây không?", "category": "healthcare"},
+  {"english": "Regular physical activity can help prevent many chronic diseases.", "vietnamese": "Hoạt động thể chất thường xuyên có thể giúp phòng ngừa nhiều bệnh mãn tính.", "category": "healthcare"},
+  {"english": "I need to schedule a vaccination appointment for my child.", "vietnamese": "Tôi cần đặt lịch hẹn tiêm phòng cho con tôi.", "category": "healthcare"},
+  {"english": "The doctor will see you in about twenty minutes.", "vietnamese": "Bác sĩ sẽ gặp bạn trong khoảng hai mươi phút nữa.", "category": "healthcare"},
+  {"english": "I'm experiencing chest pain and shortness of breath.", "vietnamese": "Tôi bị đau ngực và khó thở.", "category": "healthcare"},
+  {"english": "How much does this shirt cost?", "vietnamese": "Áo này giá bao nhiêu?", "category": "shopping"},
+  {"english": "Do you have this in a different size or color?", "vietnamese": "Bạn có cái này size hoặc màu khác không?", "category": "shopping"},
+  {"english": "I'd like to return this item. I have the receipt.", "vietnamese": "Tôi muốn trả lại mặt hàng này. Tôi có hóa đơn.", "category": "shopping"},
+  {"english": "Are there any sales or discounts going on right now?", "vietnamese": "Hiện tại có khuyến mãi hay giảm giá nào không?", "category": "shopping"},
+  {"english": "Could you help me find the electronics section?", "vietnamese": "Bạn có thể giúp tôi tìm khu vực điện tử không?", "category": "shopping"},
+  {"english": "This one is too expensive. Do you have something more affordable?", "vietnamese": "Cái này quá đắt. Bạn có cái gì rẻ hơn không?", "category": "shopping"},
+  {"english": "I'm looking for a gift for my mother's birthday.", "vietnamese": "Tôi đang tìm quà cho sinh nhật mẹ tôi.", "category": "shopping"},
+  {"english": "Can I pay with a credit card or do you only accept cash?", "vietnamese": "Tôi có thể thanh toán bằng thẻ tín dụng hay bạn chỉ nhận tiền mặt?", "category": "shopping"},
+  {"english": "The fitting rooms are at the back of the store.", "vietnamese": "Phòng thử đồ ở phía sau cửa hàng.", "category": "shopping"},
+  {"english": "Is there a warranty included with this product?", "vietnamese": "Sản phẩm này có bảo hành đi kèm không?", "category": "shopping"},
+  {"english": "I'd like to exchange this for a larger size.", "vietnamese": "Tôi muốn đổi cái này lấy size lớn hơn.", "category": "shopping"},
+  {"english": "The checkout counter is over there on the right.", "vietnamese": "Quầy thanh toán ở đằng kia phía bên phải.", "category": "shopping"},
+  {"english": "Could you gift wrap this for me, please?", "vietnamese": "Bạn có thể gói quà giúp tôi được không?", "category": "shopping"},
+  {"english": "I've been looking everywhere for this book.", "vietnamese": "Tôi đã tìm khắp nơi mà không thấy cuốn sách này.", "category": "shopping"},
+  {"english": "These shoes are on sale. They're half price.", "vietnamese": "Giày này đang giảm giá. Chúng chỉ còn nửa giá.", "category": "shopping"},
+  {"english": "What's your return policy if the item doesn't fit?", "vietnamese": "Chính sách trả hàng của bạn thế nào nếu sản phẩm không vừa?", "category": "shopping"},
+  {"english": "I need to buy some new clothes for the office.", "vietnamese": "Tôi cần mua một số quần áo mới cho công sở.", "category": "shopping"},
+  {"english": "This brand has excellent quality at a reasonable price.", "vietnamese": "Thương hiệu này có chất lượng tuyệt vời với giá hợp lý.", "category": "shopping"},
+  {"english": "Could you hold this item for me until tomorrow?", "vietnamese": "Bạn có thể giữ cái này giúp tôi đến ngày mai không?", "category": "shopping"},
+  {"english": "The store opens at nine in the morning.", "vietnamese": "Cửa hàng mở cửa lúc chín giờ sáng.", "category": "shopping"},
+  {"english": "I'd like to use my membership discount, please.", "vietnamese": "Tôi muốn sử dụng giảm giá thành viên.", "category": "shopping"},
+  {"english": "Can you give me a better deal if I buy two?", "vietnamese": "Bạn có thể cho tôi giá tốt hơn nếu tôi mua hai cái không?", "category": "shopping"},
+  {"english": "Where can I find the clearance section?", "vietnamese": "Tôi có thể tìm khu vực hàng khuyến mãi ở đâu?", "category": "shopping"},
+  {"english": "This jacket looks great on you. You should definitely buy it.", "vietnamese": "Áo khoác này trông rất hợp với bạn. Bạn chắc chắn nên mua nó.", "category": "shopping"},
+  {"english": "I've decided not to buy it. It's not worth the price.", "vietnamese": "Tôi quyết định không mua nó. Nó không đáng với giá tiền.", "category": "shopping"},
+  {"english": "What time does the concert start?", "vietnamese": "Buổi hòa nhạc bắt đầu lúc mấy giờ?", "category": "entertainment"},
+  {"english": "Have you seen any good movies lately?", "vietnamese": "Bạn có xem bộ phim nào hay gần đây không?", "category": "entertainment"},
+  {"english": "I'm a huge fan of classical music.", "vietnamese": "Tôi là fan lớn của nhạc cổ điển.", "category": "entertainment"},
+  {"english": "Let's grab some popcorn and find our seats.", "vietnamese": "Hãy lấy bắp rang và tìm chỗ ngồi.", "category": "entertainment"},
+  {"english": "The performance was absolutely incredible.", "vietnamese": "Buổi biểu diễn thực sự tuyệt vời.", "category": "entertainment"},
+  {"english": "I'd like to buy two tickets for the Saturday show.", "vietnamese": "Tôi muốn mua hai vé cho buổi diễn thứ Bảy.", "category": "entertainment"},
+  {"english": "Do you prefer comedy or drama when watching movies?", "vietnamese": "Bạn thích phim hài hay phim tình cảm khi xem phim?", "category": "entertainment"},
+  {"english": "The book I'm reading right now is a real page-turner.", "vietnamese": "Cuốn sách tôi đang đọc thực sự hấp dẫn.", "category": "entertainment"},
+  {"english": "We should check out the new art exhibition downtown.", "vietnamese": "Chúng ta nên ghé qua triển lãm nghệ thuật mới ở trung tâm.", "category": "entertainment"},
+  {"english": "I love watching stand-up comedy shows.", "vietnamese": "Tôi thích xem các buổi biểu diễn hài độc thoại.", "category": "entertainment"},
+  {"english": "The special effects in that movie were amazing.", "vietnamese": "Hiệu ứng đặc biệt trong bộ phim đó thật tuyệt vời.", "category": "entertainment"},
+  {"english": "Would you like to join me for a night at the theater?", "vietnamese": "Bạn có muốn cùng tôi đi xem kịch tối nay không?", "category": "entertainment"},
+  {"english": "I've been binge-watching this new TV series.", "vietnamese": "Tôi đang xem liên tục bộ phim truyền hình mới này.", "category": "entertainment"},
+  {"english": "The singer gave an outstanding live performance.", "vietnamese": "Ca sĩ đã trình diễn live xuất sắc.", "category": "entertainment"},
+  {"english": "Do you want to go to the amusement park this weekend?", "vietnamese": "Bạn có muốn đi công viên giải trí cuối tuần này không?", "category": "entertainment"},
+  {"english": "I prefer watching documentaries over fictional movies.", "vietnamese": "Tôi thích xem phim tài liệu hơn phim hư cấu.", "category": "entertainment"},
+  {"english": "The museum has a fascinating collection of ancient artifacts.", "vietnamese": "Bảo tàng có bộ sưu tập hiện vật cổ đại hấp dẫn.", "category": "entertainment"},
+  {"english": "We could play board games or watch a movie tonight.", "vietnamese": "Chúng ta có thể chơi trò chơi trên bàn hoặc xem phim tối nay.", "category": "entertainment"},
+  {"english": "The soundtrack of that movie was composed by a famous musician.", "vietnamese": "Bản nhạc phim được sáng tác bởi một nhạc sĩ nổi tiếng.", "category": "entertainment"},
+  {"english": "I really enjoy going to live music events.", "vietnamese": "Tôi thực sự thích đi nghe nhạc trực tiếp.", "category": "entertainment"},
+  {"english": "The theater company is performing Shakespeare this season.", "vietnamese": "Đoàn kịch đang biểu diễn Shakespeare mùa này.", "category": "entertainment"},
+  {"english": "Have you listened to the new album that came out last week?", "vietnamese": "Bạn đã nghe album mới phát hành tuần trước chưa?", "category": "entertainment"},
+  {"english": "I'm thinking of taking a pottery class for fun.", "vietnamese": "Tôi đang nghĩ học lớp gốm sứ cho vui.", "category": "entertainment"},
+  {"english": "The fireworks display on New Year's Eve was spectacular.", "vietnamese": "Màn bắn pháo hoa đêm Giao thừa thật ngoạn mục.", "category": "entertainment"},
+  {"english": "I need a relaxing weekend after a long work week.", "vietnamese": "Tôi cần một cuối tuần thư giãn sau một tuần làm việc dài.", "category": "entertainment"},
+  {"english": "The professor gave an excellent lecture on modern history.", "vietnamese": "Giáo sư đã giảng bài xuất sắc về lịch sử hiện đại.", "category": "education"},
+  {"english": "I'm thinking about enrolling in a language course.", "vietnamese": "Tôi đang cân nhắc ghi danh vào khóa học ngôn ngữ.", "category": "education"},
+  {"english": "The assignment is due by the end of next week.", "vietnamese": "Bài tập phải nộp trước cuối tuần sau.", "category": "education"},
+  {"english": "Could you explain this concept again? I'm having trouble understanding it.", "vietnamese": "Bạn có thể giải thích khái niệm này lại được không? Tôi đang hiểu khó.", "category": "education"},
+  {"english": "Studying abroad can be a life-changing experience.", "vietnamese": "Du học có thể là trải nghiệm thay đổi cuộc đời.", "category": "education"},
+  {"english": "I need to improve my writing skills for academic purposes.", "vietnamese": "Tôi cần cải thiện kỹ năng viết cho mục đích học thuật.", "category": "education"},
+  {"english": "The research paper requires at least twenty sources.", "vietnamese": "Bài nghiên cứu yêu cầu ít nhất hai mươi nguồn tham khảo.", "category": "education"},
+  {"english": "Group projects help develop teamwork and communication skills.", "vietnamese": "Dự án nhóm giúp phát triển kỹ năng làm việc nhóm và giao tiếp.", "category": "education"},
+  {"english": "I'd like to apply for a scholarship to fund my studies.", "vietnamese": "Tôi muốn nộp đơn xin học bổng để tài trợ việc học.", "category": "education"},
+  {"english": "The library has an extensive collection of academic journals.", "vietnamese": "Thư viện có bộ sưu tập tạp chí học thuật phong phú.", "category": "education"},
+  {"english": "Time management is crucial for academic success.", "vietnamese": "Quản lý thời gian rất quan trọng cho thành công học thuật.", "category": "education"},
+  {"english": "The teacher provided helpful feedback on my essay.", "vietnamese": "Giáo viên đã đưa ra phản hồi hữu ích về bài luận của tôi.", "category": "education"},
+  {"english": "I'm planning to major in computer science.", "vietnamese": "Tôi dự định theo học chuyên ngành khoa học máy tính.", "category": "education"},
+  {"english": "Online learning has become increasingly popular in recent years.", "vietnamese": "Học trực tuyến đã trở nên phổ biến hơn trong những năm gần đây.", "category": "education"},
+  {"english": "The textbook for this course is quite expensive.", "vietnamese": "Sách giáo khoa cho khóa học này khá đắt.", "category": "education"},
+  {"english": "I need to register for next semester's classes.", "vietnamese": "Tôi cần đăng ký lớp học cho học kỳ tới.", "category": "education"},
+  {"english": "The student received a full scholarship to a prestigious university.", "vietnamese": "Học sinh nhận được học bổng toàn phần vào đại học danh tiếng.", "category": "education"},
+  {"english": "Critical thinking is one of the most important skills to develop.", "vietnamese": "Tư duy phản biện là một trong những kỹ năng quan trọng nhất cần phát triển.", "category": "education"},
+  {"english": "The professor encourages students to ask questions during lectures.", "vietnamese": "Giáo sư khuyến khích học sinh đặt câu hỏi trong giờ giảng.", "category": "education"},
+  {"english": "I have an important exam tomorrow morning.", "vietnamese": "Tôi có bài thi quan trọng sáng mai.", "category": "education"},
+  {"english": "The school offers a wide range of extracurricular activities.", "vietnamese": "Trường cung cấp nhiều hoạt động ngoại khóa.", "category": "education"},
+  {"english": "Reading extensively is the best way to expand your vocabulary.", "vietnamese": "Đọc nhiều là cách tốt nhất để mở rộng từ vựng.", "category": "education"},
+  {"english": "I'd like to request a letter of recommendation from my teacher.", "vietnamese": "Tôi muốn xin thư giới thiệu từ giáo viên.", "category": "education"},
+  {"english": "The graduation ceremony will be held in the main auditorium.", "vietnamese": "Lễ tốt nghiệp sẽ được tổ chức tại hội trường lớn.", "category": "education"},
+  {"english": "Practice is essential for mastering any new skill.", "vietnamese": "Thực hành là điều cần thiết để thành thạo bất kỳ kỹ năng mới nào.", "category": "education"},
+  {"english": "Could you fill me in on what happened in today's meeting?", "vietnamese": "Bạn có thể cho tôi biết chuyện gì xảy ra trong cuộc họp hôm nay không?", "category": "workplace"},
+  {"english": "I'd like to request a few days of annual leave.", "vietnamese": "Tôi muốn xin nghỉ phép năm vài ngày.", "category": "workplace"},
+  {"english": "The quarterly targets have been set and communicated to all teams.", "vietnamese": "Mục tiêu quý đã được đặt ra và thông báo cho tất cả các nhóm.", "category": "workplace"},
+  {"english": "We need to delegate tasks more effectively.", "vietnamese": "Chúng ta cần phân công nhiệm vụ hiệu quả hơn.", "category": "workplace"},
+  {"english": "I've been working on this report for two days straight.", "vietnamese": "Tôi đã làm liên tục bản báo cáo này hai ngày.", "category": "workplace"},
+  {"english": "The office will be closed on Monday for the public holiday.", "vietnamese": "Văn phòng sẽ đóng cửa vào thứ Hai do nghỉ lễ.", "category": "workplace"},
+  {"english": "I need to update my resume with my latest experience.", "vietnamese": "Tôi cần cập nhật sơ yếu lý lịch với kinh nghiệm mới nhất.", "category": "workplace"},
+  {"english": "Could you brief me on the new company policies?", "vietnamese": "Bạn có thể tóm tắt cho tôi về chính sách mới của công ty không?", "category": "workplace"},
+  {"english": "I have a performance review scheduled with my manager next week.", "vietnamese": "Tôi có cuộc đánh giá hiệu suất với quản lý vào tuần sau.", "category": "workplace"},
+  {"english": "The team successfully completed the project ahead of schedule.", "vietnamese": "Nhóm đã hoàn thành dự án trước tiến độ thành công.", "category": "workplace"},
+  {"english": "I'd like to discuss my career development opportunities.", "vietnamese": "Tôi muốn thảo luận về cơ hội phát triển nghề nghiệp.", "category": "workplace"},
+  {"english": "The new employee will start orientation on Monday.", "vietnamese": "Nhân viên mới sẽ bắt đầu làm quen công việc vào thứ Hai.", "category": "workplace"},
+  {"english": "We should schedule a team-building activity soon.", "vietnamese": "Chúng ta nên lên lịch hoạt động gắn kết nhóm sớm.", "category": "workplace"},
+  {"english": "My computer crashed and I lost some important files.", "vietnamese": "Máy tính của tôi bị sập và tôi đã mất một số file quan trọng.", "category": "workplace"},
+  {"english": "I need access to the shared drive to complete this task.", "vietnamese": "Tôi cần quyền truy cập ổ đĩa dùng chung để hoàn thành nhiệm vụ này.", "category": "workplace"},
+  {"english": "The meeting has been moved to Conference Room B.", "vietnamese": "Cuộc họp đã được chuyển sang Phòng Họp B.", "category": "workplace"},
+  {"english": "I'll be working from home today due to the bad weather.", "vietnamese": "Hôm nay tôi sẽ làm việc tại nhà vì thời tiết xấu.", "category": "workplace"},
+  {"english": "Could you transfer me to the HR department, please?", "vietnamese": "Bạn có thể chuyển tôi sang bộ phận nhân sự không?", "category": "workplace"},
+  {"english": "The presentation needs to be polished before the client meeting.", "vietnamese": "Bản trình bày cần được chỉnh sửa trước cuộc họp khách hàng.", "category": "workplace"},
+  {"english": "I'm training the new intern on our standard procedures.", "vietnamese": "Tôi đang hướng dẫn thực tập sinh mới về quy trình chuẩn.", "category": "workplace"},
+  {"english": "We should set clear goals for the upcoming quarter.", "vietnamese": "Chúng ta nên đặt mục tiêu rõ ràng cho quý tới.", "category": "workplace"},
+  {"english": "I'm having trouble meeting my deadlines this month.", "vietnamese": "Tôi đang gặp khó khăn trong việc đáp ứng hạn chót tháng này.", "category": "workplace"},
+  {"english": "The company is offering a professional development workshop.", "vietnamese": "Công ty đang tổ chức hội thảo phát triển chuyên môn.", "category": "workplace"},
+  {"english": "The manager asked for a detailed progress update on the project.", "vietnamese": "Quản lý yêu cầu báo cáo chi tiết về tiến độ dự án.", "category": "workplace"},
+  {"english": "Let's schedule a one-on-one meeting to discuss your performance.", "vietnamese": "Hãy lên lịch họp riêng để thảo luận về hiệu suất của bạn.", "category": "workplace"}
 ]

@@ -2,7 +2,14 @@
    Learning English - Application Engine (JavaScript Core)
    ========================================================================== */
 
-
+// --- UTILITY: Fisher-Yates Shuffle (unbiased) ---
+function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
 
 // --- GLOBAL APPLICATION STATE ---
 let state = {
@@ -28,7 +35,8 @@ let state = {
     stories_done: [],      // Completed reading stories
     writingHighScores: {}, // Store highest score reached on each writing topic permanently!
     currentWotd: null,     // Selected Word of the Day
-    activityLogs: []       // Timeline history of activities and milestones
+    activityLogs: [],      // Timeline history of activities and milestones
+    placementDismissed: false // User dismissed placement test suggestion banner
 };
 
 // Flashcard Deck study state
@@ -238,37 +246,25 @@ function updateSidebarStreakUI() {
     }
 }
 
-// Streak Calculation Logic
+// Streak Calculation Logic — no reset, always increments on study day
 function checkAndUpdateStreak() {
     const today = new Date().toDateString();
-    const yesterday = new Date(Date.now() - 86400000).toDateString();
 
     if (state.lastStudyDate === today) {
         // Already studied today, streak remains same
         updateSidebarStreakUI();
         return;
-    } else if (state.lastStudyDate === yesterday) {
-        // Studied yesterday, consecutive day study!
-        state.streak += 1;
-        state.lastStudyDate = today;
-        
-        if (typeof logActivity === 'function') {
-            logActivity('milestone', `Đạt chuỗi ${state.streak} ngày liên tiếp! 🔥`, `Sự chăm chỉ của bạn đang mang lại kết quả tuyệt vời!`, 0);
-        }
-        
-        saveStatsToStorage();
-        updateSidebarStreakUI();
-    } else {
-        // Broke the streak (gap > 1 day) or brand new user
-        state.streak = 1; // Always reset to 1, never 0 for an active study day
-        state.lastStudyDate = today;
-        
-        if (typeof logActivity === 'function') {
-            logActivity('milestone', `Bắt đầu chuỗi học tập mới! 🔥`, `Ngày 1. Hãy duy trì mỗi ngày nhé!`, 0);
-        }
-        
-        saveStatsToStorage();
-        updateSidebarStreakUI();
     }
+
+    // Any other day (yesterday or gap > 1 day): increment streak
+    state.streak += 1;
+    state.lastStudyDate = today;
+
+    if (typeof logActivity === 'function') {
+        logActivity('milestone', `Đạt chuỗi ${state.streak} ngày! 🔥`, `Sự chăm chỉ của bạn đang mang lại kết quả tuyệt vời!`, 0);
+    }
+
+    saveStatsToStorage();
+    updateSidebarStreakUI();
 }
 

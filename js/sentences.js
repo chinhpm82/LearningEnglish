@@ -42,7 +42,7 @@ async function renderSentences(category = 'all') {
     });
 
     // Shuffle only the uncompleted (unlearned) sentences to make each practice deck random and dynamic!
-    const shuffledUnlearned = unlearned.sort(() => Math.random() - 0.5);
+    const shuffledUnlearned = shuffleArray(unlearned);
 
     // Combine: active randomized learning first, completed achievements at the bottom
     const finalSentences = [...shuffledUnlearned, ...learned];

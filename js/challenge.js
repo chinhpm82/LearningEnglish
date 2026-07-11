@@ -193,12 +193,12 @@
                 return [];
             }
             // Shuffle and pick 10 words
-            const words = [...INITIAL_VOCABULARY].sort(() => 0.5 - Math.random()).slice(0, 10);
+            const words = shuffleArray([...INITIAL_VOCABULARY]).slice(0, 10);
             words.forEach(word => {
                 // Find 3 distractors from vocabulary
                 const distractors = [];
                 const otherWords = INITIAL_VOCABULARY.filter(w => w.word !== word.word);
-                const shuffledOthers = [...otherWords].sort(() => 0.5 - Math.random());
+                const shuffledOthers = shuffleArray([...otherWords]);
                 for (let w of shuffledOthers) {
                     if (distractors.length >= 3) break;
                     if (!distractors.includes(w.meaning) && w.meaning !== word.meaning) {
@@ -208,7 +208,7 @@
                 while (distractors.length < 3) {
                     distractors.push(`Nghĩa khác ${distractors.length + 1}`);
                 }
-                const options = [word.meaning, ...distractors].sort(() => 0.5 - Math.random());
+                const options = shuffleArray([word.meaning, ...distractors]);
                 const correctIndex = options.indexOf(word.meaning);
 
                 generated.push({
@@ -243,17 +243,17 @@
                     { q: "She ___ to school every day.", options: ["go", "goes", "going", "gone"], answer: 1, explanation: "Chủ ngữ ngôi thứ ba số ít thêm es." }
                 ];
             }
-            generated = allPractice.sort(() => 0.5 - Math.random()).slice(0, 10);
+            generated = shuffleArray(allPractice).slice(0, 10);
         } else if (topic === "sentences") {
             if (typeof COMMUNICATIVE_SENTENCES === "undefined" || !COMMUNICATIVE_SENTENCES.length) {
                 console.error("COMMUNICATIVE_SENTENCES is not loaded");
                 return [];
             }
-            const selected = [...COMMUNICATIVE_SENTENCES].sort(() => 0.5 - Math.random()).slice(0, 10);
+            const selected = shuffleArray([...COMMUNICATIVE_SENTENCES]).slice(0, 10);
             selected.forEach(item => {
                 const distractors = [];
                 const otherSentences = COMMUNICATIVE_SENTENCES.filter(s => s.english !== item.english);
-                const shuffledOthers = [...otherSentences].sort(() => 0.5 - Math.random());
+                const shuffledOthers = shuffleArray([...otherSentences]);
                 for (let s of shuffledOthers) {
                     if (distractors.length >= 3) break;
                     if (!distractors.includes(s.vietnamese) && s.vietnamese !== item.vietnamese) {
@@ -263,7 +263,7 @@
                 while (distractors.length < 3) {
                     distractors.push(`Bản dịch khác ${distractors.length + 1}`);
                 }
-                const options = [item.vietnamese, ...distractors].sort(() => 0.5 - Math.random());
+                const options = shuffleArray([item.vietnamese, ...distractors]);
                 const correctIndex = options.indexOf(item.vietnamese);
 
                 generated.push({

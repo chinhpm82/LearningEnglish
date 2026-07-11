@@ -2,6 +2,30 @@
 let activeGrammarCategory = 'all';
 let currentPracticeSession = [];
 
+// CEFR level mapping for grammar lessons (based on lesson order)
+const GRAMMAR_LEVEL_MAP = {
+    'gr-1': 'A1', 'gr-2': 'A1', 'gr-3': 'A2',
+    'gr-4': 'A2', 'gr-5': 'A2', 'gr-6': 'B1',
+    'gr-7': 'B1', 'gr-8': 'B1', 'gr-9': 'B1',
+    'gr-10': 'B2', 'gr-11': 'B2', 'gr-12': 'B2',
+    'gr-13': 'B2', 'gr-14': 'C1', 'gr-15': 'C1',
+    'gr-16': 'C1', 'gr-17': 'C1', 'gr-18': 'C2',
+    'gr-19': 'C2', 'gr-20': 'C2', 'gr-21': 'C2'
+};
+
+function getGrammarLevelBadge(level) {
+    const colors = {
+        'A1': { bg: 'rgba(74,222,128,0.15)', color: '#4ade80', border: 'rgba(74,222,128,0.3)' },
+        'A2': { bg: 'rgba(96,165,250,0.15)', color: '#60a5fa', border: 'rgba(96,165,250,0.3)' },
+        'B1': { bg: 'rgba(251,191,36,0.15)', color: '#fbbf24', border: 'rgba(251,191,36,0.3)' },
+        'B2': { bg: 'rgba(249,115,22,0.15)', color: '#f97316', border: 'rgba(249,115,22,0.3)' },
+        'C1': { bg: 'rgba(168,85,247,0.15)', color: '#a855f7', border: 'rgba(168,85,247,0.3)' },
+        'C2': { bg: 'rgba(239,68,68,0.15)', color: '#ef4444', border: 'rgba(239,68,68,0.3)' }
+    };
+    const c = colors[level] || colors['A1'];
+    return `<span style="background:${c.bg};color:${c.color};border:1px solid ${c.border};padding:2px 8px;border-radius:8px;font-size:11px;font-weight:700;margin-left:6px;">${level}</span>`;
+}
+
 async function renderGrammarLessons(category = 'all') {
     activeGrammarCategory = category;
     const listContainer = document.getElementById('grammar-lessons-list');
@@ -53,12 +77,13 @@ async function renderGrammarLessons(category = 'all') {
         card.className = `grammar-lesson-card ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''} ${isRecommended ? 'recommended' : ''}`;
         
         let catBadgeText = lesson.category === 'tenses' ? 'Thì câu' : 'Cấu trúc';
+        const lessonLevel = GRAMMAR_LEVEL_MAP[lesson.id] || 'A1';
         let statusText = isCompleted ? `Đã học ${studyCount} lần ⚡` : 'Chưa học 📖';
         let recBadge = isRecommended ? `<span class="badge badge-recommend">Gợi ý hôm nay 🎯</span>` : '';
 
         card.innerHTML = `
             <div class="card-title-row">
-                <h4>${lesson.title}</h4>
+                <h4>${lesson.title}${getGrammarLevelBadge(lessonLevel)}</h4>
                 ${recBadge}
             </div>
             <p>${lesson.description}</p>
@@ -171,7 +196,7 @@ function initGrammarPractice() {
     }
 
     // Shuffle and pick 3
-    const shuffledPool = [...practicePool].sort(() => 0.5 - Math.random());
+    const shuffledPool = shuffleArray([...practicePool]);
     currentPracticeSession = shuffledPool.slice(0, 3);
 
     grammarPracticeIndex = 0;

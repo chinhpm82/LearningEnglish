@@ -29,15 +29,15 @@ async function initQuizSession(category = 'all') {
 
     if (category === 'assessment') {
         // Balanced sample of questions: 4 from oxford, 3 from academic, 3 from idioms
-        const oxfordPool = allWords.filter(w => w.category === 'oxford').sort(() => 0.5 - Math.random());
-        const academicPool = allWords.filter(w => w.category === 'academic').sort(() => 0.5 - Math.random());
-        const idiomsPool = allWords.filter(w => w.category === 'idioms').sort(() => 0.5 - Math.random());
+        const oxfordPool = shuffleArray(allWords.filter(w => w.category === 'oxford'));
+        const academicPool = shuffleArray(allWords.filter(w => w.category === 'academic'));
+        const idiomsPool = shuffleArray(allWords.filter(w => w.category === 'idioms'));
         
-        sourcePool = [
+        sourcePool = shuffleArray([
             ...oxfordPool.slice(0, 4),
             ...academicPool.slice(0, 3),
             ...idiomsPool.slice(0, 3)
-        ].sort(() => 0.5 - Math.random());
+        ]);
     } else if (category === 'all') {
         sourcePool = [...allWords];
     } else if (category === 'custom') {
@@ -56,7 +56,7 @@ async function initQuizSession(category = 'all') {
 
     // Chọn ngẫu nhiên 10 từ mục tiêu từ danh sách Index
     const quizLength = Math.min(10, sourcePool.length);
-    const shuffled = [...sourcePool].sort(() => 0.5 - Math.random());
+    const shuffled = shuffleArray([...sourcePool]);
     const selectedIndexWords = shuffled.slice(0, quizLength);
 
     // 1. Tải bất đồng bộ thông tin chi tiết đầy đủ của các từ đúng (tải song song)
@@ -69,7 +69,7 @@ async function initQuizSession(category = 'all') {
     // 2. Chọn ngẫu nhiên khoảng 25 từ nhiễu (distractor pool) từ Index chung và tải chi tiết để làm phương án sai
     const distractorIndexWords = allWords
         .filter(w => !selectedIndexWords.some(sw => sw.id === w.id))
-        .sort(() => 0.5 - Math.random())
+        .sort(() => Math.random() - 0.5)
         .slice(0, 25);
     
     const distractorWordsPromises = distractorIndexWords.map(async (w) => {
@@ -86,10 +86,10 @@ async function initQuizSession(category = 'all') {
             .map(w => w.meaning);
         
         // Trộn ngẫu nhiên các từ nhiễu và lấy đúng 3 phương án sai
-        const distractors = otherMeanings.sort(() => 0.5 - Math.random()).slice(0, 3);
+        const distractors = shuffleArray([...otherMeanings]).slice(0, 3);
         
         // Trộn đáp án đúng với các phương án sai
-        const options = [word.meaning, ...distractors].sort(() => 0.5 - Math.random());
+        const options = shuffleArray([word.meaning, ...distractors]);
         const correctIndex = options.indexOf(word.meaning);
 
         return {
@@ -264,7 +264,6 @@ function showQuizResults() {
             levelName = 'Sơ cấp (A1)';
         }
         
-        state.userLevel = level;
         state.lastTestScore = quizScore * 1.6; // Scale 10-based score to 16-based score
         state.roadmapTasks = generateRoadmapTasks(level);
         saveStatsToStorage();

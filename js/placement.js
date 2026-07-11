@@ -99,10 +99,24 @@ async function buildPhaseQuestions(skillConfigs, usedIds) {
 }
 
 function triggerCEFRPlacementTestIfNew() {
-    if (state.lastTestScore === 0) {
-        const modal = document.getElementById('placement-test-modal');
-        if (modal) modal.classList.remove('hidden');
+    if (state.lastTestScore === 0 && !state.placementDismissed) {
+        const banner = document.getElementById('placement-suggestion-banner');
+        if (banner) banner.classList.remove('hidden');
     }
+}
+
+function dismissPlacementSuggestion() {
+    state.placementDismissed = true;
+    saveStatsToStorage();
+    const banner = document.getElementById('placement-suggestion-banner');
+    if (banner) banner.classList.add('hidden');
+}
+
+function openPlacementTestFromBanner() {
+    const banner = document.getElementById('placement-suggestion-banner');
+    if (banner) banner.classList.add('hidden');
+    const modal = document.getElementById('placement-test-modal');
+    if (modal) modal.classList.remove('hidden');
 }
 
 async function startPlacementTestQuiz() {
