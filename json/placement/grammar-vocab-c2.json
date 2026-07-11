@@ -48,5 +48,155 @@
     "options": ["is", "be", "will be", "was"],
     "answer": 1,
     "explanation": "Cấu trúc giả định (subjunctive): 'It is imperative that + S + V nguyên thể'. 'Be' là dạng nguyên thể (không chia theo ngôi)."
+  },
+  {
+    "id": "pl-gv-c2-006",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "word_choice",
+    "question": "The CEO's ______ leadership style, characterized by autocratic decision-making and an aversion to dissent, has created a toxic work environment.",
+    "options": ["benevolent", "despotic", "egalitarian", "magnanimous"],
+    "answer": 1,
+    "explanation": "'Despotic' (độc tài) phù hợp với mô tả ra quyết định độc đoán và không tolerating bất đồng."
+  },
+  {
+    "id": "pl-gv-c2-007",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "sentence_completion",
+    "question": "Little ______ the magnitude of the crisis that would unfold in the subsequent decade when the policy was first implemented.",
+    "options": ["policy makers knew", "did policy makers know", "policy makers did know", "had policy makers known"],
+    "answer": 1,
+    "explanation": "Đảo ngữ với 'Little': Little +助动词 + S + V. 'Little did policy makers know' (Các nhà hoạch định chính sách ít biết rằng)."
+  },
+  {
+    "id": "pl-gv-c2-008",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "word_choice",
+    "question": "The novel's ______ narrative structure, which jumps between timelines and perspectives without warning, demands considerable intellectual engagement from the reader.",
+    "options": ["conventional", "labyrinthine", "linear", "simplistic"],
+    "answer": 1,
+    "explanation": "'Labyrinthine' (phức tạp như mê cung) phù hợp vì cấu trúc tường thuật nhảy giữa các dòng thời gian và góc nhìn."
+  },
+  {
+    "id": "pl-gv-c2-009",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "sentence_completion",
+    "question": "So profound was the economic disruption ______ many analysts predicted a complete restructuring of the global financial system.",
+    "options": ["so", "that", "therefore", "thus"],
+    "answer": 1,
+    "explanation": "Cấu trúc đảo ngữ: 'So + adj + was + S + that...' (Kinh tế bị gián đoạn nghiêm trọng đến mức nhiều nhà phân tích dự đoán)."
+  },
+  {
+    "id": "pl-gv-c2-010",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "word_choice",
+    "question": "The ambassador's ______ refusal to engage with the opposition party was interpreted as a tacit endorsement of the government's hardline stance.",
+    "options": ["categorical", "tentative", "reluctant", "ambiguous"],
+    "answer": 0,
+    "explanation": "'Categorical' (tuyệt đối, rõ ràng) mô tả sự từ chối không dính dáng đến phe đối lập được hiểu là ngầm ủng hộ lập trường cứng rắn."
+  },
+  {
+    "id": "pl-gv-c2-011",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "error_correction",
+    "question": "Which sentence contains a stylistic or grammatical error at the C2 level?",
+    "options": ["Notwithstanding the considerable opposition, the legislation was ratified.", "The findings, which were subsequently corroborated, lend credence to the hypothesis.", "Despite of the overwhelming evidence, the defendant was acquitted.", "Seldom does one encounter such a meticulously researched study."],
+    "answer": 2,
+    "explanation": "Câu sai: 'Despite of' → 'Despite' không đi với 'of'. Đúng: 'Despite the overwhelming evidence'."
+  },
+  {
+    "id": "pl-gv-c2-012",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "word_choice",
+    "question": "The philosopher's treatise was criticized for its ______, which obscured rather than illuminated the central argument.",
+    "options": ["perspicuity", "opacity", "eloquence", "brevity"],
+    "answer": 1,
+    "explanation": "'Opacity' (sự mờ đục, khó hiểu) phù hợp vì lý luận bị chỉ trích vì làm mờ đi rather than làm sáng tỏ."
+  },
+  {
+    "id": "pl-gv-c2-013",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "sentence_completion",
+    "question": "Never before ______ such a profound paradigm shift in the understanding of quantum mechanics.",
+    "options": ["has there been", "there has been", "was there", "had there been"],
+    "answer": 0,
+    "explanation": "Đảo ngữ với 'Never before': Never before +助动词 + S + V. 'Never before has there been' (Chưa bao giờ có)."
+  },
+  {
+    "id": "pl-gv-c2-014",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "word_choice",
+    "question": "The editor's ______ cuts to the manuscript were so extensive that the final version bore little resemblance to the original draft.",
+    "options": ["tentative", "sweeping", "cosmetic", "superficial"],
+    "answer": 1,
+    "explanation": "'Sweeping' (rộng lớn, toàn diện) phù hợp vì bản thảo bị cắt sửa rất nhiều đến mức gần như khác hoàn toàn."
+  },
+  {
+    "id": "pl-gv-c2-015",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "sentence_completion",
+    "question": "The ______ between the theory's elegant mathematical framework and its practical applications remains a subject of ongoing debate among physicists.",
+    "options": ["juxtaposition", "discrepancy", "alignment", "synthesis"],
+    "answer": 1,
+    "explanation": "'Discrepancy' (sự khác biệt, sự chênh lệch) phù hợp vì sự khác biệt giữa lý thuyết và thực tế là chủ đề tranh luận."
+  },
+  {
+    "id": "pl-gv-c2-016",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "word_choice",
+    "question": "The historian's ______ interpretation of the archival documents challenged long-held assumptions about the origins of the conflict.",
+    "options": ["conventional", "revisionist", "orthodox", "predictable"],
+    "answer": 1,
+    "explanation": "'Revisionist' (tái diễn giải) phù hợp vì lịch sử gia diễn giải tài liệu thách thức giả định lâu đời."
+  },
+  {
+    "id": "pl-gv-c2-017",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "sentence_completion",
+    "question": "Had the legislation been enacted a decade earlier, the environmental degradation ______ would arguably have been significantly mitigated.",
+    "options": ["which we now witness", "witnessed now", "now witnessing", "that now witnessed"],
+    "answer": 0,
+    "explanation": "Đảo ngữ câu điều kiện loại 3 + relative clause: 'Had the legislation been enacted..., the environmental degradation which we now witness would...'"
+  },
+  {
+    "id": "pl-gv-c2-018",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "word_choice",
+    "question": "The diplomat's ______ attempt to bridge the ideological divide between the two nations was ultimately undermined by hardliners on both sides.",
+    "options": ["ingenuous", "insidious", "disingenuous", "invidious"],
+    "answer": 0,
+    "explanation": "'Ingenuous' (thành thật, ngây thơ) mô tả nỗ lực chân thành nhằm hàn gắn khoảng cách tư tưởng."
+  },
+  {
+    "id": "pl-gv-c2-019",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "error_correction",
+    "question": "Which sentence has a subtle error at the C2 level?",
+    "options": ["The research methodology employed in this study is beyond reproach.", "The data unequivocally demonstrates that the intervention was efficacious.", "Neither the methodology nor the findings were peer reviewed.", "The study, much like its predecessors, suffers from a dearth of longitudinal data."],
+    "answer": 1,
+    "explanation": "Câu sai: 'data unequivocally demonstrates' → 'Data' là danh từ số nhiều (Latin): 'data unequivocally demonstrate'."
+  },
+  {
+    "id": "pl-gv-c2-020",
+    "skill": "grammar_vocab",
+    "level": "C2",
+    "type": "sentence_completion",
+    "question": "The ______ influence of postcolonial theory on contemporary literary criticism can hardly be overstated, having fundamentally reshaped how we read texts from formerly colonized nations.",
+    "options": ["negligible", "profound", "tangential", "ephemeral"],
+    "answer": 1,
+    "explanation": "'Profound' (sâu sắc) phù hợp vì ảnh hưởng của lý thuyết hậu thuộc địa đối với phê bình văn học đương đại là rất lớn."
   }
 ]

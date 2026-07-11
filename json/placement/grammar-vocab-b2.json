@@ -48,5 +48,155 @@
     "options": ["flourish", "perish", "diminish", "vanish"],
     "answer": 0,
     "explanation": "'Flourish' nghĩa là phát triển mạnh, thịnh vượng. Trái với 'perish' (chết), 'diminish' (giảm), 'vanish' (biến mất)."
+  },
+  {
+    "id": "pl-gv-b2-006",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "sentence_completion",
+    "question": "Had the government ______ the crisis more promptly, the economic fallout would have been less severe.",
+    "options": ["address", "addressed", "addressing", "addresses"],
+    "answer": 1,
+    "explanation": "Đảo ngữ câu điều kiện loại 3: Had + S + V3 (addressed). = If the government had addressed."
+  },
+  {
+    "id": "pl-gv-b2-007",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "word_choice",
+    "question": "The politician's attempt to ______ the public's concerns only made the controversy worse.",
+    "options": ["placate", "agitate", "provoke", "incite"],
+    "answer": 0,
+    "explanation": "'Placate' (xoa dịu) phù hợp vì chính trị gia muốn xoa dịu công chúng nhưng thất bại."
+  },
+  {
+    "id": "pl-gv-b2-008",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "sentence_completion",
+    "question": "The report, ______ authenticity has been questioned, was published in a prestigious journal.",
+    "options": ["whose", "which", "that", "whom"],
+    "answer": 0,
+    "explanation": "'Whose' là đại từ quan hệ sở hữu, dùng khi nói về tính xác thực (authenticity) của báo cáo."
+  },
+  {
+    "id": "pl-gv-b2-009",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "error_correction",
+    "question": "Which sentence has a grammar mistake?",
+    "options": ["The data suggests that the experiment was successful.", "Not until she arrived home she realized she had forgotten her keys.", "I would rather stay quiet than say something inappropriate.", "The committee has been debating this issue for months."],
+    "answer": 1,
+    "explanation": "Câu sai: 'Not until she arrived home she realized' → Đảo ngữ: 'Not until she arrived home did she realize'."
+  },
+  {
+    "id": "pl-gv-b2-010",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "word_choice",
+    "question": "The negotiations reached a(n) ______ when neither side was willing to compromise on the core issues.",
+    "options": ["impasse", "advance", "agreement", "resolution"],
+    "answer": 0,
+    "explanation": "'Impasse' (bế tắc) diễn tả tình huống hai bên đều không nhượng bộ."
+  },
+  {
+    "id": "pl-gv-b2-011",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "sentence_completion",
+    "question": "The more you practice speaking English, the ______ you will become.",
+    "options": ["fluent", "more fluent", "most fluent", "fluently"],
+    "answer": 1,
+    "explanation": "Cấu trúc so sánh kép: The more + S + V, the more + adj (The more you practice, the more fluent you become)."
+  },
+  {
+    "id": "pl-gv-b2-012",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "word_choice",
+    "question": "The new policy will have a ______ impact on small businesses, potentially forcing many to close.",
+    "options": ["devastating", "negligible", "beneficial", "marginal"],
+    "answer": 0,
+    "explanation": "'Devastating' (tai hại) phù hợp vì hậu quả là nhiều doanh nghiệp nhỏ có thể phải đóng cửa."
+  },
+  {
+    "id": "pl-gv-b2-013",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "sentence_completion",
+    "question": "Not only ______ the project on time, but they also exceeded all expectations.",
+    "options": ["they completed", "did they complete", "they did complete", "completing they"],
+    "answer": 1,
+    "explanation": "Đảo ngữ với 'Not only': Not only +助动词 + S + V. 'Not only did they complete'."
+  },
+  {
+    "id": "pl-gv-b2-014",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "word_choice",
+    "question": "The manager's ______ approach to problem-solving has earned the respect of her colleagues.",
+    "options": ["meticulous", "careless", "random", "haphazard"],
+    "answer": 0,
+    "explanation": "'Meticulous' (tỉ mỉ, cẩn thận) mô tả cách giải quyết vấn đề được đồng nghiệp kính trọng."
+  },
+  {
+    "id": "pl-gv-b2-015",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "sentence_completion",
+    "question": "The ancient castle, ______ on top of a hill, offers a breathtaking view of the surrounding countryside.",
+    "options": ["sitting", "sat", "to sit", "having sat"],
+    "answer": 0,
+    "explanation": "Participle phrase (hiện tại phân từ) 'sitting' bổ nghĩa cho danh từ 'castle' (ngôi lâu đài nằm trên đỉnh đồi)."
+  },
+  {
+    "id": "pl-gv-b2-016",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "error_correction",
+    "question": "Which sentence has a grammar mistake?",
+    "options": ["She would go if she had the chance.", "The amount of students has increased this year.", "He has been working here for five years.", "We should take advantage of this opportunity."],
+    "answer": 1,
+    "explanation": "Câu sai: 'The amount of students' → 'Amount' dùng với không đếm được. Dùng 'The number of students' (vì students đếm được)."
+  },
+  {
+    "id": "pl-gv-b2-017",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "word_choice",
+    "question": "The discovery of the new species ______ the existing scientific understanding of marine biology.",
+    "options": ["challenged", "confirmed", "reinforced", "validated"],
+    "answer": 0,
+    "explanation": "'Challenged' (thách thức) phù hợp vì phát hiện mới thách thức hiểu biết khoa học hiện có."
+  },
+  {
+    "id": "pl-gv-b2-018",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "sentence_completion",
+    "question": "So absorbed ______ in her book that she didn't hear the doorbell ring.",
+    "options": ["she was", "was she", "she is", "is she"],
+    "answer": 1,
+    "explanation": "Đảo ngữ nhấn mạnh: So + adj + was + S + V. 'So absorbed was she' (Cô ấy bị cuốn hút đến mức)."
+  },
+  {
+    "id": "pl-gv-b2-019",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "word_choice",
+    "question": "The CEO's decision to resign was entirely ______ given the mounting pressure from shareholders.",
+    "options": ["understandable", "unfortunate", "unexpected", "unnecessary"],
+    "answer": 0,
+    "explanation": "'Understandable' (có thể hiểu được) phù hợp vì áp lực từ cổ đông ngày càng lớn (mounting pressure)."
+  },
+  {
+    "id": "pl-gv-b2-020",
+    "skill": "grammar_vocab",
+    "level": "B2",
+    "type": "sentence_completion",
+    "question": "The project, ______ by a team of international experts, is expected to be completed by December.",
+    "options": ["led", "leading", "lead", "to lead"],
+    "answer": 0,
+    "explanation": "Past participle 'led' (dẫn dắt) bổ nghĩa cho 'project': dự án được dẫn dắt bởi nhóm chuyên gia quốc tế."
   }
 ]

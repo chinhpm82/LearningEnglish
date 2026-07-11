@@ -85,5 +85,208 @@
         "explanation": "Đoạn văn mô tả 'strong, dark roast coffee often served with condensed milk' (cà phê đậm thường pha với sữa đặc)."
       }
     ]
+  },
+  {
+    "id": "pl-r-b1-004",
+    "skill": "reading",
+    "level": "B1",
+    "passage": "Public transportation in Hanoi has improved significantly in recent years. The city now has a modern metro system with two operating lines. The buses are new and air-conditioned. However, many people still prefer to use motorbikes because they are more convenient for short trips. The city government plans to expand the metro network and encourage more people to use public transport to reduce traffic congestion and air pollution.",
+    "questions": [
+      {
+        "id": "pl-r-b1-004-q1",
+        "question": "How many metro lines are currently operating in Hanoi?",
+        "options": ["One", "Two", "Three", "Four"],
+        "answer": 1,
+        "explanation": "Hà Nội hiện có 'two operating lines' (hai tuyến metro đang hoạt động)."
+      },
+      {
+        "id": "pl-r-b1-004-q2",
+        "question": "Why do many people still prefer motorbikes?",
+        "options": ["They are cheaper", "They are faster on highways", "They are more convenient for short trips", "They are quieter"],
+        "answer": 2,
+        "explanation": "Nhiều người vẫn thích xe máy vì 'more convenient for short trips' (thuận tiện hơn cho chuyến đi ngắn)."
+      },
+      {
+        "id": "pl-r-b1-004-q3",
+        "question": "What is the city government's goal?",
+        "options": ["Ban all motorbikes", "Expand metro and reduce congestion and pollution", "Build more highways", "Reduce bus fares"],
+        "answer": 1,
+        "explanation": "Chính phủ thành phố muốn 'expand the metro network and encourage more people to use public transport'."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-b1-005",
+    "skill": "reading",
+    "level": "B1",
+    "passage": "Volunteering is a great way to help others while also learning new skills. Many organizations need volunteers to help with activities such as teaching children, cleaning up the environment, or caring for elderly people. Studies have shown that volunteering can improve mental health by reducing stress and increasing feelings of happiness. It also helps people build confidence and make new friends. Some universities even consider volunteer experience when reviewing applications.",
+    "questions": [
+      {
+        "id": "pl-r-b1-005-q1",
+        "question": "According to the text, what are two benefits of volunteering?",
+        "options": ["Making money and gaining fame", "Learning new skills and improving mental health", "Getting a driver's license and traveling", "Reducing homework and sleeping more"],
+        "answer": 1,
+        "explanation": "Lợi ích bao gồm 'learning new skills' và 'improving mental health' (giảm stress, tăng cảm giác hạnh phúc)."
+      },
+      {
+        "id": "pl-r-b1-005-q2",
+        "question": "Which of the following is NOT mentioned as a volunteer activity?",
+        "options": ["Teaching children", "Cleaning up the environment", "Building houses", "Caring for elderly people"],
+        "answer": 2,
+        "explanation": "Đoạn văn không đề cập đến 'building houses' (xây nhà). Ba hoạt động được nêu: dạy trẻ, dọn môi trường, chăm sóc người già."
+      },
+      {
+        "id": "pl-r-b1-005-q3",
+        "question": "Why might volunteer experience be useful for students?",
+        "options": ["It guarantees admission to university", "Some universities consider it when reviewing applications", "It replaces the need for academic grades", "It provides free meals and housing"],
+        "answer": 1,
+        "explanation": "Một số trường đại học 'consider volunteer experience when reviewing applications' (xem xét kinh nghiệm tình nguyện khi xét đơn)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-b1-006",
+    "skill": "reading",
+    "level": "B1",
+    "passage": "Many teenagers today spend too much time on their phones. A recent survey found that the average teenager checks their phone over 100 times a day. This can cause problems like poor sleep quality, difficulty paying attention in class, and less time spent with family. Some schools have started banning phones during school hours to help students focus. Parents are also encouraged to set rules about screen time at home, such as no phones during meals or an hour before bedtime.",
+    "questions": [
+      {
+        "id": "pl-r-b1-006-q1",
+        "question": "How many times does the average teenager check their phone daily?",
+        "options": ["Over 50 times", "Over 80 times", "Over 100 times", "Over 200 times"],
+        "answer": 2,
+        "explanation": "Khảo sát cho thấy thanh thiếu niên trung bình kiểm tra điện thoại 'over 100 times a day' (hơn 100 lần/ngày)."
+      },
+      {
+        "id": "pl-r-b1-006-q2",
+        "question": "What have some schools done about phone use?",
+        "options": ["Given every student a free phone", "Banned phones during school hours", "Encouraged students to use phones more", "Provided phone charging stations"],
+        "answer": 1,
+        "explanation": "Một số trường đã 'banning phones during school hours' (cấm điện thoại trong giờ học)."
+      },
+      {
+        "id": "pl-r-b1-006-q3",
+        "question": "What rule do some parents set at home?",
+        "options": ["No homework after 8 PM", "No phones during meals or before bedtime", "No TV on weekdays", "No computers in bedrooms"],
+        "answer": 1,
+        "explanation": "Phụ huynh được khuyến khích đặt quy tắc 'no phones during meals or an hour before bedtime'."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-b1-007",
+    "skill": "reading",
+    "level": "B1",
+    "passage": "The ocean covers about 71% of the Earth's surface, yet scientists estimate that more than 80% of it remains unexplored and unmapped. Deep-sea exploration has revealed incredible ecosystems around hydrothermal vents, where organisms survive in complete darkness without sunlight. These discoveries have challenged previous assumptions that life could not exist in such extreme conditions. As technology advances, researchers expect to uncover even more mysteries hidden in the deep ocean.",
+    "questions": [
+      {
+        "id": "pl-r-b1-007-q1",
+        "question": "What percentage of the Earth's surface is covered by the ocean?",
+        "options": ["About 51%", "About 61%", "About 71%", "About 81%"],
+        "answer": 2,
+        "explanation": "Đoạn văn nói đại dương bao phủ 'about 71% of the Earth's surface' (khoảng 71% bề mặt Trái Đất)."
+      },
+      {
+        "id": "pl-r-b1-007-q2",
+        "question": "How much of the ocean remains unexplored?",
+        "options": ["More than 50%", "More than 60%", "More than 70%", "More than 80%"],
+        "answer": 3,
+        "explanation": "Các nhà khoa học ước tính hơn '80% of it remains unexplored' (hơn 80% đại dương chưa được khám phá)."
+      },
+      {
+        "id": "pl-r-b1-007-q3",
+        "question": "What have deep-sea discoveries challenged?",
+        "options": ["The theory of plate tectonics", "Assumptions that life needs sunlight to exist", "The age of the Earth", "The existence of underwater volcanoes"],
+        "answer": 1,
+        "explanation": "Phát hiện đã thách thức giả định rằng sự sống 'could not exist' trong điều kiện khắc nghiệt không có ánh sáng mặt trời."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-b1-008",
+    "skill": "reading",
+    "level": "B1",
+    "passage": "Walking is one of the easiest and most effective forms of exercise. It requires no special equipment and can be done almost anywhere. Health experts recommend walking for at least 30 minutes a day to improve cardiovascular health, strengthen bones, and reduce body fat. Studies also show that walking outdoors in natural settings can reduce anxiety and improve mood. Many cities are now creating more pedestrian-friendly spaces to encourage walking as a daily activity.",
+    "questions": [
+      {
+        "id": "pl-r-b1-008-q1",
+        "question": "How long do experts recommend walking each day?",
+        "options": ["At least 15 minutes", "At least 20 minutes", "At least 30 minutes", "At least 60 minutes"],
+        "answer": 2,
+        "explanation": "Chuyên gia khuyên đi bộ 'at least 30 minutes a day' (ít nhất 30 phút mỗi ngày)."
+      },
+      {
+        "id": "pl-r-b1-008-q2",
+        "question": "What benefit does walking outdoors provide?",
+        "options": ["It makes you run faster", "It reduces anxiety and improves mood", "It increases hunger", "It helps you sleep less"],
+        "answer": 1,
+        "explanation": "Đi bộ ngoài trời 'can reduce anxiety and improve mood' (giảm lo âu và cải thiện tâm trạng)."
+      },
+      {
+        "id": "pl-r-b1-008-q3",
+        "question": "Why are cities creating more pedestrian-friendly spaces?",
+        "options": ["To reduce pollution from cars", "To encourage walking as a daily activity", "To attract more tourists", "To increase property prices"],
+        "answer": 1,
+        "explanation": "Thành phố tạo không gian thân thiện với người đi bộ 'to encourage walking as a daily activity'."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-b1-009",
+    "skill": "reading",
+    "level": "B1",
+    "passage": "Plastic pollution has become one of the most pressing environmental issues of our time. Every year, approximately 8 million tons of plastic waste end up in the world's oceans. Marine animals such as turtles, dolphins, and seabirds often mistake plastic bags for food, which can be fatal. Some countries have already banned single-use plastics like straws and shopping bags. Scientists are also developing biodegradable alternatives that break down naturally within months instead of persisting for hundreds of years.",
+    "questions": [
+      {
+        "id": "pl-r-b1-009-q1",
+        "question": "How much plastic waste enters the oceans each year?",
+        "options": ["About 2 million tons", "About 5 million tons", "About 8 million tons", "About 10 million tons"],
+        "answer": 2,
+        "explanation": "Khoảng '8 million tons of plastic waste' (8 triệu tấn rác nhựa) đổ vào đại dương mỗi năm."
+      },
+      {
+        "id": "pl-r-b1-009-q2",
+        "question": "Why is plastic dangerous for marine animals?",
+        "options": ["It makes the water too hot", "They mistake plastic bags for food", "It blocks sunlight from reaching them", "It makes the water too salty"],
+        "answer": 1,
+        "explanation": "Động vật biển 'often mistake plastic bags for food' (thường nhầm túi nhựa với thức ăn)."
+      },
+      {
+        "id": "pl-r-b1-009-q3",
+        "question": "What are scientists developing to address plastic pollution?",
+        "options": ["Stronger plastics", "Biodegradable alternatives", "Bigger recycling bins", "Underwater plastic collectors"],
+        "answer": 1,
+        "explanation": "Các nhà khoa học đang phát triển 'biodegradable alternatives' (phương án thay thế phân hủy sinh học)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-b1-010",
+    "skill": "reading",
+    "level": "B1",
+    "passage": "Music has a powerful effect on the brain. Research shows that listening to music can improve memory, reduce pain, and increase motivation during physical exercise. Playing a musical instrument has even greater benefits, including improved coordination and enhanced mathematical ability. Children who learn to play instruments often perform better in school subjects that require concentration and logical thinking. Music therapy is now used in hospitals to help patients recover from strokes and manage chronic pain.",
+    "questions": [
+      {
+        "id": "pl-r-b1-010-q1",
+        "question": "According to the text, what can listening to music improve?",
+        "options": ["Only memory", "Memory, reduce pain, and increase motivation", "Only physical strength", "Only creativity"],
+        "answer": 1,
+        "explanation": "Nghe nhạc cải thiện 'memory, reduce pain, and increase motivation during physical exercise'."
+      },
+      {
+        "id": "pl-r-b1-010-q2",
+        "question": "What additional benefit does playing a musical instrument provide?",
+        "options": ["Better sleep quality", "Improved coordination and enhanced mathematical ability", "Faster running speed", "Lower blood pressure"],
+        "answer": 1,
+        "explanation": "Chơi nhạc cụ có lợi ích thêm: 'improved coordination and enhanced mathematical ability'."
+      },
+      {
+        "id": "pl-r-b1-010-q3",
+        "question": "How is music therapy used in hospitals?",
+        "options": ["To help patients sleep longer", "To help patients recover from strokes and manage chronic pain", "To replace traditional medicine", "To help doctors communicate better"],
+        "answer": 1,
+        "explanation": "Liệu pháp âm nhạc giúp bệnh nhân 'recover from strokes and manage chronic pain' (phục hồi sau đột quỵ và quản lý đau mãn tính)."
+      }
+    ]
   }
 ]

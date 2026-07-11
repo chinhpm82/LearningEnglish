@@ -48,5 +48,155 @@
     "options": ["who", "which", "where", "when"],
     "answer": 1,
     "explanation": "Đại từ quan hệ 'which' dùng để thay thế cho danh từ chỉ vật 'the book'."
+  },
+  {
+    "id": "pl-gv-b1-006",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "sentence_completion",
+    "question": "She is used to ______ up early in the morning for her jog.",
+    "options": ["get", "getting", "got", "gets"],
+    "answer": 1,
+    "explanation": "Cấu trúc 'be used to + V-ing' (quen với việc làm gì)."
+  },
+  {
+    "id": "pl-gv-b1-007",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "word_choice",
+    "question": "The manager will ______ a decision about the project by next Friday.",
+    "options": ["do", "make", "take", "give"],
+    "answer": 1,
+    "explanation": "Cụm cố định: 'make a decision' (đưa ra quyết định)."
+  },
+  {
+    "id": "pl-gv-b1-008",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "sentence_completion",
+    "question": "He has been working at this company ______ 2015.",
+    "options": ["for", "since", "from", "during"],
+    "answer": 1,
+    "explanation": "'Since' dùng với thời điểm xác định (2015). 'For' dùng với khoảng thời gian."
+  },
+  {
+    "id": "pl-gv-b1-009",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "error_correction",
+    "question": "Which sentence has a grammar mistake?",
+    "options": ["I wish I could speak French fluently.", "She suggested that he takes the job offer.", "They have been waiting for two hours.", "We would travel if we had more money."],
+    "answer": 1,
+    "explanation": "Câu sai: 'she suggested that he takes' → Phải dùng V nguyên thể (subjunctive): 'she suggested that he take the job offer.'"
+  },
+  {
+    "id": "pl-gv-b1-010",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "word_choice",
+    "question": "I couldn't help ______ when I saw the funny dog wearing a hat.",
+    "options": ["laugh", "to laugh", "laughing", "laughed"],
+    "answer": 2,
+    "explanation": "Cấu trúc 'can't help + V-ing' (không thể nhịn được việc gì)."
+  },
+  {
+    "id": "pl-gv-b1-011",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "sentence_completion",
+    "question": "The project needs to be finished ______ the end of this month.",
+    "options": ["by", "until", "since", "for"],
+    "answer": 0,
+    "explanation": "'By' (trước khi) cho thời hạn: project cần hoàn thành trước cuối tháng."
+  },
+  {
+    "id": "pl-gv-b1-012",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "sentence_completion",
+    "question": "Not only ______ the exam, but she also won a scholarship.",
+    "options": ["she passed", "did she pass", "she did pass", "does she pass"],
+    "answer": 1,
+    "explanation": "Đảo ngữ với 'Not only': Not only +助动词 + S + V. 'Not only did she pass' (Cô ấy không những vượt qua bài kiểm tra)."
+  },
+  {
+    "id": "pl-gv-b1-013",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "word_choice",
+    "question": "The teacher asked the students to hand ______ their essays before Friday.",
+    "options": ["in", "out", "on", "up"],
+    "answer": 0,
+    "explanation": "Cụm động từ 'hand in' (nộp bài)."
+  },
+  {
+    "id": "pl-gv-b1-014",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "sentence_completion",
+    "question": "She would have called you if she ______ your phone number.",
+    "options": ["has", "had", "had had", "would have"],
+    "answer": 2,
+    "explanation": "Câu điều kiện loại 3: If + had had (quá khứ hoàn thành), would have + V3."
+  },
+  {
+    "id": "pl-gv-b1-015",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "word_choice",
+    "question": "The earthquake caused ______ damage to the buildings in the area.",
+    "options": ["a lot", "much", "many", "lot of"],
+    "answer": 0,
+    "explanation": "'A lot of' dùng với danh từ đếm được và không đếm được. 'Much' chỉ dùng với không đếm được (không có 'a'). 'Many' chỉ dùng với đếm được."
+  },
+  {
+    "id": "pl-gv-b1-016",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "sentence_completion",
+    "question": "I would rather ______ at home tonight than go to the party.",
+    "options": ["stay", "to stay", "staying", "stayed"],
+    "answer": 0,
+    "explanation": "Cấu trúc 'would rather + V nguyên thể' (thà làm gì hơn)."
+  },
+  {
+    "id": "pl-gv-b1-017",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "error_correction",
+    "question": "Which sentence has a grammar mistake?",
+    "options": ["She is very talented, isn't she?", "He can to speak three languages.", "We've known each other for years.", "They should have told us earlier."],
+    "answer": 1,
+    "explanation": "Câu sai: 'He can to speak three languages.' → Modal verb 'can' đi kèm V nguyên thể, không có 'to': 'He can speak three languages.'"
+  },
+  {
+    "id": "pl-gv-b1-018",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "sentence_completion",
+    "question": "It is essential that every student ______ the form before the deadline.",
+    "options": ["fills", "fill", "filled", "will fill"],
+    "answer": 1,
+    "explanation": "Cấu trúc giả định (subjunctive) sau 'It is essential that': S + V nguyên thể (fill)."
+  },
+  {
+    "id": "pl-gv-b1-019",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "word_choice",
+    "question": "The scientist made an important ______ about climate change at the conference.",
+    "options": ["speech", "speeches", "speaking", "speaker"],
+    "answer": 0,
+    "explanation": "'Speech' (bài phát biểu) là danh từ đếm được phù hợp với 'an important'."
+  },
+  {
+    "id": "pl-gv-b1-020",
+    "skill": "grammar_vocab",
+    "level": "B1",
+    "type": "sentence_completion",
+    "question": "No matter how hard the problem is, we will find a solution ______.",
+    "options": ["anyway", "somewhere", "somehow", "someday"],
+    "answer": 2,
+    "explanation": "'Somehow' (bằng cách nào đó) thể hiện sự quyết tâm tìm ra giải pháp bất chấp khó khăn."
   }
 ]

@@ -10,41 +10,211 @@
     "explanation": "Câu có nghĩa tương đương: 'Tom has a red car' = 'Tom's car is red' (Xe của Tom màu đỏ)."
   },
   {
+    "id": "pl-w-a1-002",
+    "skill": "writing",
+    "level": "A1",
+    "type": "error_identification",
+    "question": "Find the error: 'I am agree with you about this topic.'",
+    "options": ["am agree → am agreeing", "am agree → agree", "about → on", "this → that"],
+    "answer": 1,
+    "explanation": "Lỗi: 'am agree' → 'agree' là động từ, không cần 'am'. Đúng: 'I agree with you about this topic.'"
+  },
+  {
+    "id": "pl-w-a1-003",
+    "skill": "writing",
+    "level": "A1",
+    "type": "open_cloze",
+    "question": "Fill in the blank: I am _ student at Ho Chi Minh City University.",
+    "options": ["a", "an", "the", "one"],
+    "answer": 0,
+    "explanation": "Mạo từ 'a' đứng trước danh từ bắt đầu bằng phụ âm: 'a student' (một sinh viên)."
+  },
+  {
+    "id": "pl-w-a1-004",
+    "skill": "writing",
+    "level": "A1",
+    "type": "error_identification",
+    "question": "Find the error: 'She don't like to studying English grammar.'",
+    "options": ["don't → doesn't", "to studying → to study", "Both A and B are correct", "English → the English"],
+    "answer": 2,
+    "explanation": "Hai lỗi: 'don't' → 'doesn't' (ngôi thứ ba số ít) và 'to studying' → 'to study' (want to + V nguyên thể)."
+  },
+  {
+    "id": "pl-w-a1-005",
+    "skill": "writing",
+    "level": "A1",
+    "type": "sentence_transformation",
+    "question": "Rewrite: 'The book is on the table.' Change to a question.",
+    "options": ["Is the book on the table?", "Does the book on the table?", "The book is on the table?", "On the table is the book?"],
+    "answer": 0,
+    "explanation": "Đảo động từ 'is' lên đầu câu: 'Is the book on the table?'"
+  },
+  {
+    "id": "pl-w-a1-006",
+    "skill": "writing",
+    "level": "A1",
+    "type": "open_cloze",
+    "question": "Fill in the blank: This is _ pen. It belongs to me.",
+    "options": ["my", "I", "me", "mine"],
+    "answer": 0,
+    "explanation": "Tính từ sở hữu 'my' đứng trước danh từ: 'my pen' (bút của tôi)."
+  },
+  {
+    "id": "pl-w-a1-007",
+    "skill": "writing",
+    "level": "A1",
+    "type": "error_identification",
+    "question": "Find the error: 'There is many people at the party tonight.'",
+    "options": ["is → are", "many → much", "at → in", "tonight → today"],
+    "answer": 0,
+    "explanation": "'There is many people' → 'There are many people' (people là danh từ số nhiều)."
+  },
+  {
     "id": "pl-w-a2-001",
     "skill": "writing",
     "level": "A2",
     "type": "error_identification",
-    "question": "Find the error in this sentence: 'Yesterday, she go to the market and buyed some vegetables for dinner.'",
+    "question": "Find the error in: 'Yesterday, she go to the market and buyed some vegetables for dinner.'",
     "options": ["Yesterday → Last day", "go → went", "buyed → bought", "Both B and C are correct"],
     "answer": 3,
-    "explanation": "Hai lỗi: 'go' phải đổi thành 'went' (quá khứ đơn) và 'buyed' phải đổi thành 'bought' (dạng quá khứ bất quy tắc của 'buy')."
+    "explanation": "Hai lỗi: 'go' phải đổi thành 'went' (quá khứ đơn) và 'buyed' phải đổi thành 'bought' (quá khứ bất quy tắc)."
+  },
+  {
+    "id": "pl-w-a2-002",
+    "skill": "writing",
+    "level": "A2",
+    "type": "sentence_transformation",
+    "question": "Rewrite: 'I started learning English three years ago.' Use 'since'.",
+    "options": ["I have been learning English since three years.", "I have been learning English since three years ago.", "I have learned English since three years.", "I am learning English since three years ago."],
+    "answer": 1,
+    "explanation": "Cấu trúc với 'since': 'I have been learning English since three years ago' (kể từ 3 năm trước)."
+  },
+  {
+    "id": "pl-w-a2-003",
+    "skill": "writing",
+    "level": "A2",
+    "type": "open_cloze",
+    "question": "Fill in the blank: We are looking _ to visiting our grandparents this weekend.",
+    "options": ["forward", "after", "up", "into"],
+    "answer": 0,
+    "explanation": "Cụm cố định: 'look forward to' (mong chờ) + V-ing."
+  },
+  {
+    "id": "pl-w-a2-004",
+    "skill": "writing",
+    "level": "A2",
+    "type": "error_identification",
+    "question": "Find the error: 'He suggested me to apply for the scholarship.'",
+    "options": ["suggested → advised", "me → that I", "to apply → applying", "Both B and C are correct"],
+    "answer": 1,
+    "explanation": "Lỗi: 'suggested me to apply' → 'suggested that I apply' (suggested + that + S + V nguyên thể)."
+  },
+  {
+    "id": "pl-w-a2-005",
+    "skill": "writing",
+    "level": "A2",
+    "type": "paragraph_coherence",
+    "question": "Put these sentences in order: (A) First, she heated some oil in a pan. (B) Then she added vegetables and stir-fried for five minutes. (C) Finally, she served the dish with rice. (D) Linh decided to cook dinner for her family.",
+    "options": ["D → A → B → C", "A → B → C → D", "D → C → B → A", "B → A → D → C"],
+    "answer": 0,
+    "explanation": "Thứ tự: Mục tiêu (D) → Bước 1 (A) → Bước 2 (B) → Kết quả (C)."
+  },
+  {
+    "id": "pl-w-a2-006",
+    "skill": "writing",
+    "level": "A2",
+    "type": "sentence_transformation",
+    "question": "Rewrite: 'The movie was so boring that we left early.' Use 'such...that'.",
+    "options": ["It was such a boring movie that we left early.", "It was such boring movie that we left early.", "It was such a movie boring that we left early.", "Such was boring movie that we left early."],
+    "answer": 0,
+    "explanation": "Cấu trúc 'such + (a/an) + adj + noun + that': 'It was such a boring movie that we left early.'"
+  },
+  {
+    "id": "pl-w-a2-007",
+    "skill": "writing",
+    "level": "A2",
+    "type": "open_cloze",
+    "question": "Fill in the blank: I have been living here _ I was ten years old.",
+    "options": ["since", "for", "from", "during"],
+    "answer": 0,
+    "explanation": "'Since' dùng với thời điểm xác định (I was ten years old). 'For' dùng với khoảng thời gian."
   },
   {
     "id": "pl-w-b1-001",
     "skill": "writing",
     "level": "B1",
     "type": "paragraph_coherence",
-    "question": "Put these sentences in the correct order to form a logical paragraph:\n\n(A) Finally, she passed the exam with excellent results.\n(B) First, she made a detailed study plan for each subject.\n(C) Maria wanted to pass her university entrance exam.\n(D) Then, she studied for four hours every day without missing a single session.",
+    "question": "Put in order: (A) Finally, she passed the exam. (B) First, she made a detailed study plan. (C) Maria wanted to pass her entrance exam. (D) Then, she studied four hours daily.",
     "options": ["C → B → D → A", "B → C → D → A", "C → D → B → A", "A → B → C → D"],
     "answer": 0,
-    "explanation": "Thứ tự logic: Giới thiệu mục tiêu (C) → Bước 1 lập kế hoạch (B) → Bước 2 thực hiện (D) → Kết quả (A)."
+    "explanation": "Thứ tự: Mục tiêu (C) → Lập kế hoạch (B) → Thực hiện (D) → Kết quả (A)."
   },
   {
     "id": "pl-w-b1-002",
     "skill": "writing",
     "level": "B1",
     "type": "sentence_transformation",
-    "question": "Rewrite: 'People speak English in many countries.' → Change to passive voice.",
+    "question": "Rewrite: 'People speak English in many countries.' Change to passive voice.",
     "options": ["English is spoken in many countries.", "English was spoken in many countries.", "English has been spoken in many countries.", "English will be spoken in many countries."],
     "answer": 0,
-    "explanation": "Chuyển câu chủ động sang bị động (thì hiện tại đơn): S + is/are + V3. 'English is spoken in many countries.'"
+    "explanation": "Câu bị động thì hiện tại đơn: 'English is spoken in many countries.'"
+  },
+  {
+    "id": "pl-w-b1-003",
+    "skill": "writing",
+    "level": "B1",
+    "type": "error_identification",
+    "question": "Find the error: 'The teacher asked us to don't make noise during the exam.'",
+    "options": ["asked → told", "to don't make → not to make", "during → in", "noise → sounds"],
+    "answer": 1,
+    "explanation": "Cấu trúc phủ định: 'asked/told us not to make' (không dùng 'to don't make')."
+  },
+  {
+    "id": "pl-w-b1-004",
+    "skill": "writing",
+    "level": "B1",
+    "type": "open_cloze",
+    "question": "Fill in the blank: I wish I _ more time to travel the world last year.",
+    "options": ["had", "have", "would have", "could have"],
+    "answer": 0,
+    "explanation": "Cấu trúc 'wish + quá khứ đơn' (điều ước trái với hiện tại hoặc quá khứ)."
+  },
+  {
+    "id": "pl-w-b1-005",
+    "skill": "writing",
+    "level": "B1",
+    "type": "paragraph_coherence",
+    "question": "Choose the best sentence to fill the gap: 'Exercise has many benefits for health. It can reduce heart disease risk, improve sleep, and boost self-esteem. ___ Therefore, experts recommend at least 150 minutes of moderate exercise per week.'",
+    "options": ["However, too much exercise can be harmful to joints.", "Studies show that even 30 minutes of walking daily makes a significant difference.", "Many people prefer to exercise at gyms rather than outdoors.", "Some athletes train for over 20 hours per week."],
+    "answer": 1,
+    "explanation": "Câu điền vào cần hỗ trợ ý chính về lợi ích exercise và nối với kết luận '150 minutes per week'."
+  },
+  {
+    "id": "pl-w-b1-006",
+    "skill": "writing",
+    "level": "B1",
+    "type": "sentence_transformation",
+    "question": "Rewrite: 'They built this bridge in 1995.' Change to passive voice.",
+    "options": ["This bridge was built in 1995.", "This bridge has been built in 1995.", "This bridge is built in 1995.", "This bridge built in 1995."],
+    "answer": 0,
+    "explanation": "Câu bị động thì quá khứ đơn: 'This bridge was built in 1995.'"
+  },
+  {
+    "id": "pl-w-b1-007",
+    "skill": "writing",
+    "level": "B1",
+    "type": "open_cloze",
+    "question": "Fill in the blank: She insisted _ paying for dinner because it was her birthday.",
+    "options": ["on", "in", "at", "for"],
+    "answer": 0,
+    "explanation": "Cụm cố định: 'insist on + V-ing' (khăng khăng làm gì)."
   },
   {
     "id": "pl-w-b2-001",
     "skill": "writing",
     "level": "B2",
     "type": "error_identification",
-    "question": "Identify the error: 'Despite of the heavy rain, the outdoor concert proceeded as planned because the organizers had prepared waterproof shelters.'",
+    "question": "Identify the error: 'Despite of the heavy rain, the outdoor concert proceeded as planned.'",
     "options": ["Despite of → Despite", "proceeded → preceded", "had prepared → have prepared", "waterproof → waterproofed"],
     "answer": 0,
     "explanation": "'Despite' không đi với 'of'. Đúng: 'Despite the heavy rain' hoặc 'In spite of the heavy rain'."
@@ -54,49 +224,199 @@
     "skill": "writing",
     "level": "B2",
     "type": "sentence_transformation",
-    "question": "Rewrite using inversion: 'I have never seen such a breathtaking landscape in my entire life.'",
-    "options": ["Never have I seen such a breathtaking landscape in my entire life.", "Never I have seen such a breathtaking landscape.", "I never have seen such a breathtaking landscape.", "Such a breathtaking landscape I have never seen in my life."],
+    "question": "Rewrite using inversion: 'I have never seen such a breathtaking landscape.'",
+    "options": ["Never have I seen such a breathtaking landscape in my entire life.", "Never I have seen such a breathtaking landscape.", "I never have seen such a breathtaking landscape.", "Such a breathtaking landscape I have never seen."],
     "answer": 0,
-    "explanation": "Đảo ngữ với 'Never': Never + have/has + S + V3. 'Never have I seen such a breathtaking landscape in my entire life.'"
+    "explanation": "Đảo ngữ với 'Never': Never + have/has + S + V3."
+  },
+  {
+    "id": "pl-w-b2-003",
+    "skill": "writing",
+    "level": "B2",
+    "type": "error_identification",
+    "question": "Identify the error: 'If I would have known about the traffic jam, I would have taken a different route.'",
+    "options": ["would have known → had known", "would have taken → took", "about → about of", "a different → another"],
+    "answer": 0,
+    "explanation": "Câu điều kiện loại 3: If + had known (quá khứ hoàn thành), không dùng 'would have known'."
+  },
+  {
+    "id": "pl-w-b2-004",
+    "skill": "writing",
+    "level": "B2",
+    "type": "paragraph_coherence",
+    "question": "Choose the best sentence to fill the gap: 'The company invested heavily in renewable energy. Solar panels installed, wind farm constructed. ___ This shift is expected to reduce carbon emissions by 60%.'",
+    "options": ["The company also plans to hire more employees.", "Furthermore, electric vehicle charging stations have been added to all parking facilities.", "Some employees prefer to work from home.", "The company's stock price has increased this quarter."],
+    "answer": 1,
+    "explanation": "Câu điền cần bổ sung hành động liên quan đến năng lượng tái tạo và nối với kết quả giảm carbon."
+  },
+  {
+    "id": "pl-w-b2-005",
+    "skill": "writing",
+    "level": "B2",
+    "type": "sentence_transformation",
+    "question": "Rewrite: 'People believe that the suspect left the country yesterday.' Change to passive voice.",
+    "options": ["It is believed that the suspect left the country yesterday.", "The suspect is believed to leave the country yesterday.", "It is believed that the suspect has left the country yesterday.", "The suspect was believed leaving the country yesterday."],
+    "answer": 0,
+    "explanation": "Câu bị động với 'It is believed that...': 'It is believed that the suspect left the country yesterday.'"
+  },
+  {
+    "id": "pl-w-b2-006",
+    "skill": "writing",
+    "level": "B2",
+    "type": "open_cloze",
+    "question": "Fill in the blank: The government's proposal has been met _ fierce opposition from environmental groups.",
+    "options": ["with", "by", "for", "from"],
+    "answer": 0,
+    "explanation": "Cụm cố định: 'meet with opposition' (gặp phải sự phản đối)."
+  },
+  {
+    "id": "pl-w-b2-007",
+    "skill": "writing",
+    "level": "B2",
+    "type": "paragraph_coherence",
+    "question": "Put in order: (A) However, recent studies suggest moderate coffee may have health benefits. (B) For decades, coffee was considered harmful to heart health. (C) These findings led nutritionists to revise dietary recommendations. (D) As a result, millions can enjoy their daily cup without guilt.",
+    "options": ["B → A → C → D", "A → B → D → C", "C → B → A → D", "D → C → A → B"],
+    "answer": 0,
+    "explanation": "Quan điểm cũ (B) → Đổi mới (A) → Ứng dụng (C) → Kết quả (D)."
   },
   {
     "id": "pl-w-c1-001",
     "skill": "writing",
     "level": "C1",
     "type": "paragraph_coherence",
-    "question": "Choose the best sentence to fill the gap:\n\n'The study revealed that employees who work remotely report higher levels of job satisfaction. ____________. However, researchers caution that prolonged isolation may negatively impact mental health in the long term.'",
-    "options": ["This is because remote work eliminates commuting stress and offers greater schedule flexibility.", "Remote workers always earn more money than office workers.", "All companies should immediately switch to fully remote operations.", "Working from home is not suitable for any type of job."],
+    "question": "Choose the best sentence: 'Remote workers report higher job satisfaction. ___ However, researchers caution that prolonged isolation may negatively impact mental health.'",
+    "options": ["This is because remote work eliminates commuting stress and offers greater flexibility.", "Remote workers always earn more money than office workers.", "All companies should immediately switch to fully remote operations.", "Working from home is not suitable for any type of job."],
     "answer": 0,
-    "explanation": "Câu điền vào phải giải thích tại sao remote workers có job satisfaction cao hơn, đồng thời nối mạch với câu 'However' phía sau. Lựa chọn A cung cấp lý do hợp lý."
+    "explanation": "Câu cần giải thích tại sao remote workers có job satisfaction cao hơn, và nối với 'However' phía sau."
   },
   {
     "id": "pl-w-c1-002",
     "skill": "writing",
     "level": "C1",
     "type": "open_cloze",
-    "question": "Fill in the blank with ONE appropriate word:\n\n'The committee reached a consensus ______ the need for stricter environmental regulations, though disagreements persisted regarding the timeline for implementation.'",
+    "question": "Fill in ONE word: The committee reached a consensus _ the need for stricter environmental regulations.",
     "options": ["on", "for", "with", "about"],
     "answer": 0,
-    "explanation": "Cụm cố định: 'reach a consensus on' (đạt đồng thuận về). 'On' là giới từ đúng đi sau 'consensus'."
+    "explanation": "Cụm cố định: 'reach a consensus on' (đạt đồng thuận về)."
+  },
+  {
+    "id": "pl-w-c1-003",
+    "skill": "writing",
+    "level": "C1",
+    "type": "error_identification",
+    "question": "Identify the error: 'Not only the report was comprehensive, but it also provided actionable recommendations.'",
+    "options": ["was comprehensive → comprehensive was", "but also → but", "actionable → actions", "implementation → implementing"],
+    "answer": 0,
+    "explanation": "Đảo ngữ 'Not only': Not only + trợ động từ + S + V. Đúng: 'Not only was the report comprehensive'."
+  },
+  {
+    "id": "pl-w-c1-004",
+    "skill": "writing",
+    "level": "C1",
+    "type": "sentence_transformation",
+    "question": "Rewrite: 'The project failed because the team didn't have enough resources.' Use 'If'.",
+    "options": ["If the team had had enough resources, the project would not have failed.", "If the team has enough resources, the project will not fail.", "If the team would have had enough resources, the project would not have failed.", "If the team had enough resources, the project would not have failed."],
+    "answer": 0,
+    "explanation": "Câu điều kiện loại 3: If + had had (quá khứ hoàn thành), would not have + V3."
+  },
+  {
+    "id": "pl-w-c1-005",
+    "skill": "writing",
+    "level": "C1",
+    "type": "paragraph_coherence",
+    "question": "Choose the best sentence: 'AI is transforming healthcare diagnostics. ML algorithms detect diseases accurately. ___ Nevertheless, integrating AI raises questions about accountability and patient trust.'",
+    "options": ["This technology is only available in wealthy countries.", "For example, AI systems have outperformed radiologists in detecting certain cancers from medical images.", "Most doctors refuse to use AI in their practice.", "AI will completely replace human doctors within the next decade."],
+    "answer": 1,
+    "explanation": "Câu cần cung cấp bằng chứng cụ thể hỗ trợ ý AI transforming healthcare, nối với 'Nevertheless'."
+  },
+  {
+    "id": "pl-w-c1-006",
+    "skill": "writing",
+    "level": "C1",
+    "type": "open_cloze",
+    "question": "Fill in ONE word: The study's findings are consistent _ previous research suggesting exercise improves cognitive function.",
+    "options": ["with", "to", "from", "of"],
+    "answer": 0,
+    "explanation": "Cụm cố định: 'consistent with' (nhất quán với)."
+  },
+  {
+    "id": "pl-w-c1-007",
+    "skill": "writing",
+    "level": "C1",
+    "type": "error_identification",
+    "question": "Identify the error: 'The data, which was collected from 10,000 participants, shows a clear correlation.'",
+    "options": ["which was → which were", "shows → show", "Between → among", "Both A and B are correct"],
+    "answer": 3,
+    "explanation": "'Data' là danh từ số nhiều (Latin): 'data were collected' và 'data show'. Cả A và B đều đúng."
   },
   {
     "id": "pl-w-c2-001",
     "skill": "writing",
     "level": "C2",
     "type": "sentence_transformation",
-    "question": "Which sentence best paraphrases: 'The ubiquity of smartphones has fundamentally altered the dynamics of interpersonal communication, engendering both unprecedented connectivity and a paradoxical sense of social fragmentation.'",
-    "options": ["Smartphones are everywhere but nobody uses them for communication anymore.", "The widespread use of smartphones has both connected people more and created a contradictory feeling of social disconnection.", "Smartphones have made communication impossible and society has completely collapsed.", "Only wealthy people can afford smartphones, which creates social inequality."],
+    "question": "Paraphrase: 'The ubiquity of smartphones has fundamentally altered interpersonal communication, engendering both unprecedented connectivity and a paradoxical sense of social fragmentation.'",
+    "options": ["Smartphones are everywhere but nobody uses them for communication anymore.", "The widespread use of smartphones has both connected people more and created a contradictory feeling of social disconnection.", "Smartphones have made communication impossible and society has collapsed.", "Only wealthy people can afford smartphones, creating social inequality."],
     "answer": 1,
-    "explanation": "Diễn giải chính xác: 'ubiquity' = widespread use, 'unprecedented connectivity' = connected people more, 'paradoxical sense of social fragmentation' = contradictory feeling of social disconnection."
+    "explanation": "Diễn giải: 'ubiquity' = widespread use, 'unprecedented connectivity' = connected people more, 'paradoxical sense of social fragmentation' = contradictory feeling of social disconnection."
   },
   {
     "id": "pl-w-c2-002",
     "skill": "writing",
     "level": "C2",
     "type": "error_identification",
-    "question": "Identify the stylistic weakness: 'The ramifications of anthropogenic climate change are, to put it mildly, absolutely catastrophic, and furthermore, it is undeniably clear that immediate, decisive action is unquestionably necessary without any shadow of a doubt.'",
-    "options": ["Incorrect use of 'anthropogenic'", "Excessive redundancy and unnecessary intensifiers weaken the academic register", "The sentence is too short to convey the intended meaning", "The passive voice should be used instead of active voice"],
+    "question": "Identify the stylistic weakness: 'The ramifications of anthropogenic climate change are, to put it mildly, absolutely catastrophic, and furthermore, it is undeniably clear that immediate action is unquestionably necessary without any shadow of a doubt.'",
+    "options": ["Incorrect use of 'anthropogenic'", "Excessive redundancy and unnecessary intensifiers weaken the academic register", "The sentence is too short", "The passive voice should be used instead"],
     "answer": 1,
-    "explanation": "Câu chứa quá nhiều từ nhấn mạnh thừa (absolutely, undeniably, unquestionably, without any shadow of a doubt) gây redundancy, làm yếu văn phong học thuật. Trong academic writing, nên dùng ngôn ngữ chính xác và tiết chế."
+    "explanation": "Câu chứa quá nhiều từ nhấn mạnh thừa (absolutely, undeniably, unquestionably, without any shadow of a doubt) gây redundancy, làm yếu văn phong học thuật."
+  },
+  {
+    "id": "pl-w-c2-003",
+    "skill": "writing",
+    "level": "C2",
+    "type": "paragraph_coherence",
+    "question": "Choose the best sentence: 'LLMs generate statistically plausible text divorced from factual accuracy. ___ This tension between fluency and truthfulness represents a pressing ethical dilemma in AI.'",
+    "options": ["Most LLMs are built by large technology companies.", "Consequently, users may unwittingly disseminate misinformation that appears authoritative.", "The development of LLMs has created many new jobs.", "Some LLMs can now write poetry and compose music."],
+    "answer": 1,
+    "explanation": "Câu cần trình bày hậu quả logic của sự disconnect giữa tính thống kê và độ chính xác thực tế."
+  },
+  {
+    "id": "pl-w-c2-004",
+    "skill": "writing",
+    "level": "C2",
+    "type": "sentence_transformation",
+    "question": "Rewrite: 'The government should have invested more in renewable energy before the crisis.' Use inversion.",
+    "options": ["Had the government invested more in renewable energy before the crisis, the situation would be less dire now.", "If the government invested more in renewable energy, the situation will improve.", "The government should invest more in renewable energy now.", "More renewable energy investment was needed."],
+    "answer": 0,
+    "explanation": "Đảo ngữ câu điều kiện loại 3: 'Had + S + V3' → would be + adj."
+  },
+  {
+    "id": "pl-w-c2-005",
+    "skill": "writing",
+    "level": "C2",
+    "type": "error_identification",
+    "question": "Identify the error: 'The reason is because the implementation has been fraught with unforeseen complications.'",
+    "options": ["is because → is that", "has been → was", "were not anticipated → had not been anticipated", "fraught with → fraught of"],
+    "answer": 0,
+    "explanation": "Lỗi ngữ pháp: 'The reason is because' → 'The reason is that' ('because' đã chứa nghĩa lý do nên không cần lặp)."
+  },
+  {
+    "id": "pl-w-c2-006",
+    "skill": "writing",
+    "level": "C2",
+    "type": "open_cloze",
+    "question": "Fill in ONE word: The author's argument, _ ostensibly grounded in empirical evidence, ultimately relies on unsubstantiated assumptions.",
+    "options": ["while", "although", "despite", "however"],
+    "answer": 0,
+    "explanation": "'While' (trong khi) mang nghĩa 'although/mặc dù' - phù hợp với cấu trúc tương phản."
+  },
+  {
+    "id": "pl-w-c2-007",
+    "skill": "writing",
+    "level": "C2",
+    "type": "paragraph_coherence",
+    "question": "Choose the best sentence: 'Traditional economic metrics treat resource depletion as income rather than capital loss. ___ Without rethinking prosperity metrics, policy will prioritize short-term growth over sustainability.'",
+    "options": ["Many countries have already achieved sustainable growth.", "This conceptual flaw means environmental degradation is invisible in standard economic accounting.", "GDP per capita is the most reliable measure of well-being.", "Economic growth has always been harmful to the environment."],
+    "answer": 1,
+    "explanation": "Câu cần giải thích lý do 'paradox' và nối với kết luận về necessity of rethinking prosperity metrics."
   }
 ]

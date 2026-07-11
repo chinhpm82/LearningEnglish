@@ -48,5 +48,155 @@
     "options": ["Does", "Do", "Is", "Are"],
     "answer": 1,
     "explanation": "Câu hỏi Yes/No với chủ ngữ 'you' dùng trợ động từ 'Do' (Do you like...?)."
+  },
+  {
+    "id": "pl-gv-a1-006",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "sentence_completion",
+    "question": "I ______ my homework every evening.",
+    "options": ["does", "do", "doing", "is doing"],
+    "answer": 1,
+    "explanation": "Với chủ ngữ 'I', ta dùng 'do' ở thì hiện tại đơn (I do my homework)."
+  },
+  {
+    "id": "pl-gv-a1-007",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "word_choice",
+    "question": "My mother is a ______. She works at a hospital and helps sick people.",
+    "options": ["teacher", "nurse", "cook", "driver"],
+    "answer": 1,
+    "explanation": "'Nurse' (y tá) là người làm việc ở bệnh viện và giúp đỡ người bệnh."
+  },
+  {
+    "id": "pl-gv-a1-008",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "sentence_completion",
+    "question": "He ______ to school by bus every morning.",
+    "options": ["go", "goes", "going", "went"],
+    "answer": 1,
+    "explanation": "Chủ ngữ 'He' (ngôi thứ ba số ít) + thì hiện tại đơn: 'goes' (đi bằng xe buýt)."
+  },
+  {
+    "id": "pl-gv-a1-009",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "word_choice",
+    "question": "What time do you ______ up in the morning?",
+    "options": ["get", "go", "put", "take"],
+    "answer": 0,
+    "explanation": "Cụm động từ 'get up' nghĩa là thức dậy (wake up)."
+  },
+  {
+    "id": "pl-gv-a1-010",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "sentence_completion",
+    "question": "This is ______ cat. It is very cute.",
+    "options": ["I", "my", "me", "mine"],
+    "answer": 1,
+    "explanation": "Tính từ sở hữu 'my' đứng trước danh từ: 'my cat' (con mèo của tôi)."
+  },
+  {
+    "id": "pl-gv-a1-011",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "sentence_completion",
+    "question": "How ______ are you? — I am twelve years old.",
+    "options": ["old", "big", "tall", "long"],
+    "answer": 0,
+    "explanation": "Câu hỏi về tuổi dùng 'How old are you?' (Bạn bao nhiêu tuổi?)."
+  },
+  {
+    "id": "pl-gv-a1-012",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "word_choice",
+    "question": "I am thirsty. Can I have some ______?",
+    "options": ["bread", "water", "rice", "cheese"],
+    "answer": 1,
+    "explanation": "Khi khát (thirsty), ta cần uống nước (water)."
+  },
+  {
+    "id": "pl-gv-a1-013",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "sentence_completion",
+    "question": "They ______ tennis every Sunday.",
+    "options": ["plays", "play", "playing", "is playing"],
+    "answer": 1,
+    "explanation": "Chủ ngữ 'They' (số nhiều) + thì hiện tại đơn: 'play' (học quần vợt)."
+  },
+  {
+    "id": "pl-gv-a1-014",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "error_correction",
+    "question": "Which sentence has a grammar mistake?",
+    "options": ["I am happy today.", "She have a new bicycle.", "We are students.", "He likes chocolate."],
+    "answer": 1,
+    "explanation": "Câu sai: 'She have a new bicycle.' → Phải dùng 'has' vì She là ngôi thứ ba số ít: 'She has a new bicycle.'"
+  },
+  {
+    "id": "pl-gv-a1-015",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "sentence_completion",
+    "question": "______ is a beautiful day today. The sun is shining.",
+    "options": ["This", "It", "That", "There"],
+    "answer": 1,
+    "explanation": "Dùng 'It' làm chủ ngữ giả cho thời tiết: 'It is a beautiful day today.'"
+  },
+  {
+    "id": "pl-gv-a1-016",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "word_choice",
+    "question": "The opposite of 'big' is ______.",
+    "options": ["tall", "fat", "small", "short"],
+    "answer": 2,
+    "explanation": "Từ trái nghĩa của 'big' (to, lớn) là 'small' (nhỏ)."
+  },
+  {
+    "id": "pl-gv-a1-017",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "sentence_completion",
+    "question": "I want ______ a doctor when I grow up.",
+    "options": ["be", "to be", "being", "is"],
+    "answer": 1,
+    "explanation": "Cấu trúc 'want to + V nguyên thể': I want to be a doctor (Tôi muốn trở thành bác sĩ)."
+  },
+  {
+    "id": "pl-gv-a1-018",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "sentence_completion",
+    "question": "There is ______ apple on the plate.",
+    "options": ["a", "an", "the", "some"],
+    "answer": 1,
+    "explanation": "Mạo từ không xác định 'an' đứng trước danh từ bắt đầu bằng nguyên âm: 'an apple'."
+  },
+  {
+    "id": "pl-gv-a1-019",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "word_choice",
+    "question": "My father drives a ______ to work every day.",
+    "options": ["bicycle", "car", "book", "chair"],
+    "answer": 1,
+    "explanation": "Mẹ lái xe hơi (car) đi làm mỗi ngày. Bicycle (xe đạp) cũng hợp lý nhưng 'car' phổ biến hơn trong ngữ cảnh đi làm."
+  },
+  {
+    "id": "pl-gv-a1-020",
+    "skill": "grammar_vocab",
+    "level": "A1",
+    "type": "sentence_completion",
+    "question": "______ she have any brothers or sisters?",
+    "options": ["Do", "Does", "Is", "Has"],
+    "answer": 1,
+    "explanation": "Câu hỏi Yes/No với chủ ngữ 'she' (ngôi thứ ba số ít) dùng trợ động từ 'Does'."
   }
 ]

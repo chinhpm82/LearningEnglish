@@ -35,6 +35,7 @@ English learning SPA deployed on GitHub Pages. No build system — serve directl
 5. **CEFR levels for grammar lessons** — Added `GRAMMAR_LEVEL_MAP` mapping gr-1→A1 through gr-21→C2. Level badges now display on lesson cards. (`grammar.js`)
 6. **Sentences expanded to 250** — From 50 (5 categories × 10) to 250 (10 categories × 25). New categories: healthcare, shopping, entertainment, education, workplace. (`json/sentences-data.json`)
 7. **reading.js → sentences.js** — Renamed file and updated HTML reference. (`js/sentences.js`, `index.html`)
+8. **Placement test question banks expanded** — Grammar/Vocab: 5→20 per level (120 total). Reading: 2-3→10 passages per level (60 total). Writing: 10→42 questions. All questions CEFR-appropriate with Vietnamese explanations. (`json/placement/`)
 
 ---
 
@@ -134,7 +135,6 @@ English learning SPA deployed on GitHub Pages. No build system — serve directl
 2. **writing.js heuristic limits** — no AI/NLP, limited grammar rules, raw TTR
 3. **challenge.js** — no CEFR matchmaking, fixed 15s timer for all difficulties
 4. **gamification.js** — kitchen sink file (600 lines, 3 unrelated modules)
-5. **Placement test bank thin** — only 85 questions total
 
 ---
 

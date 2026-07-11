@@ -49,5 +49,237 @@
         "explanation": "Tính áp dụng của Chinese Room bị tranh cãi vì kiến trúc mạng nơ-ron hiện đại 'learn representations rather than follow explicit rules' (học biểu diễn thay vì tuân theo quy tắc tường minh), khác với tiền đề gốc của Searle."
       }
     ]
+  },
+  {
+    "id": "pl-r-c2-003",
+    "skill": "reading",
+    "level": "C2",
+    "passage": "The paradox of tolerance, first articulated by Karl Popper in 1945, posits that unlimited tolerance inevitably leads to the disappearance of tolerance itself. Popper argued that if a society extends tolerance to those who are fundamentally intolerant, without restricting their capacity to suppress the tolerant, the tolerant will eventually be destroyed. This philosophical principle has acquired renewed urgency in contemporary discourse about hate speech regulation, platform moderation, and the boundaries of acceptable public debate. Critics of broad censorship measures counter that the paradox has been overstated and that the real danger lies not in tolerating offensive speech but in granting institutions excessive power to determine which views are permissible — a power that historically has been wielded against marginalized communities as often as against their oppressors.",
+    "questions": [
+      {
+        "id": "pl-r-c2-003-q1",
+        "question": "What does the paradox of tolerance argue?",
+        "options": ["Societies should tolerate all views without exception", "Unlimited tolerance leads to the disappearance of tolerance itself", "Intolerant societies are always more successful", "Tolerance is irrelevant in modern politics"],
+        "answer": 1,
+        "explanation": "Nghịch lý khoan dung cho rằng 'unlimited tolerance inevitably leads to the disappearance of tolerance itself' (khoan dung không giới hạn dẫn đến biến mất khoan dung)."
+      },
+      {
+        "id": "pl-r-c2-003-q2",
+        "question": "Why has the paradox of tolerance gained renewed urgency?",
+        "options": ["It was forgotten for decades", "Because of debates about hate speech regulation, platform moderation, and acceptable public debate", "Because Popper recently published new research", "Because it only applies to democratic countries"],
+        "answer": 1,
+        "explanation": "Nó trở nên cấp bách trở lại vì tranh luận về 'hate speech regulation, platform moderation, and boundaries of acceptable public debate'."
+      },
+      {
+        "id": "pl-r-c2-003-q3",
+        "question": "What concern do critics of broad censorship measures raise?",
+        "options": ["Censorship is always effective", "Institutions may abuse power to suppress marginalized communities' speech", "Free speech has no limits", "Censorship only affects the wealthy"],
+        "answer": 1,
+        "explanation": "Lo ngại: quyền lực kiểm duyệt 'historically has been wielded against marginalized communities as often as against their oppressors' (đã bị lợi dụng chống cộng đồng bị thiệt thòi)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-c2-004",
+    "skill": "reading",
+    "level": "C2",
+    "passage": "The concept of 'antifragility,' introduced by Nassim Nicholas Taleb, describes systems that do not merely resist shocks and volatility but actually improve because of them. Biological systems exemplify this property: bones become denser under stress, immune systems strengthen when exposed to pathogens, and muscles grow through the controlled damage of exercise. Taleb argues that modern institutional design has systematically created 'fragile' systems by eliminating all sources of variability and stress — an approach that paradoxically makes them more vulnerable to catastrophic failure. The 2008 financial crisis, he contends, was a direct consequence of regulatory frameworks that suppressed small market fluctuations while accumulating systemic risk. True antifragility, according to Taleb, requires embracing redundancy, optionality, and a tolerance for small failures as the price of resilience against existential threats.",
+    "questions": [
+      {
+        "id": "pl-r-c2-004-q1",
+        "question": "What makes a system 'antifragile' according to Taleb?",
+        "options": ["It simply resists shocks without changing", "It actually improves because of shocks and volatility", "It eliminates all sources of stress", "It avoids all risk entirely"],
+        "answer": 1,
+        "explanation": "Hệ thống 'antifragile' là hệ thống 'actually improves because of shocks and volatility' (thực sự cải thiện nhờ sốc và biến động)."
+      },
+      {
+        "id": "pl-r-c2-004-q2",
+        "question": "What does Taleb argue about the 2008 financial crisis?",
+        "options": ["It was caused by too much government regulation", "It was a consequence of frameworks that suppressed small fluctuations while accumulating systemic risk", "It was entirely unpredictable", "It was caused by individual greed, not systemic issues"],
+        "answer": 1,
+        "explanation": "Taleb cho rằng khủng hoảng 2008 là 'direct consequence of regulatory frameworks that suppressed small market fluctuations while accumulating systemic risk'."
+      },
+      {
+        "id": "pl-r-c2-004-q3",
+        "question": "What does Taleb say is necessary for true antifragility?",
+        "options": ["Eliminating all risk and variability", "Embracing redundancy, optionality, and tolerance for small failures", "Following strict regulatory frameworks", "Centralizing decision-making"],
+        "answer": 1,
+        "explanation": "Antifragility thực sự cần 'embracing redundancy, optionality, and tolerance for small failures'."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-c2-005",
+    "skill": "reading",
+    "level": "C2",
+    "passage": "The intersection of algorithmic decision-making and civil liberties has produced a new class of civil rights challenges. Predictive policing algorithms, which use historical crime data to forecast where future offenses are likely to occur, have been criticized for creating feedback loops: if police are deployed more heavily to neighborhoods with high arrest rates, they will naturally make more arrests there, reinforcing the algorithm's original prediction regardless of actual crime patterns. Similar concerns apply to algorithmic risk assessments in the criminal justice system, where studies have shown that tools used to predict recidivism risk can exhibit racial bias, assigning higher risk scores to Black defendants even when controlling for prior criminal history. The fundamental challenge lies in the fact that algorithms trained on historically biased data will inevitably perpetuate and potentially amplify the very inequalities they were designed to mitigate.",
+    "questions": [
+      {
+        "id": "pl-r-c2-005-q1",
+        "question": "How do predictive policing algorithms create feedback loops?",
+        "options": ["They automatically arrest suspects", "More police deployment leads to more arrests, reinforcing the original prediction regardless of actual crime", "They eliminate all crime in targeted areas", "They reduce police response times"],
+        "answer": 1,
+        "explanation": "Feedback loop: police được triển khai nhiều hơn → nhiều bắt giữ hơn → củng cố dự đoán ban đầu regardless of actual crime patterns."
+      },
+      {
+        "id": "pl-r-c2-005-q2",
+        "question": "What racial bias have studies found in recidivism prediction tools?",
+        "options": ["They underestimate risk for all groups equally", "They assign higher risk scores to Black defendants even when controlling for criminal history", "They only work for white defendants", "They have no statistical basis"],
+        "answer": 1,
+        "explanation": "Nghiên cứu cho thấy công cụ 'assign higher risk scores to Black defendants even when controlling for prior criminal history'."
+      },
+      {
+        "id": "pl-r-c2-005-q3",
+        "question": "What is the fundamental challenge with algorithmic decision-making based on historical data?",
+        "options": ["Algorithms are too slow to be practical", "Algorithms trained on biased data perpetuate and amplify existing inequalities", "Algorithms are too expensive to implement", "Algorithms cannot process enough data"],
+        "answer": 1,
+        "explanation": "Thách thức cơ bản: 'algorithms trained on historically biased data will inevitably perpetuate and potentially amplify the very inequalities they were designed to mitigate'."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-c2-006",
+    "skill": "reading",
+    "level": "C2",
+    "passage": "The 'hard problem of consciousness,' a term coined by philosopher David Chalmers, refers to the question of why and how physical processes in the brain give rise to subjective experience. While neuroscience has made significant progress in explaining the 'easy problems' — how the brain processes sensory information, controls behavior, and integrates memories — the hard problem remains largely unsolved. Why does the experience of seeing red have a qualitative feel? Why isn't the brain simply a complex information-processing machine that operates without any accompanying inner experience? Various theoretical frameworks have been proposed: integrated information theory suggests consciousness corresponds to the degree of integrated information in a system; global workspace theory posits that consciousness arises when information is broadcast across multiple brain regions; and panpsychism provocatively suggests that consciousness is a fundamental property of all matter, not unique to biological organisms.",
+    "questions": [
+      {
+        "id": "pl-r-c2-006-q1",
+        "question": "What does the 'hard problem of consciousness' ask?",
+        "options": ["How the brain stores memories", "Why and how physical brain processes give rise to subjective experience", "How consciousness can be measured", "Whether consciousness exists in animals"],
+        "answer": 1,
+        "explanation": "Hard problem hỏi 'why and how physical processes in the brain give rise to subjective experience' (tại sao và bằng cách nào quá trình vật lý trong não tạo ra trải nghiệm chủ quan)."
+      },
+      {
+        "id": "pl-r-c2-006-q2",
+        "question": "What does integrated information theory propose about consciousness?",
+        "options": ["Consciousness only exists in humans", "Consciousness corresponds to the degree of integrated information in a system", "Consciousness is an illusion created by the brain", "Consciousness requires a biological body"],
+        "answer": 1,
+        "explanation": "Integrated information theory cho rằng 'consciousness corresponds to the degree of integrated information in a system'."
+      },
+      {
+        "id": "pl-r-c2-006-q3",
+        "question": "What is the core claim of panpsychism?",
+        "options": ["Only humans have consciousness", "Consciousness is unique to complex organisms", "Consciousness is a fundamental property of all matter", "Consciousness can be artificially created"],
+        "answer": 2,
+        "explanation": "Panpsychism gợi ý rằng 'consciousness is a fundamental property of all matter' (ý thức là thuộc tính cơ bản của tất cả vật chất)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-c2-007",
+    "skill": "reading",
+    "level": "C2",
+    "passage": "The philosophy of technology has increasingly grappled with the concept of 'technological somnambulism,' a term coined by Langdon Winner to describe how societies often adopt new technologies without critically examining their political and ethical implications. Winner argued that artifacts have politics: the design of the Long Island parkways, with their unusually low overpasses, effectively prevented public buses from reaching certain beaches, thereby excluding poor and minority communities. This example illustrates how seemingly neutral technical decisions can encode and entrench social hierarchies. In the contemporary context, algorithmic systems in hiring, lending, and criminal justice similarly embed contested values within ostensibly objective computational processes, raising questions about accountability, transparency, and the distribution of power in an increasingly automated world.",
+    "questions": [
+      {
+        "id": "pl-r-c2-007-q1",
+        "question": "What does 'technological somnambulism' describe?",
+        "options": ["How societies deliberately choose harmful technologies", "How societies adopt new technologies without critically examining their political and ethical implications", "How technology improves sleep quality", "How engineers design sleep-related products"],
+        "answer": 1,
+        "explanation": "'Technological somnambulism' mô tả cách xã hội 'adopt new technologies without critically examining their political and ethical implications'."
+      },
+      {
+        "id": "pl-r-c2-007-q2",
+        "question": "What was the political consequence of the Long Island parkway design?",
+        "options": ["It improved public transportation", "It effectively prevented buses from reaching beaches, excluding poor and minority communities", "It reduced traffic accidents", "It increased property values"],
+        "answer": 1,
+        "explanation": "Thiết kế cầu thấp ngăn xe buýt công cộng đến bãi biển, 'thereby excluding poor and minority communities'."
+      },
+      {
+        "id": "pl-r-c2-007-q3",
+        "question": "What broader point does the author make about algorithmic systems?",
+        "options": ["They are always fair and objective", "They embed contested values within ostensibly objective computational processes", "They only affect wealthy individuals", "They eliminate all forms of discrimination"],
+        "answer": 1,
+        "explanation": "Các hệ thống thuật toán 'embed contested values within ostensibly objective computational processes' (nhúng các giá trị gây tranh cãi vào quy trình tính toán khách quan bề ngoài)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-c2-008",
+    "skill": "reading",
+    "level": "C2",
+    "passage": "The concept of 'epistemic injustice,' developed by philosopher Miranda Fricker, identifies two distinct forms of harm that occur in the domain of knowledge. 'Testimonial injustice' arises when a speaker's credibility is deflated due to prejudice on the part of the hearer — for example, when a woman's technical expertise is systematically undervalued in a male-dominated workplace. 'Hermeneutical injustice' occurs when gaps in collective interpretive resources prevent individuals from making sense of their own social experiences — as when sexual harassment lacked a conceptual framework before the term was coined in the 1970s. Fricker argues that these forms of injustice are not merely interpersonal wrongs but structural features of social institutions that systematically disadvantage certain groups in their capacity as knowers.",
+    "questions": [
+      {
+        "id": "pl-r-c2-008-q1",
+        "question": "What is 'testimonial injustice'?",
+        "options": ["When a speaker lies under oath", "When a speaker's credibility is deflated due to prejudice on the part of the hearer", "When testimony is given in the wrong language", "When witnesses forget important details"],
+        "answer": 1,
+        "explanation": "'Testimonial injustice' xảy ra khi 'a speaker's credibility is deflated due to prejudice on the part of the hearer' (uy tín người nói bị hạ thấp do thiên kiến của người nghe)."
+      },
+      {
+        "id": "pl-r-c2-008-q2",
+        "question": "What is an example of hermeneutical injustice?",
+        "options": ["A witness lying in court", "Sexual harassment lacking a conceptual framework before the term was coined", "A student forgetting exam answers", "A professor misquoting a source"],
+        "answer": 1,
+        "explanation": "Ví dụ: 'sexual harassment lacked a conceptual framework before the term was coined in the 1970s' (quấy rối tình dục thiếu khung khái niệm trước khi thuật ngữ được đặt ra)."
+      },
+      {
+        "id": "pl-r-c2-008-q3",
+        "question": "According to Fricker, what is the broader nature of epistemic injustice?",
+        "options": ["It is purely an individual moral failing", "It is a structural feature of social institutions that systematically disadvantages certain groups", "It only occurs in academic settings", "It affects all groups equally"],
+        "answer": 1,
+        "explanation": "Fricker lập luận rằng đây là 'structural features of social institutions that systematically disadvantage certain groups in their capacity as knowers'."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-c2-009",
+    "skill": "reading",
+    "level": "C2",
+    "passage": "The 'paradox of value,' first articulated by Adam Smith in The Wealth of Nations, observes that water — essential to survival — is cheap, while diamonds — largely decorative — command enormous prices. The classical resolution, developed by marginalist economists in the 1870s, distinguishes between total utility and marginal utility: because water is abundant, the marginal utility of one additional unit is low, whereas the scarcity of diamonds ensures that each unit retains high marginal value. This framework has been extended to explain seemingly irrational market phenomena, from the pricing of NFTs to the valuation of pharmaceutical patents. More recently, behavioral economists have complicated the picture by demonstrating that willingness to pay is heavily influenced by framing effects, anchoring, and reference points — factors that depart significantly from the rational-agent model underlying classical marginalist theory.",
+    "questions": [
+      {
+        "id": "pl-r-c2-009-q1",
+        "question": "What is the paradox of value?",
+        "options": ["Why diamonds are more useful than water", "Why water, essential to survival, is cheap while diamonds, largely decorative, are expensive", "Why all commodities have the same price", "Why prices fluctuate over time"],
+        "answer": 1,
+        "explanation": "Nghịch lý giá trị: tại sao nước (cần thiết cho sự sống) rẻ nhưng kim cương (chủ yếu trang trí) lại đắt."
+      },
+      {
+        "id": "pl-r-c2-009-q2",
+        "question": "How does marginalist theory resolve the paradox?",
+        "options": ["By arguing that diamonds are actually more useful", "By distinguishing between total and marginal utility based on scarcity", "By claiming the paradox doesn't exist", "By saying prices are arbitrary"],
+        "answer": 1,
+        "explanation": "Lý thuyết marginalist giải quyết bằng cách 'distinguishes between total utility and marginal utility' dựa trên sự khan hiếm."
+      },
+      {
+        "id": "pl-r-c2-009-q3",
+        "question": "What do behavioral economists add to the classical model?",
+        "options": ["They prove the model is completely wrong", "They show willingness to pay is influenced by framing, anchoring, and reference points", "They confirm all classical assumptions", "They eliminate the need for pricing theory"],
+        "answer": 1,
+        "explanation": "Kinh tế học hành vi cho thấy 'willingness to pay is influenced by framing effects, anchoring, and reference points'."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-c2-010",
+    "skill": "reading",
+    "level": "C2",
+    "passage": "The 'simulation hypothesis,' popularized by philosopher Nick Bostrom, proposes that advanced civilizations capable of running detailed simulations of their ancestors would likely create vast numbers of them, such that simulated beings would vastly outnumber biological ones. From a probabilistic standpoint, this means that any given conscious being — including ourselves — is more likely to be a simulation than a 'base reality' organism. Critics have raised numerous objections: the computational resources required for a civilization-wide simulation may be physically impossible; the hypothesis is empirically unfalsifiable, since any evidence of simulation could be designed to appear natural; and the argument rests on the assumption that consciousness can be fully replicated in a computational substrate, which remains a deeply contested philosophical claim. Despite these objections, the simulation hypothesis has stimulated productive interdisciplinary dialogue between philosophy, physics, and computer science.",
+    "questions": [
+      {
+        "id": "pl-r-c2-010-q1",
+        "question": "What does the simulation hypothesis propose?",
+        "options": ["That we are living in a video game", "That advanced civilizations would create many simulations, making simulated beings vastly outnumber biological ones", "That computers will never be powerful enough to simulate reality", "That simulations can only model physical systems, not consciousness"],
+        "answer": 1,
+        "explanation": "Giả thuyết giả lập cho rằng 'advanced civilizations... would create vast numbers of simulations, such that simulated beings would vastly outnumber biological ones'."
+      },
+      {
+        "id": "pl-r-c2-010-q2",
+        "question": "What is one criticism of the simulation hypothesis?",
+        "options": ["It is too easily proven", "It is empirically unfalsifiable since any evidence could be designed to appear natural", "It has been disproven by physicists", "It contradicts quantum mechanics"],
+        "answer": 1,
+        "explanation": "Một phê bình là giả thuyết 'empirically unfalsifiable' (không thể bác bỏ thực nghiệm) vì bất kỳ bằng chứng nào cũng có thể được thiết kế để trông tự nhiên."
+      },
+      {
+        "id": "pl-r-c2-010-q3",
+        "question": "What assumption does the simulation hypothesis rest on?",
+        "options": ["That the universe is infinite", "That consciousness can be fully replicated in a computational substrate", "That all civilizations are technologically advanced", "That simulations are always cheaper than reality"],
+        "answer": 1,
+        "explanation": "Giả thuyết dựa trên giả định 'that consciousness can be fully replicated in a computational substrate' (ý thức có thể được sao chép hoàn toàn trong nền tảng tính toán)."
+      }
+    ]
   }
 ]

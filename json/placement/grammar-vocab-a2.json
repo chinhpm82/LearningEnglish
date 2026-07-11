@@ -48,5 +48,155 @@
     "options": ["watch", "watched", "were watching", "are watching"],
     "answer": 2,
     "explanation": "Hành động đang xảy ra trong quá khứ (were watching) thì bị ngắt bởi hành động khác (the phone rang) → thì quá khứ tiếp diễn."
+  },
+  {
+    "id": "pl-gv-a2-006",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "sentence_completion",
+    "question": "She ______ already finished her homework before dinner.",
+    "options": ["has", "have", "had", "is"],
+    "answer": 2,
+    "explanation": "Thì quá khứ đơn 'had finished' vì hành động hoàn thành trước một thời điểm trong quá khứ (before dinner)."
+  },
+  {
+    "id": "pl-gv-a2-007",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "word_choice",
+    "question": "I need to ______ some money from the bank tomorrow.",
+    "options": ["borrow", "lend", "take", "bring"],
+    "answer": 0,
+    "explanation": "'Borrow' (mượn) là nhận tiền từ ngân hàng. 'Lend' (cho vay) là cho người khác mượn."
+  },
+  {
+    "id": "pl-gv-a2-008",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "sentence_completion",
+    "question": "He has ______ to Paris three times.",
+    "options": ["been", "gone", "went", "going"],
+    "answer": 0,
+    "explanation": "Cấu trúc 'has been to' nghĩa là đã từng đi đến (đã về rồi). 'Has gone to' nghĩa là đã đi và vẫn đang ở đó."
+  },
+  {
+    "id": "pl-gv-a2-009",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "error_correction",
+    "question": "Which sentence has a grammar mistake?",
+    "options": ["We was at the park yesterday.", "They didn't come to the party.", "I can swim very well.", "She is reading a book."],
+    "answer": 0,
+    "explanation": "Câu sai: 'We was at the park.' → Phải dùng 'were' vì 'We' là chủ ngữ số nhiều: 'We were at the park yesterday.'"
+  },
+  {
+    "id": "pl-gv-a2-010",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "word_choice",
+    "question": "This restaurant is ______ than the one we went to last week.",
+    "options": ["good", "better", "best", "more good"],
+    "answer": 1,
+    "explanation": "So sánh hơn của tính từ bất quy tắc 'good' là 'better' (tốt hơn)."
+  },
+  {
+    "id": "pl-gv-a2-011",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "sentence_completion",
+    "question": "I ______ to the supermarket yesterday and bought some milk.",
+    "options": ["go", "went", "have gone", "am going"],
+    "answer": 1,
+    "explanation": "Thời gian xác định 'yesterday' → dùng thì quá khứ đơn: 'went'."
+  },
+  {
+    "id": "pl-gv-a2-012",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "word_choice",
+    "question": "Please turn ______ the lights. It is too bright in here.",
+    "options": ["on", "off", "up", "down"],
+    "answer": 1,
+    "explanation": "'Turn off' (tắt) ánh sáng khi quá sáng (too bright)."
+  },
+  {
+    "id": "pl-gv-a2-013",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "sentence_completion",
+    "question": "If you ______ hard, you will pass the exam.",
+    "options": ["study", "studied", "will study", "are studying"],
+    "answer": 0,
+    "explanation": "Câu điều kiện loại 1: If + hiện tại đơn (study), will + V nguyên thể (will pass)."
+  },
+  {
+    "id": "pl-gv-a2-014",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "sentence_completion",
+    "question": "She asked me where I ______ from.",
+    "options": ["come", "came", "comes", "coming"],
+    "answer": 1,
+    "explanation": "Tân ngữ gián tiếp: she asked me → đổi thì (backshift): come → came."
+  },
+  {
+    "id": "pl-gv-a2-015",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "word_choice",
+    "question": "I am looking ______ to meeting you next weekend.",
+    "options": ["at", "for", "forward", "up"],
+    "answer": 2,
+    "explanation": "Cụm cố định 'look forward to' (mong chờ) + V-ing."
+  },
+  {
+    "id": "pl-gv-a2-016",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "sentence_completion",
+    "question": "We have been friends ______ ten years.",
+    "options": ["since", "for", "from", "during"],
+    "answer": 1,
+    "explanation": "'For' dùng với khoảng thời gian (ten years). 'Since' dùng với thời điểm xác định."
+  },
+  {
+    "id": "pl-gv-a2-017",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "error_correction",
+    "question": "Which sentence has a grammar mistake?",
+    "options": ["I have lived here since 2020.", "He don't have any pets.", "She went to the store.", "They are playing in the garden."],
+    "answer": 1,
+    "explanation": "Câu sai: 'He don't have any pets.' → Phải dùng 'doesn't' với ngôi thứ ba số ít: 'He doesn't have any pets.'"
+  },
+  {
+    "id": "pl-gv-a2-018",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "sentence_completion",
+    "question": "The children ______ playing outside when it started to rain.",
+    "options": ["is", "are", "were", "was"],
+    "answer": 2,
+    "explanation": "Chủ ngữ số nhiều 'The children' + quá khứ tiếp diễn: 'were playing'."
+  },
+  {
+    "id": "pl-gv-a2-019",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "word_choice",
+    "question": "The weather is getting ______. I think it will rain soon.",
+    "options": ["colder", "coldest", "coldly", "more cold"],
+    "answer": 0,
+    "explanation": "So sánh hơn của 'cold' là 'colder' (trời đang lạnh hơn)."
+  },
+  {
+    "id": "pl-gv-a2-020",
+    "skill": "grammar_vocab",
+    "level": "A2",
+    "type": "sentence_completion",
+    "question": "I ______ never been to Japan, but I want to visit someday.",
+    "options": ["have", "has", "had", "am"],
+    "answer": 0,
+    "explanation": "Cấu trúc 'have never been to' (đã bao giờ đến): I have never been to Japan."
   }
 ]

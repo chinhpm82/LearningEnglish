@@ -56,5 +56,237 @@
         "explanation": "Câu 'the full health implications remain under investigation' và 'preliminary research suggests' cho thấy nghiên cứu vẫn ở giai đoạn đầu."
       }
     ]
+  },
+  {
+    "id": "pl-r-b2-003",
+    "skill": "reading",
+    "level": "B2",
+    "passage": "The rise of remote work has fundamentally transformed the traditional office landscape. A Stanford study found that remote workers are, on average, 13% more productive than their in-office counterparts, largely due to fewer distractions and eliminated commute times. However, the shift has also introduced new challenges. The boundary between work and personal life has blurred for many employees, leading to what researchers call 'always-on' syndrome. Companies are now grappling with how to maintain team cohesion and corporate culture when employees rarely meet in person.",
+    "questions": [
+      {
+        "id": "pl-r-b2-003-q1",
+        "question": "How much more productive are remote workers compared to office workers?",
+        "options": ["5%", "8%", "13%", "20%"],
+        "answer": 2,
+        "explanation": "Nghiên cứu Stanford cho thấy nhân viên làm việc từ xa năng suất hơn '13%'."
+      },
+      {
+        "id": "pl-r-b2-003-q2",
+        "question": "What is 'always-on' syndrome?",
+        "options": ["Working from the office every day", "The blurring of boundaries between work and personal life", "A new type of office equipment", "A management training program"],
+        "answer": 1,
+        "explanation": "'Always-on' syndrome là sự mờ nhạt ranh giới giữa công việc và đời sống cá nhân."
+      },
+      {
+        "id": "pl-r-b2-003-q3",
+        "question": "What challenge are companies facing with remote work?",
+        "options": ["How to reduce office rent", "How to maintain team cohesion and corporate culture", "How to fire remote employees", "How to increase salaries"],
+        "answer": 1,
+        "explanation": "Các công ty đang vật lộn với việc 'maintain team cohesion and corporate culture' (duy trì sự gắn kết nhóm và văn hóa doanh nghiệp)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-b2-004",
+    "skill": "reading",
+    "level": "B2",
+    "passage": "Artificial intelligence is revolutionizing healthcare diagnostics. Machine learning algorithms can now detect certain cancers from medical images with accuracy rates exceeding those of experienced radiologists. In one study, an AI system identified breast cancer in mammograms with 94.5% accuracy compared to 88% for human doctors. Beyond imaging, AI is being used to predict patient deterioration, optimize treatment plans, and accelerate drug discovery. However, concerns remain about algorithmic bias, as many AI systems are trained predominantly on data from specific demographic groups, potentially leading to less accurate diagnoses for underrepresented populations.",
+    "questions": [
+      {
+        "id": "pl-r-b2-004-q1",
+        "question": "How accurate was the AI system in detecting breast cancer?",
+        "options": ["88%", "90.5%", "94.5%", "98%"],
+        "answer": 2,
+        "explanation": "Hệ thống AI phát hiện ung thư vú với độ chính xác '94.5%'."
+      },
+      {
+        "id": "pl-r-b2-004-q2",
+        "question": "What concern does the passage raise about AI in healthcare?",
+        "options": ["It is too expensive to implement", "Algorithmic bias due to training data from specific demographic groups", "It will replace all doctors immediately", "It cannot process medical images"],
+        "answer": 1,
+        "explanation": "Lo ngại là 'algorithmic bias' do dữ liệu huấn luyện chủ yếu từ nhóm nhân khẩu học cụ thể."
+      },
+      {
+        "id": "pl-r-b2-004-q3",
+        "question": "Which of the following is NOT mentioned as an AI application in healthcare?",
+        "options": ["Detecting cancers from medical images", "Predicting patient deterioration", "Performing surgical operations", "Accelerating drug discovery"],
+        "answer": 2,
+        "explanation": "Đoạn văn không đề cập đến việc AI 'performing surgical operations' (thực hiện phẫu thuật)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-b2-005",
+    "skill": "reading",
+    "level": "B2",
+    "passage": "The concept of food security has become increasingly urgent as the global population approaches 10 billion by 2050. Traditional agriculture faces numerous threats, including climate change, soil degradation, and water scarcity. Vertical farming, which involves growing crops in stacked layers within controlled indoor environments, offers a promising solution. These farms use up to 95% less water than conventional agriculture and can produce crops year-round regardless of weather conditions. However, critics argue that vertical farming is energy-intensive and currently limited to leafy greens and herbs, making it insufficient to address global food security on its own.",
+    "questions": [
+      {
+        "id": "pl-r-b2-005-q1",
+        "question": "What is the projected global population by 2050?",
+        "options": ["8 billion", "9 billion", "10 billion", "12 billion"],
+        "answer": 2,
+        "explanation": "Dân số toàn cầu được dự báo đạt '10 billion' (10 tỷ) vào năm 2050."
+      },
+      {
+        "id": "pl-r-b2-005-q2",
+        "question": "What is one advantage of vertical farming?",
+        "options": ["It uses less energy than traditional farming", "It can produce crops year-round regardless of weather", "It grows all types of food", "It requires no electricity"],
+        "answer": 1,
+        "explanation": "Ưu điểm của canh tác thẳng đứng: 'produce crops year-round regardless of weather conditions'."
+      },
+      {
+        "id": "pl-r-b2-005-q3",
+        "question": "What limitation of vertical farming is mentioned?",
+        "options": ["It uses too much water", "It is currently limited to leafy greens and herbs", "It cannot grow crops indoors", "It requires too much land"],
+        "answer": 1,
+        "explanation": "Giới hạn: vertical farming 'currently limited to leafy greens and herbs' (hiện chỉ trồng được rau lá và thảo mộc)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-b2-006",
+    "skill": "reading",
+    "level": "B2",
+    "passage": "The gig economy has reshaped the relationship between workers and employers. Platforms like Uber, Fiverr, and TaskRabbit have created millions of short-term, flexible jobs. For many workers, this flexibility is appealing, allowing them to choose when and how much they work. However, gig workers typically lack traditional employment benefits such as health insurance, paid leave, and retirement plans. The classification of gig workers as independent contractors rather than employees has become a major legal and political battleground, with some jurisdictions passing legislation to extend protections to these workers.",
+    "questions": [
+      {
+        "id": "pl-r-b2-006-q1",
+        "question": "What is the main appeal of the gig economy for workers?",
+        "options": ["Higher salaries", "Health insurance benefits", "Flexibility in choosing when and how much to work", "Job security"],
+        "answer": 2,
+        "explanation": "Sự hấp dẫn chính là 'flexibility in choosing when and how much they work' (linh hoạt chọn thời gian và khối lượng làm việc)."
+      },
+      {
+        "id": "pl-r-b2-006-q2",
+        "question": "What benefits do gig workers typically lack?",
+        "options": ["Training opportunities", "Health insurance, paid leave, and retirement plans", "Access to the internet", "Flexible schedules"],
+        "answer": 1,
+        "explanation": "Gig workers thường thiếu 'health insurance, paid leave, and retirement plans' (bảo hiểm sức khỏe, nghỉ phép có lương, và kế hoạch hưu trí)."
+      },
+      {
+        "id": "pl-r-b2-006-q3",
+        "question": "What legal issue is mentioned regarding gig workers?",
+        "options": ["They are not allowed to work in certain countries", "Their classification as independent contractors vs. employees", "They must pay double taxes", "They are prohibited from joining unions"],
+        "answer": 1,
+        "explanation": "Vấn đề pháp lý chính là 'classification as independent contractors rather than employees' (phân loại là nhà thầu độc lập thay vì nhân viên)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-b2-007",
+    "skill": "reading",
+    "level": "B2",
+    "passage": "The phenomenon of 'doomscrolling' — the compulsive consumption of negative news — has intensified during the era of social media and 24-hour news cycles. Psychologists explain that humans have a natural negativity bias, which made sense in evolutionary terms when detecting threats was crucial for survival. In the modern world, however, this bias means that people are disproportionately drawn to alarming headlines. Studies have linked excessive doomscrolling to increased rates of anxiety, depression, and sleep disruption. Experts recommend setting specific times for news consumption, taking regular digital detox breaks, and curating news sources to include positive and solution-focused journalism.",
+    "questions": [
+      {
+        "id": "pl-r-b2-007-q1",
+        "question": "What is 'doomscrolling'?",
+        "options": ["Reading positive news articles", "The compulsive consumption of negative news", "Scrolling through social media photos", "Avoiding news entirely"],
+        "answer": 1,
+        "explanation": "'Doomscrolling' là 'the compulsive consumption of negative news' (tiêu thụ tin tức tiêu cực một cách compulsive)."
+      },
+      {
+        "id": "pl-r-b2-007-q2",
+        "question": "Why are people naturally drawn to negative news?",
+        "options": ["They enjoy being scared", "Humans have a natural negativity bias from evolution", "Negative news is always more accurate", "Social media algorithms block positive news"],
+        "answer": 1,
+        "explanation": "Con người có 'natural negativity bias' (thiên kiến tiêu cực tự nhiên) từ thời tiến hóa."
+      },
+      {
+        "id": "pl-r-b2-007-q3",
+        "question": "Which of the following is NOT recommended to combat doomscrolling?",
+        "options": ["Setting specific times for news consumption", "Taking regular digital detox breaks", "Following more negative news accounts", "Curating news sources to include positive journalism"],
+        "answer": 2,
+        "explanation": "Đoạn văn KHÔNG khuyến khích 'following more negative news accounts' (theo dõi thêm tài khoản tin tức tiêu cực)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-b2-008",
+    "skill": "reading",
+    "level": "B2",
+    "passage": "The world's coral reefs, often called the 'rainforests of the sea,' support approximately 25% of all marine species despite covering less than 1% of the ocean floor. Rising ocean temperatures caused by climate change have triggered mass coral bleaching events with increasing frequency. When water temperatures rise even 1-2 degrees above normal, corals expel the symbiotic algae that provide them with food and color, turning white and eventually dying if conditions do not improve. The Great Barrier Reef alone has experienced five mass bleaching events since 2016, raising urgent questions about the long-term survival of these vital ecosystems.",
+    "questions": [
+      {
+        "id": "pl-r-b2-008-q1",
+        "question": "What percentage of marine species do coral reefs support?",
+        "options": ["About 10%", "About 15%", "About 25%", "About 50%"],
+        "answer": 2,
+        "explanation": "San hô hỗ trợ khoảng '25% of all marine species' (25% các loài sinh vật biển)."
+      },
+      {
+        "id": "pl-r-b2-008-q2",
+        "question": "What causes coral bleaching?",
+        "options": ["Water pollution", "Rising ocean temperatures", "Overfishing", "Earthquakes"],
+        "answer": 1,
+        "explanation": "Tẩy trắng san hô do 'rising ocean temperatures caused by climate change' (nhiệt độ đại dương tăng do biến đổi khí hậu)."
+      },
+      {
+        "id": "pl-r-b2-008-q3",
+        "question": "How many mass bleaching events has the Great Barrier Reef experienced since 2016?",
+        "options": ["Three", "Four", "Five", "Six"],
+        "answer": 2,
+        "explanation": "Rạn san hô Great Barrier đã trải qua 'five mass bleaching events since 2016' (5 sự kiện tẩy trắng từ 2016)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-b2-009",
+    "skill": "reading",
+    "level": "B2",
+    "passage": "Universal basic income (UBI) has gained significant attention as automation threatens to displace millions of workers worldwide. The concept involves providing every citizen with a regular cash payment regardless of employment status. Proponents argue that UBI would provide a safety net during economic transitions, reduce poverty, and give workers the freedom to pursue education or retraining. Critics, however, contend that UBI would be prohibitively expensive, could reduce the incentive to work, and might lead to inflation. Several pilot programs in Finland, Kenya, and Stockton, California have provided preliminary data, though conclusive evidence about its long-term effects remains elusive.",
+    "questions": [
+      {
+        "id": "pl-r-b2-009-q1",
+        "question": "What is the core idea of Universal Basic Income?",
+        "options": ["Providing jobs to all citizens", "Giving every citizen a regular cash payment regardless of employment status", "Reducing taxes for low-income families", "Offering free education to everyone"],
+        "answer": 1,
+        "explanation": "Ý tưởng cốt lõi là 'providing every citizen with a regular cash payment regardless of employment status' (cho mọi công dân một khoản tiền thường xuyên bất kể tình trạng việc làm)."
+      },
+      {
+        "id": "pl-r-b2-009-q2",
+        "question": "What is one argument AGAINST UBI?",
+        "options": ["It would reduce poverty too quickly", "It could reduce the incentive to work", "It would create too many jobs", "It would increase employment rates"],
+        "answer": 1,
+        "explanation": "Một lập luận phản đối là UBI 'could reduce the incentive to work' (có thể giảm động lực làm việc)."
+      },
+      {
+        "id": "pl-r-b2-009-q3",
+        "question": "What is the current status of UBI evidence?",
+        "options": ["It has been proven to work perfectly", "Preliminary data exists but conclusive evidence remains elusive", "No experiments have been conducted", "All pilot programs have failed"],
+        "answer": 1,
+        "explanation": "Dữ liệu sơ bộ có sẵn nhưng 'conclusive evidence about its long-term effects remains elusive' (bằng chứng kết luận về tác động dài hạn vẫn khó nắm bắt)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-b2-010",
+    "skill": "reading",
+    "level": "B2",
+    "passage": "The digital divide — the gap between those who have access to modern technology and those who do not — has emerged as a critical social issue. While internet penetration has increased dramatically worldwide, significant disparities persist based on geography, income, and age. Rural communities often lack reliable broadband infrastructure, and many low-income families cannot afford devices or data plans. During the COVID-19 pandemic, this divide became particularly visible as millions of students were unable to participate in online learning due to inadequate technology access. Bridging the digital divide is now considered essential for achieving economic equity and ensuring equal educational opportunities.",
+    "questions": [
+      {
+        "id": "pl-r-b2-010-q1",
+        "question": "What is the digital divide?",
+        "options": ["The difference between old and new technology", "The gap between those with and without access to modern technology", "The speed difference between internet providers", "The gap between computer engineers and regular users"],
+        "answer": 1,
+        "explanation": "Khoảng cách kỹ thuật số là 'the gap between those who have access to modern technology and those who do not'."
+      },
+      {
+        "id": "pl-r-b2-010-q2",
+        "question": "How did the COVID-19 pandemic highlight the digital divide?",
+        "options": ["More people bought technology", "Millions of students couldn't participate in online learning", "Internet speed improved for everyone", "Schools closed permanently"],
+        "answer": 1,
+        "explanation": "Pandemic làm lộ rõ khoảng cách khi 'millions of students were unable to participate in online learning'."
+      },
+      {
+        "id": "pl-r-b2-010-q3",
+        "question": "Why is bridging the digital divide important?",
+        "options": ["To make technology cheaper", "For achieving economic equity and equal educational opportunities", "To reduce the number of technology companies", "To make everyone become programmers"],
+        "answer": 1,
+        "explanation": "Đóng khoảng cách kỹ thuật số là 'essential for achieving economic equity and ensuring equal educational opportunities'."
+      }
+    ]
   }
 ]

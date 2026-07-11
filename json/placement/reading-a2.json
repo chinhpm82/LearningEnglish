@@ -78,5 +78,208 @@
         "explanation": "Đoạn văn nói 'on weekends it is always full' (cuối tuần luôn đầy khách)."
       }
     ]
+  },
+  {
+    "id": "pl-r-a2-004",
+    "skill": "reading",
+    "level": "A2",
+    "passage": "Last weekend, Sarah went to a farm with her class. She saw cows, horses, and sheep. She milked a cow for the first time. The farmer showed them how to make butter from fresh milk. Sarah bought some eggs and jam to take home. She had a wonderful time and wants to go back.",
+    "questions": [
+      {
+        "id": "pl-r-a2-004-q1",
+        "question": "Who did Sarah go to the farm with?",
+        "options": ["Her family", "Her friends", "Her class", "Her teacher alone"],
+        "answer": 2,
+        "explanation": "Sarah đi trang trại với lớp học: 'Sarah went to a farm with her class'."
+      },
+      {
+        "id": "pl-r-a2-004-q2",
+        "question": "What did Sarah do for the first time?",
+        "options": ["She rode a horse", "She milked a cow", "She picked apples", "She fed the chickens"],
+        "answer": 1,
+        "explanation": "Sarah vắt sữa bò lần đầu tiên: 'She milked a cow for the first time'."
+      },
+      {
+        "id": "pl-r-a2-004-q3",
+        "question": "What did Sarah buy to take home?",
+        "options": ["Milk and cheese", "Butter and cream", "Eggs and jam", "Fruit and vegetables"],
+        "answer": 2,
+        "explanation": "Sarah mua 'eggs and jam' (trứng và mứt) mang về nhà."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-a2-005",
+    "skill": "reading",
+    "level": "A2",
+    "passage": "Hai has a new hobby. He is learning to play the guitar. His music teacher teaches him every Saturday morning. He practices for one hour every day after school. At first, it was very difficult, but now he can play three simple songs. He wants to play in the school concert next month.",
+    "questions": [
+      {
+        "id": "pl-r-a2-005-q1",
+        "question": "What is Hai's new hobby?",
+        "options": ["Playing the piano", "Playing the guitar", "Playing the drums", "Playing the violin"],
+        "answer": 1,
+        "explanation": "Hai đang học chơi guitar: 'He is learning to play the guitar'."
+      },
+      {
+        "id": "pl-r-a2-005-q2",
+        "question": "How often does Hai practice?",
+        "options": ["Every day for two hours", "Three times a week", "Every day for one hour", "Only on Saturdays"],
+        "answer": 2,
+        "explanation": "Hai tập 'every day for one hour' (mỗi ngày một tiếng)."
+      },
+      {
+        "id": "pl-r-a2-005-q3",
+        "question": "How many songs can Hai play now?",
+        "options": ["One", "Two", "Three", "Four"],
+        "answer": 2,
+        "explanation": "Bây giờ Hai đã chơi được 'three simple songs' (ba bài hát đơn giản)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-a2-006",
+    "skill": "reading",
+    "level": "A2",
+    "passage": "The weather forecast says it will be sunny tomorrow. Tom wants to have a picnic at the park. He will invite his friends at 8 AM. They will bring sandwiches, fruit, and drinks. Tom will bring a football so they can play games after lunch. Everyone is excited about the picnic.",
+    "questions": [
+      {
+        "id": "pl-r-a2-006-q1",
+        "question": "What will the weather be like tomorrow?",
+        "options": ["Rainy", "Cloudy", "Sunny", "Windy"],
+        "answer": 2,
+        "explanation": "Dự báo thời tiết nói 'it will be sunny tomorrow' (ngày mai trời nắng)."
+      },
+      {
+        "id": "pl-r-a2-006-q2",
+        "question": "Where will Tom have the picnic?",
+        "options": ["At the beach", "At the park", "At school", "At his house"],
+        "answer": 1,
+        "explanation": "Tom muốn tổ chức picnic 'at the park' (ở công viên)."
+      },
+      {
+        "id": "pl-r-a2-006-q3",
+        "question": "What will Tom bring for games?",
+        "options": ["A basketball", "A football", "A tennis racket", "A volleyball"],
+        "answer": 1,
+        "explanation": "Tom sẽ mang 'a football' (quả bóng đá) để chơi games."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-a2-007",
+    "skill": "reading",
+    "level": "A2",
+    "passage": "Linda works at a bookstore. She starts work at 9 AM and finishes at 5 PM. She helps customers find books they want. Her favorite part of the job is reading new books before they go on the shelves. Sometimes she recommends books to customers. She thinks reading is the best way to learn new things.",
+    "questions": [
+      {
+        "id": "pl-r-a2-007-q1",
+        "question": "Where does Linda work?",
+        "options": ["At a restaurant", "At a bookstore", "At a hospital", "At a school"],
+        "answer": 1,
+        "explanation": "Linda làm việc ở 'a bookstore' (nhà sách)."
+      },
+      {
+        "id": "pl-r-a2-007-q2",
+        "question": "What is Linda's favorite part of her job?",
+        "options": ["Talking to customers", "Organizing shelves", "Reading new books before they go on sale", "Closing the store"],
+        "answer": 2,
+        "explanation": "Phần yêu thích nhất của Linda là 'reading new books before they go on the shelves' (đọc sách mới trước khi lên kệ)."
+      },
+      {
+        "id": "pl-r-a2-007-q3",
+        "question": "What does Linda believe about reading?",
+        "options": ["It is boring", "It is the best way to learn new things", "It takes too much time", "It is only for students"],
+        "answer": 1,
+        "explanation": "Linda tin rằng đọc sách là 'the best way to learn new things' (cách tốt nhất để học điều mới)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-a2-008",
+    "skill": "reading",
+    "level": "A2",
+    "passage": "My neighborhood has a new park. There is a playground for children and benches for parents. There are also many trees and a small lake with ducks. People go there to walk, run, or sit and read. In the evening, the park has beautiful lights. It is a nice place for families.",
+    "questions": [
+      {
+        "id": "pl-r-a2-008-q1",
+        "question": "What is new in the neighborhood?",
+        "options": ["A new school", "A new park", "A new restaurant", "A new library"],
+        "answer": 1,
+        "explanation": "Khu phố có 'a new park' mới."
+      },
+      {
+        "id": "pl-r-a2-008-q2",
+        "question": "What is in the park?",
+        "options": ["A swimming pool", "A playground, benches, trees, and a lake", "A cinema", "A gym"],
+        "answer": 1,
+        "explanation": "Park có 'playground, benches, trees, and a small lake' (sân chơi, ghế đá, cây, và hồ nhỏ)."
+      },
+      {
+        "id": "pl-r-a2-008-q3",
+        "question": "What does the park have in the evening?",
+        "options": ["Live music", "Beautiful lights", "A night market", "Fireworks"],
+        "answer": 1,
+        "explanation": "Buổi tối, park có 'beautiful lights' (đèn đẹp)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-a2-009",
+    "skill": "reading",
+    "level": "A2",
+    "passage": "David is learning to cook. His grandmother is teaching him traditional recipes. Last week, he learned to make chicken soup. It was delicious. Today, he is going to learn how to make fried rice. David wants to cook a special dinner for his parents next weekend.",
+    "questions": [
+      {
+        "id": "pl-r-a2-009-q1",
+        "question": "Who is teaching David to cook?",
+        "options": ["His mother", "His father", "His grandmother", "His sister"],
+        "answer": 2,
+        "explanation": "Bà của David đang dạy anh ấy nấu ăn: 'His grandmother is teaching him'."
+      },
+      {
+        "id": "pl-r-a2-009-q2",
+        "question": "What did David learn to make last week?",
+        "options": ["Fried rice", "Chicken soup", "Pizza", "Noodles"],
+        "answer": 1,
+        "explanation": "Tuần trước David học làm 'chicken soup' (súp gà)."
+      },
+      {
+        "id": "pl-r-a2-009-q3",
+        "question": "What does David want to do next weekend?",
+        "options": ["Go to a restaurant", "Cook dinner for his parents", "Visit his grandmother", "Have a party"],
+        "answer": 1,
+        "explanation": "David muốn 'cook a special dinner for his parents' (nấu bữa tối đặc biệt cho bố mẹ)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-a2-010",
+    "skill": "reading",
+    "level": "A2",
+    "passage": "The school library has a rule: students can borrow up to three books at a time. They must return the books within two weeks. If they return the books late, they have to pay a small fine. The library is open from Monday to Saturday, from 7:30 AM to 4:00 PM.",
+    "questions": [
+      {
+        "id": "pl-r-a2-010-q1",
+        "question": "How many books can students borrow at once?",
+        "options": ["One", "Two", "Three", "Four"],
+        "answer": 2,
+        "explanation": "Học sinh được mượn 'up to three books' (tối đa 3 cuốn)."
+      },
+      {
+        "id": "pl-r-a2-010-q2",
+        "question": "How long can students keep the books?",
+        "options": ["One week", "Two weeks", "Three weeks", "One month"],
+        "answer": 1,
+        "explanation": "Học sinh phải trả sách trong 'two weeks' (hai tuần)."
+      },
+      {
+        "id": "pl-r-a2-010-q3",
+        "question": "What happens if students return books late?",
+        "options": ["They cannot borrow books again", "They have to pay a small fine", "They lose the books", "They must clean the library"],
+        "answer": 1,
+        "explanation": "Nếu trả sách muộn, họ phải 'pay a small fine' (phạt tiền nhỏ)."
+      }
+    ]
   }
 ]

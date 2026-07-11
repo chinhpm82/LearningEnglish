@@ -23,13 +23,14 @@
 | # | Task | Ưu Tiên | Ghi chú |
 |---|---|:---:|---|
 | 1 | Thêm CEFR levels cho sentences | TRUNG | Hiện sentences chưa có level field |
-| 2 | Mở rộng placement test bank | TRUNG | Hiện 85 câu, cần ≥480 |
+| 2 | ~~Mở rộng placement test bank~~ | ✅ | Đã mở rộng: 85 → 252 câu |
 | 3 | Sửa vocabulary-data.json casing | THẤP | Inconsistent `A1` vs `a1` |
 | 4 | Loại bỏ synthetic filler sentences | THẤP | "We value your Xness" patterns |
 | 5 | Thêm adaptive practice cho grammar | TRUNG | Hiện calendar-based recommendation |
 | 6 | Cross-module analytics | CAO | Writing errors, quiz failures, flashcard resets |
 | 7 | writing.js AI integration | CAO | Hiện pure heuristic |
 | 8 | challenge.js CEFR matchmaking | TRUNG | Hiện random pairing |
+| 9 | Mở rộng listening placement bank | THẤP | Cần audio files — làm sau |
 
 ---
 

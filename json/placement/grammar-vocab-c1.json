@@ -48,5 +48,155 @@
     "options": ["should", "shall", "would", "could"],
     "answer": 0,
     "explanation": "Đảo ngữ với 'Under no circumstances' + trợ động từ + S + V: 'should the documents be shared' (tuyệt đối không được chia sẻ tài liệu)."
+  },
+  {
+    "id": "pl-gv-c1-006",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "word_choice",
+    "question": "The professor's lecture was so ______ that even students who usually fell asleep remained fully engaged throughout.",
+    "options": ["pedantic", "riveting", "mundane", "perfunctory"],
+    "answer": 1,
+    "explanation": "'Riveting' (hấp dẫn, lôi cuốn) phù hợp vì sinh viên thường ngủ gật vẫn chú ý lắng nghe cả buổi."
+  },
+  {
+    "id": "pl-gv-c1-007",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "sentence_completion",
+    "question": "The research findings ______ considerable skepticism among peer reviewers due to the small sample size.",
+    "options": ["invited", "provoked", "garnered", "elicited"],
+    "answer": 3,
+    "explanation": "'Elicited' (gợi ra, khơi gợi) phù hợp: các phát hiện nghiên cứu gợi ra sự hoài nghi đáng kể từ các nhà phê bình."
+  },
+  {
+    "id": "pl-gv-c1-008",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "word_choice",
+    "question": "The diplomat's ______ response to the journalist's provocative question demonstrated remarkable self-control.",
+    "options": ["vitriolic", "measured", "belligerent", "flippant"],
+    "answer": 1,
+    "explanation": "'Measured' (đo lường cẩn thận, điềm đạm) mô tả phản ứng thể hiện sự tự chủ đáng chú ý."
+  },
+  {
+    "id": "pl-gv-c1-009",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "sentence_completion",
+    "question": "So compelling was her presentation that the board members unanimously ______ the proposed initiative.",
+    "options": ["rejected", "endorsed", "postponed", "reconsidered"],
+    "answer": 1,
+    "explanation": "Đảo ngữ 'So compelling was her presentation that...' → kết quả tích cực: hội đồng 'endorsed' (ủng hộ) đề xuất."
+  },
+  {
+    "id": "pl-gv-c1-010",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "error_correction",
+    "question": "Which sentence has a grammar mistake?",
+    "options": ["The data, which were collected over five years, support the hypothesis.", "Neither the teacher nor the students was able to solve the equation.", "Had we known about the delay, we would have made alternative arrangements.", "The more one reads, the broader one's perspective becomes."],
+    "answer": 1,
+    "explanation": "Câu sai: 'neither...nor the students was' → Với 'neither...nor', động từ agrees với chủ ngữ gần nhất: 'neither the teacher nor the students were able'."
+  },
+  {
+    "id": "pl-gv-c1-011",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "word_choice",
+    "question": "The CEO's attempt to ______ the shareholders only intensified their mistrust of the company's leadership.",
+    "options": ["placate", "incriminate", "emulate", "corroborate"],
+    "answer": 0,
+    "explanation": "'Placate' (xoa dịu) phù hợp vì CEO cố gắng xoa dịu cổ đông nhưng chỉ làm họ mất tin tưởng hơn."
+  },
+  {
+    "id": "pl-gv-c1-012",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "sentence_completion",
+    "question": "Not until the findings were published ______ the magnitude of the environmental crisis become apparent to the public.",
+    "options": ["did", "was", "had", "has"],
+    "answer": 0,
+    "explanation": "Đảo ngữ với 'Not until': Not until + S + V,助动词 + S + V. 'Not until... did the magnitude become apparent'."
+  },
+  {
+    "id": "pl-gv-c1-013",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "word_choice",
+    "question": "The ______ nature of the evidence suggests that further investigation is warranted before any conclusions can be drawn.",
+    "options": ["conclusive", "preliminary", "irrefutable", "categorical"],
+    "answer": 1,
+    "explanation": "'Preliminary' (sơ bộ) phù hợp vì bản chất bằng chứng sơ bộ cho thấy cần điều tra thêm."
+  },
+  {
+    "id": "pl-gv-c1-014",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "sentence_completion",
+    "question": "The novel, ______ by a Nobel laureate, has been translated into over forty languages.",
+    "options": ["written", "writing", "having written", "to write"],
+    "answer": 0,
+    "explanation": "Past participle 'written' bổ nghĩa cho 'novel': tiểu thuyết được viết bởi người đoạt giải Nobel."
+  },
+  {
+    "id": "pl-gv-c1-015",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "word_choice",
+    "question": "The government's ______ response to the pandemic was widely criticized as being both too slow and insufficiently coordinated.",
+    "options": ["adept", "inept", "adept", "proficient"],
+    "answer": 1,
+    "explanation": "'Inept' (không đủ năng lực) phù hợp vì phản ứng bị chỉ trích là quá chậm và thiếu sự phối hợp."
+  },
+  {
+    "id": "pl-gv-c1-016",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "sentence_completion",
+    "question": "Were the proposed regulations to be implemented, the ______ for small businesses would be considerable.",
+    "options": ["repercussions", "implications", "ramifications", "all of the above"],
+    "answer": 3,
+    "explanation": "Cả ba từ 'repercussions', 'implications', 'ramifications' đều hợp lý trong ngữ cảnh này, nhưng 'ramifications' (hậu quả phức tạp) là phù hợp nhất."
+  },
+  {
+    "id": "pl-gv-c1-017",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "word_choice",
+    "question": "Her ______ critique of the government's economic policy was both well-researched and compellingly argued.",
+    "options": ["sycophantic", "incisive", "facile", "superficial"],
+    "answer": 1,
+    "explanation": "'Incisive' (sắc sén, xuyên thấu) mô tả bài phê bình được nghiên cứu kỹ và lập luận thuyết phục."
+  },
+  {
+    "id": "pl-gv-c1-018",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "sentence_completion",
+    "question": "Hardly ______ the lecture when the professor was inundated with questions from the audience.",
+    "options": ["he started", "did he start", "he had started", "had he started"],
+    "answer": 3,
+    "explanation": "Cấu trúc đảo ngữ: 'Hardly had S + V3 ... when ...' (Vừa mới ... thì ...)."
+  },
+  {
+    "id": "pl-gv-c1-019",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "word_choice",
+    "question": "The ______ political climate has made it increasingly difficult for moderate voices to be heard.",
+    "options": ["polarized", "unified", "harmonious", "conciliatory"],
+    "answer": 0,
+    "explanation": "'Polarized' (phân cực) phù hợp vì khí hậu chính trị phân cực khiến tiếng nói ôn hòa khó được lắng nghe."
+  },
+  {
+    "id": "pl-gv-c1-020",
+    "skill": "grammar_vocab",
+    "level": "C1",
+    "type": "sentence_completion",
+    "question": "The committee, ______ to reach a consensus, has decided to postpone the vote until next month.",
+    "options": ["failing", "having failed", "failed", "to fail"],
+    "answer": 1,
+    "explanation": "Perfect participle 'having failed' (đã thất bại) bổ nghĩa cho 'committee': Ủy ban đã thất bại trong việc đạt đồng thuận."
   }
 ]

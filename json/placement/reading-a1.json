@@ -78,5 +78,208 @@
         "explanation": "Đoạn văn nói 'She walks there' (Cô ấy đi bộ đến đó)."
       }
     ]
+  },
+  {
+    "id": "pl-r-a1-004",
+    "skill": "reading",
+    "level": "A1",
+    "passage": "I have a small garden behind my house. There are five trees and many flowers. My mother waters the plants every morning. I like to sit under the big tree and read books. In summer, the garden is very beautiful with colorful flowers.",
+    "questions": [
+      {
+        "id": "pl-r-a1-004-q1",
+        "question": "Where is the garden?",
+        "options": ["In front of the house", "Behind the house", "Next to the school", "Near the park"],
+        "answer": 1,
+        "explanation": "Đoạn văn nói 'I have a small garden behind my house' (Tôi có vườn nhỏ phía sau nhà)."
+      },
+      {
+        "id": "pl-r-a1-004-q2",
+        "question": "What does the writer's mother do every morning?",
+        "options": ["Cooks breakfast", "Waters the plants", "Goes for a walk", "Reads a book"],
+        "answer": 1,
+        "explanation": "Mỗi sáng, mẹ tưới cây: 'My mother waters the plants every morning'."
+      },
+      {
+        "id": "pl-r-a1-004-q3",
+        "question": "How many trees are there in the garden?",
+        "options": ["Three", "Four", "Five", "Six"],
+        "answer": 2,
+        "explanation": "Đoạn văn nói 'There are five trees' (Có năm cái cây)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-a1-005",
+    "skill": "reading",
+    "level": "A1",
+    "passage": "Mai is a student. She wakes up at 6 o'clock every morning. She brushes her teeth and washes her face. Then she eats breakfast with her family. She goes to school at 7 o'clock by bicycle.",
+    "questions": [
+      {
+        "id": "pl-r-a1-005-q1",
+        "question": "What time does Mai wake up?",
+        "options": ["5 o'clock", "6 o'clock", "7 o'clock", "8 o'clock"],
+        "answer": 1,
+        "explanation": "Đoạn văn nói 'She wakes up at 6 o'clock every morning' (Cô ấy thức dậy lúc 6 giờ)."
+      },
+      {
+        "id": "pl-r-a1-005-q2",
+        "question": "How does Mai go to school?",
+        "options": ["By bus", "By car", "By bicycle", "On foot"],
+        "answer": 2,
+        "explanation": "Đoạn văn nói 'She goes to school... by bicycle' (Cô ấy đi học bằng xe đạp)."
+      },
+      {
+        "id": "pl-r-a1-005-q3",
+        "question": "What does Mai do after waking up?",
+        "options": ["She reads a book", "She watches TV", "She brushes her teeth and washes her face", "She plays games"],
+        "answer": 2,
+        "explanation": "Sau khi thức dậy, Mai 'brushes her teeth and washes her face' (đánh răng và rửa mặt)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-a1-006",
+    "skill": "reading",
+    "level": "A1",
+    "passage": "My favorite food is pizza. I eat pizza every Friday with my family. We order it from a restaurant near our house. My brother likes pepperoni pizza. I like cheese pizza because it is simple and delicious.",
+    "questions": [
+      {
+        "id": "pl-r-a1-006-q1",
+        "question": "When does the writer eat pizza?",
+        "options": ["Every Monday", "Every Wednesday", "Every Friday", "Every Sunday"],
+        "answer": 2,
+        "explanation": "Đoạn văn nói 'I eat pizza every Friday' (Tôi ăn pizza mỗi thứ Sáu)."
+      },
+      {
+        "id": "pl-r-a1-006-q2",
+        "question": "What kind of pizza does the writer like?",
+        "options": ["Pepperoni pizza", "Mushroom pizza", "Cheese pizza", "Chicken pizza"],
+        "answer": 2,
+        "explanation": "Tác giả nói 'I like cheese pizza' (Tôi thích pizza phô mai)."
+      },
+      {
+        "id": "pl-r-a1-006-q3",
+        "question": "Where do they order pizza from?",
+        "options": ["A restaurant far away", "A restaurant near their house", "A supermarket", "A friend's house"],
+        "answer": 1,
+        "explanation": "Họ đặt pizza từ 'a restaurant near our house' (nhà hàng gần nhà)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-a1-007",
+    "skill": "reading",
+    "level": "A1",
+    "passage": "This is my classroom. There are thirty students in my class. We have a big desk in the front for the teacher. The board is on the wall. There are posters about English and Math on the walls too. Our classroom has a window on the left side.",
+    "questions": [
+      {
+        "id": "pl-r-a1-007-q1",
+        "question": "How many students are in the class?",
+        "options": ["Twenty", "Thirty", "Forty", "Fifty"],
+        "answer": 1,
+        "explanation": "Đoạn văn nói 'There are thirty students in my class' (Có 30 học sinh)."
+      },
+      {
+        "id": "pl-r-a1-007-q2",
+        "question": "Where is the board?",
+        "options": ["On the floor", "On the ceiling", "On the wall", "On the desk"],
+        "answer": 2,
+        "explanation": "Bảng được treo 'on the wall' (trên tường)."
+      },
+      {
+        "id": "pl-r-a1-007-q3",
+        "question": "What subjects are the posters about?",
+        "options": ["English and History", "Math and Science", "English and Math", "Science and Geography"],
+        "answer": 2,
+        "explanation": "Có poster về 'English and Math' (Tiếng Anh và Toán) trên tường."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-a1-008",
+    "skill": "reading",
+    "level": "A1",
+    "passage": "My grandfather is 75 years old. He lives in a small village in the countryside. He has a big farm with chickens and ducks. Every morning, he feeds the animals and collects eggs. He loves his farm very much.",
+    "questions": [
+      {
+        "id": "pl-r-a1-008-q1",
+        "question": "How old is the writer's grandfather?",
+        "options": ["65 years old", "70 years old", "75 years old", "80 years old"],
+        "answer": 2,
+        "explanation": "Đoạn văn nói 'My grandfather is 75 years old' (Ô tôi 75 tuổi)."
+      },
+      {
+        "id": "pl-r-a1-008-q2",
+        "question": "What animals does the grandfather have?",
+        "options": ["Dogs and cats", "Chickens and ducks", "Pigs and cows", "Sheep and goats"],
+        "answer": 1,
+        "explanation": "Ông có 'chickens and ducks' (gà và vịt) trên trang trại."
+      },
+      {
+        "id": "pl-r-a1-008-q3",
+        "question": "What does the grandfather do every morning?",
+        "options": ["He goes to the market", "He watches television", "He feeds the animals and collects eggs", "He reads newspapers"],
+        "answer": 2,
+        "explanation": "Mỗi sáng ông 'feeds the animals and collects eggs' (cho ăn và thu hoạch trứng)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-a1-009",
+    "skill": "reading",
+    "level": "A1",
+    "passage": "The library is my favorite place in the school. It is quiet and there are many books. I go there every Tuesday and Thursday during lunch break. I usually borrow two books each time. My favorite books are about space and planets.",
+    "questions": [
+      {
+        "id": "pl-r-a1-009-q1",
+        "question": "What is the writer's favorite place in school?",
+        "options": ["The cafeteria", "The library", "The playground", "The gym"],
+        "answer": 1,
+        "explanation": "Tác giả nói 'The library is my favorite place' (Thư viện là nơi yêu thích nhất)."
+      },
+      {
+        "id": "pl-r-a1-009-q2",
+        "question": "How often does the writer go to the library?",
+        "options": ["Every day", "Twice a week", "Once a week", "Three times a week"],
+        "answer": 1,
+        "explanation": "Tác giả đi thư viện 'every Tuesday and Thursday' (mỗi thứ Ba và thứ Năm) = hai lần mỗi tuần."
+      },
+      {
+        "id": "pl-r-a1-009-q3",
+        "question": "What kind of books does the writer like?",
+        "options": ["Books about animals", "Books about space and planets", "Books about sports", "Books about food"],
+        "answer": 1,
+        "explanation": "Sách yêu thích của tác giả là về 'space and planets' (vũ trụ và hành tinh)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-a1-010",
+    "skill": "reading",
+    "level": "A1",
+    "passage": "My name is Peter. I am from England. I am studying Vietnamese in Ho Chi Minh City. The language is difficult but interesting. I practice speaking with my friends every day. I can say hello, thank you, and count to twenty in Vietnamese.",
+    "questions": [
+      {
+        "id": "pl-r-a1-010-q1",
+        "question": "Where is Peter from?",
+        "options": ["America", "England", "Australia", "Canada"],
+        "answer": 1,
+        "explanation": "Đoạn văn nói 'I am from England' (Tôi đến từ Anh)."
+      },
+      {
+        "id": "pl-r-a1-010-q2",
+        "question": "What is Peter studying?",
+        "options": ["French", "Chinese", "Vietnamese", "Japanese"],
+        "answer": 2,
+        "explanation": "Peter đang học tiếng Việt: 'I am studying Vietnamese'."
+      },
+      {
+        "id": "pl-r-a1-010-q3",
+        "question": "How does Peter practice Vietnamese?",
+        "options": ["He reads books alone", "He watches TV", "He practices speaking with friends", "He listens to music"],
+        "answer": 2,
+        "explanation": "Peter 'practices speaking with my friends every day' (tập nói với bạn bè mỗi ngày)."
+      }
+    ]
   }
 ]

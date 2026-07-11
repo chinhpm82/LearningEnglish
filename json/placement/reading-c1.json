@@ -49,5 +49,237 @@
         "explanation": "Giải pháp được đề xuất là 'circular migration models' (mô hình di cư tuần hoàn), khuyến khích đi làm tạm thời ở nước ngoài rồi chuyển giao kiến thức về nước."
       }
     ]
+  },
+  {
+    "id": "pl-r-c1-003",
+    "skill": "reading",
+    "level": "C1",
+    "passage": "The replication crisis has sent shockwaves through the scientific community, calling into question the reliability of published research findings. In psychology, a landmark project attempted to replicate 100 previously published studies and found that only 36% of the results could be consistently reproduced. The problem extends across disciplines: inadequate sample sizes, publication bias favoring positive results, p-hacking, and insufficient peer review have all been identified as contributing factors. Some researchers have proposed pre-registration of studies, open data sharing, and registered reports as structural reforms to restore the integrity of scientific publishing.",
+    "questions": [
+      {
+        "id": "pl-r-c1-003-q1",
+        "question": "What percentage of psychology studies could be consistently replicated?",
+        "options": ["About 25%", "About 36%", "About 50%", "About 70%"],
+        "answer": 1,
+        "explanation": "Chỉ khoảng '36%' các nghiên cứu tâm lý có thể được tái tạo một cách nhất quán."
+      },
+      {
+        "id": "pl-r-c1-003-q2",
+        "question": "Which of the following is NOT mentioned as a contributing factor to the replication crisis?",
+        "options": ["Inadequate sample sizes", "Publication bias", "Excessive government funding", "P-hacking"],
+        "answer": 2,
+        "explanation": "Đoạn văn không đề cập đến 'excessive government funding' (tài trợ chính phủ quá mức). Các yếu tố được nêu: mẫu nhỏ, thiên kiến xuất bản, p-hacking, và peer review chưa đủ."
+      },
+      {
+        "id": "pl-r-c1-003-q3",
+        "question": "What structural reforms are proposed to address the crisis?",
+        "options": ["Banning all published research", "Pre-registration, open data sharing, and registered reports", "Reducing the number of scientists", "Eliminating peer review entirely"],
+        "answer": 1,
+        "explanation": "Cải cách được đề xuất: 'pre-registration of studies, open data sharing, and registered reports' (đăng ký trước, chia sẻ dữ liệu mở, và báo cáo đã đăng ký)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-c1-004",
+    "skill": "reading",
+    "level": "C1",
+    "passage": "The concept of 'cognitive load' has profound implications for educational design. Working memory, which can hold only about four to seven items simultaneously, serves as a bottleneck for learning. When instructional materials present too much information at once — what researchers call 'extraneous cognitive load' — students struggle to process and retain key concepts. In contrast, 'germane cognitive load' represents the mental effort devoted to constructing meaningful schemas. Effective pedagogy therefore seeks to minimize extraneous load while optimizing germane load, a principle that has driven innovations such as segmenting complex lessons into manageable chunks and using worked examples before requiring independent problem-solving.",
+    "questions": [
+      {
+        "id": "pl-r-c1-004-q1",
+        "question": "How many items can working memory hold simultaneously?",
+        "options": ["Two to three", "Four to seven", "Ten to twelve", "Unlimited"],
+        "answer": 1,
+        "explanation": "Bộ nhớ ngắn hạn chỉ giữ được 'about four to seven items simultaneously' (khoảng 4-7 mục cùng lúc)."
+      },
+      {
+        "id": "pl-r-c1-004-q2",
+        "question": "What is 'extraneous cognitive load'?",
+        "options": ["The mental effort for meaningful learning", "Too much information presented at once", "The total capacity of working memory", "The speed of information processing"],
+        "answer": 1,
+        "explanation": "'Extraneous cognitive load' (tải nhận thức ngoài) là quá nhiều thông tin được trình bày cùng lúc."
+      },
+      {
+        "id": "pl-r-c1-004-q3",
+        "question": "What does effective pedagogy aim to do with cognitive load?",
+        "options": ["Maximize all types of cognitive load equally", "Minimize extraneous load while optimizing germane load", "Eliminate all cognitive load completely", "Increase extraneous load to challenge students"],
+        "answer": 1,
+        "explanation": "Giáo dục hiệu quả tìm cách 'minimize extraneous load while optimizing germane load' (tối thiểu hóa tải ngoài và tối ưu hóa tải germane)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-c1-005",
+    "skill": "reading",
+    "level": "C1",
+    "passage": "The intersection of behavioral economics and public policy has produced a new approach to governance known as 'nudging.' Rather than restricting choices through regulation, nudges subtly alter the choice architecture to steer people toward better decisions. Automatic enrollment in pension plans, for example, has dramatically increased participation rates, even when the default option is to contribute a minimal amount. Critics argue that nudges can be manipulative, particularly when governments or corporations exploit cognitive biases for their own benefit. The ethical boundaries between helpful guidance and paternalistic intervention remain a subject of vigorous debate.",
+    "questions": [
+      {
+        "id": "pl-r-c1-005-q1",
+        "question": "How does 'nudging' differ from traditional regulation?",
+        "options": ["It restricts more choices", "It subtly alters choice architecture instead of restricting choices", "It eliminates all choices except one", "It provides financial incentives"],
+        "answer": 1,
+        "explanation": "'Nudging' thay đổi kiến trúc lựa chọn một cách tinh tế thay vì hạn chế lựa chọn qua quy định."
+      },
+      {
+        "id": "pl-r-c1-005-q2",
+        "question": "What is the example of a successful nudge mentioned in the text?",
+        "options": ["Automatic seatbelt reminders", "Automatic enrollment in pension plans", "Traffic speed cameras", "Sugar tax on soft drinks"],
+        "answer": 1,
+        "explanation": "Ví dụ thành công là 'automatic enrollment in pension plans' (đăng ký tự động vào quỹ hưu trí) làm tăng tỷ lệ tham gia đáng kể."
+      },
+      {
+        "id": "pl-r-c1-005-q3",
+        "question": "What ethical concern about nudges is mentioned?",
+        "options": ["They are too expensive to implement", "They can be manipulative when governments or corporations exploit cognitive biases", "They only work on educated people", "They require too much government staff"],
+        "answer": 1,
+        "explanation": "Lo ngại đạo đức là nudges 'can be manipulative when governments or corporations exploit cognitive biases' (có thể thao túng khi lợi dụng thiên kiến nhận thức)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-c1-006",
+    "skill": "reading",
+    "level": "C1",
+    "passage": "The linguistic relativity hypothesis, often associated with the Sapir-Whorf theory, posits that the structure of a language influences the way its speakers perceive and conceptualize the world. While the strong version of this hypothesis — that language determines thought — has largely been discredited, a growing body of evidence supports a weaker version suggesting that language shapes certain cognitive processes. Studies of speakers of Kuuk Thaayorre, an Aboriginal Australian language that uses cardinal directions rather than relative spatial terms, have found that these speakers demonstrate superior spatial orientation compared to English speakers. Similarly, Russian speakers, whose language requires distinguishing between light blue (goluboy) and dark blue (siniy), can discriminate between these shades faster than English speakers.",
+    "questions": [
+      {
+        "id": "pl-r-c1-006-q1",
+        "question": "What does the strong version of the Sapir-Whorf hypothesis claim?",
+        "options": ["Language has no effect on thought", "Language determines thought", "Language and thought are completely separate", "Only written language affects cognition"],
+        "answer": 1,
+        "explanation": "Phiên bản mạnh cho rằng 'language determines thought' (ngôn ngữ quyết định tư duy) - phiên bản này đã bị bác bỏ."
+      },
+      {
+        "id": "pl-r-c1-006-q2",
+        "question": "How do Kuuk Thaayorre speakers use spatial terms differently?",
+        "options": ["They use left and right exclusively", "They use cardinal directions (north, south, east, west) instead of relative terms", "They have no words for spatial directions", "They use only hand gestures for direction"],
+        "answer": 1,
+        "explanation": "Người nói Kuuk Thaayorre sử dụng 'cardinal directions rather than relative spatial terms' (hướng đông-tây-nam-bắc thay vì so sánh tương đối)."
+      },
+      {
+        "id": "pl-r-c1-006-q3",
+        "question": "What cognitive advantage do Russian speakers demonstrate regarding color?",
+        "options": ["They can see more colors than English speakers", "They can distinguish between light and dark blue shades faster", "They can remember colors better", "They prefer blue over other colors"],
+        "answer": 1,
+        "explanation": "Người nói Nga 'can discriminate between these shades faster than English speakers' (phân biệt các sắc thái xanh nhanh hơn người nói tiếng Anh)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-c1-007",
+    "skill": "reading",
+    "level": "C1",
+    "passage": "The rise of 'surveillance capitalism,' a term coined by Harvard professor Shoshana Zuboff, describes a new economic order in which human experience is treated as free raw material for hidden commercial practices of extraction, prediction, and sales. Tech companies harvest vast quantities of personal data — from search queries and location history to social media behavior — not merely to improve their services but to predict and ultimately influence future behavior. This predictive apparatus, which Zuboff calls 'behavioral surplus,' is used to create what she terms 'prediction products' that are sold to advertisers and other third parties. The implications extend beyond privacy concerns to fundamental questions about human autonomy and democratic governance.",
+    "questions": [
+      {
+        "id": "pl-r-c1-007-q1",
+        "question": "What does 'surveillance capitalism' treat as raw material?",
+        "options": ["Physical goods", "Human experience", "Natural resources", "Financial data only"],
+        "answer": 1,
+        "explanation": "'Surveillance capitalism' coi 'human experience' (trải nghiệm con người) là nguyên liệu thô miễn phí."
+      },
+      {
+        "id": "pl-r-c1-007-q2",
+        "question": "What is 'behavioral surplus' used for?",
+        "options": ["Improving product quality", "Creating prediction products sold to advertisers", "Enhancing user privacy", "Reducing marketing costs"],
+        "answer": 1,
+        "explanation": "'Behavioral surplus' được sử dụng để tạo 'prediction products' (sản phẩm dự đoán) bán cho nhà quảng cáo."
+      },
+      {
+        "id": "pl-r-c1-007-q3",
+        "question": "According to Zuboff, what fundamental questions does surveillance capitalism raise?",
+        "options": ["Questions about product quality only", "Questions about human autonomy and democratic governance", "Questions about employee satisfaction", "Questions about environmental sustainability"],
+        "answer": 1,
+        "explanation": "Nó đặt ra câu hỏi cơ bản về 'human autonomy and democratic governance' (quyền tự chủ con người và quản trị dân chủ)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-c1-008",
+    "skill": "reading",
+    "level": "C1",
+    "passage": "The emergence of 'precision medicine' — tailoring medical treatment to individual genetic profiles — represents a paradigm shift from the traditional one-size-fits-all approach. The Human Genome Project, completed in 2003, identified approximately 20,000-25,000 human genes, opening the door to understanding how genetic variations influence disease susceptibility and drug response. Pharmacogenomics, a subfield of precision medicine, has revealed that genetic differences can dramatically affect how patients metabolize medications. For instance, variations in the CYP2D6 gene can cause some patients to process certain antidepressants too quickly for effectiveness, while others metabolize them too slowly, increasing the risk of adverse side effects.",
+    "questions": [
+      {
+        "id": "pl-r-c1-008-q1",
+        "question": "How many human genes did the Human Genome Project identify?",
+        "options": ["About 5,000", "About 10,000", "About 20,000-25,000", "About 50,000"],
+        "answer": 2,
+        "explanation": "Dự án Genom xác định 'approximately 20,000-25,000 human genes' (khoảng 20,000-25,000 gen người)."
+      },
+      {
+        "id": "pl-r-c1-008-q2",
+        "question": "What does pharmacogenomics study?",
+        "options": ["How food affects genes", "How genetic differences affect drug metabolism", "How diseases spread between people", "How genes are inherited"],
+        "answer": 1,
+        "explanation": "Pharmacogenomics nghiên cứu 'how genetic differences affect drug metabolism' (sự khác biệt gen ảnh hưởng đến chuyển hóa thuốc)."
+      },
+      {
+        "id": "pl-r-c1-008-q3",
+        "question": "What can happen if the CYP2D6 gene processes antidepressants too slowly?",
+        "options": ["The medication becomes more effective", "The risk of adverse side effects increases", "The patient recovers faster", "The medication has no effect"],
+        "answer": 1,
+        "explanation": "Nếu gen CYP2D6 xử lý thuốc chống trầm cảm quá chậm, 'the risk of adverse side effects increases' (tăng nguy cơ tác dụng phụ bất lợi)."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-c1-009",
+    "skill": "reading",
+    "level": "C1",
+    "passage": "The phenomenon of 'epistemic bubbles' and 'echo chambers' has become a central concern in discussions about democratic discourse and information integrity. An epistemic bubble occurs when an individual simply hasn't been exposed to relevant opposing viewpoints, while an echo chamber involves active distrust of outside sources, reinforced by group identity. Research suggests that echo chambers are particularly dangerous because they not only filter information but also discredit alternative perspectives, making members less likely to change their minds even when confronted with contradictory evidence. Breaking out of echo chambers requires not merely exposure to different viewpoints but also the cultivation of intellectual humility and critical self-reflection.",
+    "questions": [
+      {
+        "id": "pl-r-c1-009-q1",
+        "question": "What is the difference between an epistemic bubble and an echo chamber?",
+        "options": ["Epistemic bubbles are intentional; echo chambers are accidental", "Epistemic bubbles involve lack of exposure; echo chambers involve active distrust of outside sources", "There is no difference between them", "Epistemic bubbles are online; echo chambers are offline"],
+        "answer": 1,
+        "explanation": "Epistemic bubble là thiếu tiếp xúc, còn echo chamber là 'active distrust of outside sources' (hoạt động không tin tưởng nguồn bên ngoài)."
+      },
+      {
+        "id": "pl-r-c1-009-q2",
+        "question": "Why are echo chambers particularly dangerous?",
+        "options": ["They provide too much information", "They filter information AND discredit alternative perspectives", "They only work on social media", "They require technical expertise to create"],
+        "answer": 1,
+        "explanation": "Echo chamber nguy hiểm vì chúng 'not only filter information but also discredit alternative perspectives'."
+      },
+      {
+        "id": "pl-r-c1-009-q3",
+        "question": "What is required to break out of echo chambers?",
+        "options": ["Just seeing different opinions on social media", "Exposure to different viewpoints plus intellectual humility and critical self-reflection", "Deleting all social media accounts", "Only talking to people with the same views"],
+        "answer": 1,
+        "explanation": "Để thoát echo chamber cần 'exposure to different viewpoints' cùng 'intellectual humility and critical self-reflection'."
+      }
+    ]
+  },
+  {
+    "id": "pl-r-c1-010",
+    "skill": "reading",
+    "level": "C1",
+    "passage": "The global pharmaceutical industry faces a fundamental tension between innovation and accessibility. Developing a new drug typically costs between $1.3 billion and $2.6 billion and takes 10-15 years, with only about 10% of candidates ultimately reaching market approval. Pharmaceutical companies justify high drug prices by pointing to these enormous R&D costs and the need to recoup investment. However, critics note that much of the basic research underlying drug development is publicly funded through government grants, and that a significant portion of industry revenue goes to marketing and administrative overhead rather than research. The debate has intensified in recent years as treatments for conditions such as hepatitis C and certain cancers have been priced at levels that place them beyond the reach of patients in both developing and developed nations.",
+    "questions": [
+      {
+        "id": "pl-r-c1-010-q1",
+        "question": "How much does it typically cost to develop a new drug?",
+        "options": ["Between $100 million and $500 million", "Between $500 million and $1 billion", "Between $1.3 billion and $2.6 billion", "Between $5 billion and $10 billion"],
+        "answer": 2,
+        "explanation": "Phát triển thuốc mới tốn '$1.3 billion and $2.6 billion' (1.3-2.6 tỷ đô la)."
+      },
+      {
+        "id": "pl-r-c1-010-q2",
+        "question": "What percentage of drug candidates ultimately reach market approval?",
+        "options": ["About 1%", "About 10%", "About 25%", "About 50%"],
+        "answer": 1,
+        "explanation": "Chỉ khoảng '10% of candidates ultimately reach market approval' (10% ứng viên được phê duyệt)."
+      },
+      {
+        "id": "pl-r-c1-010-q3",
+        "question": "What do critics say about the funding of drug research?",
+        "options": ["All research is privately funded", "Much basic research is publicly funded through government grants", "Drug companies receive no government support", "Only charitable organizations fund research"],
+        "answer": 1,
+        "explanation": "Các nhà phê bình nhấn mạnh rằng 'much of the basic research... is publicly funded through government grants'."
+      }
+    ]
   }
 ]
