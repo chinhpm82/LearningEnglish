@@ -578,5 +578,13 @@ function finishPlacementTest() {
 function closePlacementTestModal() {
     const modal = document.getElementById('placement-test-modal');
     if (modal) modal.classList.add('hidden');
+
+    // Cleanup: free cached data and test state
+    for (const key in placementQuestionCache) {
+        delete placementQuestionCache[key];
+    }
+    placementTestState = null;
+    currentPracticeSession = [];
+
     renderDashboard();
 }
