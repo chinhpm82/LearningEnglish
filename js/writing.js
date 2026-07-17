@@ -25,7 +25,20 @@ function getDifficultyFromUserLevel(level) {
     return 'Intermediate';
 }
 
-function initWritingRoom() {
+async function initWritingRoom() {
+    if (typeof WRITING_DATA === 'undefined' || !WRITING_DATA || WRITING_DATA.length === 0) {
+        try {
+            if (window.FirebaseSync && window.FirebaseSync.fetchAcademicWriting) {
+                window.WRITING_DATA = await window.FirebaseSync.fetchAcademicWriting();
+            } else {
+                const resp = await fetch('json/writing-data.json');
+                window.WRITING_DATA = await resp.json();
+            }
+        } catch (e) {
+            console.error("Failed to load writing data:", e);
+            window.WRITING_DATA = [];
+        }
+    }
     const topics = typeof WRITING_DATA !== 'undefined' ? WRITING_DATA : [];
     
     // Bind Surprise Initializer button

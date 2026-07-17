@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LearningEnglish - Firebase Cloud Sync & Authentication Module
+   LearningEnglish - Firebase Auth + Backend API Bridge
    ========================================================================== */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -21,358 +21,254 @@ import {
     updateDoc,
     query,
     orderBy,
-    limit,
+    limit as fbLimit,
     onSnapshot,
     where,
     deleteField,
     enableIndexedDbPersistence
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import {
-    getDatabase,
-    ref as rtdbRef,
-    set as rtdbSet,
-    get as rtdbGet,
-    child as rtdbChild
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-// --- FIREBASE CONFIGURATION (CẤU HÌNH HỆ THỐNG) ---
-// Bạn chỉ cần thay thế các chuỗi dưới đây bằng khóa thực tế lấy từ Firebase Console của bạn.
 const firebaseConfig = {
   apiKey: "AIzaSyDr58jereWx6QVt6OXpD6RydU95T1xAaZ4",
   authDomain: "learningenglish-5b83c.firebaseapp.com",
-  databaseURL: "https://learningenglish-5b83c-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "learningenglish-5b83c",
   storageBucket: "learningenglish-5b83c.firebasestorage.app",
   messagingSenderId: "1034946550291",
-  appId: "1:1034946550291:web:7d0230635c047ed1c17de6",
-  measurementId: "G-0YSGPWF7VM"
+  appId: "1:1034946550291:web:7d0230635c047ed1c17de6"
 };
 
-// Check if user has set real Firebase credentials
 const isConfigured = firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY_PLACEHOLDER";
 
-let app, auth, db, rtdb, googleProvider;
+let app, auth, db, googleProvider;
 let currentUser = null;
-let cachedUserData = null;
 
 if (isConfigured) {
     try {
         app = initializeApp(firebaseConfig);
         auth = getAuth(app);
         db = getFirestore(app);
-        rtdb = getDatabase(app);
         googleProvider = new GoogleAuthProvider();
-        
-        // Bật Offline Persistence cho Firestore
+
         enableIndexedDbPersistence(db).catch((err) => {
             if (err.code == 'failed-precondition') {
-                console.warn('Multiple tabs open, persistence can only be enabled in one tab at a time.');
-            } else if (err.code == 'unimplemented') {
-                console.warn('The current browser does not support all of the features required to enable persistence');
+                console.warn('Multiple tabs open, persistence limited.');
             }
         });
-        
-        console.log("☁️ Firebase initialized in Cloud Sync mode with Offline Persistence.");
+
+        console.log("Firebase initialized (Auth-only mode with Backend API).");
     } catch (error) {
-        console.error("❌ Firebase failed to initialize:", error);
+        console.error("Firebase init failed:", error);
     }
 } else {
-    console.log("📂 Firebase running in Guest Mode (Offline localStorage fallback).");
+    console.log("Firebase not configured. Guest mode only.");
 }
 
-// --- GLOBAL BRIDGE TO APP.JS ---
 window.FirebaseSync = {
     isConfigured: isConfigured,
     db: db,
     getCurrentUser: () => currentUser,
-    
-    // Login with Google Popup
+
     login: async () => {
-        if (!isConfigured) {
-            console.warn("Firebase not configured. Redirecting to Guest session.");
-            return null;
-        }
+        if (!isConfigured) return null;
         try {
             const result = await signInWithPopup(auth, googleProvider);
-            return result.user;
+            const idToken = await result.user.getIdToken();
+
+            try {
+                const apiResult = await window.ApiClient.login(idToken);
+                console.log("Backend login OK. JWT stored.");
+                return result.user;
+            } catch (apiErr) {
+                console.warn("Backend login failed, using Firebase-only:", apiErr);
+                return result.user;
+            }
         } catch (error) {
             console.error("Google Sign-In Error:", error);
             throw error;
         }
     },
 
-    // Logout
     logout: async () => {
         if (!isConfigured) return;
         try {
             await signOut(auth);
+            window.ApiClient.clearToken();
         } catch (error) {
             console.error("Sign-Out Error:", error);
         }
     },
 
-    // Auth state changed listener
     onStateChanged: (callback) => {
         if (!isConfigured) {
-            // Instantly callback with null (Guest Mode)
             callback(null);
             return;
         }
         onAuthStateChanged(auth, async (user) => {
             currentUser = user;
-            cachedUserData = null; // Invalidate cache on auth state change
+            if (user) {
+                try {
+                    const idToken = await user.getIdToken();
+                    await window.ApiClient.login(idToken);
+                } catch (e) {
+                    console.warn("Auto-login to backend failed:", e);
+                }
+            }
             callback(user);
         });
     },
 
-    // Save/Update progress of a built-in word in Firestore
     saveProgress: async (wordId, box, nextReview) => {
-        if (!isConfigured || !currentUser) return;
-        cachedUserData = null; // Invalidate cache on local updates
+        if (!currentUser) return;
         try {
-            const progressRef = doc(db, "users", currentUser.uid, "progress", wordId);
-            await setDoc(progressRef, {
-                box: box,
-                nextReview: nextReview,
-                updatedAt: Date.now()
-            }, { merge: true });
+            await window.ApiClient.saveProgress(wordId, box, nextReview);
         } catch (e) {
-            console.error("Error saving progress to Firestore:", e);
+            console.error("Error saving progress to backend:", e);
         }
     },
 
-    // Save custom added word in Firestore
     saveCustomWord: async (wordObj) => {
-        if (!isConfigured || !currentUser) return;
-        cachedUserData = null; // Invalidate cache
+        if (!currentUser) return;
         try {
-            const wordRef = doc(db, "users", currentUser.uid, "customWords", wordObj.id);
-            await setDoc(wordRef, {
-                ...wordObj,
-                updatedAt: Date.now()
-            });
+            await window.ApiClient.addCustomWord(wordObj);
         } catch (e) {
-            console.error("Error saving custom word to Firestore:", e);
+            console.error("Error saving custom word:", e);
         }
     },
 
-    // Delete custom word from Firestore
     deleteCustomWord: async (wordId) => {
-        if (!isConfigured || !currentUser) return;
-        cachedUserData = null; // Invalidate cache
+        if (!currentUser) return;
         try {
-            const wordRef = doc(db, "users", currentUser.uid, "customWords", wordId);
-            await deleteDoc(wordRef);
+            await window.ApiClient.deleteCustomWord(wordId);
         } catch (e) {
-            console.error("Error deleting custom word from Firestore:", e);
+            console.error("Error deleting custom word:", e);
         }
     },
 
-    // Save user profile stats (Streak, LastStudyDate, QuizStats, UserLevel, RoadmapTasks, Stars, CustomPhotoURL, CustomDisplayName, ActivityLogs)
-    saveStreak: async (streak, lastStudyDate, quizStats, userLevel = '', roadmapTasks = [], stars = 0, customPhotoURL = '', customDisplayName = '', activityLogs = []) => {
-        if (!isConfigured || !currentUser) return;
-        cachedUserData = null; // Invalidate cache
-        
-        // 1. Save to private Firestore profile document
+    saveStreak: async (streak, lastStudyDate, quizStats, userLevel, roadmapTasks, stars, photoURL, displayName, activityLogs) => {
+        if (!currentUser) return;
         try {
-            const userRef = doc(db, "users", currentUser.uid);
-            await setDoc(userRef, {
-                name: customDisplayName || currentUser.displayName,
-                email: currentUser.email,
-                photoURL: customPhotoURL || currentUser.photoURL,
+            await window.ApiClient.updateProfile({
                 streak: streak,
                 lastStudyDate: lastStudyDate,
                 quizStats: quizStats,
                 userLevel: userLevel,
                 roadmapTasks: roadmapTasks,
                 stars: stars,
-                activityLogs: activityLogs,
-                updatedAt: Date.now()
-            }, { merge: true });
-        } catch (e) {
-            console.error("Error saving streak and roadmap statistics to Firestore:", e);
-        }
-
-        // 2. Also sync public leaderboard data to Realtime Database independently
-        try {
-            if (rtdb) {
-                const leaderboardNodeRef = rtdbRef(rtdb, `leaderboard/${currentUser.uid}`);
-                await rtdbSet(leaderboardNodeRef, {
-                    name: customDisplayName || currentUser.displayName || '',
-                    email: currentUser.email || '',
-                    photoURL: customPhotoURL || currentUser.photoURL || '',
-                    streak: streak,
-                    stars: stars,
-                    updatedAt: Date.now()
-                });
-                console.log("✅ Synced user stats to RTDB Leaderboard.");
-            }
-        } catch (e) {
-            console.warn("RTDB leaderboard sync error:", e);
-        }
-    },
-
-    // Ensure a minimal user profile exists in Realtime Database leaderboard node (called on every login)
-    // Writes to /leaderboard/{uid} - public data readable by all authenticated users
-    ensureUserProfile: async (stars = 0, streak = 0, customPhotoURL = '', customDisplayName = '') => {
-        if (!isConfigured || !currentUser || !rtdb) return;
-        try {
-            const leaderboardNodeRef = rtdbRef(rtdb, `leaderboard/${currentUser.uid}`);
-            const snapshot = await rtdbGet(leaderboardNodeRef);
-            if (!snapshot.exists() || snapshot.val().stars === undefined) {
-                await rtdbSet(leaderboardNodeRef, {
-                    name: customDisplayName || currentUser.displayName || '',
-                    email: currentUser.email || '',
-                    photoURL: customPhotoURL || currentUser.photoURL || '',
-                    streak: streak,
-                    stars: stars,
-                    updatedAt: Date.now()
-                });
-                console.log("✅ Ensured user profile exists in RTDB leaderboard with local stats.");
-            }
-        } catch (e) {
-            console.error("Error ensuring user profile in RTDB leaderboard:", e);
-        }
-    },
-
-    // Update leaderboard entry in Realtime Database (called when stats change)
-    updateLeaderboardEntry: async (stars = 0, streak = 0, customPhotoURL = '', customDisplayName = '') => {
-        if (!isConfigured || !currentUser || !rtdb) return;
-        try {
-            const leaderboardNodeRef = rtdbRef(rtdb, `leaderboard/${currentUser.uid}`);
-            await rtdbSet(leaderboardNodeRef, {
-                name: customDisplayName || currentUser.displayName || '',
-                email: currentUser.email || '',
-                photoURL: customPhotoURL || currentUser.photoURL || '',
-                streak: streak,
-                stars: stars,
-                updatedAt: Date.now()
+                photoURL: photoURL,
+                name: displayName,
+                activityLogs: activityLogs
             });
         } catch (e) {
-            console.error("Error updating RTDB leaderboard entry:", e);
+            console.error("Error saving profile:", e);
         }
     },
 
-    // Fetch global student leaderboard from Realtime Database (sorted by stars desc)
+    ensureUserProfile: async (stars, streak, photoURL, displayName) => {
+        if (!currentUser) return;
+        try {
+            await window.ApiClient.updateProfile({
+                stars: stars || 0,
+                streak: streak || 0,
+                photoURL: photoURL || '',
+                name: displayName || ''
+            });
+        } catch (e) {
+            console.error("Error ensuring profile:", e);
+        }
+    },
+
+    updateLeaderboardEntry: async (stars, streak, photoURL, displayName) => {
+        if (!currentUser) return;
+        try {
+            await window.ApiClient.updateProfile({
+                stars: stars || 0,
+                streak: streak || 0,
+                photoURL: photoURL || '',
+                name: displayName || ''
+            });
+        } catch (e) {
+            console.error("Error updating leaderboard entry:", e);
+        }
+    },
+
     loadLeaderboard: async () => {
-        if (!isConfigured || !rtdb) return null;
         try {
-            const leaderboardRef = rtdbRef(rtdb, 'leaderboard');
-            const snapshot = await rtdbGet(leaderboardRef);
-            if (!snapshot.exists()) return [];
-            
-            const data = snapshot.val();
-            const leaderboard = Object.values(data);
-            // Sort by stars descending, then by streak descending
-            leaderboard.sort((a, b) => (b.stars || 0) - (a.stars || 0) || (b.streak || 0) - (a.streak || 0));
-            return leaderboard.slice(0, 15);
+            return await window.ApiClient.getLeaderboard();
         } catch (e) {
-            console.error("Error loading leaderboard from RTDB:", e);
-            return null;
+            console.error("Error loading leaderboard:", e);
+            return [];
         }
     },
 
-    // Pull entire profile dataset from Firestore for the logged-in user
     loadUserData: async () => {
-        if (!isConfigured || !currentUser) return null;
-        if (cachedUserData) {
-            return cachedUserData;
-        }
+        if (!currentUser) return null;
         try {
-            const uid = currentUser.uid;
-            
-            // 1. Fetch profile document
-            const userRef = doc(db, "users", uid);
-            const userSnap = await getDoc(userRef);
-            let profileData = {};
-            if (userSnap.exists()) {
-                profileData = userSnap.data();
-            }
+            const [profileData, customWords, progressData] = await Promise.all([
+                window.ApiClient.getProfile().catch(() => null),
+                window.ApiClient.getCustomWords().catch(() => []),
+                window.ApiClient.getProgress().catch(() => [])
+            ]);
 
-            // 2. Fetch custom vocabulary
-            const customWordsRef = collection(db, "users", uid, "customWords");
-            const customSnap = await getDocs(customWordsRef);
-            const customWords = [];
-            customSnap.forEach(doc => {
-                customWords.push(doc.data());
-            });
-
-            // 3. Fetch built-in word progress
-            const progressRef = collection(db, "users", uid, "progress");
-            const progressSnap = await getDocs(progressRef);
-            const progressList = [];
-            progressSnap.forEach(doc => {
-                progressList.push({ id: doc.id, ...doc.data() });
-            });
-
-            cachedUserData = {
-                profile: profileData,
-                customWords: customWords,
-                progress: progressList
+            return {
+                profile: profileData || {},
+                customWords: customWords || [],
+                progress: progressData || []
             };
-            return cachedUserData;
         } catch (e) {
-            console.error("Error loading user profile dataset from Firestore:", e);
+            console.error("Error loading user data:", e);
             return null;
         }
     },
 
     fetchCategoryIndex: async (category) => {
         try {
-            const response = await fetch(`json/${category}-index.json`);
-            if (!response.ok) throw new Error(`Failed to load ${category} index`);
-            return await response.json();
+            let result = [];
+            if (category === 'translation') {
+                const data = await window.ApiClient.getTranslations({ limit: 500 });
+                result = (data.data || []).map(function(t) {
+                    return { id: t.id, dir: t.dir, level: t.level, source: t.source, title: t.source ? t.source.substring(0, 50) : '' };
+                });
+            } else if (category === 'long_translation') {
+                const data = await window.ApiClient.getLongTranslations({ limit: 500 });
+                result = (data.data || []).map(function(t) {
+                    return { id: t.id, dir: t.dir, level: t.level, source: t.source ? t.source.substring(0, 80) : '', title: t.source ? t.source.substring(0, 50) : '' };
+                });
+            }
+            return result;
         } catch (e) {
-            console.error(`Error fetching index for ${category}:`, e);
-            return null;
+            console.error("Error fetching category index:", category, e);
+            return [];
         }
     },
 
     fetchDocumentById: async (collectionName, id) => {
-        if (!isConfigured) return null;
         try {
-            const docRef = doc(db, collectionName, id);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                return { id: docSnap.id, ...docSnap.data() };
+            if (collectionName === 'academic_vocabulary') {
+                return await window.ApiClient.getVocabById(id);
+            } else if (collectionName === 'academic_translation') {
+                return await window.ApiClient.getTranslationById(id);
+            } else if (collectionName === 'academic_long_translation') {
+                return await window.ApiClient.getLongTranslationById(id);
             }
             return null;
         } catch (e) {
-            console.error(`Error fetching doc ${id} from ${collectionName}:`, e);
+            console.error("Error fetching doc:", collectionName, id, e);
             return null;
-        }
-    },
-
-    fetchDocumentsByCategory: async (collectionName, category, limitCount = 0) => {
-        if (!isConfigured) return [];
-        try {
-            let queryRef = collection(db, collectionName);
-            const constraints = [];
-            if (category && category !== 'all') {
-                constraints.push(where("category", "==", category));
-            }
-            if (limitCount > 0) {
-                constraints.push(limit(limitCount));
-            }
-            if (constraints.length > 0) {
-                queryRef = query(queryRef, ...constraints);
-            }
-            const snap = await getDocs(queryRef);
-            const items = [];
-            snap.forEach(d => items.push({ id: d.id, ...d.data() }));
-            return items;
-        } catch (e) {
-            console.error(`Error fetching category ${category} from ${collectionName}:`, e);
-            return [];
         }
     },
 
     fetchAcademicQuizzes: async () => {
         try {
-            const response = await fetch('json/quiz_bank.json?v=' + new Date().getTime());
-            return await response.json();
+            const data = await window.ApiClient.getQuiz({ limit: 500 });
+            const items = [];
+            (data.data || []).forEach(function(q) {
+                (q.items || []).forEach(function(item) {
+                    items.push(item);
+                });
+            });
+            return items;
         } catch (e) {
-            console.error("Local quiz fetch failed:", e);
+            console.error("Error fetching quizzes:", e);
             return [];
         }
     },
@@ -381,22 +277,28 @@ window.FirebaseSync = {
         if (ids.length === 0) return [];
         try {
             if (!window.LOCAL_QUIZ_BANK) {
-                const response = await fetch('json/quiz_bank.json');
-                window.LOCAL_QUIZ_BANK = await response.json();
+                const data = await window.ApiClient.getQuiz({ limit: 500 });
+                const items = [];
+                (data.data || []).forEach(function(q) {
+                    (q.items || []).forEach(function(item) {
+                        items.push(item);
+                    });
+                });
+                window.LOCAL_QUIZ_BANK = items;
             }
-            return window.LOCAL_QUIZ_BANK.filter(q => ids.includes(q.id));
+            return window.LOCAL_QUIZ_BANK.filter(function(q) { return ids.includes(q.id); });
         } catch (e) {
-            console.error('Local quiz fetch failed:', e);
+            console.error("Error fetching quiz batch:", e);
             return [];
         }
     },
 
     fetchAcademicGrammar: async () => {
         try {
-            const response = await fetch('json/grammar-data.json');
-            return await response.json();
+            const data = await window.ApiClient.getGrammar({ limit: 500 });
+            return data.data || [];
         } catch (e) {
-            console.error("Local grammar fetch failed:", e);
+            console.error("Error fetching grammar:", e);
             return [];
         }
     },
@@ -406,82 +308,87 @@ window.FirebaseSync = {
             const response = await fetch('json/grammar-practice-data.json');
             return await response.json();
         } catch (e) {
-            console.error("Local grammar practice fetch failed:", e);
+            console.error("Error fetching grammar practice:", e);
             return {};
         }
     },
 
     fetchAcademicStories: async () => {
         try {
-            const response = await fetch('json/stories-data.json');
-            return await response.json();
+            const data = await window.ApiClient.getStories({ limit: 500 });
+            return data.data || [];
         } catch (e) {
-            console.error("Local stories fetch failed:", e);
+            console.error("Error fetching stories:", e);
             return [];
         }
     },
 
     fetchAcademicSentences: async () => {
         try {
-            const response = await fetch('json/sentences-data.json');
-            return await response.json();
+            const data = await window.ApiClient.getSentences({ limit: 500 });
+            return data.data || [];
         } catch (e) {
-            console.error("Local sentences fetch failed:", e);
+            console.error("Error fetching sentences:", e);
             return [];
         }
     },
 
     fetchAcademicPodcasts: async () => {
         try {
-            const response = await fetch('json/podcast-data.json');
-            return await response.json();
+            const data = await window.ApiClient.getPodcasts({ limit: 500 });
+            return data.data || [];
         } catch (e) {
-            console.error("Local podcasts fetch failed:", e);
+            console.error("Error fetching podcasts:", e);
             return [];
         }
     },
 
     fetchAcademicTranslation: async () => {
         try {
-            const response = await fetch('json/translation-data.json');
-            return await response.json();
+            const data = await window.ApiClient.getTranslations({ limit: 500 });
+            return data.data || [];
         } catch (e) {
-            console.error("Local translation fetch failed:", e);
+            console.error("Error fetching translations:", e);
             return [];
         }
     },
 
     fetchAcademicLongTranslation: async () => {
         try {
-            const response = await fetch('json/long-translation-data.json');
-            return await response.json();
+            const data = await window.ApiClient.getLongTranslations({ limit: 500 });
+            return data.data || [];
         } catch (e) {
-            console.error("Local long translation fetch failed:", e);
+            console.error("Error fetching long translations:", e);
             return [];
         }
     },
 
-    // --- REAL-TIME MULTIPLAYER (ENGLISH CHALLENGE) ---
-    // Create a new multiplayer room document
+    fetchAcademicWriting: async () => {
+        try {
+            const data = await window.ApiClient.getWriting({ limit: 500 });
+            return data.data || [];
+        } catch (e) {
+            console.error("Error fetching writing topics:", e);
+            try {
+                const resp = await fetch('json/writing-data.json');
+                return await resp.json();
+            } catch (e2) {
+                return [];
+            }
+        }
+    },
+
     createRoom: async (roomId, topic, questions, playerInfo) => {
         if (!isConfigured || !currentUser) return null;
         try {
             const roomRef = doc(db, "challenge_rooms", roomId);
             const roomData = {
-                id: roomId,
-                topic: topic,
-                questions: questions,
-                status: "waiting",
-                creatorId: playerInfo.uid,
-                createdAt: Date.now(),
+                id: roomId, topic: topic, questions: questions,
+                status: "waiting", creatorId: playerInfo.uid, createdAt: Date.now(),
                 players: {
                     [playerInfo.uid]: {
-                        uid: playerInfo.uid,
-                        name: playerInfo.name,
-                        photoURL: playerInfo.photoURL,
-                        isReady: true, // Host is ready by default
-                        score: 0,
-                        finished: false
+                        uid: playerInfo.uid, name: playerInfo.name,
+                        photoURL: playerInfo.photoURL, isReady: true, score: 0, finished: false
                     }
                 }
             };
@@ -493,85 +400,58 @@ window.FirebaseSync = {
         }
     },
 
-    // Join an existing multiplayer room
     joinRoom: async (roomId, playerInfo) => {
         if (!isConfigured || !currentUser) return;
         try {
             const roomRef = doc(db, "challenge_rooms", roomId);
             const updateData = {};
-            updateData[`players.${playerInfo.uid}`] = {
-                uid: playerInfo.uid,
-                name: playerInfo.name,
-                photoURL: playerInfo.photoURL,
-                isReady: false,
-                score: 0,
-                finished: false
+            updateData['players.' + playerInfo.uid] = {
+                uid: playerInfo.uid, name: playerInfo.name,
+                photoURL: playerInfo.photoURL, isReady: false, score: 0, finished: false
             };
             await updateDoc(roomRef, updateData);
-        } catch (e) {
-            console.error("Error joining room:", e);
-            throw e;
-        }
+        } catch (e) { throw e; }
     },
 
-    // Update ready state of a player in a room
     updatePlayerReady: async (roomId, uid, isReady) => {
         if (!isConfigured) return;
         try {
             const roomRef = doc(db, "challenge_rooms", roomId);
             const updateData = {};
-            updateData[`players.${uid}.isReady`] = isReady;
+            updateData['players.' + uid + '.isReady'] = isReady;
             await updateDoc(roomRef, updateData);
-        } catch (e) {
-            console.error("Error updating ready state:", e);
-        }
+        } catch (e) {}
     },
 
-    // Update real-time gameplay score and answer choices
     updatePlayerScore: async (roomId, uid, score, qIndex, selectedIndex, isCorrect) => {
         if (!isConfigured) return;
         try {
             const roomRef = doc(db, "challenge_rooms", roomId);
             const updateData = {};
-            updateData[`players.${uid}.score`] = score;
-            updateData[`players.${uid}.answers.${qIndex}`] = {
-                selectedIndex: selectedIndex,
-                isCorrect: isCorrect
-            };
+            updateData['players.' + uid + '.score'] = score;
+            updateData['players.' + uid + '.answers.' + qIndex] = { selectedIndex: selectedIndex, isCorrect: isCorrect };
             await updateDoc(roomRef, updateData);
-        } catch (e) {
-            console.error("Error updating player score:", e);
-        }
+        } catch (e) {}
     },
 
-    // Mark player as finished
     updatePlayerFinished: async (roomId, uid) => {
         if (!isConfigured) return;
         try {
             const roomRef = doc(db, "challenge_rooms", roomId);
             const updateData = {};
-            updateData[`players.${uid}.finished`] = true;
+            updateData['players.' + uid + '.finished'] = true;
             await updateDoc(roomRef, updateData);
-        } catch (e) {
-            console.error("Error setting player finished:", e);
-        }
+        } catch (e) {}
     },
 
-    // Creator starts the multiplayer challenge
     startGame: async (roomId) => {
         if (!isConfigured) return;
         try {
             const roomRef = doc(db, "challenge_rooms", roomId);
-            await updateDoc(roomRef, {
-                status: "playing",
-                startedAt: Date.now()
-            });
-        } catch (e) {
-            console.error("Error starting game:", e);
-        }
+            await updateDoc(roomRef, { status: "playing", startedAt: Date.now() });
+        } catch (e) {}
     },
 
-    // Leave multiplayer room
     leaveRoom: async (roomId, uid, isLast) => {
         if (!isConfigured) return;
         try {
@@ -580,60 +460,36 @@ window.FirebaseSync = {
                 await deleteDoc(roomRef);
             } else {
                 const updateData = {};
-                updateData[`players.${uid}`] = deleteField();
+                updateData['players.' + uid] = deleteField();
                 await updateDoc(roomRef, updateData);
             }
-        } catch (e) {
-            console.error("Error leaving room:", e);
-        }
+        } catch (e) {}
     },
 
-    // Listen to real-time changes in a single active room
     listenRoom: (roomId, callback) => {
-        if (!isConfigured) return () => {};
+        if (!isConfigured) return function() {};
         const roomRef = doc(db, "challenge_rooms", roomId);
         return onSnapshot(roomRef, (snapshot) => {
-            if (snapshot.exists()) {
-                callback(snapshot.data());
-            } else {
-                callback(null);
-            }
+            callback(snapshot.exists() ? snapshot.data() : null);
         }, (error) => {
             console.error("Error listening to room:", error);
-            // Only show alert for permission issues, but do NOT call callback(null)
-            // because that would falsely trigger "room dissolved" and kick user back to lobby
-            if (error.code === 'permission-denied') {
-                alert("⚠️ Lỗi kết nối Firestore!\n\nCloud Firestore API có thể chưa được bật. Vui lòng:\n1. Truy cập: https://console.developers.google.com/apis/api/firestore.googleapis.com/overview?project=learningenglish-5b83c\n2. Bật API\n3. Kiểm tra Firestore Security Rules");
-            }
         });
     },
 
-    // Listen to all active waiting rooms for lobby room listing
     listenRoomsList: (callback) => {
-        if (!isConfigured) return () => {};
+        if (!isConfigured) return function() {};
         const roomsRef = collection(db, "challenge_rooms");
-        const q = query(
-            roomsRef,
-            where("status", "==", "waiting")
-        );
+        const q = query(roomsRef, where("status", "==", "waiting"));
         return onSnapshot(q, (snapshot) => {
             const rooms = [];
-            snapshot.forEach((doc) => {
-                rooms.push(doc.data());
-            });
-            // Sort by createdAt descending in-memory to bypass the requirement of a composite index
+            snapshot.forEach((d) => rooms.push(d.data()));
             rooms.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
             callback(rooms);
         }, (error) => {
-            console.error("Error listening to rooms list:", error);
-            if (error.code === 'permission-denied') {
-                alert("⚠️ Lỗi quyền truy cập Firestore!\n\nKhông thể tải danh sách phòng. Vui lòng kiểm tra Firestore Security Rules.");
-            }
+            console.error("Error listening rooms:", error);
             callback([]);
         });
     }
 };
 
-// Dispatch ready event to notify app.js that FirebaseSync module is fully loaded
 window.dispatchEvent(new CustomEvent('FirebaseSyncReady'));
-

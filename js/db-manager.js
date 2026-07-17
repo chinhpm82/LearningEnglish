@@ -1,185 +1,168 @@
 /**
  * ==========================================================================
- * LearningEnglish - Database Manager (Firestore + Local Progress Facade)
+ * LearningEnglish - Database Manager (Backend API + Local IndexedDB Facade)
  * ==========================================================================
- * Vai trò mới:
- * 1. Lấy dữ liệu học thuật gốc (Academic Data) từ FirebaseSync (đã được cache offline bởi Firestore).
- * 2. Lấy dữ liệu Tiến độ (Progress) từ Cloud (nếu đăng nhập) hoặc Local IndexedDB (nếu là Guest).
- * 3. Trộn (Merge) 2 nguồn dữ liệu này và trả về cho app.js xử lý như cũ.
+ * 1. Academic data: Backend API (with local IndexedDB cache)
+ * 2. User progress: Backend API (if logged in) or Local IndexedDB (if Guest)
  */
 
 const DB_NAME = 'LearningEnglish_ProgressDB';
-const DB_VERSION = 3; // Nâng version để reset DB cũ và thêm cached_words
+const DB_VERSION = 3;
 let dbInstance = null;
 
-/**
- * Initialize IndexedDB Connection (Chỉ dùng cho Guest Mode Progress)
- */
 function initDB() {
-    return new Promise((resolve, reject) => {
-        if (dbInstance) {
-            resolve(dbInstance);
-            return;
-        }
-
-        const request = indexedDB.open(DB_NAME, DB_VERSION);
-
-        request.onerror = (event) => {
-            console.error('IndexedDB open error:', event.target.error);
-            reject(event.target.error);
-        };
-
-        request.onsuccess = (event) => {
-            dbInstance = event.target.result;
-            resolve(dbInstance);
-        };
-
-        request.onupgradeneeded = (event) => {
-            const db = event.target.result;
-            
-            // Bảng lưu tiến độ từ vựng cục bộ cho Guest (chỉ lưu ID, box, nextReview)
+    return new Promise(function (resolve, reject) {
+        if (dbInstance) { resolve(dbInstance); return; }
+        var request = indexedDB.open(DB_NAME, DB_VERSION);
+        request.onerror = function (e) { reject(e.target.error); };
+        request.onsuccess = function (e) { dbInstance = e.target.result; resolve(dbInstance); };
+        request.onupgradeneeded = function (e) {
+            var db = e.target.result;
             if (!db.objectStoreNames.contains('guest_vocab_progress')) {
                 db.createObjectStore('guest_vocab_progress', { keyPath: 'id' });
             }
-
-            // Bảng lưu settings cục bộ (key-value)
             if (!db.objectStoreNames.contains('progress')) {
                 db.createObjectStore('progress', { keyPath: 'key' });
             }
-
-            // Bảng lưu dữ liệu chi tiết của từng từ (On-demand cache)
             if (!db.objectStoreNames.contains('cached_words')) {
                 db.createObjectStore('cached_words', { keyPath: 'id' });
+            }
+            if (!db.objectStoreNames.contains('api_cache')) {
+                db.createObjectStore('api_cache', { keyPath: 'key' });
             }
         };
     });
 }
 
-// Giữ nguyên hàm này để tránh lỗi app.js gọi đến
-async function seedDatabase(initialVocab, specVocab = []) {
-    console.log("seedDatabase bypass: Dữ liệu đã được đưa lên Firestore. Không cần seed Local.");
-    return Promise.resolve(0);
+async function seedDatabase() {
+    console.log("seedDatabase bypass: Data managed by backend API.");
+    return 0;
 }
 
 async function getVocabCount() {
-    const vocab = await getAllVocab();
+    var vocab = await getAllVocab();
     return vocab.length;
 }
 
-/**
- * Hàm lõi: Lấy toàn bộ từ vựng và mix với tiến độ học tập.
- */
+function setCache(key, value) {
+    return new Promise(function (resolve) {
+        if (!dbInstance) { resolve(); return; }
+        try {
+            var tx = dbInstance.transaction(['api_cache'], 'readwrite');
+            tx.objectStore('api_cache').put({ key: key, value: value, ts: Date.now() });
+            tx.oncomplete = function () { resolve(); };
+            tx.onerror = function () { resolve(); };
+        } catch (e) { resolve(); }
+    });
+}
+
+function getCache(key, maxAge) {
+    return new Promise(function (resolve) {
+        if (!dbInstance) { resolve(null); return; }
+        try {
+            var tx = dbInstance.transaction(['api_cache'], 'readonly');
+            var req = tx.objectStore('api_cache').get(key);
+            req.onsuccess = function () {
+                var r = req.result;
+                if (r && (!maxAge || (Date.now() - r.ts) < maxAge)) {
+                    resolve(r.value);
+                } else {
+                    resolve(null);
+                }
+            };
+            req.onerror = function () { resolve(null); };
+        } catch (e) { resolve(null); }
+    });
+}
+
 async function getAllVocab() {
     await initDB();
-    
-    // Helper function to read from IndexedDB strictly offline
-    const getLocalCache = async (key) => {
-        return new Promise((resolve) => {
-            const tx = dbInstance.transaction(['progress'], 'readonly');
-            const req = tx.objectStore('progress').get(key);
-            req.onsuccess = () => resolve(req.result ? req.result.value : []);
-            req.onerror = () => resolve([]);
-        });
-    };
+    var baseVocab = null;
 
-    const setLocalCache = async (key, value) => {
-        return new Promise((resolve) => {
-            const tx = dbInstance.transaction(['progress'], 'readwrite');
-            const req = tx.objectStore('progress').put({ key, value });
-            req.onsuccess = () => resolve();
-            req.onerror = () => resolve();
-        });
-    };
-
-    // 1. Lấy dữ liệu siêu tốc từ bộ nhớ đệm cục bộ (Cache Offline-First) cho Index
-    let baseVocab = await getLocalCache('cached_academic_vocab_index');
-
-    // 2. Nếu Cache rỗng hoặc chứa dữ liệu Index cũ không có 'meaning', nạp lại từ file json/vocabulary-data.json
-    if (!baseVocab || baseVocab.length === 0 || (baseVocab[0] && !baseVocab[0].meaning)) {
+    // Try backend API first
+    if (window.ApiClient && window.ApiClient.isLoggedIn()) {
         try {
-            const response = await fetch('json/vocabulary-data.json');
+            var apiData = await window.ApiClient.getVocab({ limit: 5000 });
+            baseVocab = apiData.data || [];
+            await setCache('vocab_all', baseVocab);
+        } catch (e) {
+            console.warn("Backend vocab fetch failed, trying cache:", e);
+        }
+    }
+
+    // Fallback to local cache
+    if (!baseVocab) {
+        baseVocab = await getCache('vocab_all', 3600000);
+    }
+
+    // Fallback to local JSON
+    if (!baseVocab || baseVocab.length === 0) {
+        try {
+            var response = await fetch('json/vocabulary-data.json');
             if (response.ok) {
                 baseVocab = await response.json();
-                if (baseVocab && baseVocab.length > 0) {
-                    await setLocalCache('cached_academic_vocab_index', baseVocab);
-                }
+                await setCache('vocab_all', baseVocab);
             }
-        } catch (error) {
-            console.error("Failed to load vocabulary index:", error);
+        } catch (e) {
+            console.error("Failed to load vocabulary:", e);
             baseVocab = [];
         }
     }
 
-
-
-    // Clone dữ liệu để không làm biến đổi bộ gốc
-    const vocabList = JSON.parse(JSON.stringify(baseVocab));
-    const user = window.FirebaseSync ? window.FirebaseSync.getCurrentUser() : null;
+    var vocabList = JSON.parse(JSON.stringify(baseVocab));
+    var user = window.FirebaseSync ? window.FirebaseSync.getCurrentUser() : null;
 
     if (user) {
-        // --- CHẾ ĐỘ ĐĂNG NHẬP: Lấy tiến độ từ Firestore ---
-        const cloudData = await window.FirebaseSync.loadUserData();
-        if (cloudData) {
-            // Mix tiến trình học
-            const progressMap = new Map();
-            cloudData.progress.forEach(p => progressMap.set(p.id, p));
-
-            vocabList.forEach(w => {
-                const id = String(w.id || w.word.toLowerCase());
-                const wordKey = String(w.word || '').toLowerCase();
-                
-                let p = null;
-                if (progressMap.has(id)) {
-                    p = progressMap.get(id);
-                } else if (wordKey && progressMap.has(wordKey)) {
-                    p = progressMap.get(wordKey);
-                }
-
-                if (p) {
-                    w.box = p.box || 1;
-                    w.nextReview = p.nextReview || 0;
-                } else {
-                    w.box = 1;
-                    w.nextReview = 0;
-                }
+        // Logged in: get progress from backend
+        try {
+            var progressData = await window.ApiClient.getProgress();
+            var progressMap = new Map();
+            progressData.forEach(function (p) {
+                var id = p.vocabId || p.id;
+                progressMap.set(String(id), p);
             });
 
-            // Mix custom words
-            if (cloudData.customWords && cloudData.customWords.length > 0) {
-                vocabList.push(...cloudData.customWords);
+            vocabList.forEach(function (w) {
+                var id = String(w.id || w.word.toLowerCase());
+                var wordKey = String(w.word || '').toLowerCase();
+                var p = progressMap.get(id) || progressMap.get(wordKey);
+                if (p) {
+                    w.box = p.box || 1;
+                    w.nextReview = typeof p.nextReview === 'number' ? p.nextReview : (p.nextReview ? new Date(p.nextReview).getTime() : 0);
+                }
+            });
+        } catch (e) {
+            console.warn("Backend progress fetch failed:", e);
+        }
+
+        // Custom words from backend
+        try {
+            var customWords = await window.ApiClient.getCustomWords();
+            if (customWords && customWords.length > 0) {
+                vocabList.push.apply(vocabList, customWords);
             }
+        } catch (e) {
+            console.warn("Backend custom words fetch failed:", e);
         }
     } else {
-        // --- CHẾ ĐỘ KHÁCH: Lấy tiến độ từ IndexedDB ---
-        const guestProgress = await new Promise((resolve) => {
-            const db = dbInstance;
-            const tx = db.transaction(['guest_vocab_progress'], 'readonly');
-            const store = tx.objectStore('guest_vocab_progress');
-            const req = store.getAll();
-            req.onsuccess = () => resolve(req.result || []);
-            req.onerror = () => resolve([]);
+        // Guest: get progress from IndexedDB
+        var guestProgress = await new Promise(function (resolve) {
+            var tx = dbInstance.transaction(['guest_vocab_progress'], 'readonly');
+            var req = tx.objectStore('guest_vocab_progress').getAll();
+            req.onsuccess = function () { resolve(req.result || []); };
+            req.onerror = function () { resolve([]); };
         });
 
-        const progressMap = new Map();
-        guestProgress.forEach(p => progressMap.set(p.id, p));
+        var progressMap = new Map();
+        guestProgress.forEach(function (p) { progressMap.set(p.id, p); });
 
-        vocabList.forEach(w => {
-            const id = String(w.id || w.word.toLowerCase());
-            const wordKey = String(w.word || '').toLowerCase();
-            
-            let p = null;
-            if (progressMap.has(id)) {
-                p = progressMap.get(id);
-            } else if (wordKey && progressMap.has(wordKey)) {
-                p = progressMap.get(wordKey);
-            }
-
+        vocabList.forEach(function (w) {
+            var id = String(w.id || w.word.toLowerCase());
+            var wordKey = String(w.word || '').toLowerCase();
+            var p = progressMap.get(id) || progressMap.get(wordKey);
             if (p) {
                 w.box = p.box || 1;
                 w.nextReview = p.nextReview || 0;
-            } else {
-                w.box = 1;
-                w.nextReview = 0;
             }
         });
     }
@@ -187,320 +170,245 @@ async function getAllVocab() {
     return vocabList;
 }
 
-/**
- * Cập nhật tiến độ của 1 từ vựng
- */
 async function updateVocabWord(wordObj) {
-    const id = String(wordObj.id || wordObj.word.toLowerCase());
-    const box = wordObj.box || 1;
-    const nextReview = wordObj.nextReview || 0;
-    
-    const user = window.FirebaseSync ? window.FirebaseSync.getCurrentUser() : null;
+    var id = String(wordObj.id || wordObj.word.toLowerCase());
+    var box = wordObj.box || 1;
+    var nextReview = wordObj.nextReview || 0;
+    var user = window.FirebaseSync ? window.FirebaseSync.getCurrentUser() : null;
 
     if (user) {
-        // Đẩy lên Firestore
-        // Phân biệt custom word hay academic word
         if (wordObj.isCustom) {
             await window.FirebaseSync.saveCustomWord(wordObj);
         } else {
-            await window.FirebaseSync.saveProgress(id, box, nextReview);
+            await window.ApiClient.saveProgress(id, box, nextReview);
         }
     } else {
-        // Lưu vào Local IndexedDB cho Guest
         await initDB();
-        return new Promise((resolve, reject) => {
-            const tx = dbInstance.transaction(['guest_vocab_progress'], 'readwrite');
-            const store = tx.objectStore('guest_vocab_progress');
-            store.put({ id: id, box: box, nextReview: nextReview });
-            tx.oncomplete = () => resolve();
-            tx.onerror = (e) => reject(e.target.error);
+        return new Promise(function (resolve, reject) {
+            var tx = dbInstance.transaction(['guest_vocab_progress'], 'readwrite');
+            tx.objectStore('guest_vocab_progress').put({ id: id, box: box, nextReview: nextReview });
+            tx.oncomplete = function () { resolve(); };
+            tx.onerror = function (e) { reject(e.target.error); };
         });
     }
 }
 
-/**
- * Bulk update
- */
 async function bulkUpdateVocab(wordList) {
-    for (const w of wordList) {
-        await updateVocabWord(w);
+    for (var i = 0; i < wordList.length; i++) {
+        await updateVocabWord(wordList[i]);
     }
 }
 
-/**
- * Cập nhật key-value Progress (Streak, Level, v.v.)
- */
-async function getProgress(key, defaultValue = null) {
-    const user = window.FirebaseSync ? window.FirebaseSync.getCurrentUser() : null;
-    
+async function getProgress(key, defaultValue) {
+    if (defaultValue === undefined) defaultValue = null;
+    var user = window.FirebaseSync ? window.FirebaseSync.getCurrentUser() : null;
+
     if (user) {
-        const cloudData = await window.FirebaseSync.loadUserData();
-        if (cloudData && cloudData.profile) {
-            const keyMap = {
-                'last_study_date': 'lastStudyDate',
-                'quiz_stats': 'quizStats',
-                'user_level': 'userLevel',
-                'last_test_score': 'lastTestScore',
-                'placement_stats': 'placementStats',
-                'roadmap_tasks': 'roadmapTasks',
-                'photo_url': 'photoURL',
-                'display_name': 'name',
-                'completed_lessons': 'completedLessons',
-                'completed_sentences': 'completedSentences',
-                'stories_done': 'storiesDone',
-                'writing_high_scores': 'writingHighScores',
-                'streak': 'streak',
-                'stars': 'stars'
-            };
-            const mappedKey = keyMap[key] || key;
-            if (cloudData.profile[mappedKey] !== undefined) {
-                return cloudData.profile[mappedKey];
+        try {
+            var profileData = await window.ApiClient.getProfile();
+            if (profileData) {
+                var keyMap = {
+                    'last_study_date': 'lastStudyDate',
+                    'quiz_stats': 'quizStats',
+                    'user_level': 'userLevel',
+                    'last_test_score': 'lastTestScore',
+                    'placement_stats': 'placementStats',
+                    'roadmap_tasks': 'roadmapTasks',
+                    'photo_url': 'photoURL',
+                    'display_name': 'name',
+                    'completed_lessons': 'completedLessons',
+                    'completed_sentences': 'completedSentences',
+                    'stories_done': 'storiesDone',
+                    'writing_high_scores': 'writingHighScores',
+                    'streak': 'streak',
+                    'stars': 'stars',
+                    'activity_logs': 'activityLogs',
+                    'placement_dismissed': 'placementDismissed'
+                };
+                var mappedKey = keyMap[key] || key;
+                if (profileData[mappedKey] !== undefined) {
+                    return profileData[mappedKey];
+                }
             }
+        } catch (e) {
+            console.warn("Backend profile fetch failed for key:", key, e);
         }
     }
-    
-    // Guest Mode
+
+    // Guest: IndexedDB
     await initDB();
-    return new Promise((resolve) => {
-        const transaction = dbInstance.transaction(['progress'], 'readonly');
-        const store = transaction.objectStore('progress');
-        const request = store.get(key);
-        request.onsuccess = () => {
-            if (request.result) resolve(request.result.value);
-            else resolve(defaultValue);
+    return new Promise(function (resolve) {
+        var tx = dbInstance.transaction(['progress'], 'readonly');
+        var req = tx.objectStore('progress').get(key);
+        req.onsuccess = function () {
+            resolve(req.result ? req.result.value : defaultValue);
         };
-        request.onerror = () => resolve(defaultValue);
+        req.onerror = function () { resolve(defaultValue); };
     });
 }
 
 async function setProgress(key, value) {
-    const user = window.FirebaseSync ? window.FirebaseSync.getCurrentUser() : null;
-
-    if (user) {
-        // Sync to cloud
-        // Lưu ý: FirebaseSync.saveStreak() trong code cũ nhận nhiều tham số, ta giả lập gọi vào profile update.
-        // Tạm thời FirebaseSync chưa có hàm update generic profile property, nên ta vẫn lưu local để fallback,
-        // hoặc app.js sẽ gọi thẳng FirebaseSync.saveStreak.
-    }
-
-    // Luôn lưu local cache
+    // Always save locally as backup
     await initDB();
-    return new Promise((resolve, reject) => {
-        const transaction = dbInstance.transaction(['progress'], 'readwrite');
-        const store = transaction.objectStore('progress');
-        const request = store.put({ key, value });
-        request.onsuccess = () => resolve();
-        request.onerror = (e) => reject(e.target.error);
+    return new Promise(function (resolve, reject) {
+        var tx = dbInstance.transaction(['progress'], 'readwrite');
+        tx.objectStore('progress').put({ key: key, value: value });
+        tx.oncomplete = function () { resolve(); };
+        tx.onerror = function (e) { reject(e.target.error); };
     });
 }
 
 async function migrateFromLocalStorage() {
-    console.log("Bỏ qua migrateFromLocalStorage cũ.");
+    console.log("migrateFromLocalStorage: skipped.");
 }
 
-/**
- * Lấy chi tiết đầy đủ của một từ vựng theo ID (On-demand Cache-first)
- */
 async function getFullWordData(id) {
     await initDB();
-    
-    // 1. Kiểm tra trong cache IndexedDB cục bộ trước
-    const cached = await new Promise((resolve) => {
-        const tx = dbInstance.transaction(['cached_words'], 'readonly');
-        const store = tx.objectStore('cached_words');
-        const req = store.get(id);
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = () => resolve(null);
+
+    // 1. Check local IndexedDB cache
+    var cached = await new Promise(function (resolve) {
+        var tx = dbInstance.transaction(['cached_words'], 'readonly');
+        var req = tx.objectStore('cached_words').get(id);
+        req.onsuccess = function () { resolve(req.result); };
+        req.onerror = function () { resolve(null); };
     });
-    
-    if (cached) {
-        return cached;
-    }
-    
-    // 2. Không có trong cache IndexedDB. Lấy payload.
-    let payload = null;
-    
-    // Gọi Firestore nếu có cấu hình
-    if (window.FirebaseSync && window.FirebaseSync.isConfigured) {
+    if (cached) return cached;
+
+    // 2. Fetch from backend API
+    var payload = null;
+    if (window.ApiClient) {
         try {
-            payload = await window.FirebaseSync.fetchDocumentById("academic_vocabulary", id);
-        } catch (e) {
-            console.error("Lỗi fetch Firestore cho id:", id, e);
-        }
+            payload = await window.ApiClient.getVocabById(id);
+        } catch (e) {}
     }
-    
-    // 3. Fallback: Đọc từ file JSON cục bộ (oxford_5000.json) nếu offline hoặc không có Firestore
+
+    // 3. Fallback to local JSON
     if (!payload) {
         try {
             if (!window.LOCAL_OXFORD_5000) {
-                console.log("Đang nạp file oxford_5000.json dự phòng...");
-                const response = await fetch('json/oxford_5000.json');
-                window.LOCAL_OXFORD_5000 = await response.json();
+                var resp = await fetch('json/oxford_5000.json');
+                window.LOCAL_OXFORD_5000 = await resp.json();
             }
             if (window.LOCAL_OXFORD_5000) {
-                payload = window.LOCAL_OXFORD_5000.find(w => w.id === id);
+                payload = window.LOCAL_OXFORD_5000.find(function (w) { return w.id === id; });
             }
-        } catch (e) {
-            console.error("Lỗi fetch JSON dự phòng cho id:", id, e);
-        }
+        } catch (e) {}
     }
-    
-    // 4. Lưu lại vào cache IndexedDB để lần sau không cần tải lại nữa
+
+    // 4. Cache in IndexedDB
     if (payload) {
         try {
-            await new Promise((resolve, reject) => {
-                const tx = dbInstance.transaction(['cached_words'], 'readwrite');
-                const store = tx.objectStore('cached_words');
-                store.put(payload);
-                tx.oncomplete = () => resolve();
-                tx.onerror = (e) => reject(e.target.error);
+            await new Promise(function (resolve) {
+                var tx = dbInstance.transaction(['cached_words'], 'readwrite');
+                tx.objectStore('cached_words').put(payload);
+                tx.oncomplete = function () { resolve(); };
+                tx.onerror = function () { resolve(); };
             });
-        } catch (e) {
-            console.warn("Không thể lưu cache IndexedDB cho từ:", id, e);
-        }
+        } catch (e) {}
     }
-    
+
     return payload;
 }
 
-/**
- * Lấy chi tiết câu dịch ngắn (On-demand Cache-first)
- */
 async function getTranslationPayload(id) {
     await initDB();
-    
-    const cached = await new Promise((resolve) => {
-        const tx = dbInstance.transaction(['cached_words'], 'readonly');
-        const store = tx.objectStore('cached_words');
-        const req = store.get(id);
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = () => resolve(null);
+
+    var cached = await new Promise(function (resolve) {
+        var tx = dbInstance.transaction(['cached_words'], 'readonly');
+        var req = tx.objectStore('cached_words').get(id);
+        req.onsuccess = function () { resolve(req.result); };
+        req.onerror = function () { resolve(null); };
     });
-    
-    if (cached) {
-        return cached;
-    }
-    
-    let payload = null;
-    
-    // Gọi Firestore nếu có cấu hình
-    if (window.FirebaseSync && window.FirebaseSync.isConfigured) {
+    if (cached) return cached;
+
+    var payload = null;
+    if (window.ApiClient) {
         try {
-            payload = await window.FirebaseSync.fetchDocumentById("academic_translation", id);
-        } catch (e) {
-            console.error("Firestore translation fetch error for id:", id, e);
-        }
+            payload = await window.ApiClient.getTranslationById(id);
+        } catch (e) {}
     }
-    
-    // Fallback cục bộ
+
     if (!payload) {
         try {
             if (!window.LOCAL_TRANSLATION) {
-                console.log("Đang nạp file translation-data.json dự phòng...");
-                const response = await fetch('json/translation-data.json');
-                window.LOCAL_TRANSLATION = await response.json();
+                var resp = await fetch('json/translation-data.json');
+                window.LOCAL_TRANSLATION = await resp.json();
             }
             if (window.LOCAL_TRANSLATION) {
-                payload = window.LOCAL_TRANSLATION.find(t => t.id === id);
+                payload = window.LOCAL_TRANSLATION.find(function (t) { return t.id === id; });
             }
-        } catch (e) {
-            console.error("Local fallback translation fetch error for id:", id, e);
-        }
+        } catch (e) {}
     }
-    
-    // Cache IndexedDB
+
     if (payload) {
         try {
-            await new Promise((resolve, reject) => {
-                const tx = dbInstance.transaction(['cached_words'], 'readwrite');
-                const store = tx.objectStore('cached_words');
-                store.put(payload);
-                tx.oncomplete = () => resolve();
-                tx.onerror = (e) => reject(e.target.error);
+            await new Promise(function (resolve) {
+                var tx = dbInstance.transaction(['cached_words'], 'readwrite');
+                tx.objectStore('cached_words').put(payload);
+                tx.oncomplete = function () { resolve(); };
+                tx.onerror = function () { resolve(); };
             });
-        } catch (e) {
-            console.warn("Failed to cache translation in IndexedDB:", e);
-        }
+        } catch (e) {}
     }
-    
+
     return payload;
 }
 
-/**
- * Lấy chi tiết đoạn văn dịch dài (On-demand Cache-first)
- */
 async function getLongTranslationPayload(id) {
     await initDB();
-    
-    const cached = await new Promise((resolve) => {
-        const tx = dbInstance.transaction(['cached_words'], 'readonly');
-        const store = tx.objectStore('cached_words');
-        const req = store.get(id);
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = () => resolve(null);
+
+    var cached = await new Promise(function (resolve) {
+        var tx = dbInstance.transaction(['cached_words'], 'readonly');
+        var req = tx.objectStore('cached_words').get(id);
+        req.onsuccess = function () { resolve(req.result); };
+        req.onerror = function () { resolve(null); };
     });
-    
-    if (cached) {
-        return cached;
-    }
-    
-    let payload = null;
-    
-    // Gọi Firestore nếu có cấu hình
-    if (window.FirebaseSync && window.FirebaseSync.isConfigured) {
+    if (cached) return cached;
+
+    var payload = null;
+    if (window.ApiClient) {
         try {
-            payload = await window.FirebaseSync.fetchDocumentById("academic_long_translation", id);
-        } catch (e) {
-            console.error("Firestore long translation fetch error for id:", id, e);
-        }
+            payload = await window.ApiClient.getLongTranslationById(id);
+        } catch (e) {}
     }
-    
-    // Fallback cục bộ
+
     if (!payload) {
         try {
             if (!window.LOCAL_LONG_TRANSLATION) {
-                console.log("Đang nạp file long-translation-data.json dự phòng...");
-                const response = await fetch('json/long-translation-data.json');
-                window.LOCAL_LONG_TRANSLATION = await response.json();
+                var resp = await fetch('json/long-translation-data.json');
+                window.LOCAL_LONG_TRANSLATION = await resp.json();
             }
             if (window.LOCAL_LONG_TRANSLATION) {
-                payload = window.LOCAL_LONG_TRANSLATION.find(lt => lt.id === id);
+                payload = window.LOCAL_LONG_TRANSLATION.find(function (lt) { return lt.id === id; });
             }
-        } catch (e) {
-            console.error("Local fallback long translation fetch error for id:", id, e);
-        }
+        } catch (e) {}
     }
-    
-    // Cache IndexedDB
+
     if (payload) {
         try {
-            await new Promise((resolve, reject) => {
-                const tx = dbInstance.transaction(['cached_words'], 'readwrite');
-                const store = tx.objectStore('cached_words');
-                store.put(payload);
-                tx.oncomplete = () => resolve();
-                tx.onerror = (e) => reject(e.target.error);
+            await new Promise(function (resolve) {
+                var tx = dbInstance.transaction(['cached_words'], 'readwrite');
+                tx.objectStore('cached_words').put(payload);
+                tx.oncomplete = function () { resolve(); };
+                tx.onerror = function () { resolve(); };
             });
-        } catch (e) {
-            console.warn("Failed to cache long translation in IndexedDB:", e);
-        }
+        } catch (e) {}
     }
-    
+
     return payload;
 }
 
-// Export functions to global scope for easy access in app.js
 window.LearningDB = {
-    initDB,
-    seedDatabase,
-    getAllVocab,
-    updateVocabWord,
-    bulkUpdateVocab,
-    getProgress,
-    setProgress,
-    migrateFromLocalStorage,
-    getVocabCount,
-    getFullWordData,
-    getTranslationPayload,
-    getLongTranslationPayload
+    initDB: initDB,
+    seedDatabase: seedDatabase,
+    getAllVocab: getAllVocab,
+    updateVocabWord: updateVocabWord,
+    bulkUpdateVocab: bulkUpdateVocab,
+    getProgress: getProgress,
+    setProgress: setProgress,
+    migrateFromLocalStorage: migrateFromLocalStorage,
+    getVocabCount: getVocabCount,
+    getFullWordData: getFullWordData,
+    getTranslationPayload: getTranslationPayload,
+    getLongTranslationPayload: getLongTranslationPayload
 };
