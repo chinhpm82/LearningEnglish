@@ -28,11 +28,9 @@ function getDifficultyFromUserLevel(level) {
 async function initWritingRoom() {
     if (typeof WRITING_DATA === 'undefined' || !WRITING_DATA || WRITING_DATA.length === 0) {
         try {
-            if (window.FirebaseSync && window.FirebaseSync.fetchAcademicWriting) {
-                window.WRITING_DATA = await window.FirebaseSync.fetchAcademicWriting();
-            } else {
-                const resp = await fetch('json/writing-data.json');
-                window.WRITING_DATA = await resp.json();
+            if (window.ApiClient) {
+                const data = await window.ApiClient.getWriting({ limit: 500 });
+                window.WRITING_DATA = data.data || [];
             }
         } catch (e) {
             console.error("Failed to load writing data:", e);

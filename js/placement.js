@@ -10,22 +10,27 @@ const placementQuestionCache = {};
  * Caches results to avoid redundant network calls.
  */
 async function fetchPlacementQuestions(skill, level) {
-    const fileMap = {
-        listening: `json/placement/listening-${level.toLowerCase()}.json`,
-        reading: `json/placement/reading-${level.toLowerCase()}.json`,
-        grammar_vocab: `json/placement/grammar-vocab-${level.toLowerCase()}.json`,
-        writing: `json/placement/writing-placement.json`
-    };
-    const filePath = fileMap[skill];
-    if (!filePath) return [];
-
     const cacheKey = `${skill}_${level}`;
     if (placementQuestionCache[cacheKey]) {
         return placementQuestionCache[cacheKey];
     }
 
     try {
-        // Add cache-busting to ensure we get the latest JSON files with audioUrl
+        if (window.ApiClient) {
+            const data = await window.ApiClient.getPlacement({ type: skill, level: level.toLowerCase() });
+            const result = (data.data && data.data[0]) ? data.data[0].items : [];
+            placementQuestionCache[cacheKey] = result;
+            return result;
+        }
+        // Fallback to local JSON
+        const fileMap = {
+            listening: `json/placement/listening-${level.toLowerCase()}.json`,
+            reading: `json/placement/reading-${level.toLowerCase()}.json`,
+            grammar_vocab: `json/placement/grammar-vocab-${level.toLowerCase()}.json`,
+            writing: `json/placement/writing-placement.json`
+        };
+        const filePath = fileMap[skill];
+        if (!filePath) return [];
         const response = await fetch(`${filePath}?t=${new Date().getTime()}`, { cache: 'no-cache' });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();

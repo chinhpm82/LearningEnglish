@@ -305,11 +305,11 @@ window.FirebaseSync = {
 
     fetchAcademicGrammarPractice: async () => {
         try {
-            const response = await fetch('json/grammar-practice-data.json');
-            return await response.json();
+            const data = await window.ApiClient.getGrammarPractice({ limit: 500 });
+            return data.data || [];
         } catch (e) {
             console.error("Error fetching grammar practice:", e);
-            return {};
+            return [];
         }
     },
 
@@ -369,12 +369,7 @@ window.FirebaseSync = {
             return data.data || [];
         } catch (e) {
             console.error("Error fetching writing topics:", e);
-            try {
-                const resp = await fetch('json/writing-data.json');
-                return await resp.json();
-            } catch (e2) {
-                return [];
-            }
+            return [];
         }
     },
 

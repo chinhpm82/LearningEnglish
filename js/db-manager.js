@@ -95,12 +95,12 @@ async function getAllVocab() {
         baseVocab = await getCache('vocab_all', 3600000);
     }
 
-    // Fallback to local JSON
+    // Fallback to backend API
     if (!baseVocab || baseVocab.length === 0) {
         try {
-            var response = await fetch('json/vocabulary-data.json');
-            if (response.ok) {
-                baseVocab = await response.json();
+            if (window.ApiClient) {
+                var data = await window.ApiClient.getVocab({ limit: 5000 });
+                baseVocab = data.data || [];
                 await setCache('vocab_all', baseVocab);
             }
         } catch (e) {
@@ -282,16 +282,10 @@ async function getFullWordData(id) {
         } catch (e) {}
     }
 
-    // 3. Fallback to local JSON
+    // 3. Fallback to backend API
     if (!payload) {
         try {
-            if (!window.LOCAL_OXFORD_5000) {
-                var resp = await fetch('json/oxford_5000.json');
-                window.LOCAL_OXFORD_5000 = await resp.json();
-            }
-            if (window.LOCAL_OXFORD_5000) {
-                payload = window.LOCAL_OXFORD_5000.find(function (w) { return w.id === id; });
-            }
+            payload = await window.ApiClient.getOxfordById(id);
         } catch (e) {}
     }
 
@@ -330,13 +324,7 @@ async function getTranslationPayload(id) {
 
     if (!payload) {
         try {
-            if (!window.LOCAL_TRANSLATION) {
-                var resp = await fetch('json/translation-data.json');
-                window.LOCAL_TRANSLATION = await resp.json();
-            }
-            if (window.LOCAL_TRANSLATION) {
-                payload = window.LOCAL_TRANSLATION.find(function (t) { return t.id === id; });
-            }
+            payload = await window.ApiClient.getTranslationById(id);
         } catch (e) {}
     }
 
@@ -374,13 +362,7 @@ async function getLongTranslationPayload(id) {
 
     if (!payload) {
         try {
-            if (!window.LOCAL_LONG_TRANSLATION) {
-                var resp = await fetch('json/long-translation-data.json');
-                window.LOCAL_LONG_TRANSLATION = await resp.json();
-            }
-            if (window.LOCAL_LONG_TRANSLATION) {
-                payload = window.LOCAL_LONG_TRANSLATION.find(function (lt) { return lt.id === id; });
-            }
+            payload = await window.ApiClient.getLongTranslationById(id);
         } catch (e) {}
     }
 

@@ -62,13 +62,19 @@ async function initRandomQuizSession(difficulty) {
     updateRQTimerUI();
     updateRQScoreUI();
 
-    // Load Index
+    // Load quiz bank index from backend
     if (rqQuizIndex.length === 0) {
         try {
-            const response = await fetch('json/quiz-index.json?v=' + new Date().getTime());
-            rqQuizIndex = await response.json();
+            const data = await window.ApiClient.getQuiz({ limit: 500 });
+            const allItems = [];
+            (data.data || []).forEach(function (bank) {
+                (bank.items || []).forEach(function (item) {
+                    allItems.push({ id: item.id, category: item.category || bank.category, level: item.level || bank.level || '' });
+                });
+            });
+            rqQuizIndex = allItems;
         } catch (e) {
-            console.error("Failed to load quiz-index.json", e);
+            console.error("Failed to load quiz index", e);
             alert("Lỗi tải dữ liệu ngân hàng câu hỏi!");
             return;
         }
