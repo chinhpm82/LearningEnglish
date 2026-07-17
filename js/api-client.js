@@ -223,7 +223,7 @@ const ApiClient = (function () {
 
     // --- Leaderboard ---
     async function getLeaderboard() {
-        const data = await request('GET', '/api/leaderboard', null, false);
+        const data = await request('GET', '/api/user/leaderboard', null, false);
         return data.data || [];
     }
 
