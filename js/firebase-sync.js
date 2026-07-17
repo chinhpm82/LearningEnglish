@@ -306,10 +306,15 @@ window.FirebaseSync = {
     fetchAcademicGrammarPractice: async () => {
         try {
             const data = await window.ApiClient.getGrammarPractice({ limit: 500 });
-            return data.data || [];
+            const arr = data.data || [];
+            const map = {};
+            arr.forEach(function (item) {
+                map[item.grammarId] = item.items || [];
+            });
+            return map;
         } catch (e) {
             console.error("Error fetching grammar practice:", e);
-            return [];
+            return {};
         }
     },
 
