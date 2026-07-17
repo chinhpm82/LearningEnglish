@@ -305,35 +305,49 @@ function nextGrammarPracticeQuestion() {
     if (grammarPracticeIndex < currentPracticeSession.length) {
         loadGrammarPracticeQuestion();
     } else {
-        // End of practice! Show Success Panel
+        // End of practice!
         document.getElementById('grammar-practice-panel').classList.add('hidden');
-        document.getElementById('grammar-success-panel').classList.remove('hidden');
 
-        // Count how many times completed before this attempt
-        const studyCountBefore = state.completedLessons.filter(id => id === lesson.id).length;
-        
-        state.completedLessons.push(lesson.id);
-        saveStatsToStorage();
+        const totalQuestions = currentPracticeSession.length;
+        const isPassed = grammarPracticeScore === totalQuestions;
 
-        const totalTimes = studyCountBefore + 1;
-        const successTitleEl = document.getElementById('grammar-success-title');
-        const successMsgEl = document.getElementById('grammar-success-msg');
-
-        if (studyCountBefore === 0) {
-            awardStars(10, `Hoàn thành bài học "${lesson.title}"`);
-            if (successTitleEl) successTitleEl.textContent = `🎉 Tuyệt vời! Hoàn thành bài học!`;
+        if (!isPassed) {
+            // Failed: show retry message, no stars
+            document.getElementById('grammar-success-panel').classList.remove('hidden');
+            const successTitleEl = document.getElementById('grammar-success-title');
+            const successMsgEl = document.getElementById('grammar-success-msg');
+            if (successTitleEl) successTitleEl.textContent = `😅 Chưa đạt! Thử lại nhé!`;
             if (successMsgEl) {
-                successMsgEl.innerHTML = `Chúc mừng bạn đã học thành công chủ điểm <strong>"${lesson.title}"</strong> lần đầu tiên! Bạn nhận được <strong>+10 Ngôi sao vàng ⭐</strong>.<br><br>💡 <em>Mẹo nhỏ: Học đi học lại nhiều lần sẽ giúp biến kiến thức ngữ pháp thành phản xạ tự nhiên của bạn!</em>`;
+                successMsgEl.innerHTML = `Bạn trả lời đúng <strong>${grammarPracticeScore}/${totalQuestions}</strong> câu.<br><br>Để nhận được ⭐ sao vàng, bạn cần trả lời <strong>đúng tất cả</strong> các câu hỏi.<br><br>💡 <em>Đọc kỹ phần lý thuyết ở trên rồi thử lại nhé!</em>`;
             }
         } else {
-            awardStars(4, `Ôn tập thành công bài "${lesson.title}" (Lần ${totalTimes})`);
-            if (successTitleEl) successTitleEl.textContent = `🔥 Xuất sắc! Ôn tập liên tục!`;
-            if (successMsgEl) {
-                successMsgEl.innerHTML = `Bạn vừa xuất sắc ôn tập thành công chủ điểm <strong>"${lesson.title}"</strong> (Lần thứ <strong>${totalTimes}</strong>)! Bạn nhận được thêm <strong>+4 Ngôi sao vàng ⭐</strong>.<br><br>🚀 <em>Tuyệt vời! Bạn đang củng cố trí nhớ dài hạn cực kỳ tốt. Hãy duy trì phong độ và tiếp tục ôn tập nhé!</em>`;
+            // Passed: award stars
+            const studyCountBefore = state.completedLessons.filter(id => id === lesson.id).length;
+            state.completedLessons.push(lesson.id);
+            saveStatsToStorage();
+
+            const totalTimes = studyCountBefore + 1;
+            const successTitleEl = document.getElementById('grammar-success-title');
+            const successMsgEl = document.getElementById('grammar-success-msg');
+
+            document.getElementById('grammar-success-panel').classList.remove('hidden');
+
+            if (studyCountBefore === 0) {
+                awardStars(10, `Hoàn thành bài học "${lesson.title}"`);
+                if (successTitleEl) successTitleEl.textContent = `🎉 Tuyệt vời! Hoàn thành bài học!`;
+                if (successMsgEl) {
+                    successMsgEl.innerHTML = `Chúc mừng bạn đã học thành công chủ điểm <strong>"${lesson.title}"</strong> lần đầu tiên! Bạn nhận được <strong>+10 Ngôi sao vàng ⭐</strong>.<br><br>💡 <em>Mẹo nhỏ: Học đi học lại nhiều lần sẽ giúp biến kiến thức ngữ pháp thành phản xạ tự nhiên của bạn!</em>`;
+                }
+            } else {
+                awardStars(4, `Ôn tập thành công bài "${lesson.title}" (Lần ${totalTimes})`);
+                if (successTitleEl) successTitleEl.textContent = `🔥 Xuất sắc! Ôn tập liên tục!`;
+                if (successMsgEl) {
+                    successMsgEl.innerHTML = `Bạn vừa xuất sắc ôn tập thành công chủ điểm <strong>"${lesson.title}"</strong> (Lần thứ <strong>${totalTimes}</strong>)! Bạn nhận được thêm <strong>+4 Ngôi sao vàng ⭐</strong>.<br><br>🚀 <em>Tuyệt vời! Bạn đang củng cố trí nhớ dài hạn cực kỳ tốt. Hãy duy trì phong độ và tiếp tục ôn tập nhé!</em>`;
+                }
             }
         }
 
-        // Re-render sidebar list to update "Đã xong ✅" status badge
+        // Re-render sidebar list
         renderGrammarLessons(activeGrammarCategory);
     }
 }
