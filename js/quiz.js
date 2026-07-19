@@ -1,20 +1,27 @@
-// --- DYNAMIC QUIZ SYSTEM ---
+// --- DYNAMIC QUIZ SYSTEM (Backend-powered) ---
+
+// Map frontend category to backend difficulty
+function quizCategoryToDifficulty(category) {
+    if (category === 'easy' || category === 'oxford' || category === 'basic') return 'easy';
+    if (category === 'hard' || category === 'advanced' || category === 'idioms') return 'hard';
+    return 'normal'; // 'all', 'assessment', 'custom', 'academic', etc.
+}
+
 async function initQuizSession(category = 'all') {
     quizSelectedCategory = category;
-    
-    // Hiển thị trạng thái chuẩn bị câu hỏi ngay lập tức để tạo trải nghiệm mượt mà
+
     const activeState = document.getElementById('quiz-active-state');
     const introState = document.getElementById('quiz-intro-state');
     const resultState = document.getElementById('quiz-result-state');
-    
+
     if (introState) introState.classList.add('hidden');
     if (resultState) resultState.classList.add('hidden');
     if (activeState) activeState.classList.remove('hidden');
-    
+
     const quizCounter = document.getElementById('quiz-counter');
     const quizQuestionWord = document.getElementById('quiz-question-word');
     const optionsContainer = document.getElementById('quiz-options-container');
-    
+
     if (quizCounter) quizCounter.textContent = "Đang chuẩn bị câu hỏi...";
     if (quizQuestionWord) quizQuestionWord.textContent = "Đang tải dữ liệu...";
     if (optionsContainer) {
@@ -24,71 +31,103 @@ async function initQuizSession(category = 'all') {
             </div>`;
     }
 
-    const allWords = [...(state.vocabulary || []), ...(state.customWords || [])];
-    let sourcePool = [];
-
+    // Assessment mode: use local vocabulary quiz (no backend)
     if (category === 'assessment') {
-        // Balanced sample of questions: 4 from oxford, 3 from academic, 3 from idioms
-        const oxfordPool = shuffleArray(allWords.filter(w => w.category === 'oxford'));
-        const academicPool = shuffleArray(allWords.filter(w => w.category === 'academic'));
-        const idiomsPool = shuffleArray(allWords.filter(w => w.category === 'idioms'));
-        
-        sourcePool = shuffleArray([
-            ...oxfordPool.slice(0, 4),
-            ...academicPool.slice(0, 3),
-            ...idiomsPool.slice(0, 3)
-        ]);
-    } else if (category === 'all') {
-        sourcePool = [...allWords];
-    } else if (category === 'custom') {
-        sourcePool = [...(state.customWords || [])];
-    } else {
-        sourcePool = allWords.filter(w => w.category === category);
+        await initAssessmentQuiz();
+        return;
     }
 
-    if (sourcePool.length < 4) {
-        console.warn("Không đủ từ vựng để tạo bài trắc nghiệm.", sourcePool.length);
-        alert('⚠️ Kho từ vựng hiện tại cần ít nhất 4 từ để có thể bắt đầu làm Trắc nghiệm.');
+    // Backend-powered quiz (requires login)
+    if (!window.ApiClient || !window.ApiClient.isLoggedIn()) {
+        alert('Vui lòng đăng nhập để làm trắc nghiệm!');
         if (introState) introState.classList.remove('hidden');
         if (activeState) activeState.classList.add('hidden');
         return;
     }
 
-    // Chọn ngẫu nhiên 10 từ mục tiêu từ danh sách Index
-    const quizLength = Math.min(10, sourcePool.length);
-    const shuffled = shuffleArray([...sourcePool]);
-    const selectedIndexWords = shuffled.slice(0, quizLength);
+    try {
+        const difficulty = quizCategoryToDifficulty(category);
+        const data = await window.ApiClient.generateQuiz(difficulty, 10);
+        const questions = data.data || [];
 
-    // 1. Tải bất đồng bộ thông tin chi tiết đầy đủ của các từ đúng (tải song song)
+        if (questions.length === 0) {
+            alert('Không có câu hỏi phù hợp. Vui lòng thử lại!');
+            if (introState) introState.classList.remove('hidden');
+            if (activeState) activeState.classList.add('hidden');
+            return;
+        }
+
+        // Transform backend questions to frontend format
+        quizQuestions = questions.map(q => ({
+            id: q.id,
+            questionText: q.question,
+            options: q.options,
+            correctIndex: q.answer,
+            explanation: q.explanation || ''
+        }));
+
+        currentQuestionIndex = 0;
+        quizScore = 0;
+        quizTimer.start = Date.now();
+
+        renderQuizQuestion();
+    } catch (err) {
+        console.error('Failed to generate quiz:', err);
+        alert('Lỗi tải câu hỏi. Vui lòng thử lại!');
+        if (introState) introState.classList.remove('hidden');
+        if (activeState) activeState.classList.add('hidden');
+    }
+}
+
+// Assessment mode: local vocabulary quiz (backward compatible)
+async function initAssessmentQuiz() {
+    const allWords = [...(state.vocabulary || []), ...(state.customWords || [])];
+
+    const oxfordPool = shuffleArray(allWords.filter(w => w.category === 'oxford'));
+    const academicPool = shuffleArray(allWords.filter(w => w.category === 'academic'));
+    const idiomsPool = shuffleArray(allWords.filter(w => w.category === 'idioms'));
+
+    const sourcePool = shuffleArray([
+        ...oxfordPool.slice(0, 4),
+        ...academicPool.slice(0, 3),
+        ...idiomsPool.slice(0, 3)
+    ]);
+
+    if (sourcePool.length < 4) {
+        alert('⚠️ Kho từ vựng hiện tại cần ít nhất 4 từ để có thể bắt đầu đánh giá.');
+        const introState = document.getElementById('quiz-intro-state');
+        const activeState = document.getElementById('quiz-active-state');
+        if (introState) introState.classList.remove('hidden');
+        if (activeState) activeState.classList.add('hidden');
+        return;
+    }
+
+    const shuffled = shuffleArray([...sourcePool]);
+    const selectedIndexWords = shuffled.slice(0, 10);
+
     const correctWordsPromises = selectedIndexWords.map(async (w) => {
         const fullData = await LearningDB.getFullWordData(w.id);
         return fullData ? fullData : { ...w, meaning: w.word, example: '' };
     });
     const correctWords = await Promise.all(correctWordsPromises);
 
-    // 2. Chọn ngẫu nhiên khoảng 25 từ nhiễu (distractor pool) từ Index chung và tải chi tiết để làm phương án sai
     const distractorIndexWords = allWords
         .filter(w => !selectedIndexWords.some(sw => sw.id === w.id))
         .sort(() => Math.random() - 0.5)
         .slice(0, 25);
-    
+
     const distractorWordsPromises = distractorIndexWords.map(async (w) => {
         return await LearningDB.getFullWordData(w.id);
     });
     const distractorWordsRaw = await Promise.all(distractorWordsPromises);
     const distractorWords = distractorWordsRaw.filter(Boolean);
 
-    // 3. Ghép nối tạo câu hỏi trắc nghiệm hoàn chỉnh
     quizQuestions = correctWords.map(word => {
-        // Lấy nghĩa từ vựng của danh sách từ nhiễu
         const otherMeanings = distractorWords
             .filter(w => w.id !== word.id && w.meaning !== word.meaning)
             .map(w => w.meaning);
-        
-        // Trộn ngẫu nhiên các từ nhiễu và lấy đúng 3 phương án sai
+
         const distractors = shuffleArray([...otherMeanings]).slice(0, 3);
-        
-        // Trộn đáp án đúng với các phương án sai
         const options = shuffleArray([word.meaning, ...distractors]);
         const correctIndex = options.indexOf(word.meaning);
 
@@ -109,23 +148,38 @@ async function initQuizSession(category = 'all') {
 
 function renderQuizQuestion() {
     const question = quizQuestions[currentQuestionIndex];
-    
+    const isAssessment = quizSelectedCategory === 'assessment' && question.wordObj;
+
     // Header Info
     document.getElementById('quiz-counter').textContent = `Câu hỏi ${currentQuestionIndex + 1} / ${quizQuestions.length}`;
     document.getElementById('quiz-score-correct').textContent = quizScore;
-    
+
     // Progress Bar
     const progressPct = Math.round(((currentQuestionIndex) / quizQuestions.length) * 100);
     document.getElementById('quiz-progress-bar').style.width = `${progressPct}%`;
 
-    // Word Question Text
-    document.getElementById('quiz-question-word').textContent = question.wordObj.word;
+    // Question Text
+    const qWordEl = document.getElementById('quiz-question-word');
+    if (isAssessment) {
+        qWordEl.textContent = question.wordObj.word;
+        qWordEl.style.fontSize = '';
+    } else {
+        qWordEl.textContent = question.questionText;
+        qWordEl.style.fontSize = '16px';
+    }
 
-    // Speech Trigger for Question
+    // Speech Trigger (assessment mode only)
     const speakBtn = document.getElementById('quiz-speak-question-btn');
-    const newBtn = speakBtn.cloneNode(true);
-    speakBtn.parentNode.replaceChild(newBtn, speakBtn);
-    newBtn.addEventListener('click', () => speakEnglish(question.wordObj.word));
+    if (speakBtn) {
+        if (isAssessment) {
+            speakBtn.classList.remove('hidden');
+            const newBtn = speakBtn.cloneNode(true);
+            speakBtn.parentNode.replaceChild(newBtn, speakBtn);
+            newBtn.addEventListener('click', () => speakEnglish(question.wordObj.word));
+        } else {
+            speakBtn.classList.add('hidden');
+        }
+    }
 
     // Hide Feedback Panel
     document.getElementById('quiz-feedback').classList.add('hidden');
@@ -139,26 +193,25 @@ function renderQuizQuestion() {
         btn.className = 'option-card';
         btn.textContent = opt;
         btn.dataset.index = idx;
-        btn.addEventListener('click', () => handleQuizAnswer(idx, question.correctIndex, btn));
+        btn.addEventListener('click', () => handleQuizAnswer(idx, btn));
         optionsContainer.appendChild(btn);
     });
 }
 
-function handleQuizAnswer(selectedIndex, correctIndex, clickedButton) {
+function handleQuizAnswer(selectedIndex, clickedButton) {
     const question = quizQuestions[currentQuestionIndex];
     const optionsContainer = document.getElementById('quiz-options-container');
     const optionCards = optionsContainer.querySelectorAll('.option-card');
 
-    // Register active study date for Streak
     checkAndUpdateStreak();
     renderDashboard();
 
-    // Disable all options click immediately
     optionCards.forEach(card => card.classList.add('disabled'));
 
+    const correctIndex = question.correctIndex;
     const isCorrect = selectedIndex === correctIndex;
 
-    // Stat Track
+    // Stat Track (local for instant UI feedback)
     state.quizStats.totalAnswered += 1;
     if (isCorrect) {
         state.quizStats.correctAnswers += 1;
@@ -166,14 +219,23 @@ function handleQuizAnswer(selectedIndex, correctIndex, clickedButton) {
         clickedButton.classList.add('correct');
     } else {
         clickedButton.classList.add('incorrect');
-        // highlight correct one
         optionCards[correctIndex].classList.add('correct');
     }
-
     saveStatsToStorage();
 
-    // Auto-pronounce when answered
-    speakEnglish(question.wordObj.word);
+    // Store answer for backend submission
+    if (!quizAnswers) quizAnswers = [];
+    quizAnswers.push({
+        questionId: question.id || null,
+        selected: selectedIndex,
+        correct: isCorrect
+    });
+
+    // Auto-pronounce (assessment mode)
+    const isAssessment = quizSelectedCategory === 'assessment' && question.wordObj;
+    if (isAssessment) {
+        speakEnglish(question.wordObj.word);
+    }
 
     // Show Feedback Box
     const feedbackBox = document.getElementById('quiz-feedback');
@@ -195,7 +257,11 @@ function handleQuizAnswer(selectedIndex, correctIndex, clickedButton) {
         feedbackIcon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
     }
 
-    feedbackDetail.textContent = `Ví dụ: "${question.wordObj.example || ''}"`;
+    if (isAssessment) {
+        feedbackDetail.textContent = `Ví dụ: "${question.wordObj.example || ''}"`;
+    } else {
+        feedbackDetail.textContent = question.explanation || '';
+    }
 }
 
 function handleQuizNext() {
@@ -203,10 +269,31 @@ function handleQuizNext() {
         currentQuestionIndex++;
         renderQuizQuestion();
     } else {
-        // Quiz completed
         quizTimer.end = Date.now();
-        showQuizResults();
+        submitAndShowResults();
     }
+}
+
+async function submitAndShowResults() {
+    const isAssessment = quizSelectedCategory === 'assessment';
+
+    // Submit to backend (non-assessment mode)
+    if (!isAssessment && window.ApiClient && window.ApiClient.isLoggedIn() && quizAnswers && quizAnswers.length > 0) {
+        try {
+            const difficulty = quizCategoryToDifficulty(quizSelectedCategory);
+            const backendAnswers = quizAnswers
+                .filter(a => a.questionId != null)
+                .map(a => ({ questionId: a.questionId, selected: a.selected }));
+
+            if (backendAnswers.length > 0) {
+                await window.ApiClient.submitQuiz(difficulty, backendAnswers);
+            }
+        } catch (err) {
+            console.error('Failed to submit quiz to backend:', err);
+        }
+    }
+
+    showQuizResults();
 }
 
 function showQuizResults() {
@@ -217,19 +304,17 @@ function showQuizResults() {
     const pct = Math.round((quizScore / quizQuestions.length) * 100);
 
     document.getElementById('result-score-val').textContent = `${quizScore} / ${quizQuestions.length}`;
-    
-    // Award Gold Stars for Quiz completion & accuracy!
+
     const baseStars = 5;
     const accuracyStars = quizScore * 1;
     const totalStarsEarned = baseStars + accuracyStars;
-    awardStars(totalStarsEarned, `Hoàn thành trắc nghiệm (${quizScore}/10 câu đúng)`);
+    awardStars(totalStarsEarned, `Hoàn thành trắc nghiệm (${quizScore}/${quizQuestions.length} câu đúng)`);
     document.getElementById('result-time').textContent = `${durationSec} giây`;
     document.getElementById('result-accuracy').textContent = `${pct}%`;
 
     const activeCategory = quizSelectedCategory;
     trackDailyActivity('quiz', { correct: quizScore, total: quizQuestions.length, category: activeCategory });
 
-    // Dynamic result message
     const msgEl = document.getElementById('quiz-result-message');
     if (activeCategory === 'assessment') {
         let level = 'Beginner';
@@ -242,14 +327,13 @@ function showQuizResults() {
             speedRating = 'Phản xạ tiêu chuẩn ⏱️';
         }
 
-        // Timed Assessment Rating Matrix (Độ chính xác + Tốc độ phản xạ)
         if (quizScore >= 8) {
             if (durationSec < 60) {
                 level = 'C1';
                 levelName = 'Cao cấp (C1)';
             } else {
                 level = 'B1';
-                levelName = 'Trung cấp (B1)'; // Slower recall, downgraded to Intermediate
+                levelName = 'Trung cấp (B1)';
             }
         } else if (quizScore >= 5) {
             if (durationSec < 95) {
@@ -257,24 +341,24 @@ function showQuizResults() {
                 levelName = 'Trung cấp (B1)';
             } else {
                 level = 'A1';
-                levelName = 'Sơ cấp (A1)'; // Too slow, downgraded to Beginner
+                levelName = 'Sơ cấp (A1)';
             }
         } else {
             level = 'A1';
             levelName = 'Sơ cấp (A1)';
         }
-        
-        state.lastTestScore = quizScore * 1.6; // Scale 10-based score to 16-based score
+
+        state.lastTestScore = quizScore * 1.6;
         state.roadmapTasks = generateRoadmapTasks(level);
         saveStatsToStorage();
-        
+
         let badgeStyleClass = 'beginner';
         if (level.startsWith('B')) badgeStyleClass = 'intermediate';
         else if (level.startsWith('C')) badgeStyleClass = 'advanced';
 
         msgEl.innerHTML = `
             🎓 <b>KẾT QUẢ ĐÁNH GIÁ PHẢN XẠ & TRÌNH ĐỘ:</b><br>
-            • Độ chính xác: <b>${quizScore}/10 câu đúng</b> (${pct}%)<br>
+            • Độ chính xác: <b>${quizScore}/${quizQuestions.length} câu đúng</b> (${pct}%)<br>
             • Thời gian hoàn thành: <b>${durationSec} giây</b> (${speedRating})<br>
             • Xếp hạng trình độ: <span class="level-badge ${badgeStyleClass}" style="font-size:12px; padding: 4px 10px; box-shadow:none; line-height:1.2; display:inline-block; margin: 6px 0;">${levelName}</span><br>
             <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 8px; line-height: 1.4;">Hệ thống đã phân tích tốc độ phản xạ và độ chính xác của bạn để tự động thiết lập Lộ trình học tập phù hợp nhất tại trang Tổng quan!</p>
@@ -286,7 +370,5 @@ function showQuizResults() {
         else msgEl.textContent = '💪 Cố lên! Chăm chỉ luyện tập để cải thiện điểm số.';
     }
 
-    // Synchronize overall stats wheel on dashboard
     renderDashboard();
 }
-

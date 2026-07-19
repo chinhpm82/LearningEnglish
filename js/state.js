@@ -50,6 +50,7 @@ let currentQuestionIndex = 0;
 let quizScore = 0;
 let quizTimer = { start: 0, end: 0 };
 let quizSelectedCategory = 'all';
+let quizAnswers = [];
 
 // Grammar state
 let currentGrammarLesson = null;

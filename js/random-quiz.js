@@ -1,20 +1,18 @@
 /* ==========================================================================
-   LearningEnglish - Random Quiz Game Logic
+   LearningEnglish - Random Quiz Game Logic (Backend-powered)
    ========================================================================== */
 
 let rqTimerInterval = null;
-let rqTimeRemaining = 300; // 5 phút = 300 giây
+let rqTimeRemaining = 300;
 let rqLives = 3;
 let rqScore = 0;
-let rqCurrentDifficulty = 'easy'; // 'easy', 'normal', 'hardcore'
-let rqAllowedLevels = [];
+let rqCurrentDifficulty = 'easy';
 let rqQuestions = [];
 let rqCurrentQuestionIndex = 0;
-let rqQuizIndex = [];
 let rqRewardMultiplier = 1;
 let rqIsGameOver = false;
-let rqHistory = []; // Lưu lại lịch sử trả lời: { q: questionObj, isCorrect: boolean }
-let rqUsedQuestionIds = new Set(); // Track used IDs to prevent duplicates
+let rqHistory = [];
+let rqAnswers = []; // For backend submission
 
 async function initRandomQuizSession(difficulty) {
     rqCurrentDifficulty = difficulty;
@@ -25,34 +23,26 @@ async function initRandomQuizSession(difficulty) {
     rqCurrentQuestionIndex = 0;
     rqIsGameOver = false;
     rqHistory = [];
-    rqUsedQuestionIds.clear();
+    rqAnswers = [];
 
-    // Thiết lập độ khó ban đầu và hệ số nhân điểm
     if (difficulty === 'easy') {
-        rqAllowedLevels = ['A1', 'A2', 'B1'];
         rqRewardMultiplier = 1;
     } else if (difficulty === 'normal') {
-        rqAllowedLevels = ['B1', 'B2', 'C1'];
         rqRewardMultiplier = 2;
     } else if (difficulty === 'hardcore') {
-        rqAllowedLevels = ['C1', 'C2'];
         rqRewardMultiplier = 4;
     }
 
-    // Hiển thị loading và reset lại các style bị ẩn khi game over
     document.getElementById('random-quiz-intro').classList.add('hidden');
     document.getElementById('random-quiz-active').classList.remove('hidden');
-    
+
     document.getElementById('rq-question-direction').style.display = '';
     document.getElementById('rq-question-text').style.display = '';
     document.getElementById('rq-options-container').style.display = '';
     document.getElementById('rq-progress-bar').parentElement.style.display = '';
-    
-    // Xóa end-screen nếu vẫn còn
+
     const existingEndScreen = document.getElementById('rq-end-screen');
-    if (existingEndScreen) {
-        existingEndScreen.remove();
-    }
+    if (existingEndScreen) existingEndScreen.remove();
 
     document.getElementById('rq-question-direction').textContent = "Đang kết nối Đấu Trường...";
     document.getElementById('rq-question-text').textContent = "Đang tải dữ liệu...";
@@ -62,65 +52,35 @@ async function initRandomQuizSession(difficulty) {
     updateRQTimerUI();
     updateRQScoreUI();
 
-    // Load quiz bank index from backend
-    if (rqQuizIndex.length === 0) {
-        try {
-            const data = await window.ApiClient.getQuiz({ limit: 500 });
-            const allItems = [];
-            (data.data || []).forEach(function (bank) {
-                (bank.items || []).forEach(function (item) {
-                    allItems.push({ id: item.id, category: item.category || bank.category, level: item.level || bank.level || '' });
-                });
-            });
-            rqQuizIndex = allItems;
-        } catch (e) {
-            console.error("Failed to load quiz index", e);
-            alert("Lỗi tải dữ liệu ngân hàng câu hỏi!");
+    // Map difficulty to backend difficulty
+    const backendDifficulty = difficulty === 'hardcore' ? 'hard' : difficulty;
+
+    try {
+        const data = await window.ApiClient.generateQuiz(backendDifficulty, 50);
+        const questions = data.data || [];
+
+        if (questions.length === 0) {
+            alert("Không tìm thấy câu hỏi phù hợp cho cấp độ này!");
+            document.getElementById('random-quiz-intro').classList.remove('hidden');
+            document.getElementById('random-quiz-active').classList.add('hidden');
             return;
         }
-    }
 
-    await fetchNextBatch();
-    
-    if (rqQuestions.length > 0) {
+        rqQuestions = questions.map(q => ({
+            id: q.id,
+            question: q.question,
+            options: q.options,
+            answer: q.answer,
+            explanation: q.explanation || ''
+        }));
+
         startRQTimer();
         renderRQQuestion();
-    } else {
-        alert("Không tìm thấy câu hỏi phù hợp cho cấp độ này!");
-    }
-}
-
-async function fetchNextBatch() {
-    document.getElementById('rq-question-direction').textContent = `Đang tải câu hỏi...`;
-    
-    // Lọc các ID thuộc các level được phép và chưa từng được hỏi trong session này
-    // quiz-index.json uses compound levels like 'A1/A2', so check if any allowed level is contained
-    const availableIds = rqQuizIndex
-        .filter(q => rqAllowedLevels.some(lv => q.level && q.level.includes(lv)) && !rqUsedQuestionIds.has(q.id))
-        .map(q => q.id);
-    
-    if (availableIds.length === 0) {
-        return; // Đã hết câu hỏi
-    }
-
-    // Trộn mảng ID và lấy tối đa 50 câu (đủ cho 5 phút)
-    const shuffledIds = shuffleArray(availableIds);
-    const batchIds = shuffledIds.slice(0, 50);
-    
-    // Ghi nhận các ID này đã được lấy
-    batchIds.forEach(id => rqUsedQuestionIds.add(id));
-
-    // Gọi Firestore (hoặc local fallback) qua firebase-sync.js
-    if (window.FirebaseSync && window.FirebaseSync.fetchQuizBatch) {
-        let fetchedData = await window.FirebaseSync.fetchQuizBatch(batchIds);
-        
-        // Trộn ngẫu nhiên câu hỏi trả về
-        fetchedData = shuffleArray(fetchedData);
-        
-        // Thêm vào hàng đợi câu hỏi
-        rqQuestions = rqQuestions.concat(fetchedData);
-    } else {
-        console.warn("FirebaseSync not available, cannot fetch random quiz data");
+    } catch (err) {
+        console.error("Failed to generate quiz:", err);
+        alert("Lỗi tải dữ liệu ngân hàng câu hỏi!");
+        document.getElementById('random-quiz-intro').classList.remove('hidden');
+        document.getElementById('random-quiz-active').classList.add('hidden');
     }
 }
 
@@ -130,7 +90,7 @@ function startRQTimer() {
         if (rqIsGameOver) return;
         rqTimeRemaining--;
         updateRQTimerUI();
-        
+
         if (rqTimeRemaining <= 0) {
             clearInterval(rqTimerInterval);
             endRandomQuiz("Hết giờ! ⏱️");
@@ -142,8 +102,7 @@ function updateRQTimerUI() {
     const m = Math.floor(rqTimeRemaining / 60).toString().padStart(2, '0');
     const s = (rqTimeRemaining % 60).toString().padStart(2, '0');
     document.getElementById('rq-timer').textContent = `${m}:${s}`;
-    
-    // Đổi màu khi sắp hết giờ
+
     if (rqTimeRemaining < 30) {
         document.getElementById('rq-timer').style.color = '#f87171';
     } else {
@@ -154,11 +113,7 @@ function updateRQTimerUI() {
 function updateRQLivesUI() {
     let hearts = "";
     for (let i = 0; i < 3; i++) {
-        if (i < rqLives) {
-            hearts += "❤️";
-        } else {
-            hearts += "🖤";
-        }
+        hearts += i < rqLives ? "❤️" : "🖤";
     }
     document.getElementById('rq-lives').textContent = hearts;
 }
@@ -175,31 +130,16 @@ function renderRQQuestion() {
 
     const q = rqQuestions[rqCurrentQuestionIndex];
     document.getElementById('rq-feedback').classList.add('hidden');
-    
+
     document.getElementById('rq-question-direction').textContent = `Câu ${rqCurrentQuestionIndex + 1}`;
     document.getElementById('rq-question-text').textContent = q.question;
 
-    // Handle Audio button for listening questions
     const speakBtn = document.getElementById('rq-speak-btn');
-    if (q.section === 'listening') {
-        speakBtn.classList.remove('hidden');
-        speakBtn.onclick = () => {
-            const audioPath = `audio/listening/${q.id}.mp3`;
-            const audio = new Audio(audioPath);
-            audio.play().catch(e => {
-                console.warn("Audio file not found, falling back to TTS", e);
-                if (typeof speakEnglish === 'function') {
-                    speakEnglish(q.question);
-                }
-            });
-        };
-    } else {
-        speakBtn.classList.add('hidden');
-    }
+    if (speakBtn) speakBtn.classList.add('hidden');
 
     const optionsContainer = document.getElementById('rq-options-container');
     optionsContainer.innerHTML = '';
-    
+
     q.options.forEach((opt, idx) => {
         const btn = document.createElement('button');
         btn.className = 'option-card';
@@ -208,7 +148,6 @@ function renderRQQuestion() {
         optionsContainer.appendChild(btn);
     });
 
-    // Cập nhật Progress Bar (trên tổng số câu hỏi đang nạp)
     const progress = Math.min(100, (rqCurrentQuestionIndex / rqQuestions.length) * 100);
     document.getElementById('rq-progress-bar').style.width = `${progress}%`;
 }
@@ -218,24 +157,23 @@ function handleRQAnswer(selectedIndex, btnElement) {
     const q = rqQuestions[rqCurrentQuestionIndex];
     const isCorrect = (selectedIndex === q.answer);
     const options = document.getElementById('rq-options-container').querySelectorAll('.option-card');
-    
-    // Khóa tất cả các nút
+
     options.forEach(btn => btn.disabled = true);
+
+    // Store answer for backend submission
+    rqAnswers.push({ questionId: q.id || null, selected: selectedIndex });
 
     if (isCorrect) {
         btnElement.classList.add('correct');
         rqScore++;
         updateRQScoreUI();
-        
-        // Ghi lại lịch sử
+
         rqHistory.push({ q: q, isCorrect: true });
-        
-        // Hiển thị toast cộng sao
+
         if (typeof showToastNotification === 'function') {
             showToastNotification(`+${rqRewardMultiplier} ⭐`);
         }
-        
-        // Không hiện feedback, đợi 1s và chuyển câu
+
         setTimeout(() => {
             if (!rqIsGameOver) {
                 rqCurrentQuestionIndex++;
@@ -247,16 +185,15 @@ function handleRQAnswer(selectedIndex, btnElement) {
                 }
             }
         }, 1000);
-        
+
     } else {
         btnElement.classList.add('wrong');
-        options[q.answer].classList.add('correct'); // Hiện đáp án đúng
-        rqLives--; // Trừ mạng vĩnh viễn
+        options[q.answer].classList.add('correct');
+        rqLives--;
         updateRQLivesUI();
-        
-        // Ghi lại lịch sử
+
         rqHistory.push({ q: q, isCorrect: false });
-        
+
         if (rqLives <= 0) {
             showRQFeedback(false, "Sai rồi!", q.explanation);
             setTimeout(() => {
@@ -306,13 +243,25 @@ async function endRandomQuiz(reasonText) {
     try {
         rqIsGameOver = true;
         clearInterval(rqTimerInterval);
-        
+
+        // Submit answers to backend
+        if (window.ApiClient && window.ApiClient.isLoggedIn() && rqAnswers.length > 0) {
+            try {
+                const backendDifficulty = rqCurrentDifficulty === 'hardcore' ? 'hard' : rqCurrentDifficulty;
+                const validAnswers = rqAnswers.filter(a => a.questionId != null);
+                if (validAnswers.length > 0) {
+                    await window.ApiClient.submitQuiz(backendDifficulty, validAnswers);
+                }
+            } catch (err) {
+                console.error('Failed to submit random quiz to backend:', err);
+            }
+        }
+
         const finalStars = rqScore * rqRewardMultiplier;
-        
-        // Render History Lists
+
         let correctListHTML = rqHistory.filter(h => h.isCorrect).map(h => `<div style="font-size: 14px; margin-bottom: 8px; color: #4ade80;">✔️ ${h.q?.question || 'N/A'}</div>`).join('');
         let wrongListHTML = rqHistory.filter(h => !h.isCorrect).map(h => `<div style="font-size: 14px; margin-bottom: 8px; color: #f87171; border-bottom: 1px solid rgba(248, 113, 113, 0.2); padding-bottom: 8px;">❌ ${h.q?.question || 'N/A'}<div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">💡 <em>${h.q?.explanation || 'Không có giải thích'}</em></div></div>`).join('');
-        
+
         if (!correctListHTML) correctListHTML = "<div style='color: var(--text-muted); font-size: 14px; text-align: center;'>Chưa có câu trả lời đúng nào.</div>";
         if (!wrongListHTML) wrongListHTML = "<div style='color: var(--text-muted); font-size: 14px; text-align: center;'>Tuyệt vời! Không có câu sai.</div>";
 
@@ -348,23 +297,22 @@ async function endRandomQuiz(reasonText) {
                 </div>
             </div>
         `;
-        
+
         const qDir = document.getElementById('rq-question-direction');
         if (qDir) qDir.style.display = 'none';
-        
+
         const qText = document.getElementById('rq-question-text');
         if (qText) qText.style.display = 'none';
-        
+
         const qOpts = document.getElementById('rq-options-container');
         if (qOpts) qOpts.style.display = 'none';
-        
+
         const qFb = document.getElementById('rq-feedback');
         if (qFb) qFb.style.display = 'none';
-        
+
         const pb = document.getElementById('rq-progress-bar');
         if (pb && pb.parentElement) pb.parentElement.style.display = 'none';
-        
-        // Render HTML kết thúc vào thẳng khung màn hình
+
         const container = document.getElementById('random-quiz-active');
         if (container) {
             const endDiv = document.createElement('div');
@@ -372,7 +320,7 @@ async function endRandomQuiz(reasonText) {
             endDiv.innerHTML = html;
             container.appendChild(endDiv);
         }
-        
+
         if (finalStars > 0 && typeof awardStars === 'function') {
             await awardStars(finalStars, `Random Quiz (${rqCurrentDifficulty})`);
         }

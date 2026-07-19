@@ -1,6 +1,7 @@
-// --- INTERACTIVE GRAMMAR LEARNING CONTROLLER ---
+// --- INTERACTIVE GRAMMAR LEARNING CONTROLLER (Backend-powered) ---
 let activeGrammarCategory = 'all';
 let currentPracticeSession = [];
+let grammarPracticeAnswers = [];
 
 // CEFR level mapping for grammar lessons (based on lesson order)
 const GRAMMAR_LEVEL_MAP = {
@@ -198,12 +199,45 @@ function loadGrammarLesson(lessonId) {
     renderDashboard();
 }
 
-function initGrammarPractice() {
+async function initGrammarPractice() {
     if (!currentGrammarLesson) return;
 
+    const grammarId = currentGrammarLesson.id;
+
+    // Try backend API first
+    if (window.ApiClient && window.ApiClient.isLoggedIn()) {
+        try {
+            const data = await window.ApiClient.generateGrammarPractice(grammarId, 10);
+            const questions = data.data || [];
+
+            if (questions.length > 0) {
+                currentPracticeSession = questions.map(q => ({
+                    id: q.id,
+                    q: q.question,
+                    options: q.options,
+                    answer: q.answer,
+                    explanation: q.explanation || ''
+                }));
+                grammarPracticeAnswers = [];
+                grammarPracticeIndex = 0;
+                grammarPracticeScore = 0;
+
+                document.getElementById('grammar-practice-entry').classList.add('hidden');
+                document.getElementById('grammar-success-panel').classList.add('hidden');
+                document.getElementById('grammar-practice-panel').classList.remove('hidden');
+
+                loadGrammarPracticeQuestion();
+                return;
+            }
+        } catch (err) {
+            console.warn('Backend generate failed, falling back to local:', err);
+        }
+    }
+
+    // Fallback: local practice data
     let practicePool = [];
-    if (window.GRAMMAR_PRACTICE_DATA && window.GRAMMAR_PRACTICE_DATA[currentGrammarLesson.id]) {
-        practicePool = window.GRAMMAR_PRACTICE_DATA[currentGrammarLesson.id];
+    if (window.GRAMMAR_PRACTICE_DATA && window.GRAMMAR_PRACTICE_DATA[grammarId]) {
+        practicePool = window.GRAMMAR_PRACTICE_DATA[grammarId];
     } else if (currentGrammarLesson.practice) {
         practicePool = currentGrammarLesson.practice;
     }
@@ -213,14 +247,13 @@ function initGrammarPractice() {
         return;
     }
 
-    // Shuffle and pick 3
     const shuffledPool = shuffleArray([...practicePool]);
     currentPracticeSession = shuffledPool.slice(0, 3);
+    grammarPracticeAnswers = [];
 
     grammarPracticeIndex = 0;
     grammarPracticeScore = 0;
 
-    // Hide entry block & success, show quiz panel
     document.getElementById('grammar-practice-entry').classList.add('hidden');
     document.getElementById('grammar-success-panel').classList.add('hidden');
     document.getElementById('grammar-practice-panel').classList.remove('hidden');
@@ -265,12 +298,16 @@ function answerGrammarPracticeQuestion(selectedIndex) {
     const question = currentPracticeSession[grammarPracticeIndex];
     const optionBtns = document.querySelectorAll('.practice-opt-btn');
 
-    // Disable all options
     optionBtns.forEach(btn => btn.disabled = true);
 
     const isCorrect = selectedIndex === question.answer;
 
-    // Highlight
+    // Store answer for backend submission
+    grammarPracticeAnswers.push({
+        questionId: question.id || null,
+        selected: selectedIndex
+    });
+
     if (isCorrect) {
         optionBtns[selectedIndex].classList.add('correct');
         grammarPracticeScore++;
@@ -281,7 +318,6 @@ function answerGrammarPracticeQuestion(selectedIndex) {
         speakEnglish("Incorrect");
     }
 
-    // Explanation details
     const explanationBox = document.getElementById('grammar-explanation-box');
     const badge = document.getElementById('grammar-result-badge');
     const text = document.getElementById('grammar-explanation-text');
@@ -305,14 +341,22 @@ function nextGrammarPracticeQuestion() {
     if (grammarPracticeIndex < currentPracticeSession.length) {
         loadGrammarPracticeQuestion();
     } else {
-        // End of practice!
+        // Submit answers to backend
+        if (window.ApiClient && window.ApiClient.isLoggedIn() && grammarPracticeAnswers.length > 0) {
+            const validAnswers = grammarPracticeAnswers.filter(a => a.questionId != null);
+            if (validAnswers.length > 0) {
+                window.ApiClient.submitGrammarPractice(lesson.id, validAnswers).catch(err => {
+                    console.error('Failed to submit grammar practice to backend:', err);
+                });
+            }
+        }
+
         document.getElementById('grammar-practice-panel').classList.add('hidden');
 
         const totalQuestions = currentPracticeSession.length;
         const isPassed = grammarPracticeScore === totalQuestions;
 
         if (!isPassed) {
-            // Failed: show retry message, no stars
             document.getElementById('grammar-success-panel').classList.remove('hidden');
             const successTitleEl = document.getElementById('grammar-success-title');
             const successMsgEl = document.getElementById('grammar-success-msg');
@@ -321,7 +365,6 @@ function nextGrammarPracticeQuestion() {
                 successMsgEl.innerHTML = `Bạn trả lời đúng <strong>${grammarPracticeScore}/${totalQuestions}</strong> câu.<br><br>Để nhận được ⭐ sao vàng, bạn cần trả lời <strong>đúng tất cả</strong> các câu hỏi.<br><br>💡 <em>Đọc kỹ phần lý thuyết ở trên rồi thử lại nhé!</em>`;
             }
         } else {
-            // Passed: award stars
             const studyCountBefore = state.completedLessons.filter(id => id === lesson.id).length;
             state.completedLessons.push(lesson.id);
             saveStatsToStorage();
@@ -347,7 +390,6 @@ function nextGrammarPracticeQuestion() {
             }
         }
 
-        // Re-render sidebar list
         renderGrammarLessons(activeGrammarCategory);
     }
 }

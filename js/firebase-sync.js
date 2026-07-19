@@ -258,39 +258,13 @@ window.FirebaseSync = {
     },
 
     fetchAcademicQuizzes: async () => {
-        try {
-            const data = await window.ApiClient.getQuiz({ limit: 500 });
-            const items = [];
-            (data.data || []).forEach(function(q) {
-                (q.items || []).forEach(function(item) {
-                    items.push(item);
-                });
-            });
-            return items;
-        } catch (e) {
-            console.error("Error fetching quizzes:", e);
-            return [];
-        }
+        // Quiz questions now generated on-demand via POST /api/quiz/generate
+        return [];
     },
 
     fetchQuizBatch: async (ids) => {
-        if (ids.length === 0) return [];
-        try {
-            if (!window.LOCAL_QUIZ_BANK) {
-                const data = await window.ApiClient.getQuiz({ limit: 500 });
-                const items = [];
-                (data.data || []).forEach(function(q) {
-                    (q.items || []).forEach(function(item) {
-                        items.push(item);
-                    });
-                });
-                window.LOCAL_QUIZ_BANK = items;
-            }
-            return window.LOCAL_QUIZ_BANK.filter(function(q) { return ids.includes(q.id); });
-        } catch (e) {
-            console.error("Error fetching quiz batch:", e);
-            return [];
-        }
+        // Quiz questions now generated on-demand via POST /api/quiz/generate
+        return [];
     },
 
     fetchAcademicGrammar: async () => {
@@ -304,18 +278,8 @@ window.FirebaseSync = {
     },
 
     fetchAcademicGrammarPractice: async () => {
-        try {
-            const data = await window.ApiClient.getGrammarPractice({ limit: 500 });
-            const arr = data.data || [];
-            const map = {};
-            arr.forEach(function (item) {
-                map[item.grammarId] = item.items || [];
-            });
-            return map;
-        } catch (e) {
-            console.error("Error fetching grammar practice:", e);
-            return {};
-        }
+        // Grammar practice now generated on-demand via POST /api/grammar-practice/generate
+        return {};
     },
 
     fetchAcademicStories: async () => {

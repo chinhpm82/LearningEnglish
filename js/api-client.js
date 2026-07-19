@@ -158,16 +158,16 @@ const ApiClient = (function () {
 
     async function getPlacement(params) {
         const qs = buildQuery(Object.assign({ limit: 500 }, params));
-        return request('GET', '/api/placement?' + qs, null, false);
+        return request('GET', '/api/placement-questions?' + qs, null, false);
     }
 
     async function getPlacementById(id) {
-        return request('GET', '/api/placement/' + encodeURIComponent(id), null, false);
+        return request('GET', '/api/placement-questions/' + encodeURIComponent(id), null, false);
     }
 
     async function getQuiz(params) {
         const qs = buildQuery(Object.assign({ limit: 500 }, params));
-        return request('GET', '/api/quiz?' + qs, null, false);
+        return request('GET', '/api/quiz-questions?' + qs, null, false);
     }
 
     async function getOxford(params) {
@@ -181,7 +181,49 @@ const ApiClient = (function () {
 
     async function getGrammarPractice(params) {
         const qs = buildQuery(Object.assign({ limit: 500 }, params));
-        return request('GET', '/api/grammar-practice?' + qs, null, false);
+        return request('GET', '/api/grammar-questions?' + qs, null, false);
+    }
+
+    // --- Quiz Generate/Submit (auth required) ---
+    async function generateQuiz(difficulty, count) {
+        return request('POST', '/api/quiz/generate', { difficulty: difficulty, count: count || 10 }, true);
+    }
+
+    async function submitQuiz(difficulty, answers) {
+        return request('POST', '/api/quiz/submit', { difficulty: difficulty, answers: answers }, true);
+    }
+
+    async function getQuizSessions(limit) {
+        const qs = buildQuery({ limit: limit || 20 });
+        return request('GET', '/api/quiz/sessions?' + qs, null, true);
+    }
+
+    // --- Placement Generate/Submit (auth required) ---
+    async function generatePlacement(type, count) {
+        return request('POST', '/api/placement/generate', { type: type, count: count || 20 }, true);
+    }
+
+    async function submitPlacement(type, answers, currentLevel) {
+        return request('POST', '/api/placement/submit', { type: type, answers: answers, currentLevel: currentLevel }, true);
+    }
+
+    async function getPlacementSessions(limit) {
+        const qs = buildQuery({ limit: limit || 20 });
+        return request('GET', '/api/placement/sessions?' + qs, null, true);
+    }
+
+    // --- Grammar Practice Generate/Submit (auth required) ---
+    async function generateGrammarPractice(grammarId, count) {
+        return request('POST', '/api/grammar-practice/generate', { grammarId: grammarId, count: count || 10 }, true);
+    }
+
+    async function submitGrammarPractice(grammarId, answers) {
+        return request('POST', '/api/grammar-practice/submit', { grammarId: grammarId, answers: answers }, true);
+    }
+
+    async function getGrammarSessions(limit) {
+        const qs = buildQuery({ limit: limit || 20 });
+        return request('GET', '/api/grammar-practice/sessions?' + qs, null, true);
     }
 
     // --- User Progress (auth required) ---
@@ -259,6 +301,15 @@ const ApiClient = (function () {
         getPlacement: getPlacement,
         getPlacementById: getPlacementById,
         getQuiz: getQuiz,
+        generateQuiz: generateQuiz,
+        submitQuiz: submitQuiz,
+        getQuizSessions: getQuizSessions,
+        generatePlacement: generatePlacement,
+        submitPlacement: submitPlacement,
+        getPlacementSessions: getPlacementSessions,
+        generateGrammarPractice: generateGrammarPractice,
+        submitGrammarPractice: submitGrammarPractice,
+        getGrammarSessions: getGrammarSessions,
         getOxford: getOxford,
         getOxfordById: getOxfordById,
         getGrammarPractice: getGrammarPractice,
