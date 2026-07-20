@@ -282,13 +282,6 @@ async function getFullWordData(id) {
         } catch (e) {}
     }
 
-    // 3. Fallback to backend API
-    if (!payload) {
-        try {
-            payload = await window.ApiClient.getOxfordById(id);
-        } catch (e) {}
-    }
-
     // 4. Cache in IndexedDB
     if (payload) {
         try {

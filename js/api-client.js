@@ -170,15 +170,6 @@ const ApiClient = (function () {
         return request('GET', '/api/quiz-questions?' + qs, null, false);
     }
 
-    async function getOxford(params) {
-        const qs = buildQuery(Object.assign({ limit: 5000 }, params));
-        return request('GET', '/api/oxford?' + qs, null, false);
-    }
-
-    async function getOxfordById(id) {
-        return request('GET', '/api/oxford/' + encodeURIComponent(id), null, false);
-    }
-
     async function getGrammarPractice(params) {
         const qs = buildQuery(Object.assign({ limit: 500 }, params));
         return request('GET', '/api/grammar-questions?' + qs, null, false);
@@ -310,8 +301,6 @@ const ApiClient = (function () {
         generateGrammarPractice: generateGrammarPractice,
         submitGrammarPractice: submitGrammarPractice,
         getGrammarSessions: getGrammarSessions,
-        getOxford: getOxford,
-        getOxfordById: getOxfordById,
         getGrammarPractice: getGrammarPractice,
         getProgress: getProgress,
         saveProgress: saveProgress,
