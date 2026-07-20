@@ -88,10 +88,18 @@ function initFlashcardSession(category = 'all') {
             container.innerHTML = `
                 <div class="loading-spinner-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; color: var(--text-muted);">
                     <div class="spinner"></div>
-                    <p style="margin-top: 10px;">Đang tải kho từ vựng từ đám mây...</p>
+                    <p style="margin-top: 10px;">Đang tải kho từ vựng...</p>
                 </div>`;
         }
-        setTimeout(() => initFlashcardSession(category), 500);
+        try {
+            state.vocabulary = await LearningDB.getAllVocab();
+            state.isVocabLoaded = true;
+        } catch (e) {
+            console.error("Failed to load vocabulary:", e);
+            if (container) container.innerHTML = '<p style="padding:20px;color:var(--text-muted);text-align:center;">Không thể tải kho từ vựng. Vui lòng thử lại!</p>';
+            return;
+        }
+        initFlashcardSession(category);
         return;
     }
 

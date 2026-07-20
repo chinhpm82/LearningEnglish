@@ -81,6 +81,16 @@ async function initQuizSession(category = 'all') {
 
 // Assessment mode: local vocabulary quiz (backward compatible)
 async function initAssessmentQuiz() {
+    if (!state.isVocabLoaded) {
+        try {
+            state.vocabulary = await LearningDB.getAllVocab();
+            state.isVocabLoaded = true;
+        } catch (e) {
+            console.error("Assessment quiz: failed to load vocab:", e);
+            alert('Không thể tải kho từ vựng. Vui lòng thử lại!');
+            return;
+        }
+    }
     const allWords = [...(state.vocabulary || []), ...(state.customWords || [])];
 
     const oxfordPool = shuffleArray(allWords.filter(w => w.category === 'oxford'));

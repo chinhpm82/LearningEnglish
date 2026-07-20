@@ -46,11 +46,17 @@ document.getElementById('btn-sub-trans-long')?.addEventListener('click', () => {
 const longTransState = { deck: [], idx: 0, hintsShown: 0 };
 
 async function initLongTranslation() {
-    // Nếu chưa có academic index, tải ngay lập tức
-    if (!window.LONG_TRANSLATION_INDEX) {
-        if (window.FirebaseSync) {
-            window.LONG_TRANSLATION_INDEX = await window.FirebaseSync.fetchCategoryIndex('long_translation') || [];
+    // Always fetch fresh from backend
+    if (window.ApiClient) {
+        try {
+            const data = await window.ApiClient.getLongTranslations({ limit: 500 });
+            window.LONG_TRANSLATION_INDEX = data.data || [];
+        } catch (e) {
+            console.error("Long translation fetch failed:", e);
+            window.LONG_TRANSLATION_INDEX = [];
         }
+    } else if (window.FirebaseSync) {
+        window.LONG_TRANSLATION_INDEX = await window.FirebaseSync.fetchCategoryIndex('long_translation') || [];
     }
 
     const data = window.LONG_TRANSLATION_INDEX || [];

@@ -317,22 +317,27 @@ async function renderStoriesGrid(filter = 'all') {
     const grid = document.getElementById('stories-grid');
     if (!grid) return;
     
-    // Lazy load STORIES_DATA if empty
-    if (!window.STORIES_DATA || window.STORIES_DATA.length === 0) {
-        grid.innerHTML = `
-            <div class="loading-spinner-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; color: var(--text-muted); width: 100%;">
-                <div class="spinner"></div>
-                <p style="font-size:13px; margin-top:10px;">Đang tải danh sách truyện ngắn...</p>
-            </div>`;
-        if (window.FirebaseSync) {
+    // Always fetch fresh from backend
+    grid.innerHTML = `
+        <div class="loading-spinner-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; color: var(--text-muted); width: 100%;">
+            <div class="spinner"></div>
+            <p style="font-size:13px; margin-top:10px;">Đang tải danh sách truyện ngắn...</p>
+        </div>`;
+    try {
+        if (window.ApiClient) {
+            const data = await window.ApiClient.getStories({ limit: 500 });
+            window.STORIES_DATA = data.data || [];
+        } else if (window.FirebaseSync) {
             window.STORIES_DATA = await window.FirebaseSync.fetchAcademicStories() || [];
         }
-        if (!window.STORIES_DATA || window.STORIES_DATA.length === 0) {
-            grid.innerHTML = '<p style="padding: 20px; color: var(--text-muted); text-align: center;">Không thể tải truyện. Vui lòng kiểm tra mạng!</p>';
-            return;
-        }
-        grid.innerHTML = '';
+    } catch (e) {
+        console.error("Stories fetch failed:", e);
     }
+    if (!window.STORIES_DATA || window.STORIES_DATA.length === 0) {
+        grid.innerHTML = '<p style="padding: 20px; color: var(--text-muted); text-align: center;">Không thể tải truyện. Vui lòng kiểm tra mạng!</p>';
+        return;
+    }
+    grid.innerHTML = '';
 
     const stories = typeof STORIES_DATA !== 'undefined' ? STORIES_DATA : [];
     const filtered = filter === 'all' ? stories : stories.filter(s => s.level === filter);
@@ -416,11 +421,17 @@ function openStory(story) {
 const transState = { deck: [], idx: 0, score: 0, hintsShown: 0 };
 
 async function initTranslation() {
-    // Nếu chưa có academic index, tải ngay lập tức
-    if (!window.TRANSLATION_INDEX) {
-        if (window.FirebaseSync) {
-            window.TRANSLATION_INDEX = await window.FirebaseSync.fetchCategoryIndex('translation') || [];
+    // Always fetch fresh from backend
+    if (window.ApiClient) {
+        try {
+            const data = await window.ApiClient.getTranslations({ limit: 500 });
+            window.TRANSLATION_INDEX = data.data || [];
+        } catch (e) {
+            console.error("Translation fetch failed:", e);
+            window.TRANSLATION_INDEX = [];
         }
+    } else if (window.FirebaseSync) {
+        window.TRANSLATION_INDEX = await window.FirebaseSync.fetchCategoryIndex('translation') || [];
     }
 
     const data = window.TRANSLATION_INDEX || [];

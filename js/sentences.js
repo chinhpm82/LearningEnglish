@@ -3,26 +3,27 @@ async function renderSentences(category = 'all') {
     const container = document.getElementById('sentences-list-container');
     if (!container) return;
     
-    // Preloaded in state.js — skip fetch if already loaded
-    if (!window.COMMUNICATIVE_SENTENCES || window.COMMUNICATIVE_SENTENCES.length === 0) {
-        container.innerHTML = `
-            <div class="loading-spinner-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; color: var(--text-muted); width: 100%;">
-                <div class="spinner"></div>
-                <p style="font-size:13px; margin-top:10px;">Đang tải danh sách mẫu câu giao tiếp...</p>
-            </div>`;
-        try {
-            if (window.FirebaseSync && window.FirebaseSync.fetchAcademicSentences) {
-                window.COMMUNICATIVE_SENTENCES = await window.FirebaseSync.fetchAcademicSentences() || [];
-            }
-        } catch (e) {
-            console.error("Sentences fetch failed:", e);
+    // Always fetch fresh from backend
+    container.innerHTML = `
+        <div class="loading-spinner-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; color: var(--text-muted); width: 100%;">
+            <div class="spinner"></div>
+            <p style="font-size:13px; margin-top:10px;">Đang tải danh sách mẫu câu giao tiếp...</p>
+        </div>`;
+    try {
+        if (window.ApiClient) {
+            const data = await window.ApiClient.getSentences({ limit: 500 });
+            window.COMMUNICATIVE_SENTENCES = data.data || [];
+        } else if (window.FirebaseSync && window.FirebaseSync.fetchAcademicSentences) {
+            window.COMMUNICATIVE_SENTENCES = await window.FirebaseSync.fetchAcademicSentences() || [];
         }
-        if (!window.COMMUNICATIVE_SENTENCES || window.COMMUNICATIVE_SENTENCES.length === 0) {
-            container.innerHTML = '<p style="padding: 20px; color: var(--text-muted); text-align: center;">Không thể tải mẫu câu giao tiếp. Vui lòng kiểm tra mạng!</p>';
-            return;
-        }
-        container.innerHTML = '';
+    } catch (e) {
+        console.error("Sentences fetch failed:", e);
     }
+    if (!window.COMMUNICATIVE_SENTENCES || window.COMMUNICATIVE_SENTENCES.length === 0) {
+        container.innerHTML = '<p style="padding: 20px; color: var(--text-muted); text-align: center;">Không thể tải mẫu câu giao tiếp. Vui lòng kiểm tra mạng!</p>';
+        return;
+    }
+    container.innerHTML = '';
 
     // Filter sentences by category
     const baseFiltered = category === 'all' 

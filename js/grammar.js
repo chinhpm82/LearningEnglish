@@ -34,23 +34,28 @@ async function renderGrammarLessons(category = 'all') {
 
     listContainer.innerHTML = '';
 
-    // Lazy load GRAMMAR_LESSONS if empty
-    if (!window.GRAMMAR_LESSONS || window.GRAMMAR_LESSONS.length === 0) {
-        listContainer.innerHTML = `
-            <div class="loading-spinner-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; color: var(--text-muted); width: 100%;">
-                <div class="spinner"></div>
-                <p style="font-size:13px; margin-top:10px;">Đang tải danh sách bài học ngữ pháp...</p>
-            </div>`;
-        if (window.FirebaseSync) {
+    // Always fetch fresh from backend
+    listContainer.innerHTML = `
+        <div class="loading-spinner-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; color: var(--text-muted); width: 100%;">
+            <div class="spinner"></div>
+            <p style="font-size:13px; margin-top:10px;">Đang tải danh sách bài học ngữ pháp...</p>
+        </div>`;
+    try {
+        if (window.ApiClient) {
+            const data = await window.ApiClient.getGrammar({ limit: 500 });
+            window.GRAMMAR_LESSONS = data.data || [];
+        } else if (window.FirebaseSync) {
             window.GRAMMAR_LESSONS = await window.FirebaseSync.fetchAcademicGrammar() || [];
             window.GRAMMAR_PRACTICE_DATA = await window.FirebaseSync.fetchAcademicGrammarPractice() || {};
         }
-        if (!window.GRAMMAR_LESSONS || window.GRAMMAR_LESSONS.length === 0) {
-            listContainer.innerHTML = '<p style="padding: 20px; color: var(--text-muted); text-align: center;">Không thể tải bài học ngữ pháp. Vui lòng kiểm tra mạng!</p>';
-            return;
-        }
-        listContainer.innerHTML = '';
+    } catch (e) {
+        console.error("Grammar fetch failed:", e);
     }
+    if (!window.GRAMMAR_LESSONS || window.GRAMMAR_LESSONS.length === 0) {
+        listContainer.innerHTML = '<p style="padding: 20px; color: var(--text-muted); text-align: center;">Không thể tải bài học ngữ pháp. Vui lòng kiểm tra mạng!</p>';
+        return;
+    }
+    listContainer.innerHTML = '';
 
     const filtered = category === 'all'
         ? [...GRAMMAR_LESSONS]

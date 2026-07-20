@@ -92,6 +92,21 @@ function renderDashboard() {
     // Proactively check if placement test needs to be triggered
     triggerCEFRPlacementTestIfNew();
 
+    // Load vocab on-demand if not yet loaded
+    if (!state.isVocabLoaded) {
+        LearningDB.getAllVocab().then(vocab => {
+            state.vocabulary = vocab;
+            state.isVocabLoaded = true;
+            renderDashboard();
+        }).catch(e => {
+            console.error("Dashboard: failed to load vocab:", e);
+            state.vocabulary = [];
+            state.isVocabLoaded = true;
+            renderDashboard();
+        });
+        return;
+    }
+
     // Render Activity Timeline
     if (typeof renderActivityTimeline === 'function') {
         renderActivityTimeline();

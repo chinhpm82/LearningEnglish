@@ -14,6 +14,7 @@ function shuffleArray(arr) {
 // --- GLOBAL APPLICATION STATE ---
 let state = {
     vocabulary: [],
+    isVocabLoaded: false,
     customWords: [],
     streak: 0,
     lastStudyDate: '',
@@ -85,37 +86,7 @@ async function loadStateAsync() {
 
         // 2. Deprecated: Global academic index loading removed. Indexes are now loaded lazily.
 
-        // 3. Load vocabulary asynchronously in the background so it doesn't block the initial page render
-        state.vocabulary = [];
-        state.isVocabLoaded = false;
-        (async () => {
-            try {
-                console.log("Loading vocabulary database in the background...");
-                state.vocabulary = await LearningDB.getAllVocab();
-                state.isVocabLoaded = true;
-                console.log(`Background loaded ${state.vocabulary.length} unique words successfully.`);
-                
-                // If the user is currently on the dashboard, re-render the dashboard to populate vocabulary numbers
-                const activeTab = document.querySelector('.tab-content.active');
-                if (activeTab && activeTab.id === 'dashboard-tab') {
-                    renderDashboard();
-                }
-            } catch (e) {
-                console.error("Failed to load vocabulary in the background:", e);
-            }
-        })();
-
-        // 3b. Preload sentences in background (for instant tab switch)
-        (async () => {
-            try {
-                if (window.FirebaseSync && window.FirebaseSync.fetchAcademicSentences) {
-                    window.COMMUNICATIVE_SENTENCES = await window.FirebaseSync.fetchAcademicSentences() || [];
-                    console.log(`Preloaded ${window.COMMUNICATIVE_SENTENCES.length} sentences.`);
-                }
-            } catch (e) {
-                console.error("Failed to preload sentences:", e);
-            }
-        })();
+        // 3. Vocab & content loaded on-demand per tab (no preload)
 
         // 4. Load other progress variables from progress store
         state.customWords = await LearningDB.getProgress('custom_words', []);
