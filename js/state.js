@@ -40,9 +40,7 @@ let state = {
     placementDismissed: false // User dismissed placement test suggestion banner
 };
 
-// Flashcard Deck study state
-let flashcardDeck = [];
-let currentCardIndex = 0;
+// Flashcard state
 let isCardFlipped = false;
 
 // Quiz state

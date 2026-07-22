@@ -1,265 +1,123 @@
-// --- FLASHCARD ENGINE (LEITNER SRS SYSTEM) ---
-// shuffleArray is defined globally in state.js (Fisher-Yates)
+// --- FLASHCARD ENGINE (Backend-powered, one word at a time) ---
 
-// Function to generate an adaptive, weighted multi-level flashcard pool based on CEFR levels
-function getWeightedFlashcardPool(allWords, level) {
-    const CEFR_LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
-    const curIdx = CEFR_LEVELS.indexOf(level);
-    
-    // Default fallback if level not found in array
-    if (curIdx === -1) {
-        const pool = filterWordsByLevel(allWords, level);
-        return {
-            dueReviews: pool.filter(w => w.nextReview <= Date.now() && w.box < 3),
-            practice: pool.filter(w => w.nextReview > Date.now() || w.box === 3)
-        };
-    }
+// Flashcard session state
+let flashcardCurrentWord = null;
+let flashcardSeenIds = [];
+let flashcardCategory = 'all';
+let flashcardSessionCount = 0;
 
-    // 1. Get base pools for previous, current, and next levels
-    const currentPool = filterWordsByLevel(allWords, level);
-    const prevPool = curIdx > 0 ? filterWordsByLevel(allWords, CEFR_LEVELS[curIdx - 1]) : [];
-    const nextPool = curIdx < CEFR_LEVELS.length - 1 ? filterWordsByLevel(allWords, CEFR_LEVELS[curIdx + 1]) : [];
+async function initFlashcardSession(category) {
+    flashcardCategory = category || 'all';
+    flashcardSeenIds = [];
+    flashcardSessionCount = 0;
+    flashcardCurrentWord = null;
 
-    const now = Date.now();
-    
-    // We also want to keep ALL studied words in other levels (box > 1) reviewable when they are due!
-    const studiedWords = allWords.filter(w => w.box > 1);
-
-    // 2. Gather due reviews from all related and studied words (Always prioritize due reviews!)
-    const allActiveWordsMap = new Map();
-    [...currentPool, ...prevPool, ...nextPool, ...studiedWords].forEach(w => {
-        allActiveWordsMap.set(w.id, w);
-    });
-    const allActiveWords = Array.from(allActiveWordsMap.values());
-    const dueReviews = allActiveWords.filter(w => w.nextReview <= now && w.box < 3);
-
-    // 3. For new/regular practice words, we sample in proportions: 70% current, 20% prev, 10% next
-    const regularCurrent = currentPool.filter(w => w.nextReview > now || w.box === 3);
-    const regularPrev = prevPool.filter(w => w.nextReview > now || w.box === 3);
-    const regularNext = nextPool.filter(w => w.nextReview > now || w.box === 3);
-
-    // Shuffle regular pools using Fisher-Yates
-    const shufCurrent = shuffleArray(regularCurrent);
-    const shufPrev = shuffleArray(regularPrev);
-    const shufNext = shuffleArray(regularNext);
-
-    // Determine target sample counts (e.g. target total 60 practice words in the session to keep it light)
-    let currentCount = 42; // 70%
-    let prevCount = 12;    // 20%
-    let nextCount = 6;     // 10%
-
-    if (prevPool.length === 0) {
-        // Level is A1 (no prev level)
-        currentCount = 48; // 80%
-        nextCount = 12;    // 20%
-        prevCount = 0;
-    } else if (nextPool.length === 0) {
-        // Level is C2 (no next level)
-        currentCount = 48; // 80%
-        prevCount = 12;    // 20%
-        nextCount = 0;
-    }
-
-    const sampledCurrent = shufCurrent.slice(0, currentCount);
-    const sampledPrev = shufPrev.slice(0, prevCount);
-    const sampledNext = shufNext.slice(0, nextCount);
-
-    // Combine all elements without duplicates
-    const combinedPractice = [...sampledCurrent, ...sampledPrev, ...sampledNext];
-    const finalPracticeMap = new Map();
-    combinedPractice.forEach(w => finalPracticeMap.set(w.id, w));
-    
-    // Remove due reviews from practice map to avoid duplicates
-    dueReviews.forEach(w => finalPracticeMap.delete(w.id));
-
-    const finalPractice = Array.from(finalPracticeMap.values());
-
-    return {
-        dueReviews,
-        practice: finalPractice
-    };
+    await loadNextFlashcardWord();
 }
 
-function initFlashcardSession(category = 'all') {
-    // If background vocabulary loading is still in progress, show spinner and retry in 500ms
-    if (!state.isVocabLoaded) {
-        const container = document.getElementById('flashcard-element');
-        if (container) {
-            container.innerHTML = `
-                <div class="loading-spinner-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; color: var(--text-muted);">
-                    <div class="spinner"></div>
-                    <p style="margin-top: 10px;">Đang tải kho từ vựng...</p>
-                </div>`;
+async function loadNextFlashcardWord() {
+    const container = document.getElementById('flashcard-element');
+    if (!container) return;
+
+    // Show loading
+    container.classList.remove('flipped');
+    isCardFlipped = false;
+    document.getElementById('card-front-word').textContent = '...';
+    document.getElementById('card-front-type').textContent = '';
+    document.getElementById('card-front-ipa').textContent = 'Đang tải từ tiếp theo...';
+    document.getElementById('card-back-meaning').textContent = '';
+    document.getElementById('card-back-example-en').textContent = '';
+    document.getElementById('card-back-example-vi').textContent = '';
+    document.getElementById('card-box-badge').textContent = '-';
+
+    const level = state.userLevel || 'A1';
+    const exclude = flashcardSeenIds.join(',');
+
+    try {
+        let word = null;
+
+        if (flashcardCategory === 'custom') {
+            // Custom words: pick from local state
+            const customs = state.customWords || [];
+            const unseen = customs.filter(w => !flashcardSeenIds.includes(w.id));
+            if (unseen.length > 0) {
+                word = unseen[Math.floor(Math.random() * unseen.length)];
+            }
+        } else if (window.ApiClient) {
+            // Backend: random word by level (and category if specified)
+            const res = await window.ApiClient.getVocabRandom(level, flashcardSeenIds, flashcardCategory !== 'all' ? flashcardCategory : undefined);
+            word = res.data || null;
         }
-        try {
-            state.vocabulary = await LearningDB.getAllVocab();
-            state.isVocabLoaded = true;
-        } catch (e) {
-            console.error("Failed to load vocabulary:", e);
-            if (container) container.innerHTML = '<p style="padding:20px;color:var(--text-muted);text-align:center;">Không thể tải kho từ vựng. Vui lòng thử lại!</p>';
+
+        if (!word) {
+            // No more words available or API failed
+            if (flashcardSeenIds.length > 0) {
+                // Reset seen list and try again
+                flashcardSeenIds = [];
+                await loadNextFlashcardWord();
+                return;
+            }
+            renderEmptyFlashcardDeck();
             return;
         }
-        initFlashcardSession(category);
-        return;
+
+        flashcardCurrentWord = word;
+        flashcardSeenIds.push(word.id);
+        flashcardSessionCount++;
+
+        renderFlashcardWord(word);
+    } catch (e) {
+        console.error("Failed to load flashcard word:", e);
+        document.getElementById('card-front-ipa').textContent = 'Lỗi tải dữ liệu. Thử lại!';
     }
-
-    const now = Date.now();
-    const allWords = [...state.vocabulary, ...state.customWords];
-    const level = state.userLevel || 'Beginner';
-
-    let reviewQueue = [];
-    let regularQueue = [];
-
-    // Filter deck based on category and level
-    if (category === 'all') {
-        // Automatically suggest random words using our adaptive weighted multi-level pool!
-        const pool = getWeightedFlashcardPool(allWords, level);
-        reviewQueue = pool.dueReviews;
-        regularQueue = pool.practice;
-    } else {
-        let filtered = [];
-        if (category === 'custom') {
-            filtered = [...state.customWords];
-        } else {
-            // If they select a specific category, show words of that category
-            filtered = allWords.filter(w => w.category === category);
-        }
-        reviewQueue = filtered.filter(w => w.nextReview <= now && w.box < 3);
-        regularQueue = filtered.filter(w => w.nextReview > now || w.box === 3);
-    }
-
-    if (reviewQueue.length === 0 && regularQueue.length === 0) {
-        flashcardDeck = [];
-        renderEmptyFlashcardDeck();
-        return;
-    }
-
-    // Shuffle the review items and the practice items to keep learning completely fresh and random!
-    const shuffledReview = shuffleArray(reviewQueue);
-    const shuffledPractice = shuffleArray(regularQueue);
-
-    // Prioritize due reviews, filled with random practices
-    flashcardDeck = [...shuffledReview, ...shuffledPractice];
-    currentCardIndex = 0;
-    isCardFlipped = false;
-
-    renderFlashcard();
 }
 
-async function renderFlashcard() {
+function renderFlashcardWord(word) {
     const container = document.getElementById('flashcard-element');
     container.classList.remove('flipped');
     isCardFlipped = false;
 
-    if (flashcardDeck.length === 0) {
-        renderEmptyFlashcardDeck();
-        return;
-    }
+    document.getElementById('card-front-word').textContent = word.word;
+    document.getElementById('card-front-type').textContent = word.type || '';
+    document.getElementById('card-front-ipa').textContent = word.ipa || '';
+    document.getElementById('card-box-badge').textContent = 'Từ mới';
+    document.getElementById('card-box-badge').style.color = 'var(--warning)';
 
-    const cardIndex = currentCardIndex;
-    const card = flashcardDeck[cardIndex];
+    document.getElementById('card-back-meaning').textContent = word.meaning || '';
+    document.getElementById('card-back-example-en').textContent = word.example ? `"${word.example}"` : '';
+    document.getElementById('card-back-example-vi').textContent = (word.example_vi || word.exampleVi) ? `"${word.example_vi || word.exampleVi}"` : '';
 
-    // Card Front - Hiển thị ngay lập tức từ vựng từ Index để không gây giật lag
-    document.getElementById('card-front-word').textContent = card.word;
-    document.getElementById('card-front-type').textContent = card.type || '...';
-    document.getElementById('card-front-ipa').textContent = card.ipa || '';
-    
-    const boxBadge = document.getElementById('card-box-badge');
-    if (card.box === 1) {
-        boxBadge.textContent = 'Từ mới';
-        boxBadge.style.color = 'var(--warning)';
-    } else if (card.box === 2) {
-        boxBadge.textContent = 'Đang học';
-        boxBadge.style.color = 'var(--primary-light)';
-    } else {
-        boxBadge.textContent = 'Đã thuộc';
-        boxBadge.style.color = 'var(--success)';
-    }
-
-    // Card Back - Tạm thời hiển thị trạng thái chờ nếu chưa có chi tiết
-    document.getElementById('card-back-meaning').textContent = card.meaning || 'Đang tải...';
-    document.getElementById('card-back-example-en').textContent = card.example ? `"${card.example}"` : '';
-    document.getElementById('card-back-example-vi').textContent = card.example_vi ? `"${card.example_vi}"` : '';
-
-    // Deck Bar
+    // Progress bar (incremental)
     const progressFill = document.getElementById('flashcard-progress-bar');
     const deckCount = document.getElementById('flashcard-deck-count');
-    const progressPct = Math.round((currentCardIndex / flashcardDeck.length) * 100);
-    
-    progressFill.style.width = `${progressPct}%`;
-    deckCount.textContent = `Thẻ ${currentCardIndex + 1} / ${flashcardDeck.length}`;
+    const pct = Math.min(100, Math.round((flashcardSessionCount / 20) * 100));
+    progressFill.style.width = `${pct}%`;
+    deckCount.textContent = `Thẻ ${flashcardSessionCount}`;
 
-    // Enable normal button deck states
+    // Enable buttons
     document.getElementById('btn-card-incorrect').style.opacity = '1';
     document.getElementById('btn-card-correct').style.opacity = '1';
     document.getElementById('btn-card-incorrect').pointerEvents = 'auto';
     document.getElementById('btn-card-correct').pointerEvents = 'auto';
-
-    // Update nav buttons disabled state
-    const prevBtn = document.getElementById('btn-card-prev');
-    const nextBtn = document.getElementById('btn-card-next');
-    if (prevBtn) prevBtn.disabled = currentCardIndex === 0;
-    if (nextBtn) nextBtn.disabled = currentCardIndex === flashcardDeck.length - 1;
-
-    // --- Tải thông tin chi tiết đầy đủ một cách bất đồng bộ ---
-    if (!card.meaning) {
-        try {
-            const fullData = await LearningDB.getFullWordData(card.id);
-            // Kiểm tra race-condition nếu người dùng đã bấm chuyển thẻ rất nhanh trước khi mạng tải xong
-            if (currentCardIndex === cardIndex && fullData) {
-                Object.assign(card, fullData); // Trộn chi tiết vào đối tượng thẻ hiện tại
-                
-                // Cập nhật lại UI với dữ liệu chi tiết vừa nạp
-                document.getElementById('card-front-type').textContent = card.type || '';
-                document.getElementById('card-front-ipa').textContent = card.ipa || '';
-                document.getElementById('card-back-meaning').textContent = card.meaning || '';
-                document.getElementById('card-back-example-en').textContent = card.example ? `"${card.example}"` : '';
-                document.getElementById('card-back-example-vi').textContent = card.example_vi ? `"${card.example_vi}"` : '';
-            }
-        } catch (e) {
-            console.error("Lỗi khi tải chi tiết từ vựng:", e);
-        }
-    } else {
-        // Dữ liệu đã có sẵn (hoặc do custom word hoặc đã pre-fetch trước), hiển thị ngay lập tức
-        document.getElementById('card-front-type').textContent = card.type || '';
-        document.getElementById('card-front-ipa').textContent = card.ipa || '';
-        document.getElementById('card-back-meaning').textContent = card.meaning || '';
-        document.getElementById('card-back-example-en').textContent = card.example ? `"${card.example}"` : '';
-        document.getElementById('card-back-example-vi').textContent = card.example_vi ? `"${card.example_vi}"` : '';
-    }
-
-    // --- Tải trước ngầm (Pre-fetch) thẻ tiếp theo trong hàng đợi để loại bỏ hoàn toàn độ trễ ---
-    if (currentCardIndex < flashcardDeck.length - 1) {
-        const nextCard = flashcardDeck[currentCardIndex + 1];
-        if (nextCard && !nextCard.meaning) {
-            LearningDB.getFullWordData(nextCard.id).then(fullData => {
-                if (fullData) {
-                    Object.assign(nextCard, fullData);
-                }
-            }).catch(() => {});
-        }
-    }
 }
 
 function renderEmptyFlashcardDeck() {
     document.getElementById('card-front-word').textContent = 'Trống Rỗng 📂';
     document.getElementById('card-front-type').textContent = '';
-    document.getElementById('card-front-ipa').textContent = 'Không có từ nào trong deck này';
+    document.getElementById('card-front-ipa').textContent = 'Không có từ nào phù hợp';
     document.getElementById('card-box-badge').textContent = '-';
-    document.getElementById('card-back-meaning').textContent = 'Chưa có từ nào phù hợp';
-    document.getElementById('card-back-example-en').textContent = 'Hãy thêm từ mới hoặc đổi chủ đề.';
+    document.getElementById('card-back-meaning').textContent = 'Chưa có từ nào';
+    document.getElementById('card-back-example-en').textContent = 'Hãy đổi chủ đề hoặc thử lại.';
     document.getElementById('card-back-example-vi').textContent = '';
 
     document.getElementById('flashcard-progress-bar').style.width = '0%';
-    document.getElementById('flashcard-deck-count').textContent = 'Thẻ 0 / 0';
+    document.getElementById('flashcard-deck-count').textContent = 'Thẻ 0';
 
-    // Disable incorrect/correct actions since deck is empty
     document.getElementById('btn-card-incorrect').style.opacity = '0.4';
     document.getElementById('btn-card-correct').style.opacity = '0.4';
     document.getElementById('btn-card-incorrect').pointerEvents = 'none';
     document.getElementById('btn-card-correct').pointerEvents = 'none';
 
-    // Disable navigation buttons since deck is empty
     const prevBtn = document.getElementById('btn-card-prev');
     const nextBtn = document.getElementById('btn-card-next');
     if (prevBtn) prevBtn.disabled = true;
@@ -267,94 +125,48 @@ function renderEmptyFlashcardDeck() {
 }
 
 function toggleCardFlip() {
-    if (flashcardDeck.length === 0) return;
     const container = document.getElementById('flashcard-element');
     container.classList.toggle('flipped');
     isCardFlipped = !isCardFlipped;
 }
 
-// Leitner SRS Scheduling Logic
 async function handleFlashcardAction(isCorrect, isMastered = false) {
-    if (flashcardDeck.length === 0) return;
-    
-    // Register study activity for Streak
+    if (!flashcardCurrentWord) return;
+
     checkAndUpdateStreak();
     trackDailyActivity('flashcard', 1);
 
-    const word = flashcardDeck[currentCardIndex];
-    const now = Date.now();
+    const word = flashcardCurrentWord;
 
-    // Find vocabulary source list (built-in or custom)
-    let sourceList = state.vocabulary;
-    let isCustom = false;
-    let originalIdx = state.vocabulary.findIndex(w => w.id === word.id);
-
-    if (originalIdx === -1) {
-        originalIdx = state.customWords.findIndex(w => w.id === word.id);
-        sourceList = state.customWords;
-        isCustom = true;
+    // Save progress if logged in
+    if (isCloudMode && window.FirebaseSync && window.ApiClient && window.ApiClient.isLoggedIn()) {
+        try {
+            const box = isMastered ? 3 : (isCorrect ? 2 : 1);
+            const nextReview = isMastered
+                ? Date.now() + (30 * 24 * 60 * 60 * 1000)
+                : isCorrect
+                    ? Date.now() + (3 * 24 * 60 * 60 * 1000)
+                    : Date.now();
+            await window.ApiClient.saveProgress(word.id, box, nextReview);
+        } catch (e) {
+            console.warn("Failed to save flashcard progress:", e);
+        }
     }
 
-    if (originalIdx !== -1) {
+    // Update local state for dashboard
+    const vocabIdx = state.vocabulary.findIndex(w => w.id === word.id);
+    if (vocabIdx !== -1) {
         if (isMastered) {
-            // Jump directly to Box 3 (Mastered) and schedule review very far away
-            sourceList[originalIdx].box = 3;
-            sourceList[originalIdx].nextReview = now + (30 * 24 * 60 * 60 * 1000); // 30 days
+            state.vocabulary[vocabIdx].box = 3;
         } else if (isCorrect) {
-            // Upgrade Box (Max Box is 3)
-            if (word.box < 3) {
-                sourceList[originalIdx].box += 1;
-            }
-            // Schedule next review based on Box weight & Adaptive student level (CEFR)
-            // Spaced Retrieval adapts dynamically to combat the forgetting curve:
-            // - Beginner: Needs faster recall (Box 2: 1.5 days, Box 3: 4 days)
-            // - Intermediate: Standard spacing (Box 2: 3 days, Box 3: 7 days)
-            // - Advanced: Stronger retention, wider spacing (Box 2: 5 days, Box 3: 12 days)
-            let daysMultiplier = sourceList[originalIdx].box === 2 ? 3 : 7;
-            const lvl = state.userLevel || 'A1';
-            if (lvl === 'A1' || lvl === 'A2' || lvl === 'Beginner') {
-                daysMultiplier = sourceList[originalIdx].box === 2 ? 1.5 : 4;
-            } else if (lvl === 'C1' || lvl === 'C2' || lvl === 'Advanced') {
-                daysMultiplier = sourceList[originalIdx].box === 2 ? 5 : 12;
-            }
-            
-            sourceList[originalIdx].nextReview = now + (daysMultiplier * 24 * 60 * 60 * 1000);
+            if (state.vocabulary[vocabIdx].box < 3) state.vocabulary[vocabIdx].box++;
         } else {
-            // Downgrade to Box 1 (New) and schedule review immediately
-            sourceList[originalIdx].box = 1;
-            sourceList[originalIdx].nextReview = now; // Ready immediately
-        }
-
-        // Save asynchronously
-        if (isCustom) {
-            await saveCustomWordsToStorage();
-        } else {
-            await updateWordInDB(sourceList[originalIdx]);
-        }
-
-        // Sync to Firebase if in Cloud Mode
-        if (isCloudMode && window.FirebaseSync) {
-            const updatedWord = sourceList[originalIdx];
-            if (isCustom) {
-                window.FirebaseSync.saveCustomWord(updatedWord);
-            } else {
-                window.FirebaseSync.saveProgress(updatedWord.id, updatedWord.box, updatedWord.nextReview);
-            }
+            state.vocabulary[vocabIdx].box = 1;
         }
     }
 
-    // Render dashboard instantly to update counts
     renderDashboard();
 
-    // Go to next card in session
-    if (currentCardIndex < flashcardDeck.length - 1) {
-        currentCardIndex++;
-        renderFlashcard();
-    } else {
-        // Session ended
-        alert('🎉 Chúc mừng! Bạn đã hoàn thành tất cả thẻ trong lượt này.');
-        awardStars(10, "Hoàn thành lượt học Flashcard");
-        initFlashcardSession(document.getElementById('flashcard-category').value);
-    }
+    // Load next word
+    await loadNextFlashcardWord();
 }
-

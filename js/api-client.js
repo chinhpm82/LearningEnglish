@@ -217,6 +217,24 @@ const ApiClient = (function () {
         return request('GET', '/api/grammar-practice/sessions?' + qs, null, true);
     }
 
+    async function getVocabRandom(level, exclude, category) {
+        const params = {};
+        if (level) params.level = level;
+        if (exclude && exclude.length > 0) params.exclude = exclude.join(',');
+        if (category) params.category = category;
+        const qs = buildQuery(params);
+        return request('GET', '/api/vocab/random?' + qs, null, false);
+    }
+
+    async function getVocabRandomBatch(level, count, exclude, category) {
+        const params = { count: count || 10 };
+        if (level) params.level = level;
+        if (exclude && exclude.length > 0) params.exclude = exclude.join(',');
+        if (category) params.category = category;
+        const qs = buildQuery(params);
+        return request('GET', '/api/vocab/random-batch?' + qs, null, false);
+    }
+
     // --- User Progress (auth required) ---
     async function getProgress() {
         const data = await request('GET', '/api/user/progress', null, true);
@@ -276,6 +294,8 @@ const ApiClient = (function () {
         getMe: getMe,
         getVocab: getVocab,
         getVocabById: getVocabById,
+        getVocabRandom: getVocabRandom,
+        getVocabRandomBatch: getVocabRandomBatch,
         searchVocab: searchVocab,
         getGrammar: getGrammar,
         getGrammarById: getGrammarById,

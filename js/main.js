@@ -383,8 +383,8 @@ function initApp() {
 
     document.getElementById('card-speak-btn').addEventListener('click', (e) => {
         e.stopPropagation();
-        if (flashcardDeck.length > 0) {
-            speakEnglish(flashcardDeck[currentCardIndex].word);
+        if (flashcardCurrentWord) {
+            speakEnglish(flashcardCurrentWord.word);
         }
     });
 
@@ -406,23 +406,14 @@ function initApp() {
     // Previous and Next Navigation Buttons
     const cardPrevBtn = document.getElementById('btn-card-prev');
     if (cardPrevBtn) {
-        cardPrevBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (currentCardIndex > 0) {
-                currentCardIndex--;
-                renderFlashcard();
-            }
-        });
+        cardPrevBtn.style.display = 'none';
     }
 
     const cardNextBtn = document.getElementById('btn-card-next');
     if (cardNextBtn) {
         cardNextBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (currentCardIndex < flashcardDeck.length - 1) {
-                currentCardIndex++;
-                renderFlashcard();
-            }
+            loadNextFlashcardWord();
         });
     }
 
@@ -445,8 +436,8 @@ function initApp() {
             } else if (e.key === 'ArrowUp') {
                 handleFlashcardAction(true, true);
             } else if (e.key === 'Enter' || e.key.toLowerCase() === 'v') {
-                if (flashcardDeck.length > 0) {
-                    speakEnglish(flashcardDeck[currentCardIndex].word);
+                if (flashcardCurrentWord) {
+                    speakEnglish(flashcardCurrentWord.word);
                 }
             }
         }
